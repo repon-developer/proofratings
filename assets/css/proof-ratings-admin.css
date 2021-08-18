@@ -1,0 +1,60 @@
+
+.review-sites-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.review-sites-checkboxes .checkbox-review-site {
+    margin-right: 20px;
+}
+
+.checkbox-review-site {
+    padding: 20px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.checkbox-review-site img {
+    max-width: 100px;
+}
+
+.checkbox-review-site input {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    visibility: hidden;
+    margin: 0!important;
+    height: auto!important;
+    width: auto!important;
+    font-size: 20px;
+    font-family: dashicons!important;
+    appearance: none!important;
+    border: none!important;
+    outline: none!important;
+    box-shadow: none!important;
+}
+
+.checkbox-review-site input:before {
+    float: none!important;
+    content: "\f12a"!important;
+    vertical-align: text-bottom!important;
+}
+
+.checkbox-review-site input:checked {
+    color: green;
+    visibility: visible;
+}
+
+.checkbox-review-site input:checked:before {
+    margin: 0!important;
+    height: auto!important;
+    width: auto!important;
+}
+
+fieldset.fieldset-site-review {display: none; margin-bottom: 30px;}
