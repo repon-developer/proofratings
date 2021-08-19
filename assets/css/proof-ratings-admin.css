@@ -1,3 +1,8 @@
+.proof-ratings-settings-wrap .proof-ratings-options {
+    max-width: 1200px;
+}
+
+.proof-ratings-settings-wrap .wp-heading-inline {margin-bottom: 30px;}
 
 .review-sites-checkboxes {
     display: flex;
@@ -7,10 +12,12 @@
 
 .review-sites-checkboxes .checkbox-review-site {
     margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 .checkbox-review-site {
     padding: 20px;
+    height: 40px;
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -26,8 +33,8 @@
 
 .checkbox-review-site input {
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 3px;
+    left: 3px;
     visibility: hidden;
     margin: 0!important;
     height: auto!important;

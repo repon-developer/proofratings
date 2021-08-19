@@ -1,9 +1,9 @@
 <?php
 /**
- * File containing the class WP_Job_Manager.
+ * File containing the class WP_Proof_Ratings_Admin.
  *
- * @package wp-job-manager
- * @since   1.33.0
+ * @package proof-ratings
+ * @since   1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

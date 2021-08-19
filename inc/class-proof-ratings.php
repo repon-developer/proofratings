@@ -1,9 +1,9 @@
 <?php
 /**
- * File containing the class WP_Job_Manager.
+ * File containing the class Wordpress_Proof_Ratings.
  *
- * @package wp-job-manager
- * @since   1.33.0
+ * @package proof-ratings
+ * @since   1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,12 +44,18 @@ class Wordpress_Proof_Ratings {
 	 * Constructor.
 	 */
 	public function __construct() {
+		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/SimpleXLSX.php';
+		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/helpers.php';
 		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-admin.php';
+		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-shortcodes.php';
 
 		$this->admin = WP_Proof_Ratings_Admin::instance();
+		$this->shortcodes = WP_Proof_Ratings_Shortcodes::instance();
 
 		// Actions.
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
 	}
 
 	/**
@@ -58,5 +64,21 @@ class Wordpress_Proof_Ratings {
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain( 'proof-ratings', false, PROOF_RATINGS_PLUGIN_DIR . '/languages' );
 	}
+
+	/**
+	 * frontend CSS and JS assets.
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'proof-ratings', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings.css', [], PROOF_RATINGS_VERSION);
+	}
+
+	/**
+	 * Embed floating badge on frontend
+	 */
+	public function embed_floating_badge() {
+		echo do_shortcode( '[proof_ratings_floating_badge]' );
+	}
+
+	
 
 }

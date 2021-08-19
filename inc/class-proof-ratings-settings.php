@@ -1,9 +1,9 @@
 <?php
 /**
- * File containing the class WP_Job_Manager.
+ * File containing the class WP_Proof_Ratings_Settings.
  *
- * @package wp-job-manager
- * @since   1.33.0
+ * @package proof-ratings
+ * @since   1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,50 +55,36 @@ class WP_Proof_Ratings_Settings {
 	public function get_review_sites() {
 		return [
 			'google' => [
-				'color' => '#febc00',
-				'text_color' => '',
 				'title' => __('Google Review Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/google.svg'
 			],
 
 			'facebook' => [
-				'color' => '#0f7ff3',
-				'text_color' => '',
 				'title' => __('Facebook Review Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/facebook.svg'
 			],
 
 			'energysage' => [
-				'color' => '#bf793f',
-				'text_color' => '',
 				'title' => __('Energy Sage Review Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/energysage.png'
 			],
 
 			'solarreviews' => [
-				'color' => '#0f92d7',
-				'text_color' => '',
-				'title' => __('Solar Reviews Review Settings', 'proof-ratings'),
+				'title' => __('Solar Reviews Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg'
 			],
 
 			'yelp' => [
-				'color' => '#e21c21',
-				'text_color' => '',
 				'title' => __('Yelp Review Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/yelp.svg'
 			],
 
 			'bbb' => [
-				'color' => '#136796',
-				'text_color' => '',
 				'title' => __('BBB Review Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/bbb.svg'
 			],
 
 			'guildquality' => [
-				'color' => '#032e57',
-				'text_color' => '',
 				'title' => __('Guild Quality Review Settings', 'proof-ratings'),
 				'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/guildquality.svg'
 			],
@@ -113,8 +99,16 @@ class WP_Proof_Ratings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function output() {
+		// $xlsx = SimpleXLSX::parse( PROOF_RATINGS_PLUGIN_DIR . '/inc/reviews.xlsx');
+		// var_dump($xlsx->rows());
+		// exit;
+
+
 		?>
 		<div class="wrap proof-ratings-settings-wrap">
+			<h1 class="wp-heading-inline"><?php _e('Proof Ratings Settings', 'proof-ratings') ?></h1>
+			<hr class="wp-header-end">
+
 			<form class="proof-ratings-options" method="post" action="options.php">
 
 				<?php settings_fields( $this->settings_group ); ?>
@@ -124,8 +118,8 @@ class WP_Proof_Ratings_Settings {
 					echo '<div class="updated fade"><p>' . esc_html__( 'Settings successfully saved', 'proof-ratings' ) . '</p></div>';
 				}
 
-				$proof_ratings_settings = get_option( 'proof_ratings_settings', []);
-
+				$proof_ratings_settings = get_proof_ratings_settings();
+				
 				echo '<div class="review-sites-checkboxes">';
 				foreach ($this->get_review_sites() as $key => $site) {
 					printf(
@@ -143,16 +137,22 @@ class WP_Proof_Ratings_Settings {
 
 						echo '<table class="form-table form-table-review-sites settings">';
 							echo '<tr>';
-								echo '<th scope="row"><label for="mailserver_url">Color</label></th>';
-								printf('<td><input class="proof-ratings-color-field" name="proof_ratings_settings[%1$s][color]" type="text" value="%2$s"></td>', $key, $site['color']);
+								echo '<th scope="row"><label for="mailserver_url">Theme Color</label></th>';
+								printf('<td><input class="proof-ratings-color-field" name="proof_ratings_settings[%1$s][theme_color]" type="text" value="%2$s"></td>', $key, $proof_ratings_settings[$key]['theme_color']);
+							echo '</tr>';
+
+							echo '<tr>';
+								echo '<th scope="row"><label>Text Color</label></th>';
+								printf('<td><input class="proof-ratings-color-field" name="proof_ratings_settings[%1$s][text_color]" type="text" value="%2$s"></td>', $key, $proof_ratings_settings[$key]['text_color']);
 							echo '</tr>';
 							
 							echo '<tr>';
 								echo '<th scope="row"><label for="mailserver_url">Background Color</label></th>';
-								printf('<td><input class="proof-ratings-color-field" name="proof_ratings_settings[%1$s][background]" type="text" value="%2$s"></td>', $key, $site['background']);
+								printf('<td><input class="proof-ratings-color-field" name="proof_ratings_settings[%1$s][background]" type="text" value="%2$s"></td>', $key, $proof_ratings_settings[$key]['background']);
 							echo '</tr>';
 
 						echo '</table>';
+						echo '<hr>';
 					echo '</fieldset>';
 				}
 				
