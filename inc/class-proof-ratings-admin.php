@@ -44,13 +44,45 @@ class WP_Proof_Ratings_Admin {
 	 */
 	public function __construct() {
 		include_once dirname( __FILE__ ) . '/class-proof-ratings-settings.php';
-
 		$this->settings_page = WP_Proof_Ratings_Settings::instance();
 
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_action( "updated_option", [ $this, 'generate_css' ], 10, 3 );
+	}
 
+	/**
+	 * Generate styles 
+	 */
+	public function generate_css($old_value, $value, $option) {
+		if ( 'proof_ratings' != $_POST['option_page'] ) {
+			return;
+		}
+
+		$settings = $_POST['proof_ratings_settings'];
+
+		ob_start();
+		foreach ($settings as $key => $site) {
+			if ( empty($key)) continue;
+			printf(".proof-ratings-widget.proof-ratings-widget-%s {\n", $key);
+
+				if ( $site['theme_color'] ) {
+					printf("\t--themeColor: %s;\n", $site['theme_color']);
+				}
+
+				if ( $site['text_color'] ) {
+					printf("\t--textColor: %s;\n", $site['text_color']);
+				}
+
+				if ( $site['background'] ) {
+					printf("\tbackground-color: %s;\n", $site['background']);
+				}
+				
+			echo "}\n\n";					
+		}			
+			
+		$styles = ob_get_clean();
+		file_put_contents(PROOF_RATINGS_PLUGIN_DIR . '/assets/css/proof-ratings-generated.css', $styles);	
 	}
 
 	/**

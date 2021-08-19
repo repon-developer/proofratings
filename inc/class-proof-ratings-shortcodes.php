@@ -94,6 +94,10 @@ class WP_Proof_Ratings_Shortcodes {
 	 * floating badge shortcode
 	 */
 	public function proof_ratings_widgets($atts, $content = null) {
+		$atts = shortcode_atts([
+            'id' => 'proof_ratings_widgets'
+        ], $atts);
+
         $review_sites = [];
 
         foreach (get_proof_ratings_settings() as $key => $site) {
@@ -110,10 +114,9 @@ class WP_Proof_Ratings_Shortcodes {
 
         ob_start();
 
-
-        echo '<div class="proof-ratings-review-widgets-grid">';			
+        printf('<div id="%s" class="proof-ratings-review-widgets-grid">', $atts['id']);
 	        foreach ($review_sites as $key => $site) {
-				echo '<div class="proof-ratings-widget">';
+				printf('<div class="proof-ratings-widget proof-ratings-widget-%s">', $key);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', $logos[$key]['logo'], $logos[$key]['alt']);
 				
 					echo '<div class="proof-ratings-reviews">';
