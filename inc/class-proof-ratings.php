@@ -49,8 +49,8 @@ class Wordpress_Proof_Ratings {
 		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-admin.php';
 		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-shortcodes.php';
 
-		$this->admin = WP_Proof_Ratings_Admin::instance();
-		$this->shortcodes = WP_Proof_Ratings_Shortcodes::instance();
+		$this->admin = Proof_Ratings_Admin::instance();
+		$this->shortcodes = Proof_Ratings_Shortcodes::instance();
 
 		// Actions.
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );

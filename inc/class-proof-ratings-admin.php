@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class WP_Proof_Ratings_Admin {
+class Proof_Ratings_Admin {
 
 	/**
 	 * The single instance of the class.

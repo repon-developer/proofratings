@@ -107,10 +107,6 @@ class WP_Proof_Ratings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function output() {
-		// $xlsx = SimpleXLSX::parse( PROOF_RATINGS_PLUGIN_DIR . '/inc/reviews.xlsx');
-		// var_dump($xlsx->rows());
-		// exit;
-
 
 		?>
 		<div class="wrap proof-ratings-settings-wrap">

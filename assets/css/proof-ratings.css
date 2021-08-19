@@ -61,7 +61,7 @@ html {
 
 .proof-ratings-stars {
     margin-left: 7px;
-    width: 96px!important;
+    width: 95.5px!important;
     display: inline-block;
     background-color: rgb(148, 148, 148);
 }
@@ -83,7 +83,7 @@ html {
 .proof-ratings-review-widgets-grid {
     display: grid;
     gap: 30px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))
 }
 
 .proof-ratings-widget {
