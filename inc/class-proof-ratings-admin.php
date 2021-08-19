@@ -38,7 +38,6 @@ class WP_Proof_Ratings_Admin {
 		return self::$instance;
 	}
 
-
 	/**
 	 * Constructor.
 	 */
@@ -60,6 +59,7 @@ class WP_Proof_Ratings_Admin {
 		}
 
 		$settings = $_POST['proof_ratings_settings'];
+		$badge_settings = $_POST['proof_ratings_floating_badge_settings'];
 
 		ob_start();
 		foreach ($settings as $key => $site) {
@@ -78,8 +78,32 @@ class WP_Proof_Ratings_Admin {
 					printf("\tbackground-color: %s;\n", $site['background']);
 				}
 				
-			echo "}\n\n";					
-		}			
+			echo "}\n\n";
+		}
+
+		echo ".proof-ratings-floating-badge {\n";			
+			if ( $badge_settings['shadow_color'] ) {
+				printf("\t--shadowColor: %s66;\n", $badge_settings['shadow_color']);
+			}
+
+			if ( $badge_settings['shadow_hover'] ) {
+				printf("\t--shadowHover: %s66;\n", $badge_settings['shadow_hover']);
+			}
+
+			if ( $badge_settings['background_color'] ) {
+				printf("\tbackground-color: %s;\n", $badge_settings['background_color']);
+			}
+		echo "}\n\n";
+
+		echo ".proof-ratings-floating-badge .proof-ratings-review-count {\n";
+			if ( $badge_settings['review_text_color'] ) {
+				printf("\tcolor: %s!important;\n", $badge_settings['review_text_color']);
+			}
+
+			if ( $badge_settings['review_background'] ) {
+				printf("\tbackground-color: %s!important;\n", $badge_settings['review_background']);
+			}
+		echo "}";
 			
 		$styles = ob_get_clean();
 		file_put_contents(PROOF_RATINGS_PLUGIN_DIR . '/assets/css/proof-ratings-generated.css', $styles);	
@@ -91,7 +115,6 @@ class WP_Proof_Ratings_Admin {
 	public function admin_menu() {
 		add_menu_page(__('Proof Ratings', 'proof-ratings'), __('Proof Ratings', 'proof-ratings'), 'manage_options', 'proof-ratings', [$this->settings_page, 'output'], 'dashicons-star-filled', 25);
 	}
-
 
 	/**
 	 * Enqueues CSS and JS assets.

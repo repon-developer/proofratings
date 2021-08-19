@@ -6,6 +6,10 @@
 	--themeColor: #0f7ff3;
 }
 
+.proof-ratings-widget.proof-ratings-widget-yelp {
+	--themeColor: #e21c21;
+}
+
 .proof-ratings-widget.proof-ratings-widget-bbb {
 	--themeColor: #136796;
 }
@@ -18,11 +22,13 @@
 	--themeColor: #0f92d7;
 }
 
-.proof-ratings-widget.proof-ratings-widget-yelp {
-	--themeColor: #e21c21;
-}
-
 .proof-ratings-widget.proof-ratings-widget-guildquality {
 	--themeColor: #032e57;
 }
 
+.proof-ratings-floating-badge {
+}
+
+.proof-ratings-floating-badge .proof-ratings-review-count {
+	background-color: #212a3d!important;
+}

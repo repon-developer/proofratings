@@ -52,7 +52,7 @@ class WP_Proof_Ratings_Shortcodes {
 	 */
 	public function floating_badge($atts, $content = null) {
         $atts = shortcode_atts([
-            'url' => ''
+            'url' => '#proof_ratings_widgets'
         ], $atts, 'proof_ratings_floating_badge');
 
 
@@ -68,9 +68,23 @@ class WP_Proof_Ratings_Shortcodes {
             return;
         }
 
-        ob_start();
+		$classes = ['proof-ratings-floating-badge'];
 
-        echo '<div class="proof-ratings-floating-badge">';
+		$badget_settings = get_option( 'proof_ratings_floating_badge_settings');
+
+		if ( !empty($badget_settings['position']) ) {
+			$classes[] = $badget_settings['position'];
+		}
+
+		$url_attribute = '';
+		$tag = 'div';
+		if (!empty($atts['url'])) {
+			$tag = 'a';
+			$url_attribute = sprintf('href="%s"', $atts['url']);
+		}
+
+        ob_start();
+        printf('<%s %s class="%s">', $tag, $url_attribute, implode(' ', $classes));
 			echo '<div class="proof-ratings-inner">';
 		        echo '<div class="proof-ratings-logos">';
 		        foreach ($review_sites as $key => $site) {
@@ -85,7 +99,7 @@ class WP_Proof_Ratings_Shortcodes {
 	        echo '</div>';
 
         	printf('<div class="proof-ratings-review-count">%d %s</div>', 225, __('reviews', 'proof-ratings'));
-        echo '</div>';
+        printf('</%s>', $tag);
         return ob_get_clean();
 
 	}

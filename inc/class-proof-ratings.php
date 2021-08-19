@@ -69,8 +69,8 @@ class Wordpress_Proof_Ratings {
 	 * frontend CSS and JS assets.
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style( 'proof-ratings-generated', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings-generated.css', [], PROOF_RATINGS_VERSION);
 		wp_enqueue_style( 'proof-ratings', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings.css', [], PROOF_RATINGS_VERSION);
+		wp_enqueue_style( 'proof-ratings-generated', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings-generated.css', [], PROOF_RATINGS_VERSION);
 	}
 
 	/**
