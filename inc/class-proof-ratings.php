@@ -44,7 +44,6 @@ class Wordpress_Proof_Ratings {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/SimpleXLSX.php';
 		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/helpers.php';
 		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-admin.php';
 		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-shortcodes.php';
@@ -56,6 +55,34 @@ class Wordpress_Proof_Ratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
+
+		$this->activate();
+	}
+
+	/**
+	 * proof ratings activate
+	 */
+	public function activate() {
+		update_option('proof_ratings_version', PROOF_RATINGS_VERSION );
+
+		$request_url = add_query_arg(array(
+			'name' => get_bloginfo( 'name' ),
+			'email' => get_bloginfo( 'admin_email' ),
+			'site_url' => get_site_url()
+		), PROOF_RATINGS_API_URL . '/register');
+
+
+		var_dump($request_url);
+
+
+		$response = wp_remote_get($request_url);
+
+
+		if( $response['response']['code'] === 200) {
+			$data = json_decode(wp_remote_retrieve_body($response));
+			var_dump($data);
+			exit;
+		}		
 	}
 
 	/**

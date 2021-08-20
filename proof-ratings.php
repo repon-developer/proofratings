@@ -25,6 +25,7 @@ define( 'PROOF_RATINGS_VERSION', '1.0.1' );
 define( 'PROOF_RATINGS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'PROOF_RATINGS_PLUGIN_URL', untrailingslashit(plugin_dir_url(__FILE__)));
 define( 'PROOF_RATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'PROOF_RATINGS_API_URL', 'http://wooshop.me/wp-json/proof-ratings/v1');
 
 
 require_once dirname( __FILE__ ) . '/inc/class-proof-ratings.php';
@@ -40,3 +41,5 @@ function WP_Proof_Ratings() { // phpcs:ignore WordPress.NamingConventions.ValidF
 }
 
 $GLOBALS['proof_ratings'] = WP_Proof_Ratings();
+
+register_activation_hook( PROOF_RATINGS_PLUGIN_BASENAME, array( WP_Proof_Ratings(), 'activate' ) );

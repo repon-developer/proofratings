@@ -54,7 +54,7 @@ class Proof_Ratings_Admin {
 	 * Generate styles 
 	 */
 	public function generate_css($old_value, $value, $option) {
-		if ( 'proof_ratings' != $_POST['option_page'] ) {
+		if ( !isset($_POST['option_page']) || 'proof_ratings' != $_POST['option_page'] ) {
 			return;
 		}
 

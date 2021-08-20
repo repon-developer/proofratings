@@ -43,6 +43,7 @@ class Proof_Ratings_Shortcodes {
 	 * Constructor.
 	 */
 	public function __construct() {
+		return;
         add_shortcode('proof_ratings_floating_badge', [$this, 'floating_badge']);
         add_shortcode('proof_ratings_widgets', [$this, 'proof_ratings_widgets']);
 	}
@@ -62,24 +63,6 @@ class Proof_Ratings_Shortcodes {
         if ( empty($review_sites) ) {
             return false;
         }
-
-		$xlsx = SimpleXLSX::parse( PROOF_RATINGS_PLUGIN_DIR . '/inc/reviews.xlsx');
-
-		$rows = $xlsx->rows();
-		unset($rows[0]);
-
-		foreach ($rows as $site_rating) {
-			$key = strtolower($site_rating[0]);
-			if ( !isset($review_sites[$key])) {
-				continue;
-			}
-
-			$review_sites[$key] = array_merge($review_sites[$key], [
-				'rating' => $site_rating[1],
-				'count' => $site_rating[2],
-				'percent' => $site_rating[1] * 20
-			]);
-		}
 
 		return $review_sites;
 	}
