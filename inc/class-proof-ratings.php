@@ -55,8 +55,6 @@ class Wordpress_Proof_Ratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
-
-		$this->activate();
 	}
 
 	/**
@@ -68,21 +66,17 @@ class Wordpress_Proof_Ratings {
 		$request_url = add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
 			'email' => get_bloginfo( 'admin_email' ),
-			'site_url' => get_site_url()
+			'url' => get_site_url()
 		), PROOF_RATINGS_API_URL . '/register');
-
-
-		var_dump($request_url);
-
 
 		$response = wp_remote_get($request_url);
 
-
 		if( $response['response']['code'] === 200) {
 			$data = json_decode(wp_remote_retrieve_body($response));
-			var_dump($data);
-			exit;
-		}		
+			if ( $data->success ) {
+				update_option('proof_ratings_status', $data->status );
+			}
+		}
 	}
 
 	/**
