@@ -122,3 +122,21 @@ function get_proof_ratings_settings() {
 
     return $settings;
 }
+
+
+/**
+ * get current status
+ * @since  1.0.1
+ */
+function get_proof_ratings_current_status() {
+    $proof_ratings_status = get_option( 'proof_ratings_status');
+
+    if ( !$proof_ratings_status ) {
+        return false;
+    }
+
+    return (object) wp_parse_args((array) $proof_ratings_status, [
+        'status' => 'pending',
+        'message' => ''
+    ]);
+}

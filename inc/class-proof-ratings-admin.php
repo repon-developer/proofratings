@@ -44,10 +44,29 @@ class Proof_Ratings_Admin {
 	public function __construct() {
 		include_once dirname( __FILE__ ) . '/class-proof-ratings-settings.php';
 		$this->settings_page = WP_Proof_Ratings_Settings::instance();
-
+		
+		add_action( 'init', [$this, 'register_your_domain']);
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		add_action( "updated_option", [ $this, 'generate_css' ], 10, 3 );
+	}
+
+	/**
+	 * Register domain for getting review data
+	 * @since 1.0.1
+	 */
+	public function register_your_domain() {
+		if ( !isset($_GET['_regsiter_nonce']) ) {
+			return;
+		}
+
+		if( !wp_verify_nonce( $_GET['_regsiter_nonce'], 'register_proof_ratings') ) {
+			return;
+		}
+
+		WP_Proof_Ratings()->activate();
+
+		exit(wp_safe_redirect(remove_query_arg('_regsiter_nonce')));
 	}
 
 	/**

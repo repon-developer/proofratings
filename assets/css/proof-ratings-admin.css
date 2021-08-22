@@ -1,3 +1,18 @@
+.proof-ratings-status {
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-left: 3px solid rgb(156, 44, 44);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+}
+
+.proof-ratings-status p {
+    margin: 0;
+    font-size: inherit;
+}
+
 .proof-ratings-settings-wrap .proof-ratings-options {
     max-width: 1200px;
 }

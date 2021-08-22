@@ -122,7 +122,22 @@ class WP_Proof_Ratings_Settings {
 					echo '<div class="updated fade"><p>' . esc_html__( 'Settings successfully saved', 'proof-ratings' ) . '</p></div>';
 				}
 
-				?>
+				$proof_ratings_status = get_proof_ratings_current_status();
+				if ( !$proof_ratings_status ) {
+					echo '<div class="proof-ratings-status">';
+					echo sprintf('<p>You have not registered your site. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proof_ratings' )], menu_page_url('proof-ratings', false)) );
+					echo '</div>';
+				}
+
+				if ( in_array($proof_ratings_status->status, ['pending', 'pause', 'suspend', 'no_sheet_id']) ) {
+					echo '<div class="proof-ratings-status">';
+						if ($proof_ratings_status->status == 'suspend') {
+							printf('<p>'. __('Your application has been suspended.', 'proof-ratings') .'</p>');
+						} else {							
+							printf('<p>%s</p>', $proof_ratings_status->message);
+						}
+					echo '</div>';
+				} ?>
 
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proof-ratings'); ?></a>

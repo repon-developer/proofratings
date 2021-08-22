@@ -55,8 +55,6 @@ class Wordpress_Proof_Ratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
-
-		//$this->schedule_hook();
 	}
 
 	/**
@@ -73,10 +71,15 @@ class Wordpress_Proof_Ratings {
 
 		$response = wp_remote_get($request_url);
 
-		if( $response['response']['code'] === 200) {
-			$data = json_decode(wp_remote_retrieve_body($response));
-			if ( $data->success ) {
-				update_option('proof_ratings_status', $data->status );
+		if( $response['response']['code'] !== 200) {
+			return;			
+		}
+
+		$data = json_decode(wp_remote_retrieve_body($response));
+		if ( is_object($data) && $data->success ) {
+			update_option('proof_ratings_status', $data );
+			if ( $data->status == 'active' ) {
+				$this->schedule_hook();
 			}
 		}
 	}
@@ -110,14 +113,22 @@ class Wordpress_Proof_Ratings {
 
 		$response = wp_remote_get($request_url);
 
+		$data = json_decode(wp_remote_retrieve_body($response));
+		if ( isset($data->data) ) {
+			unset($data->data);
+		}
+
+		if( $response['response']['code'] === 404) {
+			return update_option('proof_ratings_status', $data );
+		}
+
 		if( $response['response']['code'] !== 200) {
 			return;
 		}
-		
-		$data = json_decode(wp_remote_retrieve_body($response));
 
 		if( is_object($data) ) {
 			update_option( 'proof_ratings_reviews', $data);
+			update_option('proof_ratings_status', ['status' => 'active']);		
 		}
 	}
 
