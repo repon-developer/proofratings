@@ -123,13 +123,12 @@ class WP_Proof_Ratings_Settings {
 				}
 
 				$proof_ratings_status = get_proof_ratings_current_status();
-				if ( !$proof_ratings_status ) {
+				if ( !$proof_ratings_status || 'not_registered' == $proof_ratings_status->status ) {
 					echo '<div class="proof-ratings-status">';
 					echo sprintf('<p>You have not registered your site. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proof_ratings' )], menu_page_url('proof-ratings', false)) );
 					echo '</div>';
-				}
 
-				if ( in_array($proof_ratings_status->status, ['pending', 'pause', 'suspend', 'no_sheet_id']) ) {
+				} else if ( in_array($proof_ratings_status->status, ['pending', 'pause', 'suspend', 'no_sheetid']) ) {
 					echo '<div class="proof-ratings-status">';
 						if ($proof_ratings_status->status == 'suspend') {
 							printf('<p>'. __('Your application has been suspended.', 'proof-ratings') .'</p>');

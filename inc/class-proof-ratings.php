@@ -55,6 +55,9 @@ class Wordpress_Proof_Ratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
+		add_action( 'proof_ratings_get_reviews', [ $this, 'proof_ratings_get_reviews' ] );
+
+		self::maybe_schedule_cron_jobs();
 	}
 
 	/**
@@ -79,7 +82,7 @@ class Wordpress_Proof_Ratings {
 		if ( is_object($data) && $data->success ) {
 			update_option('proof_ratings_status', $data );
 			if ( $data->status == 'active' ) {
-				$this->schedule_hook();
+				$this->proof_ratings_get_reviews();
 			}
 		}
 	}
@@ -105,8 +108,19 @@ class Wordpress_Proof_Ratings {
 	public function embed_floating_badge() {
 		echo do_shortcode( '[proof_ratings_floating_badge]' );
 	}
+	
+	/**
+	 * Schedule cron jobs for proof rating events.
+	 * @since 1.0.1
+	 */
+	public static function maybe_schedule_cron_jobs() {
+		//do_action( 'proof_ratings_get_reviews');
+		if ( ! wp_next_scheduled( 'proof_ratings_get_reviews' ) ) {
+			wp_schedule_event( time(), 'daily', 'proof_ratings_get_reviews' );
+		}
+	}
 
-	public function schedule_hook() {
+	public function proof_ratings_get_reviews() {
 		$request_url = add_query_arg(array(
 			'domain' => get_site_url()
 		), PROOF_RATINGS_API_URL . '/get-reviews');
@@ -118,7 +132,9 @@ class Wordpress_Proof_Ratings {
 			unset($data->data);
 		}
 
-		if( $response['response']['code'] === 404) {
+		if( $response['response']['code'] === 412) {
+			$data->status = $data->code;
+			unset($data->code);
 			return update_option('proof_ratings_status', $data );
 		}
 
