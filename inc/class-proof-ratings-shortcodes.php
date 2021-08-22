@@ -43,7 +43,6 @@ class Proof_Ratings_Shortcodes {
 	 * Constructor.
 	 */
 	public function __construct() {
-		return;
         add_shortcode('proof_ratings_floating_badge', [$this, 'floating_badge']);
         add_shortcode('proof_ratings_widgets', [$this, 'proof_ratings_widgets']);
 	}
@@ -64,6 +63,16 @@ class Proof_Ratings_Shortcodes {
             return false;
         }
 
+		$proof_ratings_reviews = get_option( 'proof_ratings_reviews' );
+		if ( !$proof_ratings_reviews ) {
+			return false;
+		}
+
+		array_walk($review_sites, function(&$item, $key) use($proof_ratings_reviews) {
+			$site_rating = isset($proof_ratings_reviews->{$key}) ? $proof_ratings_reviews->{$key} : [];
+			$item = wp_parse_args( $item, wp_parse_args( $site_rating , ['rating' => 0, 'count' => 0, 'percent' => 0, 'review_url' => '']));
+		});
+
 		return $review_sites;
 	}
 
@@ -82,12 +91,13 @@ class Proof_Ratings_Shortcodes {
         }
 
 		$total_reviews = array_sum(array_column($review_sites, 'count'));
+		$has_reviews = array_filter($review_sites, function($item) {
+			return $item['count'] > 0;
+		});
 		
-		$total_score = array_sum(array_column($review_sites, 'rating')) / count($review_sites);
+		$total_score = array_sum(array_column($review_sites, 'rating')) / count($has_reviews);
 
 		$total_score = floor($total_score*100)/100;
-
-
 
 		$classes = ['proof-ratings-floating-badge'];
 
@@ -96,9 +106,6 @@ class Proof_Ratings_Shortcodes {
 		if ( !empty($badget_settings['position']) ) {
 			$classes[] = $badget_settings['position'];
 		}
-
-
-
 
 		$url_attribute = '';
 		$tag = 'div';
@@ -147,7 +154,15 @@ class Proof_Ratings_Shortcodes {
 		
         printf('<div id="%s" class="proof-ratings-review-widgets-grid">', $atts['id']);
 	        foreach ($review_sites as $key => $site) {
-				printf('<div class="proof-ratings-widget proof-ratings-widget-%s">', $key);
+				$tag = 'div';
+				$attribue= '';
+				
+				if( !empty($site['review_url']) ) {
+					$tag = 'a';
+					$attribue = sprintf('href="%s" target="_blank"', $site['review_url']);
+				}
+				
+				printf('<%s class="proof-ratings-widget proof-ratings-widget-%s" %s>', $tag, $key, $attribue);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', $logos[$key]['logo'], $logos[$key]['alt']);
 				
 					echo '<div class="proof-ratings-reviews">';
@@ -159,7 +174,7 @@ class Proof_Ratings_Shortcodes {
 
 					echo '<p class="view-reviews">' . __('View Reviews', 'proof-ratings') . '</p>';
 
-				echo '</div>';
+				printf('</%s>', $tag);
 	        }
 
         echo '</div>';
