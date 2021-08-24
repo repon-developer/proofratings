@@ -1,8 +1,8 @@
 <?php
 /**
- * File containing the class Proof_Ratings_Shortcodes.
+ * File containing the class ProofRatings_Shortcodes.
  *
- * @package proof-ratings
+ * @package proofratings
  * @since   1.0.1
  */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Proof_Ratings_Shortcodes {
+class ProofRatings_Shortcodes {
 
 	/**
 	 * The single instance of the class.
@@ -43,8 +43,8 @@ class Proof_Ratings_Shortcodes {
 	 * Constructor.
 	 */
 	public function __construct() {
-        add_shortcode('proof_ratings_floating_badge', [$this, 'floating_badge']);
-        add_shortcode('proof_ratings_widgets', [$this, 'proof_ratings_widgets']);
+        add_shortcode('proofratings_floating_badge', [$this, 'floating_badge']);
+        add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Proof_Ratings_Shortcodes {
 	private function get_active_review_sites() {
 		$review_sites = [];
 
-        foreach (get_proof_ratings_settings() as $key => $site) {
+        foreach (get_proofratings_settings() as $key => $site) {
             if ($site['active'] == 'yes') {
                 $review_sites[$key] = $site;
             }
@@ -63,13 +63,13 @@ class Proof_Ratings_Shortcodes {
             return false;
         }
 
-		$proof_ratings_reviews = get_option( 'proof_ratings_reviews' );
-		if ( !$proof_ratings_reviews ) {
+		$proofratings_reviews = get_option( 'proofratings_reviews' );
+		if ( !$proofratings_reviews ) {
 			return false;
 		}
 
-		array_walk($review_sites, function(&$item, $key) use($proof_ratings_reviews) {
-			$site_rating = isset($proof_ratings_reviews->{$key}) ? $proof_ratings_reviews->{$key} : [];
+		array_walk($review_sites, function(&$item, $key) use($proofratings_reviews) {
+			$site_rating = isset($proofratings_reviews->{$key}) ? $proofratings_reviews->{$key} : [];
 			$item = wp_parse_args( $item, wp_parse_args( $site_rating , ['rating' => 0, 'count' => 0, 'percent' => 0, 'review_url' => '']));
 		});
 
@@ -81,8 +81,8 @@ class Proof_Ratings_Shortcodes {
 	 */
 	public function floating_badge($atts, $content = null) {
         $atts = shortcode_atts([
-            'url' => '#proof_ratings_widgets'
-        ], $atts, 'proof_ratings_floating_badge');
+            'url' => '#proofratings_widgets'
+        ], $atts, 'proofratings_floating_badge');
 
 
         $review_sites = $this->get_active_review_sites();
@@ -99,9 +99,9 @@ class Proof_Ratings_Shortcodes {
 
 		$total_score = floor($total_score*100)/100;
 
-		$classes = ['proof-ratings-floating-badge'];
+		$classes = ['proofratings-floating-badge'];
 
-		$badget_settings = get_option( 'proof_ratings_floating_badge_settings');
+		$badget_settings = get_option( 'proofratings_floating_badge_settings');
 
 		if ( !empty($badget_settings['position']) ) {
 			$classes[] = $badget_settings['position'];
@@ -116,20 +116,20 @@ class Proof_Ratings_Shortcodes {
 
         ob_start();
         printf('<%s %s class="%s">', $tag, $url_attribute, implode(' ', $classes));
-			echo '<div class="proof-ratings-inner">';
-		        echo '<div class="proof-ratings-logos">';
+			echo '<div class="proofratings-inner">';
+		        echo '<div class="proofratings-logos">';
 		        foreach ($review_sites as $key => $site) {
-		            printf('<img src="%1$s/assets/images/icon-%2$s.webp" alt="%2$s" >', PROOF_RATINGS_PLUGIN_URL, $key);
+		            printf('<img src="%1$s/assets/images/icon-%2$s.webp" alt="%2$s" >', PROOFRATINGS_PLUGIN_URL, $key);
 		        }
 				echo '</div>';
 
-		        echo '<div class="proof-ratings-reviews">';
-		            printf('<span class="proof-ratings-score">%s</span>', $total_score);
-		            printf( '<span class="proof-ratings-stars"><i style="width: %s%%"></i></span>', $total_score * 20);
+		        echo '<div class="proofratings-reviews">';
+		            printf('<span class="proofratings-score">%s</span>', $total_score);
+		            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $total_score * 20);
 		        echo '</div>';
 	        echo '</div>';
 
-        	printf('<div class="proof-ratings-review-count">%d %s</div>', $total_reviews, __('reviews', 'proof-ratings'));
+        	printf('<div class="proofratings-review-count">%d %s</div>', $total_reviews, __('reviews', 'proofratings'));
         printf('</%s>', $tag);
         return ob_get_clean();
 
@@ -138,9 +138,9 @@ class Proof_Ratings_Shortcodes {
 	/**
 	 * floating badge shortcode
 	 */
-	public function proof_ratings_widgets($atts, $content = null) {
+	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
-            'id' => 'proof_ratings_widgets'
+            'id' => 'proofratings_widgets'
         ], $atts);
 
 		$review_sites = $this->get_active_review_sites();
@@ -152,7 +152,7 @@ class Proof_Ratings_Shortcodes {
 
         ob_start();
 		
-        printf('<div id="%s" class="proof-ratings-review-widgets-grid">', $atts['id']);
+        printf('<div id="%s" class="proofratings-review-widgets-grid">', $atts['id']);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
 				$attribue= '';
@@ -162,17 +162,17 @@ class Proof_Ratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', $site['review_url']);
 				}
 				
-				printf('<%s class="proof-ratings-widget proof-ratings-widget-%s" %s>', $tag, $key, $attribue);
+				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', $logos[$key]['logo'], $logos[$key]['alt']);
 				
-					echo '<div class="proof-ratings-reviews">';
-						printf('<span class="proof-ratings-score">%s</span>', number_format($site['rating'], 1));
-						printf('<span class="proof-ratings-stars"><i style="width: %s%%"></i></span>', $site['rating'] * 20);
+					echo '<div class="proofratings-reviews">';
+						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));
+						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $site['rating'] * 20);
 			        echo '</div>';
 
-					printf('<div class="review-count"> %d %s </div>', $site['count'], __('reviews', 'proof-ratings'));
+					printf('<div class="review-count"> %d %s </div>', $site['count'], __('reviews', 'proofratings'));
 
-					echo '<p class="view-reviews">' . __('View Reviews', 'proof-ratings') . '</p>';
+					echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
 
 				printf('</%s>', $tag);
 	        }

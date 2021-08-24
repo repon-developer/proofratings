@@ -1,5 +1,5 @@
 (function ($) {
-    $('.proof-ratings-settings-wrap [type="color"], .proof-ratings-color-field').wpColorPicker();
+    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker();
 
     $('.checkbox-review-site input').on('change', function () {
         fieldset = $('#review-site-settings-' + $(this).parent().data('site'))
@@ -24,14 +24,14 @@
         $(this).addClass('nav-tab-active');
 
         window.location.hash = jQuery(this).attr('href');
-        $('form.proof-ratings-options').attr('action', 'options.php' + $(this).attr('href'));
+        $('form.proofratings-options').attr('action', 'options.php' + $(this).attr('href'));
         window.scrollTo(0, 0);
         return false;
     });
 
     var goto_hash = window.location.hash;
     if ('#' === goto_hash.substr(0, 1)) {
-        $('form.proof-ratings-options').attr('action', 'options.php' + $(this).attr('href'));
+        $('form.proofratings-options').attr('action', 'options.php' + $(this).attr('href'));
     }
 
     if (goto_hash) {

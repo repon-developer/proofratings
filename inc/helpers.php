@@ -2,7 +2,7 @@
 /**
  * File containing the class WP_Job_Manager.
  *
- * @package proof-ratings
+ * @package proofratings
  * @since   1.0.1
  */
 
@@ -17,38 +17,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 function get_review_sites_logos() {
     return [
         'google' => [
-            'alt' => __('Google', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/google.svg'
+            'alt' => __('Google', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg'
         ],
 
         'facebook' => [
-            'alt' => __('Facebook', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/facebook.svg'
+            'alt' => __('Facebook', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg'
         ],
 
         'energysage' => [
-            'alt' => __('Energy Sage', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/energysage.png'
+            'alt' => __('Energy Sage', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png'
         ],
 
         'solarreviews' => [
-            'alt' => __('Solar', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg'
+            'alt' => __('Solar', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg'
         ],
 
         'yelp' => [
-            'alt' => __('Yelp', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/yelp.svg'
+            'alt' => __('Yelp', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg'
         ],
 
         'bbb' => [
-            'alt' => __('BBB', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/bbb.svg'
+            'alt' => __('BBB', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg'
         ],
 
         'guildquality' => [
-            'alt' => __('Guild Quality', 'proof-ratings'),
-            'logo' => PROOF_RATINGS_PLUGIN_URL . '/assets/images/guildquality.svg'
+            'alt' => __('Guild Quality', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg'
         ],
     ];
 }
@@ -58,7 +58,7 @@ function get_review_sites_logos() {
  * get settings of proof ratings settings
  * @since  1.0.1
  */
-function get_proof_ratings_settings() {
+function get_proofratings_settings() {
     $default = [
         'google' => [
             'active' => 'no',
@@ -110,7 +110,7 @@ function get_proof_ratings_settings() {
         ]
     ];
 
-    $settings = get_option('proof_ratings_settings', []);
+    $settings = get_option('proofratings_settings', []);
 
     if ( !is_array($settings) || empty($settings)) {
         return $default;
@@ -128,14 +128,14 @@ function get_proof_ratings_settings() {
  * get current status
  * @since  1.0.1
  */
-function get_proof_ratings_current_status() {
-    $proof_ratings_status = get_option( 'proof_ratings_status');
+function get_proofratings_current_status() {
+    $proofratings_status = get_option( 'proofratings_status');
 
-    if ( !$proof_ratings_status ) {
+    if ( !$proofratings_status ) {
         return false;
     }
 
-    return (object) wp_parse_args((array) $proof_ratings_status, [
+    return (object) wp_parse_args((array) $proofratings_status, [
         'status' => 'pending',
         'message' => ''
     ]);

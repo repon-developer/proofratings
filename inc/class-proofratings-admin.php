@@ -1,8 +1,8 @@
 <?php
 /**
- * File containing the class WP_Proof_Ratings_Admin.
+ * File containing the class WP_ProofRatings_Admin.
  *
- * @package proof-ratings
+ * @package proofratings
  * @since   1.0.1
  */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Proof_Ratings_Admin {
+class ProofRatings_Admin {
 
 	/**
 	 * The single instance of the class.
@@ -42,8 +42,8 @@ class Proof_Ratings_Admin {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once dirname( __FILE__ ) . '/class-proof-ratings-settings.php';
-		$this->settings_page = WP_Proof_Ratings_Settings::instance();
+		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
+		$this->settings_page = WP_ProofRatings_Settings::instance();
 		
 		add_action( 'init', [$this, 'register_your_domain']);
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
@@ -60,11 +60,11 @@ class Proof_Ratings_Admin {
 			return;
 		}
 
-		if( !wp_verify_nonce( $_GET['_regsiter_nonce'], 'register_proof_ratings') ) {
+		if( !wp_verify_nonce( $_GET['_regsiter_nonce'], 'register_proofratings') ) {
 			return;
 		}
 
-		WP_Proof_Ratings()->activate();
+		WP_ProofRatings()->activate();
 
 		exit(wp_safe_redirect(remove_query_arg('_regsiter_nonce')));
 	}
@@ -73,17 +73,17 @@ class Proof_Ratings_Admin {
 	 * Generate styles 
 	 */
 	public function generate_css($old_value, $value, $option) {
-		if ( !isset($_POST['option_page']) || 'proof_ratings' != $_POST['option_page'] ) {
+		if ( !isset($_POST['option_page']) || 'proofratings' != $_POST['option_page'] ) {
 			return;
 		}
 
-		$settings = $_POST['proof_ratings_settings'];
-		$badge_settings = $_POST['proof_ratings_floating_badge_settings'];
+		$settings = $_POST['proofratings_settings'];
+		$badge_settings = $_POST['proofratings_floating_badge_settings'];
 
 		ob_start();
 		foreach ($settings as $key => $site) {
 			if ( empty($key)) continue;
-			printf(".proof-ratings-widget.proof-ratings-widget-%s {\n", $key);
+			printf(".proofratings-widget.proofratings-widget-%s {\n", $key);
 
 				if ( $site['theme_color'] ) {
 					printf("\t--themeColor: %s;\n", $site['theme_color']);
@@ -100,7 +100,7 @@ class Proof_Ratings_Admin {
 			echo "}\n\n";
 		}
 
-		echo ".proof-ratings-floating-badge {\n";			
+		echo ".proofratings-floating-badge {\n";			
 			if ( $badge_settings['shadow_color'] ) {
 				printf("\t--shadowColor: %s66;\n", $badge_settings['shadow_color']);
 			}
@@ -114,7 +114,7 @@ class Proof_Ratings_Admin {
 			}
 		echo "}\n\n";
 
-		echo ".proof-ratings-floating-badge .proof-ratings-review-count {\n";
+		echo ".proofratings-floating-badge .proofratings-review-count {\n";
 			if ( $badge_settings['review_text_color'] ) {
 				printf("\tcolor: %s!important;\n", $badge_settings['review_text_color']);
 			}
@@ -125,14 +125,14 @@ class Proof_Ratings_Admin {
 		echo "}";
 			
 		$styles = ob_get_clean();
-		file_put_contents(PROOF_RATINGS_PLUGIN_DIR . '/assets/css/proof-ratings-generated.css', $styles);	
+		file_put_contents(PROOFRATINGS_PLUGIN_DIR . '/assets/css/proofratings-generated.css', $styles);	
 	}
 
 	/**
 	 * Add menu page
 	 */
 	public function admin_menu() {
-		add_menu_page(__('Proof Ratings', 'proof-ratings'), __('Proof Ratings', 'proof-ratings'), 'manage_options', 'proof-ratings', [$this->settings_page, 'output'], 'dashicons-star-filled', 25);
+		add_menu_page(__('Proof Ratings', 'proofratings'), __('Proof Ratings', 'proofratings'), 'manage_options', 'proofratings', [$this->settings_page, 'output'], 'dashicons-star-filled', 25);
 	}
 
 	/**
@@ -141,9 +141,9 @@ class Proof_Ratings_Admin {
 	public function admin_enqueue_scripts() {
 		$screen = get_current_screen();
 
-		if ( in_array( $screen->id, [ 'toplevel_page_proof-ratings' ] ) ) {
-			wp_enqueue_style( 'proof-ratings', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings-admin.css', ['wp-color-picker'], PROOF_RATINGS_VERSION);
-			wp_enqueue_script( 'proof-ratings', PROOF_RATINGS_PLUGIN_URL . '/assets/js/proof-ratings-admin.js', ['jquery', 'wp-color-picker'], PROOF_RATINGS_VERSION, true);
+		if ( in_array( $screen->id, [ 'toplevel_page_proofratings' ] ) ) {
+			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
+			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
 	}
 

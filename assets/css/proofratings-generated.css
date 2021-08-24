@@ -1,0 +1,34 @@
+.proofratings-widget.proofratings-widget-google {
+	--themeColor: #dd3333;
+}
+
+.proofratings-widget.proofratings-widget-facebook {
+	--themeColor: #0f7ff3;
+}
+
+.proofratings-widget.proofratings-widget-energysage {
+	--themeColor: #bf793f;
+}
+
+.proofratings-widget.proofratings-widget-solarreviews {
+	--themeColor: #0f92d7;
+}
+
+.proofratings-widget.proofratings-widget-yelp {
+	--themeColor: #e21c21;
+}
+
+.proofratings-widget.proofratings-widget-bbb {
+	--themeColor: #136796;
+}
+
+.proofratings-widget.proofratings-widget-guildquality {
+	--themeColor: #032e57;
+}
+
+.proofratings-floating-badge {
+}
+
+.proofratings-floating-badge .proofratings-review-count {
+	background-color: #1f9e25!important;
+}

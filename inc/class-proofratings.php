@@ -1,8 +1,8 @@
 <?php
 /**
- * File containing the class Wordpress_Proof_Ratings.
+ * File containing the class Wordpress_ProofRatings.
  *
- * @package proof-ratings
+ * @package proofratings
  * @since   1.0.1
  */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Wordpress_Proof_Ratings {
+class Wordpress_ProofRatings {
 	/**
 	 * The single instance of the class.
 	 *
@@ -30,7 +30,6 @@ class Wordpress_Proof_Ratings {
 	 *
 	 * @since  1.0.1
 	 * @static
-	 * @see WP_Proof_Ratings()
 	 * @return self Main instance.
 	 */
 	public static function instance() {
@@ -44,18 +43,18 @@ class Wordpress_Proof_Ratings {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/helpers.php';
-		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-admin.php';
-		include_once PROOF_RATINGS_PLUGIN_DIR . '/inc/class-proof-ratings-shortcodes.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 
-		$this->admin = Proof_Ratings_Admin::instance();
-		$this->shortcodes = Proof_Ratings_Shortcodes::instance();
+		$this->admin = ProofRatings_Admin::instance();
+		$this->shortcodes = ProofRatings_Shortcodes::instance();
 
 		// Actions.
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
-		add_action( 'proof_ratings_get_reviews', [ $this, 'proof_ratings_get_reviews' ] );
+		add_action( 'proofratings_get_reviews', [ $this, 'proofratings_get_reviews' ] );
 
 		self::maybe_schedule_cron_jobs();
 	}
@@ -64,13 +63,13 @@ class Wordpress_Proof_Ratings {
 	 * proof ratings activate
 	 */
 	public function activate() {
-		update_option('proof_ratings_version', PROOF_RATINGS_VERSION );
+		update_option('proofratings_version', PROOFRATINGS_VERSION );
 
 		$request_url = add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
 			'email' => get_bloginfo( 'admin_email' ),
 			'url' => get_site_url()
-		), PROOF_RATINGS_API_URL . '/register');
+		), PROOFRATINGS_API_URL . '/register');
 
 		$response = wp_remote_get($request_url);
 
@@ -80,9 +79,9 @@ class Wordpress_Proof_Ratings {
 
 		$data = json_decode(wp_remote_retrieve_body($response));
 		if ( is_object($data) && $data->success ) {
-			update_option('proof_ratings_status', $data );
+			update_option('proofratings_status', $data );
 			if ( $data->status == 'active' ) {
-				$this->proof_ratings_get_reviews();
+				$this->proofratings_get_reviews();
 			}
 		}
 	}
@@ -91,22 +90,22 @@ class Wordpress_Proof_Ratings {
 	 * Loads textdomain for plugin.
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( 'proof-ratings', false, PROOF_RATINGS_PLUGIN_DIR . '/languages' );
+		load_plugin_textdomain( 'proofratings', false, PROOFRATINGS_PLUGIN_DIR . '/languages' );
 	}
 
 	/**
 	 * frontend CSS and JS assets.
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style( 'proof-ratings', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings.css', [], PROOF_RATINGS_VERSION);
-		wp_enqueue_style( 'proof-ratings-generated', PROOF_RATINGS_PLUGIN_URL . '/assets/css/proof-ratings-generated.css', [], PROOF_RATINGS_VERSION);
+		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', [], PROOFRATINGS_VERSION);
+		wp_enqueue_style( 'proofratings-generated', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-generated.css', [], PROOFRATINGS_VERSION);
 	}
 
 	/**
 	 * Embed floating badge on frontend
 	 */
 	public function embed_floating_badge() {
-		echo do_shortcode( '[proof_ratings_floating_badge]' );
+		echo do_shortcode( '[proofratings_floating_badge]' );
 	}
 	
 	/**
@@ -114,16 +113,16 @@ class Wordpress_Proof_Ratings {
 	 * @since 1.0.1
 	 */
 	public static function maybe_schedule_cron_jobs() {
-		//do_action( 'proof_ratings_get_reviews');
-		if ( ! wp_next_scheduled( 'proof_ratings_get_reviews' ) ) {
-			wp_schedule_event( time(), 'daily', 'proof_ratings_get_reviews' );
+		//do_action( 'proofratings_get_reviews');
+		if ( ! wp_next_scheduled( 'proofratings_get_reviews' ) ) {
+			wp_schedule_event( time(), 'daily', 'proofratings_get_reviews' );
 		}
 	}
 
-	public function proof_ratings_get_reviews() {
+	public function proofratings_get_reviews() {
 		$request_url = add_query_arg(array(
 			'domain' => get_site_url()
-		), PROOF_RATINGS_API_URL . '/get-reviews');
+		), PROOFRATINGS_API_URL . '/get-reviews');
 
 		$response = wp_remote_get($request_url);
 
@@ -135,7 +134,7 @@ class Wordpress_Proof_Ratings {
 		if( $response['response']['code'] === 412) {
 			$data->status = $data->code;
 			unset($data->code);
-			return update_option('proof_ratings_status', $data );
+			return update_option('proofratings_status', $data );
 		}
 
 		if( $response['response']['code'] !== 200) {
@@ -143,8 +142,8 @@ class Wordpress_Proof_Ratings {
 		}
 
 		if( is_object($data) ) {
-			update_option( 'proof_ratings_reviews', $data);
-			update_option('proof_ratings_status', ['status' => 'active']);		
+			update_option( 'proofratings_reviews', $data);
+			update_option('proofratings_status', ['status' => 'active']);		
 		}
 	}
 
