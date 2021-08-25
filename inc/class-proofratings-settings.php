@@ -144,6 +144,7 @@ class WP_ProofRatings_Settings {
 				</h2>
 
 				<div id="settings-review-sites" class="settings_panel">
+					<div class="shortcode-info">Use shortcode where you want to display review widgets <code>[proofratings_widgets]</code></div>
 					<?php
 					$proofratings_settings = get_proofratings_settings();
 					
