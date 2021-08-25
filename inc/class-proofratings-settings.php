@@ -125,7 +125,7 @@ class WP_ProofRatings_Settings {
 				$proofratings_status = get_proofratings_current_status();
 				if ( !$proofratings_status || 'not_registered' == $proofratings_status->status ) {
 					echo '<div class="proofratings-status">';
-					printf('<p>You have not registered your site. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
+					printf('<p>You have not registered your site. For register, we will collect your website name, admin email, and domain. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
 					echo '</div>';
 
 				} else if ( in_array($proofratings_status->status, ['pending', 'pause', 'suspend', 'no_sheetid']) ) {
