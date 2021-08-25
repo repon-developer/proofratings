@@ -125,7 +125,7 @@ class WP_ProofRatings_Settings {
 				$proofratings_status = get_proofratings_current_status();
 				if ( !$proofratings_status || 'not_registered' == $proofratings_status->status ) {
 					echo '<div class="proofratings-status">';
-					echo sprintf('<p>You have not registered your site. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
+					printf('<p>You have not registered your site. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
 					echo '</div>';
 
 				} else if ( in_array($proofratings_status->status, ['pending', 'pause', 'suspend', 'no_sheetid']) ) {
@@ -133,7 +133,7 @@ class WP_ProofRatings_Settings {
 						if ($proofratings_status->status == 'suspend') {
 							printf('<p>'. __('Your application has been suspended.', 'proofratings') .'</p>');
 						} else {							
-							printf('<p>%s</p>', $proofratings_status->message);
+							printf('<p>%s</p>', esc_html__($proofratings_status->message));
 						}
 					echo '</div>';
 				} ?>
@@ -151,7 +151,7 @@ class WP_ProofRatings_Settings {
 					foreach ($this->get_review_sites() as $key => $site) {
 						printf(
 							'<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_settings[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
-							$key, $site['logo'], checked('yes', $proofratings_settings[$key]['active'], false)
+							$key, esc_attr($site['logo']), checked('yes', $proofratings_settings[$key]['active'], false)
 						);
 					}
 					echo '</div>';
@@ -159,23 +159,23 @@ class WP_ProofRatings_Settings {
 					foreach ($this->get_review_sites() as $key => $site) {
 						printf('<fieldset id="review-site-settings-%s" class="fieldset-site-review">', $key);
 							if ( $site['title']) {
-								echo '<h2 class="title">'.$site['title'].'</h2>';
+								echo '<h2 class="title">'. esc_html($site['title']).'</h2>';
 							}
 
 							echo '<table class="form-table form-table-review-sites settings">';
 								echo '<tr>';
 									echo '<th scope="row"><label for="mailserver_url">Theme Color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][theme_color]" type="text" value="%2$s"></td>', $key, $proofratings_settings[$key]['theme_color']);
+									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][theme_color]" type="text" value="%2$s"></td>', $key, esc_attr($proofratings_settings[$key]['theme_color']));
 								echo '</tr>';
 
 								echo '<tr>';
 									echo '<th scope="row"><label>Text Color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][text_color]" type="text" value="%2$s"></td>', $key, $proofratings_settings[$key]['text_color']);
+									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][text_color]" type="text" value="%2$s"></td>', $key, esc_attr($proofratings_settings[$key]['text_color']));
 								echo '</tr>';
 								
 								echo '<tr>';
 									echo '<th scope="row"><label for="mailserver_url">Background Color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][background]" type="text" value="%2$s"></td>', $key, $proofratings_settings[$key]['background']);
+									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][background]" type="text" value="%2$s"></td>', $key, esc_attr($proofratings_settings[$key]['background']));
 								echo '</tr>';
 
 							echo '</table>';
@@ -205,7 +205,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_color]"
-									value="<?php echo $badge_settings['shadow_color'] ?>" data-default-color="#f6d300">
+									value="<?php echo esc_attr($badge_settings['shadow_color']) ?>" data-default-color="#f6d300">
 							</td>
 						</tr>
 
@@ -214,7 +214,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_hover]"
-									value="<?php echo $badge_settings['shadow_hover'] ?>" data-default-color="#377dbc">
+									value="<?php esc_attr_e($badge_settings['shadow_hover']) ?>" data-default-color="#377dbc">
 							</td>
 						</tr>
 
@@ -223,7 +223,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[background_color]" 
-									value="<?php echo $badge_settings['background_color'] ?>" data-default-color="#fff">
+									value="<?php esc_attr_e($badge_settings['background_color']) ?>" data-default-color="#fff">
 							</td>
 						</tr>
 
@@ -232,7 +232,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[review_text_color]" 
-									value="<?php echo $badge_settings['review_text_color'] ?>">
+									value="<?php esc_attr_e($badge_settings['review_text_color']) ?>">
 							</td>
 						</tr>
 
@@ -241,7 +241,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[review_background]" 
-									value="<?php echo $badge_settings['review_background'] ?>" data-default-color="#212a3d">
+									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d">
 							</td>
 						</tr>
 					</table>

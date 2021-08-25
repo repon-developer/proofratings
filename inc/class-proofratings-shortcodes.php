@@ -152,14 +152,14 @@ class ProofRatings_Shortcodes {
 
         ob_start();
 		
-        printf('<div id="%s" class="proofratings-review-widgets-grid">', $atts['id']);
+        printf('<div id="%s" class="proofratings-review-widgets-grid">', esc_attr($atts['id']));
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
 				$attribue= '';
 				
 				if( !empty($site['review_url']) ) {
 					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', $site['review_url']);
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($site['review_url']));
 				}
 				
 				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);

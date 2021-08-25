@@ -77,9 +77,11 @@ class ProofRatings_Admin {
 			return;
 		}
 
-		$settings = $_POST['proofratings_settings'];
-		$badge_settings = $_POST['proofratings_floating_badge_settings'];
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+		$settings = $postdata['proofratings_settings'];
+		$badge_settings = $postdata['proofratings_floating_badge_settings'];
+		
 		ob_start();
 		foreach ($settings as $key => $site) {
 			if ( empty($key)) continue;
