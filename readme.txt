@@ -1,6 +1,8 @@
 === Proofratings ===
 Contributors: proofratings
 Link: https://proofratings.com
+Privacy Policy: https://proofratings.com/privacy-policy/
+Terms of Service: https://proofratings.com/terms-of-service/
 Tags: testimonials, reviews, badge, reviews badge, ratings badge, testimonial widget, testimonials widget, random reviews, reviews widget, social reviews, ratings widget, yelp reviews, facebook reviews, google reviews, appstore reviews, solarreviews, energysage reviews, bbb reviews, solarquotes reviews
 Requires at least: 5.2
 Tested up to: 5.8
