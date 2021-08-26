@@ -24,7 +24,7 @@ define( 'PROOFRATINGS_VERSION', '1.0.1' );
 define( 'PROOFRATINGS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'PROOFRATINGS_PLUGIN_URL', untrailingslashit(plugin_dir_url(__FILE__)));
 define( 'PROOFRATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'PROOFRATINGS_API_URL', 'http://wooshop.me/wp-json/proofratings/v1');
+define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
 
 
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
