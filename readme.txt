@@ -1,9 +1,7 @@
 === Proofratings ===
 Contributors: proofratings
 Link: https://proofratings.com
-Privacy Policy: https://proofratings.com/privacy-policy/
-Terms of Service: https://proofratings.com/terms-of-service/
-Tags: testimonials, reviews, badge, reviews badge, ratings badge, testimonial widget, testimonials widget, random reviews, reviews widget, social reviews, ratings widget, yelp reviews, facebook reviews, google reviews, appstore reviews, solarreviews, energysage reviews, bbb reviews, solarquotes reviews
+Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
 Requires at least: 5.2
 Tested up to: 5.8
 Stable tag: 1.0.1
@@ -27,6 +25,8 @@ Proofratings monitors all your third party sites for reviews by your customers. 
 6. BBB
 7. Solarquotes
 8. Guildquality
+9. Solar Tribune
+10. Good Company
 
 All your reviews are collected to one dashboard, where you can decide which of them to feature in widgets.
 Easily add these beautiful widgets to your website:
@@ -36,6 +36,12 @@ Easily add these beautiful widgets to your website:
 
 = Showcase ratings on your website in real-time to build trust =
 Increase your website's conversion by showing the ratings badges in the floating widget or embeded badges on your most important pages.
+
+Visit our website for more information about this plugin: https://proofratings.com
+Privacy Policy: https://proofratings.com/privacy-policy/
+Terms of Service: https://proofratings.com/terms-of-service/
+
+Third Party Trademarks Policy: Proofratings is not affiliated with or endorsed by any of these third parties, nor is it in a joint venture relationship or partnership with any of these third parties. Such third-parties are not associated in any way with Proofratings, the Website or Services. To the extent Proofratings uses any tradenames or trademarks associated with such third-parties, it does so solely to identify those companies and their services. Proofratings makes no claim as to ownership of such third-party trademarks. Please refer to our Privacy Policy for more third party disclosures.
 
 == Installation ==
 
