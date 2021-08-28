@@ -111,7 +111,7 @@ class ProofRatings_Shortcodes {
 		$tag = 'div';
 		if (!empty($atts['url'])) {
 			$tag = 'a';
-			$url_attribute = sprintf('href="%s"', $atts['url']);
+			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
 		}
 
         ob_start();
@@ -119,7 +119,7 @@ class ProofRatings_Shortcodes {
 			echo '<div class="proofratings-inner">';
 		        echo '<div class="proofratings-logos">';
 		        foreach ($review_sites as $key => $site) {
-		            printf('<img src="%1$s/assets/images/icon-%2$s.webp" alt="%2$s" >', PROOFRATINGS_PLUGIN_URL, $key);
+		            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site['icon']), $key);
 		        }
 				echo '</div>';
 
@@ -163,14 +163,14 @@ class ProofRatings_Shortcodes {
 				}
 				
 				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
-	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', $logos[$key]['logo'], $logos[$key]['alt']);
+	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($logos[$key]['logo']), esc_attr($logos[$key]['alt']));
 				
 					echo '<div class="proofratings-reviews">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));
-						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $site['rating'] * 20);
+						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site['rating'] * 20));
 			        echo '</div>';
 
-					printf('<div class="review-count"> %d %s </div>', $site['count'], __('reviews', 'proofratings'));
+					printf('<div class="review-count"> %d %s </div>', esc_html($site['count']), __('reviews', 'proofratings'));
 
 					echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
 

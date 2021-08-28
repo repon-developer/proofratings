@@ -89,6 +89,21 @@ class WP_ProofRatings_Settings {
 				'title' => __('Guild Quality Review Settings', 'proofratings'),
 				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg'
 			],
+
+			'solarquotes' => [
+				'title' => __('Solarquotes Review Settings', 'proofratings'),
+				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes.png'
+			],
+
+			'trustpilot' => [
+				'title' => __('Trustpilot Review Settings', 'proofratings'),
+				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.png'
+			],
+
+			'wordpress' => [
+				'title' => __('Wordpress Review Settings', 'proofratings'),
+				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png'
+			],
 		];
 	}
 
@@ -145,8 +160,7 @@ class WP_ProofRatings_Settings {
 				<div id="settings-review-sites" class="settings_panel">
 					<div class="shortcode-info">Use shortcode where you want to display review widgets <code>[proofratings_widgets]</code></div>
 					<?php
-					$proofratings_settings = get_proofratings_settings();
-					
+					$proofratings_settings = get_proofratings_settings();					
 					echo '<div class="review-sites-checkboxes">';
 					foreach ($this->get_review_sites() as $key => $site) {
 						printf(
@@ -205,7 +219,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_color]"
-									value="<?php echo esc_attr($badge_settings['shadow_color']) ?>" data-default-color="#f6d300">
+									value="<?php esc_attr_e($badge_settings['shadow_color']) ?>" data-default-color="#f6d300">
 							</td>
 						</tr>
 
