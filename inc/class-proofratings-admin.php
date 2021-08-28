@@ -127,7 +127,9 @@ class ProofRatings_Admin {
 		echo "}";
 			
 		$styles = ob_get_clean();
-		file_put_contents(PROOFRATINGS_PLUGIN_DIR . '/assets/css/proofratings-generated.css', $styles);	
+
+
+		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	
 	}
 
 	/**

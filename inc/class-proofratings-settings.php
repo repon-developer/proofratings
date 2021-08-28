@@ -107,7 +107,6 @@ class WP_ProofRatings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function output() {
-
 		?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Proof Ratings Settings', 'proofratings') ?></h1>

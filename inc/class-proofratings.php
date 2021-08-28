@@ -98,7 +98,12 @@ class Wordpress_ProofRatings {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', [], PROOFRATINGS_VERSION);
-		wp_enqueue_style( 'proofratings-generated', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-generated.css', [], PROOFRATINGS_VERSION);
+
+		$upload_dir = wp_upload_dir();
+		$generated_css = $upload_dir['basedir'] . '/proofratings-generated.css';
+		if ( file_exists($generated_css) ) {
+			wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));			
+		}
 	}
 
 	/**
