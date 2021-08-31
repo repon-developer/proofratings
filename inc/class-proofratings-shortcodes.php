@@ -148,7 +148,7 @@ class ProofRatings_Shortcodes {
             return;
         }
 
-		$logos = get_review_sites_logos();
+		$logos = get_proofratings_review_sites();
 
         ob_start();
 		

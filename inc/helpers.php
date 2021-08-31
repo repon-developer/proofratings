@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * get reviews sites logo and icon
  * @since  1.0.1
  */
-function get_review_sites_logos() {
+function get_proofratings_review_sites() {
     return [
         'google' => [
             'alt' => __('Google', 'proofratings'),
