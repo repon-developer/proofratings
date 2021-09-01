@@ -1,5 +1,5 @@
 === Proofratings ===
-Contributors: proofratings
+Contributors: proofratings, repon.wp
 Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
 Requires at least: 5.2
@@ -50,4 +50,8 @@ Third Party Trademarks Policy: Proofratings is not affiliated with or endorsed b
 1. Activate the plugin through the 'Plugins' screen in WordPress
 1. Go to Proofratings Dashboard to get started
 
-== Arbitrary section ==
+
+== Changelog ==
+
+= 1.0.1 =
+* Initial release
