@@ -148,8 +148,6 @@ class ProofRatings_Shortcodes {
             return;
         }
 
-		$logos = get_proofratings_review_sites();
-
         ob_start();
 		
         printf('<div id="%s" class="proofratings-review-widgets-grid">', esc_attr($atts['id']));
@@ -163,7 +161,7 @@ class ProofRatings_Shortcodes {
 				}
 				
 				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
-	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($logos[$key]['logo']), esc_attr($logos[$key]['alt']));
+	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site['logo']), esc_attr($site['name']));
 				
 					echo '<div class="proofratings-reviews">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));

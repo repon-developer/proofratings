@@ -11,67 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * get reviews sites logo and icon
- * @since  1.0.1
- */
-function get_proofratings_review_sites() {
-    return [
-        'google' => [
-            'alt' => __('Google', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg'
-        ],
-
-        'facebook' => [
-            'alt' => __('Facebook', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg'
-        ],
-
-        'energysage' => [
-            'alt' => __('Energy Sage', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png'
-        ],
-
-        'solarreviews' => [
-            'alt' => __('Solar', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg'
-        ],
-
-        'yelp' => [
-            'alt' => __('Yelp', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg'
-        ],
-
-        'bbb' => [
-            'alt' => __('BBB', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg'
-        ],
-
-        'guildquality' => [
-            'alt' => __('Guild Quality', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg'
-        ],
-
-        'solarquotes' => [
-            'alt' => __('Solarquotes', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes.png'
-        ],
-
-        'trustpilot' => [
-            'alt' => __('Trustpilot', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.png'
-        ],
-
-        'wordpress' => [
-            'alt' => __('Wordpress', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png'
-        ],
-
-        
-    ];
-}
-
-
-/**
  * get settings of proof ratings settings
  * @since  1.0.1
  */
@@ -82,6 +21,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#febc00',
+            'name' => __('Google', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-google.webp'
         ],
@@ -91,6 +31,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#0f7ff3',
+            'name' => __('Facebook', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-facebook.webp'
         ],
@@ -100,7 +41,8 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#bf793f',
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.svg',
+            'name' => __('Energy Sage', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.webp'
         ],
 
@@ -109,6 +51,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#0f92d7',
+            'name' => __('Solar', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.webp'
         ],
@@ -118,6 +61,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#e21c21',
+            'name' => __('Yelp', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-yelp.webp'
         ],
@@ -127,6 +71,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#136796',
+            'name' => __('BBB', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bbb.webp'
         ],
@@ -136,6 +81,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#032e57',
+            'name' => __('Guild Quality', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.webp'
         ],
@@ -145,6 +91,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#208ECD',
+            'name' => __('Solarquotes', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarquotes.png'
         ],
@@ -154,6 +101,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#01B67B',
+            'name' => __('Trustpilot', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-trustpilot.png'
         ],
@@ -163,6 +111,7 @@ function get_proofratings_settings() {
             'text_color' => '',
             'background' => '',
             'theme_color' => '#00769D',
+            'name' => __('Wordpress', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wordpress.png'
         ]
