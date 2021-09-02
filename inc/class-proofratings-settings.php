@@ -265,6 +265,8 @@ class WP_ProofRatings_Settings {
 					<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 'proofratings' ); ?>" />
 				</p>
 			</form>
+
+			<p class="review-us">Enjoying Proofratings? ❤️ Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
 		</div>
 		<?php
 	}
