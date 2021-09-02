@@ -118,7 +118,7 @@ class Wordpress_ProofRatings {
 	 * @since 1.0.1
 	 */
 	public static function maybe_schedule_cron_jobs() {
-		do_action( 'proofratings_get_reviews');
+		//do_action( 'proofratings_get_reviews');
 		if ( ! wp_next_scheduled( 'proofratings_get_reviews' ) ) {
 			wp_schedule_event( time(), 'daily', 'proofratings_get_reviews' );
 		}
