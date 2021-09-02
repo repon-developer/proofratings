@@ -53,60 +53,6 @@ class WP_ProofRatings_Settings {
 		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
 	}
 
-	public function get_review_sites() {
-		return [
-			'google' => [
-				'title' => __('Google Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg'
-			],
-
-			'facebook' => [
-				'title' => __('Facebook Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg'
-			],
-
-			'energysage' => [
-				'title' => __('Energy Sage Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png'
-			],
-
-			'solarreviews' => [
-				'title' => __('Solar Reviews Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg'
-			],
-
-			'yelp' => [
-				'title' => __('Yelp Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg'
-			],
-
-			'bbb' => [
-				'title' => __('BBB Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg'
-			],
-
-			'guildquality' => [
-				'title' => __('Guild Quality Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg'
-			],
-
-			'solarquotes' => [
-				'title' => __('Solarquotes Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes.png'
-			],
-
-			'trustpilot' => [
-				'title' => __('Trustpilot Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.png'
-			],
-
-			'wordpress' => [
-				'title' => __('Wordpress Review Settings', 'proofratings'),
-				'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png'
-			],
-		];
-	}
-
 	public function get_floating_badge_settings() {
 		return wp_parse_args((array)get_option( 'proofratings_floating_badge_settings'), [
 			'position' => '',
@@ -162,7 +108,7 @@ class WP_ProofRatings_Settings {
 					<?php
 					$proofratings_settings = get_proofratings_settings();					
 					echo '<div class="review-sites-checkboxes">';
-					foreach ($this->get_review_sites() as $key => $site) {
+					foreach ($proofratings_settings as $key => $site) {
 						printf(
 							'<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_settings[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
 							$key, esc_attr($site['logo']), checked('yes', $proofratings_settings[$key]['active'], false)
@@ -170,7 +116,7 @@ class WP_ProofRatings_Settings {
 					}
 					echo '</div>';
 
-					foreach ($this->get_review_sites() as $key => $site) {
+					foreach ($proofratings_settings as $key => $site) {
 						printf('<fieldset id="review-site-settings-%s" class="fieldset-site-review">', $key);
 							if ( $site['title']) {
 								echo '<h2 class="title">'. esc_html($site['title']).'</h2>';

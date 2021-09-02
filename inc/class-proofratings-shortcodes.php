@@ -95,9 +95,12 @@ class ProofRatings_Shortcodes {
 			return $item['count'] > 0;
 		});
 		
-		$total_score = array_sum(array_column($review_sites, 'rating')) / count($has_reviews);
+		$total_score = 0.0;
+		if (count($has_reviews) > 0) {
+			$total_score = array_sum(array_column($review_sites, 'rating')) / count($has_reviews);
+		}
 
-		$total_score = floor($total_score*100)/100;
+		$total_score = number_format(floor($total_score*100)/100, 1);
 
 		$classes = ['proofratings-floating-badge'];
 
