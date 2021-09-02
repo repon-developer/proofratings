@@ -25,7 +25,7 @@ class Wordpress_ProofRatings {
 	private static $instance = null;
 
 	/**
-	 * Main WP Proof Ratings Instance.
+	 * Main WP Proofratings Instance.
 	 * Ensures only one instance of WP Job Manager is loaded or can be loaded.
 	 *
 	 * @since  1.0.1
@@ -118,7 +118,7 @@ class Wordpress_ProofRatings {
 	 * @since 1.0.1
 	 */
 	public static function maybe_schedule_cron_jobs() {
-		//do_action( 'proofratings_get_reviews');
+		do_action( 'proofratings_get_reviews');
 		if ( ! wp_next_scheduled( 'proofratings_get_reviews' ) ) {
 			wp_schedule_event( time(), 'daily', 'proofratings_get_reviews' );
 		}
@@ -129,7 +129,11 @@ class Wordpress_ProofRatings {
 			'domain' => get_site_url()
 		), PROOFRATINGS_API_URL . '/get-reviews');
 
+		
 		$response = wp_remote_get($request_url);
+		if ( is_wp_error( $response ) ) {
+			return;
+		}
 
 		$data = json_decode(wp_remote_retrieve_body($response));
 		if ( isset($data->data) ) {

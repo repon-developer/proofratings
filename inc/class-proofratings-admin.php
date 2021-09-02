@@ -136,7 +136,7 @@ class ProofRatings_Admin {
 	 * Add menu page
 	 */
 	public function admin_menu() {
-		add_menu_page(__('Proof Ratings', 'proofratings'), __('Proof Ratings', 'proofratings'), 'manage_options', 'proofratings', [$this->settings_page, 'output'], 'dashicons-star-filled', 25);
+		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', [$this->settings_page, 'output'], 'dashicons-star-filled', 25);
 	}
 
 	/**

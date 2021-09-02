@@ -30,7 +30,7 @@ define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
 
 /**
- * Main instance of Wordpress Proof Ratings.
+ * Main instance of Wordpress Proofratings.
  * Returns the main instance of Wordpress_ProofRatings to prevent the need to use globals.
  * @since  1.0.1
  * @return Wordpress_ProofRatings

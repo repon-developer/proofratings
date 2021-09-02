@@ -124,7 +124,7 @@ class WP_ProofRatings_Settings {
 	public function output() {
 		?>
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proof Ratings Settings', 'proofratings') ?></h1>
+			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
 
 			<form class="proofratings-options" method="post" action="options.php">
