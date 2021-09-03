@@ -4,6 +4,7 @@ html {
 
 .proofratings-floating-badge {
     --padx: 20px;
+    color: inherit;
     min-width: 230px;
     display: inline-block;
     position: fixed;
