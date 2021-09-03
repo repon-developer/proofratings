@@ -81,8 +81,16 @@ class ProofRatings_Admin {
 
 		$settings = $postdata['proofratings_settings'];
 		$badge_settings = $postdata['proofratings_floating_badge_settings'];
+		$proofratings_font = $postdata['proofratings_font'];
 		
 		ob_start();
+
+		if ( $proofratings_font ) {
+			echo ".proofratings-widget, .proofratings-floating-badge {\n";
+				printf("\tfont-family: %s;\n", $proofratings_font);
+			echo "}\n\n";
+		}
+
 		foreach ($settings as $key => $site) {
 			if ( empty($key)) continue;
 			printf(".proofratings-widget.proofratings-widget-%s {\n", $key);

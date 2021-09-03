@@ -20,11 +20,11 @@ function get_proofratings_settings() {
             'active' => 'no',
             'text_color' => '',
             'background' => '',
-            'theme_color' => '#febc00',
+            'theme_color' => '#03AB4E',
             'name' => __('Google', 'proofratings'),
             'title' => __('Google Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-google.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-google.png'
         ],
 
         'facebook' => [
@@ -35,7 +35,7 @@ function get_proofratings_settings() {
             'name' => __('Facebook', 'proofratings'),
             'title' => __('Facebook Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-facebook.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-facebook.png'
         ],
 
         'energysage' => [
@@ -46,7 +46,7 @@ function get_proofratings_settings() {
             'name' => __('Energy Sage', 'proofratings'),
             'title' => __('Energy Sage Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.png'
         ],
 
         'solarreviews' => [
@@ -57,7 +57,7 @@ function get_proofratings_settings() {
             'name' => __('Solar', 'proofratings'),
             'title' => __('Solar Reviews Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.png'
         ],
 
         'yelp' => [
@@ -68,7 +68,7 @@ function get_proofratings_settings() {
             'name' => __('Yelp', 'proofratings'),
             'title' => __('Yelp Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-yelp.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-yelp.png'
         ],
 
         'bbb' => [
@@ -79,7 +79,7 @@ function get_proofratings_settings() {
             'name' => __('BBB', 'proofratings'),
             'title' => __('BBB Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bbb.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bbb.png'
         ],
 
         'guildquality' => [
@@ -90,7 +90,7 @@ function get_proofratings_settings() {
             'name' => __('Guild Quality', 'proofratings'),
             'title' => __('Guild Quality Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.webp'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.png'
         ],
 
         'solarquotes' => [
@@ -123,7 +123,7 @@ function get_proofratings_settings() {
             'name' => __('Wordpress', 'proofratings'),
             'title' => __('Wordpress Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wordpress.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wordpress.jpg'
         ],
 
         'bestcompany' => [

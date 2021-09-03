@@ -97,6 +97,7 @@ class Wordpress_ProofRatings {
 	 * frontend CSS and JS assets.
 	 */
 	public function enqueue_scripts() {
+		wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', [], PROOFRATINGS_VERSION);
 
 		$upload_dir = wp_upload_dir();

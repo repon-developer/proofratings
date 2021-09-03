@@ -49,6 +49,7 @@ class WP_ProofRatings_Settings {
 	 * Registers the plugin's settings with WordPress's Settings API.
 	 */
 	public function register_settings() {
+		register_setting( $this->settings_group, 'proofratings_font' );
 		register_setting( $this->settings_group, 'proofratings_settings' );
 		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
 	}
@@ -96,7 +97,9 @@ class WP_ProofRatings_Settings {
 							printf('<p>%s</p>', esc_html__($proofratings_status->message));
 						}
 					echo '</div>';
-				} ?>
+				}
+
+				$proofratings_font = get_option( 'proofratings_font', 'inherit'); ?>
 
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
@@ -105,6 +108,20 @@ class WP_ProofRatings_Settings {
 
 				<div id="settings-review-sites" class="settings_panel">
 					<div class="shortcode-info">Use shortcode where you want to display review widgets <code>[proofratings_widgets]</code></div>
+
+					<table class="form-table">
+						<tr>
+							<th scope="row"><?php _e('Font Family', 'proofratings') ?></th>
+							<td>
+								<select name="proofratings_font">
+									<option value="inherit"><?php _e( 'Inherit', 'proofratings') ?></option>
+									<option value="Didact Gothic" <?php selected('Didact Gothic', $proofratings_font) ?>><?php _e( 'Didact Gothic', 'proofratings') ?></option>
+								</select>
+							</td>
+						</tr>
+					</table>
+
+
 					<?php
 					$proofratings_settings = get_proofratings_settings();					
 					echo '<div class="review-sites-checkboxes">';
