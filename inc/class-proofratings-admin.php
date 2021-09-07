@@ -124,6 +124,12 @@ class ProofRatings_Admin {
 			}
 		echo "}\n\n";
 
+		echo ".proofratings-floating-badge .proofratings-stars i {\n";			
+			if ( $badge_settings['star_color'] ) {
+				printf("\tbackground-color: %s;\n", $badge_settings['star_color']);
+			}
+		echo "}\n\n";
+
 		echo ".proofratings-floating-badge .proofratings-review-count {\n";
 			if ( $badge_settings['review_text_color'] ) {
 				printf("\tcolor: %s!important;\n", $badge_settings['review_text_color']);

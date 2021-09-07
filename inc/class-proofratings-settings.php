@@ -56,7 +56,11 @@ class WP_ProofRatings_Settings {
 
 	public function get_floating_badge_settings() {
 		return wp_parse_args((array)get_option( 'proofratings_floating_badge_settings'), [
+			'show' => 'yes',
+			'tablet' => 'yes',
+			'mobile' => 'yes',
 			'position' => '',
+			'star_color' => '',
 			'shadow_color' => '',
 			'shadow_hover' => '',
 			'background_color' => '',
@@ -163,10 +167,42 @@ class WP_ProofRatings_Settings {
 
 				<div id="settings-floating-badge" class="settings_panel" style="display:none">
 					<?php 
-						$badge_settings = $this->get_floating_badge_settings(); 
-					?>
+						$badge_settings = $this->get_floating_badge_settings(); ?>
 
 					<table class="form-table">
+						<tr>
+							<th scope="row"><?php _e('Badge Visibility', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_floating_badge_settings[show]" value="no" type="hidden">
+									<input class="checkbox-show-hide" name="proofratings_floating_badge_settings[show]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['show'] ) ?>>
+									<?php _e('Show/Hide', 'proofratings'); ?>
+								</label>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Tablet Visibility', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_floating_badge_settings[tablet]" value="no" type="hidden">
+									<input class="checkbox-show-hide" name="proofratings_floating_badge_settings[tablet]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['tablet'] ) ?>>
+									<?php _e('Show/Hide on tablet', 'proofratings'); ?>
+								</label>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Mobile Visibility', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_floating_badge_settings[mobile]" value="no" type="hidden">
+									<input class="checkbox-show-hide" name="proofratings_floating_badge_settings[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['mobile'] ) ?>>
+									<?php _e('Show/Hide on mobile', 'proofratings'); ?>
+								</label>
+							</td>
+						</tr>
+
 						<tr>
 							<th scope="row"><?php _e('Position', 'proofratings') ?></th>
 							<td>
@@ -174,6 +210,15 @@ class WP_ProofRatings_Settings {
 									<option value="left" <?php selected('left', $badge_settings['position']) ?>><?php _e('Left', 'proofratings') ?></option>
 									<option value="right" <?php selected('right', $badge_settings['position']) ?>><?php _e('Right', 'proofratings') ?></option>
 								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Start Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_floating_badge_settings[star_color]"
+									value="<?php esc_attr_e($badge_settings['star_color']) ?>" data-default-color="#212A3D">
 							</td>
 						</tr>
 

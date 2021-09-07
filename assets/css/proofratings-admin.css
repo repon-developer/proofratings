@@ -92,3 +92,74 @@ fieldset.fieldset-site-review {display: none; margin-bottom: 30px;}
     text-align: center;
     font-size: 17px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+input[type="checkbox"].checkbox-show-hide {
+    text-align: center;
+    width: 58px;
+    font-size: 11px;
+    line-height: inherit;
+    font-weight: normal;
+    padding: 0 8px!important;
+    padding-left: 20px!important;
+    background-color: #000;
+    border: 1px solid #000;
+
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    outline: none!important;
+    border-radius: 100px;
+}
+
+input[type="checkbox"].checkbox-show-hide:before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    margin: 0!important;
+    display: inline-block;
+    background: #fff;
+    border-radius: 100px;
+    transition: all 150ms;
+}
+
+input[type="checkbox"].checkbox-show-hide:after {
+    font-size: 11px;
+    line-height: 1;
+    font-weight: normal;
+    margin-left: 13px;
+    color: #fff;
+    content: "Hide";
+    margin: 0!important;
+}
+
+input[type="checkbox"].checkbox-show-hide:checked {
+    padding-right: 20px!important;
+    padding-left: 8px!important;
+    background-color: #2271b1;
+    border-color: #2271b1;
+}
+
+
+input[type="checkbox"].checkbox-show-hide:checked:before {
+    left: calc(100% - 14px - 2px);
+    background: #fff;
+}
+
+input[type="checkbox"].checkbox-show-hide:checked:after {
+    content: "Show";
+}

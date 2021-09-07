@@ -81,9 +81,10 @@ class ProofRatings_Shortcodes {
 	 */
 	public function floating_badge($atts, $content = null) {
         $atts = shortcode_atts([
+			'mobile' => 'yes',
+			'tablet' => 'yes',
             'url' => '#proofratings_widgets'
         ], $atts, 'proofratings_floating_badge');
-
 
         $review_sites = $this->get_active_review_sites();
         if ( !$review_sites ) {
@@ -110,12 +111,21 @@ class ProofRatings_Shortcodes {
 			$classes[] = $badget_settings['position'];
 		}
 
+		if ( $atts['mobile'] == 'no') {
+			$classes[] = 'proofratings-floating-badge-hidden-mobile';
+		}
+
+		if ( $atts['tablet'] == 'no') {
+			$classes[] = 'proofratings-floating-badge-hidden-tablet';
+		}
+
 		$url_attribute = '';
 		$tag = 'div';
 		if (!empty($atts['url'])) {
 			$tag = 'a';
 			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
 		}
+
 
         ob_start();
         printf('<%s %s class="%s">', $tag, $url_attribute, implode(' ', $classes));
@@ -151,7 +161,7 @@ class ProofRatings_Shortcodes {
             return;
         }
 
-        ob_start();
+        ob_start(); 
 		
         printf('<div id="%s" class="proofratings-review-widgets-grid">', esc_attr($atts['id']));
 	        foreach ($review_sites as $key => $site) {
@@ -163,12 +173,15 @@ class ProofRatings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site['review_url']));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
+				printf('<%s class="proofratings-widget proofratings-widget-%s" %s itemprop="review" itemscope itemtype="https://schema.org/Review">', $tag, $key, $attribue);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site['logo']), esc_attr($site['name']));
 				
-					echo '<div class="proofratings-reviews">';
+					echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+						echo '<meta itemprop="worstRating" content = "1">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));
 						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site['rating'] * 20));
+						echo '<meta itemprop="ratingValue" content="'.$site['rating'].'">';
+						echo '<meta itemprop="bestRating" content="5">';
 			        echo '</div>';
 
 					printf('<div class="review-count"> %d %s </div>', esc_html($site['count']), __('reviews', 'proofratings'));

@@ -111,7 +111,12 @@ class Wordpress_ProofRatings {
 	 * Embed floating badge on frontend
 	 */
 	public function embed_floating_badge() {
-		echo do_shortcode( '[proofratings_floating_badge]' );
+		$badge_settings = get_option( 'proofratings_floating_badge_settings');
+
+		$show_badge = @$badge_settings['show'];
+		if ( !($show_badge != 'yes') ) {
+			echo do_shortcode(sprintf('[proofratings_floating_badge mobile="%s" tablet="%s"]', $badge_settings['mobile'], $badge_settings['tablet']) );
+		}
 	}
 	
 	/**
