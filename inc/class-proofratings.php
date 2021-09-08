@@ -105,6 +105,8 @@ class Wordpress_ProofRatings {
 		if ( file_exists($generated_css) ) {
 			wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));			
 		}
+
+		wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings.js', ['jquery'], PROOFRATINGS_VERSION, true);
 	}
 
 	/**
@@ -116,6 +118,7 @@ class Wordpress_ProofRatings {
 		$show_badge = @$badge_settings['show'];
 		if ( !($show_badge != 'yes') ) {
 			echo do_shortcode(sprintf('[proofratings_floating_badge mobile="%s" tablet="%s"]', $badge_settings['mobile'], $badge_settings['tablet']) );
+			echo do_shortcode('[proofratings_floating_widgets]' );
 		}
 	}
 	

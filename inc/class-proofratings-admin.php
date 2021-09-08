@@ -112,11 +112,11 @@ class ProofRatings_Admin {
 
 		echo ".proofratings-floating-badge {\n";			
 			if ( $badge_settings['shadow_color'] ) {
-				printf("\t--shadowColor: %s66;\n", $badge_settings['shadow_color']);
+				printf("\t--shadowColor: %s;\n", $badge_settings['shadow_color']);
 			}
 
 			if ( $badge_settings['shadow_hover'] ) {
-				printf("\t--shadowHover: %s66;\n", $badge_settings['shadow_hover']);
+				printf("\t--shadowHover: %s;\n", $badge_settings['shadow_hover']);
 			}
 
 			if ( $badge_settings['background_color'] ) {
@@ -127,6 +127,12 @@ class ProofRatings_Admin {
 		echo ".proofratings-floating-badge .proofratings-stars i {\n";			
 			if ( $badge_settings['star_color'] ) {
 				printf("\tbackground-color: %s;\n", $badge_settings['star_color']);
+			}
+		echo "}\n\n";
+
+		echo "#proofratings-floating-embed .proofrating-close {\n";			
+			if ( $badge_settings['star_color'] ) {
+				printf("\tcolor: %s;\n", $badge_settings['star_color']);
 			}
 		echo "}\n\n";
 

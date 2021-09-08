@@ -44,6 +44,7 @@ class ProofRatings_Shortcodes {
 	 */
 	public function __construct() {
         add_shortcode('proofratings_floating_badge', [$this, 'floating_badge']);
+        add_shortcode('proofratings_floating_widgets', [$this, 'proofratings_floating_widgets']);
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
 	}
 
@@ -83,7 +84,7 @@ class ProofRatings_Shortcodes {
         $atts = shortcode_atts([
 			'mobile' => 'yes',
 			'tablet' => 'yes',
-            'url' => '#proofratings_widgets'
+            //'url' => '#proofratings_widgets'
         ], $atts, 'proofratings_floating_badge');
 
         $review_sites = $this->get_active_review_sites();
@@ -128,7 +129,7 @@ class ProofRatings_Shortcodes {
 
 
         ob_start();
-        printf('<%s %s class="%s">', $tag, $url_attribute, implode(' ', $classes));
+        printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
 			echo '<div class="proofratings-inner">';
 		        echo '<div class="proofratings-logos">';
 		        foreach ($review_sites as $key => $site) {
@@ -136,9 +137,13 @@ class ProofRatings_Shortcodes {
 		        }
 				echo '</div>';
 
-		        echo '<div class="proofratings-reviews">';
+		        echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
 		            printf('<span class="proofratings-score">%s</span>', $total_score);
 		            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $total_score * 20);
+
+					echo '<meta itemprop="worstRating" content = "1">';
+					echo '<meta itemprop="ratingValue" content="'.$total_score.'">';
+					echo '<meta itemprop="bestRating" content="5">';
 		        echo '</div>';
 	        echo '</div>';
 
@@ -149,7 +154,50 @@ class ProofRatings_Shortcodes {
 	}
 
 	/**
-	 * floating badge shortcode
+	 * Floating widgets shortcode
+	 */
+	public function proofratings_floating_widgets($atts, $content = null) {
+		$review_sites = $this->get_active_review_sites();
+        if ( !$review_sites ) {
+            return;
+        }
+
+        ob_start(); 
+		
+        printf('<div id="proofratings-floating-embed">');
+			echo '<div class="proofratings-floating-widgets-box">';
+	        foreach ($review_sites as $key => $site) {
+				$tag = 'div';
+				$attribue= '';
+				
+				if( !empty($site['review_url']) ) {
+					$tag = 'a';
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($site['review_url']));
+				}
+				
+				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
+	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site['logo']), esc_attr($site['name']));
+				
+					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));
+						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site['rating'] * 20));
+			        echo '</div>';
+
+					printf('<div class="review-count"> %d %s </div>', esc_html($site['count']), __('reviews', 'proofratings'));
+
+					echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
+
+				printf('</%s>', $tag);
+	        }
+			echo '</div>';
+
+			echo '<span class="proofrating-close">-<span>';
+        echo '</div>';
+        return ob_get_clean();
+	}
+
+	/**
+	 * embed badge shortcode
 	 */
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
@@ -173,15 +221,12 @@ class ProofRatings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site['review_url']));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s" %s itemprop="review" itemscope itemtype="https://schema.org/Review">', $tag, $key, $attribue);
+				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site['logo']), esc_attr($site['name']));
 				
-					echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-						echo '<meta itemprop="worstRating" content = "1">';
+					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));
 						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site['rating'] * 20));
-						echo '<meta itemprop="ratingValue" content="'.$site['rating'].'">';
-						echo '<meta itemprop="bestRating" content="5">';
 			        echo '</div>';
 
 					printf('<div class="review-count"> %d %s </div>', esc_html($site['count']), __('reviews', 'proofratings'));
@@ -193,6 +238,5 @@ class ProofRatings_Shortcodes {
 
         echo '</div>';
         return ob_get_clean();
-
 	}
 }

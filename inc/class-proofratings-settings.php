@@ -214,7 +214,7 @@ class WP_ProofRatings_Settings {
 						</tr>
 
 						<tr>
-							<th scope="row"><?php _e('Start Color', 'proofratings') ?></th>
+							<th scope="row"><?php _e('Star Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[star_color]"
