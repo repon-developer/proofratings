@@ -163,3 +163,6 @@ input[type="checkbox"].checkbox-show-hide:checked:before {
 input[type="checkbox"].checkbox-show-hide:checked:after {
     content: "Show";
 }
+
+
+#pfb-exclude-page {min-width: 300px}

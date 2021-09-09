@@ -114,9 +114,11 @@ class Wordpress_ProofRatings {
 	 */
 	public function embed_floating_badge() {
 		$badge_settings = get_option( 'proofratings_floating_badge_settings');
+		$on_pages = (array) @$badge_settings['on_pages'];
 
+		$has_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
 		$show_badge = @$badge_settings['show'];
-		if ( !($show_badge != 'yes') ) {
+		if ( !($show_badge != 'yes') && $has_page ) {
 			echo do_shortcode(sprintf('[proofratings_floating_badge mobile="%s" tablet="%s"]', $badge_settings['mobile'], $badge_settings['tablet']) );
 			echo do_shortcode('[proofratings_floating_widgets]' );
 		}

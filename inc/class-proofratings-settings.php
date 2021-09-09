@@ -59,6 +59,7 @@ class WP_ProofRatings_Settings {
 			'show' => 'yes',
 			'tablet' => 'yes',
 			'mobile' => 'yes',
+			'on_pages' => [],
 			'position' => '',
 			'star_color' => '',
 			'shadow_color' => '',
@@ -108,6 +109,7 @@ class WP_ProofRatings_Settings {
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
 					<a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
+					<a href="#settings-floating-pages" class="nav-tab"><?php _e('Pages', 'proofratings'); ?></a>
 				</h2>
 
 				<div id="settings-review-sites" class="settings_panel">
@@ -118,7 +120,6 @@ class WP_ProofRatings_Settings {
 							<th scope="row"><?php _e('Font Family', 'proofratings') ?></th>
 							<td>
 								<select name="proofratings_font">
-									<option value="inherit"><?php _e( 'Inherit', 'proofratings') ?></option>
 									<option value="Didact Gothic" <?php selected('Didact Gothic', $proofratings_font) ?>><?php _e( 'Didact Gothic', 'proofratings') ?></option>
 								</select>
 							</td>
@@ -267,8 +268,28 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 					</table>
-					
 				</div>
+
+				<div id="settings-floating-pages" class="settings_panel" style="display:none">
+					<table class="form-table">
+						<?php foreach (get_pages() as $page) : ?>
+						<tr>
+							<th scope="row"><?php echo $page->post_title ?></th>
+							<td>	
+							<?php
+								$checked = !isset($badge_settings['on_pages'][$page->ID]) || $badge_settings['on_pages'][$page->ID] == 'yes'? 'checked' : '';
+								printf('<input name="proofratings_floating_badge_settings[on_pages][%s]" value="no" type="hidden">', $page->ID);
+								printf(
+									'<label><input class="checkbox-show-hide" name="proofratings_floating_badge_settings[on_pages][%s]" value="yes" %s type="checkbox"></label>',
+									$page->ID, $checked
+								);
+							?>
+							</td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
+				</div>
+
 				<p class="submit">
 					<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 'proofratings' ); ?>" />
 				</p>

@@ -162,10 +162,20 @@ class ProofRatings_Shortcodes {
             return;
         }
 
+		$column = 4;
+
+		if ( count($review_sites) == 5 ) {
+			$column = 5;
+		}
+
+		if ( count($review_sites) < 4 ) {
+			$column = count($review_sites);
+		}
+
         ob_start(); 
 		
         printf('<div id="proofratings-floating-embed">');
-			echo '<div class="proofratings-floating-widgets-box">';
+			printf ('<div class="proofratings-floating-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
 				$attribue= '';

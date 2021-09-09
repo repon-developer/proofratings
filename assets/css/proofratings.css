@@ -10,7 +10,7 @@ html {
     position: fixed;
     left: 30px;
     bottom: 30px;
-    z-index: 3000;
+    z-index: 30000;
     font-size: 18px;
     line-height: 1.3;
     cursor: pointer;
@@ -108,8 +108,7 @@ html {
     line-height: 1.2;
     align-items: center;
     border-radius: 10px;
-    min-width: 200px;
-    max-width: 225px;
+    width: 200px;
     min-height: 185px;
     font-family: "Didact Gothic"!important;
     flex-direction: column;
@@ -187,9 +186,11 @@ html {
     position: fixed;
     left: 20px;
     bottom: 20px;
-    z-index: 5000;
+    z-index: 50000;
     display: none;
     padding: 8px;
+    max-width: 90vw;
+    padding-bottom: 4px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.25)
@@ -201,14 +202,20 @@ html {
 }
 
 .proofratings-floating-widgets-box {
-    max-width: 80vw;
     overflow-y: auto;
     display: flex;
 }
 
-#proofratings-floating-embed .proofratings-widget:not(:last-child) {
-    margin-right: 25px;
+#proofratings-floating-embed .proofratings-floating-widgets-box {
+    --column: 4;
+    display: grid;
+    grid-template-columns: repeat(var(--column), 200px);
 }
+
+#proofratings-floating-embed .proofratings-floating-widgets-box[data-column="1"] {--column: 1}
+#proofratings-floating-embed .proofratings-floating-widgets-box[data-column="2"] {--column: 2}
+#proofratings-floating-embed .proofratings-floating-widgets-box[data-column="3"] {--column: 3}
+#proofratings-floating-embed .proofratings-floating-widgets-box[data-column="5"] {--column: 5}
 
 #proofratings-floating-embed .proofratings-widget {
     box-shadow: none!important;
@@ -222,9 +229,12 @@ html {
     top: 20px;
     bottom: 20px;
     width: 1px;
-    right: -16px;
+    right: 0;
+    z-index: 3;
     background-color: rgb(224,224,224);
 }
+
+#proofratings-floating-embed .proofratings-floating-widgets-box:not([data-column="5"]) .proofratings-widget:nth-child(4n):after {content: none!important}
 
 #proofratings-floating-embed .proofrating-close {
     color: #212a3d;
@@ -240,8 +250,9 @@ html {
     cursor: pointer;
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 575px) {
     .proofratings-floating-widgets-box {
+        display: block!important;
         overflow-x: inherit;
         flex-direction: column;
         max-height: 80vh;

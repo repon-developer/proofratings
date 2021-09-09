@@ -162,9 +162,8 @@ class ProofRatings_Admin {
 	/**
 	 * Enqueues CSS and JS assets.
 	 */
-	public function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {	
 		$screen = get_current_screen();
-
 		if ( in_array( $screen->id, [ 'toplevel_page_proofratings' ] ) ) {
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
