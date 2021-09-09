@@ -1,5 +1,5 @@
 === Proofratings ===
-Contributors: proofratings, repon.wp
+Contributors: proofratings
 Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
 Requires at least: 5.2
@@ -53,7 +53,7 @@ Third Party Trademarks Policy: Proofratings is not affiliated with or endorsed b
 == Frequently Asked Questions ==
 
 = Is this free? =
-We offer a free trial period, afterwards it'll require to select a paid plan: [Proofratings Plans](https://proofratings.com/pricing/)
+This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" target="_blank">Proofratings Plans</a>
 
 
 == Changelog ==
