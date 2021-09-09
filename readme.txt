@@ -50,6 +50,11 @@ Third Party Trademarks Policy: Proofratings is not affiliated with or endorsed b
 1. Activate the plugin through the 'Plugins' screen in WordPress
 1. Go to Proofratings Dashboard to get started
 
+== Frequently Asked Questions ==
+
+= Is this free? =
+We offer a free trial period, afterwards it'll require to select a paid plan: [Proofratings Plans](https://proofratings.com/pricing/)
+
 
 == Changelog ==
 
