@@ -146,9 +146,18 @@ function get_proofratings_settings() {
             'title' => __('Solar Tribune Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solartribune.png'
-        ]
+        ],
 
-        
+        'oneflare' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#3D9EA0',
+            'name' => __('Oneflare', 'proofratings'),
+            'title' => __('Oneflare Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-oneflare.png'
+        ]        
     ];
 
     $settings = get_option('proofratings_settings', []);
