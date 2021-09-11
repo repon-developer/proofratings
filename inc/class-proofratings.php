@@ -54,10 +54,6 @@ class Wordpress_ProofRatings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
-		add_action( 'proofratings_get_reviews', [ $this, 'proofratings_get_reviews' ] );
-
-		self::maybe_schedule_cron_jobs();
-
 		$this->ping_review();
 	}
 
@@ -111,12 +107,6 @@ class Wordpress_ProofRatings {
 		wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings.js', ['jquery'], PROOFRATINGS_VERSION, true);
 	}
 
-	public function ping_review() {
-		if ( isset($_GET['ping-proofratings'])) {
-			do_action( 'proofratings_get_reviews');
-		}
-	}
-
 	/**
 	 * Embed floating badge on frontend
 	 */
@@ -131,23 +121,18 @@ class Wordpress_ProofRatings {
 			echo do_shortcode('[proofratings_floating_widgets]' );
 		}
 	}
-	
-	/**
-	 * Schedule cron jobs for proof rating events.
-	 * @since 1.0.1
-	 */
-	public static function maybe_schedule_cron_jobs() {		
-		if ( ! wp_next_scheduled( 'proofratings_get_reviews' ) ) {
-			wp_schedule_event( time(), 'daily', 'proofratings_get_reviews' );
+
+	public function ping_review() {
+		if ( isset($_GET['ping-proofratings'])) {
+			exit($this->proofratings_get_reviews());
 		}
-	}
+	}	
 
 	public function proofratings_get_reviews() {
 		$request_url = add_query_arg(array(
 			'domain' => get_site_url()
 		), PROOFRATINGS_API_URL . '/get-reviews');
 
-		
 		$response = wp_remote_get($request_url);
 		if ( is_wp_error( $response ) ) {
 			return;
