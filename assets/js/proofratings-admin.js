@@ -44,4 +44,12 @@
     } else {
         jQuery('.nav-tab-wrapper a:first').click();
     }
+
+    $('[name="proofratings_banner_badge_settings[type]"]').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            return $(this).closest('table.form-table').removeClass('banner-badge-embed');
+        }
+
+        $(this).closest('table.form-table').addClass('banner-badge-embed');
+    }).trigger('change')
 })(jQuery)

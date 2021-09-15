@@ -111,6 +111,16 @@ class Wordpress_ProofRatings {
 	 * Embed floating badge on frontend
 	 */
 	public function embed_floating_badge() {
+		
+		$banner_badge_settings = get_option( 'proofratings_banner_badge_settings');
+
+		if ( @$banner_badge_settings['type'] == 'float') {
+			echo do_shortcode('[proofratings_banner display="float"]' );
+			echo do_shortcode('[proofratings_floating_widgets]' );
+			return;
+		}
+
+
 		$badge_settings = get_option( 'proofratings_floating_badge_settings');
 		$on_pages = (array) @$badge_settings['on_pages'];
 

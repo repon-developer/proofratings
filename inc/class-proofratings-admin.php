@@ -145,6 +145,34 @@ class ProofRatings_Admin {
 				printf("\tbackground-color: %s!important;\n", $badge_settings['review_background']);
 			}
 		echo "}";
+
+		$banner_badge_settings = $postdata['proofratings_banner_badge_settings'];
+
+		echo ".proofratings-badge.proofratings-banner-badge {\n";			
+			if ( $banner_badge_settings['shadow_color'] ) {
+				printf("\t--shadowColor: %s;\n", $banner_badge_settings['shadow_color']);
+			}
+
+			if ( $banner_badge_settings['shadow_hover'] ) {
+				printf("\t--shadowHover: %s;\n", $banner_badge_settings['shadow_hover']);
+			}
+
+			if ( $banner_badge_settings['background_color'] ) {
+				printf("\tbackground-color: %s;\n", $banner_badge_settings['background_color']);
+			}
+		echo "}\n\n";
+
+		echo ".proofratings-badge.proofratings-banner-badge .proofratings-stars i {\n";			
+			if ( $banner_badge_settings['star_color'] ) {
+				printf("\tbackground-color: %s;\n", $banner_badge_settings['star_color']);
+			}
+		echo "}\n\n";
+
+		echo ".proofratings-badge.proofratings-banner-badge .proofratings-review-count {\n";
+			if ( $banner_badge_settings['review_text_color'] ) {
+				printf("\tcolor: %s!important;\n", $banner_badge_settings['review_text_color']);
+			}
+		echo "}";
 			
 		$styles = ob_get_clean();
 

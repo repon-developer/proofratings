@@ -44,6 +44,7 @@ class ProofRatings_Shortcodes {
 	 */
 	public function __construct() {
         add_shortcode('proofratings_floating_badge', [$this, 'floating_badge']);
+        add_shortcode('proofratings_banner', [$this, 'banner_badge']);
         add_shortcode('proofratings_floating_widgets', [$this, 'proofratings_floating_widgets']);
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
 	}
@@ -80,6 +81,32 @@ class ProofRatings_Shortcodes {
 	/**
 	 * floating badge shortcode
 	 */
+	public function get_overall_reviews() {
+		$review_sites = $this->get_active_review_sites();
+        if ( !$review_sites ) {
+            return false;
+        }
+
+		
+
+		$total_reviews = array_sum(array_column($review_sites, 'count'));
+		$has_reviews = array_filter($review_sites, function($item) {
+			return $item['count'] > 0;
+		});
+		
+		$total_score = 0.0;
+		if (count($has_reviews) > 0) {
+			$total_score = array_sum(array_column($review_sites, 'rating')) / count($has_reviews);
+		}
+
+		$total_score = number_format(floor($total_score*100)/100, 1);
+
+		return ['sites' => $review_sites, 'count' => $total_reviews, 'rating' => $total_score, 'percent' => $total_score * 20];
+	}
+
+	/**
+	 * floating badge shortcode
+	 */
 	public function floating_badge($atts, $content = null) {
         $atts = shortcode_atts([
 			'mobile' => 'yes',
@@ -104,7 +131,7 @@ class ProofRatings_Shortcodes {
 
 		$total_score = number_format(floor($total_score*100)/100, 1);
 
-		$classes = ['proofratings-floating-badge'];
+		$classes = ['proofratings-badge', 'proofratings-floating-badge'];
 
 		$badget_settings = get_option( 'proofratings_floating_badge_settings');
 
@@ -148,6 +175,73 @@ class ProofRatings_Shortcodes {
 	        echo '</div>';
 
         	printf('<div class="proofratings-review-count">%d %s</div>', $total_reviews, __('reviews', 'proofratings'));
+        printf('</%s>', $tag);
+        return ob_get_clean();
+	}
+
+	/**
+	 * banner badge shortcode
+	 */
+	public function banner_badge($atts, $content = null) {
+        $badge_settings = shortcode_atts([
+			'display' => 'embed',
+			'url' => '#proofratings_widgets'
+        ], $atts, 'proofratings_banner_badge');
+
+		$badge_settings = wp_parse_args( $badge_settings, get_option( 'proofratings_banner_badge_settings'));
+
+        $review_data = $this->get_overall_reviews();
+        if ( !$review_data ) {
+			return;
+        }
+		
+		//var_dump($badge_settings);
+		
+		$classes = ['proofratings-badge proofratings-banner-badge'];
+		if ( $badge_settings['display'] == 'float') {
+			$badge_settings['url'] = '';
+
+			$classes[] = 'badge-float';
+			if ( !empty($badge_settings['position'])) {
+				$classes[] = $badge_settings['position'];
+			}
+			
+			if ( @$badge_settings['mobile'] == 'no') {
+				$classes[] = 'badge-hidden-mobile';
+			}
+			
+			if ( @$badge_settings['tablet'] == 'no') {
+				$classes[] = 'badge-hidden-tablet';
+			}
+		}
+
+			
+		$url_attribute = '';
+		$tag = 'div';
+		if (!empty($badge_settings['url'])) {
+			$tag = 'a';
+			$url_attribute = sprintf('href="%s"', esc_url($badge_settings['url']));
+		}
+		
+        ob_start();
+        printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
+			
+	        echo '<div class="proofratings-logos">';
+	        foreach ($review_data['sites'] as $key => $site) {
+	            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site['icon']), $key);
+	        }
+			echo '</div>';
+
+	        echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+	            printf('<span class="proofratings-score">%s</span>', $review_data['rating']);
+	            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $review_data['percent']);
+
+				echo '<meta itemprop="worstRating" content = "1">';
+				echo '<meta itemprop="ratingValue" content="'.$review_data['rating'].'">';
+				echo '<meta itemprop="bestRating" content="5">';
+	        echo '</div>';
+
+        	printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
         printf('</%s>', $tag);
         return ob_get_clean();
 
