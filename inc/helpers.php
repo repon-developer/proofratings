@@ -157,7 +157,84 @@ function get_proofratings_settings() {
             'title' => __('Oneflare Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-oneflare.png'
-        ]        
+        ],
+
+        'capterra' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#044D80',
+            'name' => __('Capterra', 'proofratings'),
+            'title' => __('Capterra Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/capterra.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-capterra.png'
+        ],
+
+        'g2' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#EF4D35',
+            'name' => __('G2', 'proofratings'),
+            'title' => __('G2 Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/g2.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-g2.png'
+        ],
+
+        'getapp' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#41E3E2',
+            'name' => __('Getapp', 'proofratings'),
+            'title' => __('Getapp Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/getapp.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-getapp.png'
+        ],
+
+        'softwareadvice' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#FD810D',
+            'name' => __('Software Advice', 'proofratings'),
+            'title' => __('Software Advice Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/softwareadvice.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-softwareadvice.png'
+        ],
+
+        'saasworthy' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#FEBA52',
+            'name' => __('SaaSworthy', 'proofratings'),
+            'title' => __('SaaSworthy Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/saasworthy.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-saasworthy.png'
+        ],
+
+        'crozdesk' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#015BE3',
+            'name' => __('Crozdesk', 'proofratings'),
+            'title' => __('Crozdesk Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/crozdesk.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-crozdesk.png'
+        ],
+
+        'quickbooks' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#2C9F1C',
+            'name' => __('Quickbooks', 'proofratings'),
+            'title' => __('Quickbooks Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks.png',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-quickbooks.png'
+        ]
     ];
 
     $settings = get_option('proofratings_settings', []);
