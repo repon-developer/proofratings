@@ -124,6 +124,7 @@ html {
     color: #fff;
     padding: 10px var(--padx);
     background-color: #212a3d;
+    border-radius: 0 0 10px 10px;
 }
 
 

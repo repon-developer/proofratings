@@ -157,6 +157,7 @@ class ProofRatings_Shortcodes {
 
         ob_start();
         printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
+			echo  '<i class="proofratings-close">&times;</i>';
 			echo '<div class="proofratings-inner">';
 		        echo '<div class="proofratings-logos">';
 		        foreach ($review_sites as $key => $site) {

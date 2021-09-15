@@ -4,7 +4,7 @@ Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
 Requires at least: 5.2
 Tested up to: 5.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Author: Proofratings <info@proofratings.com>
@@ -27,11 +27,21 @@ Proofratings monitors all your third party sites for reviews by your customers. 
 8. Guildquality
 9. Solar Tribune
 10. Good Company
+11. Trustpilot
+12. Wordpress
+13. Capterra
+14. G2
+15. Getapp
+16. Software Advice
+17. Saasworthy
+18. Crozdesk
+19. Quickbooks
 
 All your reviews are collected to one dashboard, where you can decide which of them to feature in widgets.
 Easily add these beautiful widgets to your website:
 1. Floating widget
 2. Embeded Badge widget
+3. Banner Widget
 
 
 = Showcase ratings on your website in real-time to build trust =
