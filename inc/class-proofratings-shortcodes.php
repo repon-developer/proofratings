@@ -194,8 +194,8 @@ class ProofRatings_Shortcodes {
         if ( !$review_data ) {
 			return;
         }
-		
-		//var_dump($badge_settings);
+
+		$close_button = '';
 		
 		$classes = ['proofratings-badge proofratings-banner-badge'];
 		if ( $badge_settings['display'] == 'float') {
@@ -213,6 +213,10 @@ class ProofRatings_Shortcodes {
 			if ( @$badge_settings['tablet'] == 'no') {
 				$classes[] = 'badge-hidden-tablet';
 			}
+
+			if ( $badge_settings['close_button'] == 'yes' ) {
+				$close_button = '<i class="proofratings-close">&times;</i>';
+			}
 		}
 
 			
@@ -225,6 +229,8 @@ class ProofRatings_Shortcodes {
 		
         ob_start();
         printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
+
+			echo $close_button;
 			
 	        echo '<div class="proofratings-logos">';
 	        foreach ($review_data['sites'] as $key => $site) {

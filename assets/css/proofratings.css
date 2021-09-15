@@ -13,7 +13,6 @@ html {
     text-decoration: none!important;
     background-color: #fff;
     border-radius: 10px;
-    overflow: hidden;
     transition: all 200ms;
     box-shadow: 0 0 4px 4px var(--shadowColor, rgba(246,211,0,0.4))!important
 }
@@ -38,7 +37,25 @@ html {
     letter-spacing: 1px;
 }
 
-.proofratings-logos {text-align: center; line-height: 1; margin-bottom: 7px;}
+
+.proofratings-badge .proofratings-close {
+    --size: 22px;
+    color: #fff;
+    font-size: 22px;
+    font-style: normal;
+    width: var(--size);
+    height: var(--size);
+    text-align: center;
+    line-height: 0.9;
+    border-radius: 100px;
+    position: absolute;
+    z-index: 56;
+    top: -8px;
+    right: -8px;
+    background-color: #e9e9e9;
+}
+
+.proofratings-logos {text-align: center; line-height: 1; margin-bottom: 7px; flex: 0 0 auto}
 
 .proofratings-logos img {
     --size: 25px;
@@ -81,20 +98,7 @@ html {
     background-color: #212A3D
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-.proofratings-badge.proofratings-floating-badge.opened {visibility: hidden;}
-
+.proofratings-badge.opened {visibility: hidden;}
 
 .proofratings-badge.proofratings-floating-badge, .proofratings-badge.badge-float {
     position: fixed;

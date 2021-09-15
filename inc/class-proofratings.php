@@ -98,13 +98,15 @@ class Wordpress_ProofRatings {
 		wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', [], PROOFRATINGS_VERSION);
 
+		wp_register_script( 'js-cookie', PROOFRATINGS_PLUGIN_URL.  '/assets/js/js.cookie.min.js', [], '3.0.1', true);
+
 		$upload_dir = wp_upload_dir();
 		$generated_css = $upload_dir['basedir'] . '/proofratings-generated.css';
 		if ( file_exists($generated_css) ) {
 			wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));			
 		}
 
-		wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings.js', ['jquery'], PROOFRATINGS_VERSION, true);
+		wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings.js', ['jquery', 'js-cookie'], PROOFRATINGS_VERSION, true);
 	}
 
 	/**
@@ -114,7 +116,11 @@ class Wordpress_ProofRatings {
 		
 		$banner_badge_settings = get_option( 'proofratings_banner_badge_settings');
 
-		if ( @$banner_badge_settings['type'] == 'float') {
+		if ( @$banner_badge_settings['type'] == 'float' ) {
+			if ( isset($_COOKIE['hide_proofratings_float_badge'])) {
+				return;
+			}
+
 			echo do_shortcode('[proofratings_banner display="float"]' );
 			echo do_shortcode('[proofratings_floating_widgets]' );
 			return;
