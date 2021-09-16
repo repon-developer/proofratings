@@ -39,27 +39,26 @@
         jQuery('.nav-tab-wrapper a:first').click();
     }
 
-    $('[name="proofratings_banner_badge_settings[type]"]').on('change', function(){
-        $('[name="proofratings_floating_badge_settings[show]"]').prop('checked', !$(this).is(':checked'));
-
-        if ( $(this).is(':checked') ) {
-            return $(this).closest('table.form-table').removeClass('banner-badge-embed');
-        }
-
-        $(this).closest('table.form-table').addClass('banner-badge-embed');
-    }).trigger('change')
-
     $('[name="proofratings_floating_badge_settings[show]"]').on('change', function(){
-
-        $('[name="proofratings_banner_badge_settings[type]"]').prop('checked', !$(this).is(':checked'));
-
-        next_rows = $(this).closest('tr').nextAll();
-        
+        next_rows = $(this).closest('tr').nextAll();        
         if ( $(this).is(':checked') ) {
+            $('[name="proofratings_banner_badge_settings[type]"]').prop('checked', false).trigger('change');
             return next_rows.show();
         }
 
         next_rows.hide();
 
     }).trigger('change')
+
+    $('[name="proofratings_banner_badge_settings[type]"]').on('change', function(){
+        
+        if ( $(this).is(':checked') ) {
+            $('[name="proofratings_floating_badge_settings[show]"]').prop('checked', false).trigger('change');
+            return $(this).closest('table.form-table').removeClass('banner-badge-embed');
+        }
+
+        $(this).closest('table.form-table').addClass('banner-badge-embed');
+    }).trigger('change')
+
+    
 })(jQuery)
