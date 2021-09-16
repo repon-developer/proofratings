@@ -185,7 +185,6 @@ class ProofRatings_Shortcodes {
 	 */
 	public function banner_badge($atts, $content = null) {
         $badge_settings = shortcode_atts([
-			'display' => 'embed',
 			'url' => '#proofratings_widgets'
         ], $atts, 'proofratings_banner_badge');
 
@@ -199,7 +198,7 @@ class ProofRatings_Shortcodes {
 		$close_button = '';
 		
 		$classes = ['proofratings-badge proofratings-banner-badge'];
-		if ( $badge_settings['display'] == 'float') {
+		if ( $badge_settings['type'] == 'float') {
 			$badge_settings['url'] = '';
 
 			$classes[] = 'badge-float';
@@ -250,6 +249,9 @@ class ProofRatings_Shortcodes {
 
         	printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
         printf('</%s>', $tag);
+
+		echo do_shortcode('[proofratings_floating_widgets]' );
+
         return ob_get_clean();
 
 	}
