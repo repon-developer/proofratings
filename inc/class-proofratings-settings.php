@@ -302,7 +302,7 @@ class WP_ProofRatings_Settings {
 									<?php _e('Float/Embed', 'proofratings'); ?>
 								</label>
 
-								<p>Use shortcode where you want to display review widgets <code>[proofratings_banner]</code></p>
+								<p class="shortcode-guide">Use shortcode where you want to display review widgets <code>[proofratings_banner]</code></p>
 							</td>
 						</tr>
 

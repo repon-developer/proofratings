@@ -184,11 +184,12 @@ class ProofRatings_Shortcodes {
 	 * banner badge shortcode
 	 */
 	public function banner_badge($atts, $content = null) {
-        $badge_settings = shortcode_atts([
+		$badge_settings = wp_parse_args(get_option('proofratings_banner_badge_settings'), [
+			'type' => 'embed',
 			'url' => '#proofratings_widgets'
-        ], $atts, 'proofratings_banner_badge');
+		]);
 
-		$badge_settings = wp_parse_args( $badge_settings, get_option( 'proofratings_banner_badge_settings'));
+        $badge_settings = shortcode_atts($badge_settings, $atts);
 
         $review_data = $this->get_overall_reviews();
         if ( !$review_data ) {
