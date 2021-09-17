@@ -119,8 +119,18 @@ class Wordpress_ProofRatings {
 
 		$banner_badge_settings = get_option( 'proofratings_banner_badge_settings');
 		if ( @$banner_badge_settings['type'] == 'float' ) {
+
+			if ( @$banner_badge_settings['position'] == 'center-bottom') {
+				echo '<div class="proofratings-banner-badge-tab">';
+			}
+
 			echo do_shortcode('[proofratings_banner type="float"]' );
 			echo do_shortcode('[proofratings_floating_widgets]' );
+
+			if ( @$banner_badge_settings['position'] == 'center-bottom') {
+				echo '</div>';
+			}
+
 			return;
 		}
 

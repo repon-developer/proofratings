@@ -234,6 +234,17 @@ function get_proofratings_settings() {
             'title' => __('Quickbooks Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-quickbooks.png'
+        ],
+
+        'angi' => [
+            'active' => 'no',
+            'text_color' => '',
+            'background' => '',
+            'theme_color' => '#FF5E4F',
+            'name' => __('Angi', 'proofratings'),
+            'title' => __('Angi Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/angi.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-angi.png'
         ]
     ];
 

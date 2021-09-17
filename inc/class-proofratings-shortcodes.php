@@ -250,8 +250,6 @@ class ProofRatings_Shortcodes {
         	printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
         printf('</%s>', $tag);
 
-		echo do_shortcode('[proofratings_floating_widgets]' );
-
         return ob_get_clean();
 
 	}

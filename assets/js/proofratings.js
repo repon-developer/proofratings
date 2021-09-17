@@ -1,5 +1,12 @@
 (function ($) {
     $('.proofratings-banner-badge.badge-float, .proofratings-floating-badge').on('click', function () {
+
+        has_tab = $(this).closest('.proofratings-banner-badge-tab');
+        if ( has_tab.length) {
+            return has_tab.toggleClass('opened');
+        }
+
+
         $(this).addClass('opened');
     })
 
@@ -13,7 +20,14 @@
             Cookies.set('hide_proofratings_float_badge', true)
         }
 
-        $(this).closest('.proofratings-badge').fadeOut(120, function () {
+        container = $(this).closest('.proofratings-badge');
+        
+        if ( $(this).closest('.proofratings-banner-badge-tab').length) {
+            container = $(this).closest('.proofratings-banner-badge-tab');
+        }
+
+
+        container.fadeOut(120, function () {
             $(this).remove();
         });
     })

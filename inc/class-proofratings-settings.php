@@ -346,6 +346,7 @@ class WP_ProofRatings_Settings {
 									<option value="left" <?php selected('left', $banner_badge_settings['position']) ?>><?php _e('Left', 'proofratings') ?></option>
 									<option value="center" <?php selected('center', $banner_badge_settings['position']) ?>><?php _e('Center', 'proofratings') ?></option>
 									<option value="right" <?php selected('right', $banner_badge_settings['position']) ?>><?php _e('Right', 'proofratings') ?></option>
+									<option value="center-bottom" <?php selected('center-bottom', $banner_badge_settings['position']) ?>><?php _e('Center Bottom', 'proofratings') ?></option>
 								</select>
 							</td>
 						</tr>
