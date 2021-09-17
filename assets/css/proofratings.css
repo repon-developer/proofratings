@@ -319,6 +319,7 @@ html {
     align-items: center;
     max-height: 85vh;
     text-align: center;
+    z-index: 60606;
     transform: translate(calc(50vw - 50%), var(--translateY, calc(100% - var(--badgeHeight, 62px))));
     transition: all 200ms;
 }
