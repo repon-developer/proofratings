@@ -61,6 +61,7 @@ class WP_ProofRatings_Settings {
 			'tablet' => 'yes',
 			'mobile' => 'yes',
 			'on_pages' => [],
+			'close_button' => 'yes',
 			'position' => '',
 			'star_color' => '',
 			'shadow_color' => '',
@@ -217,6 +218,17 @@ class WP_ProofRatings_Settings {
 								<label>
 									<input name="proofratings_floating_badge_settings[mobile]" value="no" type="hidden">
 									<input class="checkbox-switch" name="proofratings_floating_badge_settings[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['mobile'] ) ?>>
+									<?php _e('Show/Hide on mobile', 'proofratings'); ?>
+								</label>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Close option', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_floating_badge_settings[close_button]" value="no" type="hidden">
+									<input class="checkbox-switch" name="proofratings_floating_badge_settings[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['close_button'] ) ?>>
 									<?php _e('Show/Hide on mobile', 'proofratings'); ?>
 								</label>
 							</td>

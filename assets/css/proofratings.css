@@ -120,9 +120,8 @@ html {
 }
 
 .proofratings-badge.badge-float.center, .proofratings-badge.badge-float.center-bottom {
-    left: 50%;
+    left: auto;
     transform: translateX(calc(50vw - 50%));
-
 }
 
 .proofratings-badge.proofratings-floating-badge .proofratings-review-count {
