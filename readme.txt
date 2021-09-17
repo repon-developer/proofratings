@@ -36,6 +36,7 @@ Proofratings monitors all your third party sites for reviews by your customers. 
 17. Saasworthy
 18. Crozdesk
 19. Quickbooks
+20. Angi
 
 All your reviews are collected to one dashboard, where you can decide which of them to feature in widgets.
 Easily add these beautiful widgets to your website:
@@ -67,6 +68,10 @@ This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" ta
 
 
 == Changelog ==
+
+= 1.0.2 =
+* Add Banner Badge
+* Add Angi Site
 
 = 1.0.1 =
 * Initial release
