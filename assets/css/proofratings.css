@@ -355,17 +355,29 @@ html {
 }
 
 @media screen and (max-width: 575px) {
+    #proofratings-floating-embed {min-width: min(420px, 94vw)}
+
     .proofratings-floating-widgets-box {
-        display: block!important;
+        --column: 2!important;
+    }
+
+    .proofratings-floating-widgets-box {
         overflow-x: inherit;
-        flex-direction: column;
         max-height: 80vh;
         overflow-y: auto;
+        
     }
     
     .proofratings-floating-widgets-box .proofratings-widget {
         padding: 8px;
         margin-right: 0!important;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .proofratings-floating-widgets-box {
+        --column: 1!important;
+        justify-content: center;
     }
 
     #proofratings-floating-embed .proofratings-widget:not(:last-child):after {
@@ -376,6 +388,8 @@ html {
         height: 1px;
         width: auto;
     }
+}
 
-    .proofratings-banner-badge-tab .proofratings-banner-badge {margin-bottom: 10px;}
+@media screen and (max-width: 380px) {
+    .proofratings-banner-badge-tab .proofratings-review-count {display: none;}
 }

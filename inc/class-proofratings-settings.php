@@ -229,7 +229,6 @@ class WP_ProofRatings_Settings {
 								<label>
 									<input name="proofratings_floating_badge_settings[close_button]" value="no" type="hidden">
 									<input class="checkbox-switch" name="proofratings_floating_badge_settings[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['close_button'] ) ?>>
-									<?php _e('Show/Hide on mobile', 'proofratings'); ?>
 								</label>
 							</td>
 						</tr>
@@ -346,7 +345,6 @@ class WP_ProofRatings_Settings {
 								<label>
 									<input name="proofratings_banner_badge_settings[close_button]" value="no" type="hidden">
 									<input class="checkbox-switch" name="proofratings_banner_badge_settings[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge_settings['close_button'] ) ?>>
-									<?php _e('Show/Hide on mobile', 'proofratings'); ?>
 								</label>
 							</td>
 						</tr>
