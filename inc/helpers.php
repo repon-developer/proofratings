@@ -10,6 +10,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+class Proofratings_Site_Data {
+    var $active = 'no';
+
+    function __construct($data = []) {
+        if ( is_object($data)) {
+            $data = (array) $data;
+        }
+
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
+    public function __get($key) {
+        return isset($this->$key) ? $this->$key : null;
+    }
+}
+
 /**
  * get settings of proof ratings settings
  * @since  1.0.1
@@ -17,42 +35,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 function get_proofratings_settings() {
     $default = [
         'google' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#03AB4E',
             'name' => __('Google', 'proofratings'),
             'title' => __('Google Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-google.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-google.png',
+            'rating_title' => __('Google Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google-black.png',
         ],
 
         'facebook' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#0f7ff3',
             'name' => __('Facebook', 'proofratings'),
             'title' => __('Facebook Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-facebook.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-facebook.png',
+            'rating_title' => __('Facebook Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook-black.png',
         ],
 
         'energysage' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#bf793f',
             'name' => __('Energy Sage', 'proofratings'),
             'title' => __('Energy Sage Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.png',
+            'rating_title' => __('Energy Sage Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage-black.png',
         ],
 
         'solarreviews' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#0f92d7',
             'name' => __('Solar', 'proofratings'),
             'title' => __('Solar Reviews Settings', 'proofratings'),
@@ -61,9 +73,6 @@ function get_proofratings_settings() {
         ],
 
         'yelp' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#e21c21',
             'name' => __('Yelp', 'proofratings'),
             'title' => __('Yelp Review Settings', 'proofratings'),
@@ -72,9 +81,6 @@ function get_proofratings_settings() {
         ],
 
         'bbb' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#136796',
             'name' => __('BBB', 'proofratings'),
             'title' => __('BBB Review Settings', 'proofratings'),
@@ -83,9 +89,6 @@ function get_proofratings_settings() {
         ],
 
         'guildquality' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#032e57',
             'name' => __('Guild Quality', 'proofratings'),
             'title' => __('Guild Quality Review Settings', 'proofratings'),
@@ -94,9 +97,6 @@ function get_proofratings_settings() {
         ],
 
         'solarquotes' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#208ECD',
             'name' => __('Solarquotes', 'proofratings'),
             'title' => __('Solarquotes Review Settings', 'proofratings'),
@@ -105,9 +105,6 @@ function get_proofratings_settings() {
         ],
 
         'trustpilot' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#01B67B',
             'name' => __('Trustpilot', 'proofratings'),
             'title' => __('Trustpilot Review Settings', 'proofratings'),
@@ -116,9 +113,6 @@ function get_proofratings_settings() {
         ],
 
         'wordpress' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#00769D',
             'name' => __('Wordpress', 'proofratings'),
             'title' => __('Wordpress Review Settings', 'proofratings'),
@@ -127,9 +121,6 @@ function get_proofratings_settings() {
         ],
 
         'bestcompany' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#3c5170',
             'name' => __('Best Comapny', 'proofratings'),
             'title' => __('Best Company Review Settings', 'proofratings'),
@@ -138,9 +129,6 @@ function get_proofratings_settings() {
         ],
 
         'solartribune' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#fbcb38',
             'name' => __('Solar Tribune', 'proofratings'),
             'title' => __('Solar Tribune Review Settings', 'proofratings'),
@@ -149,9 +137,6 @@ function get_proofratings_settings() {
         ],
 
         'oneflare' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#3D9EA0',
             'name' => __('Oneflare', 'proofratings'),
             'title' => __('Oneflare Review Settings', 'proofratings'),
@@ -160,9 +145,6 @@ function get_proofratings_settings() {
         ],
 
         'capterra' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#044D80',
             'name' => __('Capterra', 'proofratings'),
             'title' => __('Capterra Review Settings', 'proofratings'),
@@ -171,9 +153,6 @@ function get_proofratings_settings() {
         ],
 
         'g2' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#EF4D35',
             'name' => __('G2', 'proofratings'),
             'title' => __('G2 Review Settings', 'proofratings'),
@@ -182,9 +161,6 @@ function get_proofratings_settings() {
         ],
 
         'getapp' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#41E3E2',
             'name' => __('Getapp', 'proofratings'),
             'title' => __('Getapp Review Settings', 'proofratings'),
@@ -193,9 +169,6 @@ function get_proofratings_settings() {
         ],
 
         'softwareadvice' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#FD810D',
             'name' => __('Software Advice', 'proofratings'),
             'title' => __('Software Advice Review Settings', 'proofratings'),
@@ -204,9 +177,6 @@ function get_proofratings_settings() {
         ],
 
         'saasworthy' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#FEBA52',
             'name' => __('SaaSworthy', 'proofratings'),
             'title' => __('SaaSworthy Review Settings', 'proofratings'),
@@ -215,9 +185,6 @@ function get_proofratings_settings() {
         ],
 
         'crozdesk' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#015BE3',
             'name' => __('Crozdesk', 'proofratings'),
             'title' => __('Crozdesk Review Settings', 'proofratings'),
@@ -226,9 +193,6 @@ function get_proofratings_settings() {
         ],
 
         'quickbooks' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#2C9F1C',
             'name' => __('Quickbooks', 'proofratings'),
             'title' => __('Quickbooks Review Settings', 'proofratings'),
@@ -237,9 +201,6 @@ function get_proofratings_settings() {
         ],
 
         'angi' => [
-            'active' => 'no',
-            'text_color' => '',
-            'background' => '',
             'theme_color' => '#FF5E4F',
             'name' => __('Angi', 'proofratings'),
             'title' => __('Angi Review Settings', 'proofratings'),
@@ -254,12 +215,12 @@ function get_proofratings_settings() {
         return $default;
     }    
 
-    array_walk($default, function(&$item, $key) use($settings) {         
+    array_walk($default, function(&$item, $key) use($settings) {
         if ( !isset($settings[$key]) ) {
-            return $item;
+            return new Proofratings_Site_Data($item);
         }
 
-        $item = array_merge($item, $settings[$key]);
+        $item = new Proofratings_Site_Data(array_merge($item, $settings[$key]));
     });
 
     return $default;

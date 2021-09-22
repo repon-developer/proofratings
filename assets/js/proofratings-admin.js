@@ -39,6 +39,14 @@
         jQuery('.nav-tab-wrapper a:first').click();
     }
 
+    $('[name="proofratings_widget_settings[badge_style]"]').on('change', function(){
+        demo_image = $(this).find(':selected').data('img');
+        $(this).next('img').prop('src', demo_image);
+
+        
+        
+    }).trigger('change');
+
     $('[name="proofratings_floating_badge_settings[show]"]').on('change', function(){
         next_rows = $(this).closest('tr').nextAll();        
         if ( $(this).is(':checked') ) {

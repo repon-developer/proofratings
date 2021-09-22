@@ -140,19 +140,17 @@ html {
 .proofratings-badge.proofratings-badge-style2 .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
 .proofratings-badge.proofratings-badge-style2 .proofratings-reviews {margin-right: 20px;}
 
-
-
-
 .proofratings-review-widgets-grid {
     display: grid;
     gap: 30px;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 225px))
+    grid-template-columns: repeat(auto-fit, minmax(200px, 260px))
 }
 
 .proofratings-widget {
     color: var(--textColor, inherit)!important;
     display: flex;
+    position: relative;
     padding: 10px 20px;
     line-height: 1.2;
     align-items: center;
@@ -205,6 +203,62 @@ html {
     margin-top: 8px;
     letter-spacing: 1px;
 }
+
+
+.proofratings-widget.proofratings-widget-style2 {
+    width: 250px;
+    display: unset;
+    min-height: 121px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.proofratings-widget.proofratings-widget-style2 .review-site-logo {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+.proofratings-widget.proofratings-widget-style2 .rating-title {
+    font-size: 16px;
+    letter-spacing:0.05em;
+    margin-bottom: 8px;
+}
+
+.proofratings-widget.proofratings-widget-style2 .proofratings-reviews {
+    text-align: left;
+    justify-content: unset;
+}
+
+.proofratings-widget.proofratings-widget-style2 .proofratings-score {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.proofratings-widget.proofratings-widget-style2 .review-count {
+    color: var(--color, #767676);
+    padding: unset;
+    font-weight: unset;
+    letter-spacing:0.05em;
+    background-color: transparent;
+}
+
+.proofratings-widget.proofratings-widget-style2 .proofratings-stars {width: 146px!important}
+
+.proofratings-widget.proofratings-widget-style2 .proofratings-stars, .proofratings-widget.proofratings-widget-style2 .proofratings-stars i {
+    height: 22px!important;
+    -webkit-mask-size: 30px auto
+}
+
+
+
+
+
+
+
+
 
 .proofratings-floating-widgets-box::-webkit-scrollbar {
     height: 5px;

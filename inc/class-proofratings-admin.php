@@ -81,13 +81,16 @@ class ProofRatings_Admin {
 
 		$settings = $postdata['proofratings_settings'];
 		$badge_settings = $postdata['proofratings_floating_badge_settings'];
-		$proofratings_font = $postdata['proofratings_font'];
+
+		$widget_settings = wp_parse_args($postdata['proofratings_widget_settings'], [
+			'proofratings_font' => 'inherit',
+		]);
 		
 		ob_start();
 
-		if ( $proofratings_font ) {
+		if ( $widget_settings['proofratings_font'] ) {
 			echo ".proofratings-widget, .proofratings-floating-badge {\n";
-				printf("\tfont-family: %s!important;\n", $proofratings_font);
+				printf("\tfont-family: %s!important;\n", $widget_settings['proofratings_font']);
 			echo "}\n\n";
 		}
 
@@ -108,6 +111,12 @@ class ProofRatings_Admin {
 				}
 				
 			echo "}\n\n";
+
+			printf(".proofratings-widget.proofratings-widget-style2.proofratings-widget-%s .review-count {\n", $key);
+				if ( $site['review_count_textcolor'] ) {
+					printf("\t--color: %s!important;\n", $site['review_count_textcolor']);
+				}
+			echo "}";
 		}
 
 		echo ".proofratings-badge {\n";			
