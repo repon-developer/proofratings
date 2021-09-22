@@ -42,23 +42,36 @@
     $('[name="proofratings_floating_badge_settings[show]"]').on('change', function(){
         next_rows = $(this).closest('tr').nextAll();        
         if ( $(this).is(':checked') ) {
-            $('[name="proofratings_banner_badge_settings[type]"]').prop('checked', false).trigger('change');
             return next_rows.show();
         }
 
         next_rows.hide();
 
-    }).trigger('change')
+    }).trigger('change');
 
-    $('[name="proofratings_banner_badge_settings[type]"]').on('change', function(){
+    $('[name="proofratings_floating_badge_settings[badge_style]"]').on('change', function(){
+        demo_image = $(this).find(':selected').data('img');
+
+        position_select = $('[name="proofratings_floating_badge_settings[position]"]');
         
-        if ( $(this).is(':checked') ) {
-            $('[name="proofratings_floating_badge_settings[show]"]').prop('checked', false).trigger('change');
-            return $(this).closest('table.form-table').removeClass('banner-badge-embed');
+        $(this).next('img').prop('src', demo_image);
+
+        style = $(this).val();
+
+        let positions = ['Left', 'Center', 'Right'];
+
+        if ( style == 'style1') {
+            positions.splice(1, 1);
         }
 
-        $(this).closest('table.form-table').addClass('banner-badge-embed');
-    }).trigger('change')
+        position_options = positions.map(pos => {
+            pos_lower = pos.toLowerCase();
+            const selected = (pos_lower == position_select.data('position')) ? 'selected' : '';
+            return `<option value="${pos_lower}" ${selected}>${pos}</option>`;
+        });
+
+        position_select.html(position_options.join(''))
+    }).trigger('change');
 
     
 })(jQuery)

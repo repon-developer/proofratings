@@ -60,7 +60,7 @@ html {
     display: block;
 }
 
-.proofratings-logos {text-align: center; line-height: 1; margin-bottom: 7px; flex: 0 0 auto}
+.proofratings-logos {display: flex; text-align: center; justify-content: center; line-height: 1; margin-bottom: 7px; flex: 0 0 auto}
 
 .proofratings-logos img {
     --size: 25px;
@@ -105,26 +105,24 @@ html {
 
 .proofratings-badge.opened {visibility: hidden;}
 
-.proofratings-badge.proofratings-floating-badge, .proofratings-badge.badge-float {
+.proofratings-badge.badge-float {
     position: fixed;
     left: 30px;
     bottom: 30px;
     z-index: 30000;
 }
 
-
-
-.proofratings-badge.proofratings-floating-badge.right, .proofratings-badge.badge-float.right {
+.proofratings-badge.badge-float.right {
     left: auto;
     right: 30px
 }
 
-.proofratings-badge.badge-float.center, .proofratings-badge.badge-float.center-bottom {
+.proofratings-badge.badge-float.center {
     left: auto;
     transform: translateX(calc(50vw - 50%));
 }
 
-.proofratings-badge.proofratings-floating-badge .proofratings-review-count {
+.proofratings-badge.proofratings-badge-style1 .proofratings-review-count {
     color: #fff;
     padding: 10px var(--padx);
     background-color: #212a3d;
@@ -132,16 +130,15 @@ html {
 }
 
 
-.proofratings-badge.proofratings-banner-badge {
+.proofratings-badge.proofratings-badge-style2 {
     min-height: 62px;
     padding: 15px 20px;
     display: inline-flex;
     align-items: center;
-    --shadowColor: rgba(0,0,0, 0.10)
 }
 
-.proofratings-badge.proofratings-banner-badge .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
-.proofratings-badge.proofratings-banner-badge .proofratings-reviews {margin-right: 20px;}
+.proofratings-badge.proofratings-badge-style2 .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
+.proofratings-badge.proofratings-badge-style2 .proofratings-reviews {margin-right: 20px;}
 
 
 
@@ -243,8 +240,7 @@ html {
     transition: all 140ms;
 }
 
-.proofratings-badge.center + #proofratings-floating-embed,
-.proofratings-badge.center-bottom + #proofratings-floating-embed {
+.proofratings-badge.center + #proofratings-floating-embed {
     left: 50%;
     --translateX: -50%
 }
@@ -327,7 +323,7 @@ html {
     --translateY: -10px
 }
 
-.proofratings-banner-badge-tab .proofratings-banner-badge, .proofratings-banner-badge-tab #proofratings-floating-embed {
+.proofratings-banner-badge-tab .proofratings-badge-style2, .proofratings-banner-badge-tab #proofratings-floating-embed {
     position: static;
     transform: translate(0)!important;
 }
@@ -341,7 +337,7 @@ html {
 .proofratings-banner-badge-tab #proofratings-floating-embed .proofrating-close {display: none!important}
 
 
-.proofratings-banner-badge-tab .proofratings-banner-badge {
+.proofratings-banner-badge-tab .proofratings-badge-style2 {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }

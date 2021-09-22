@@ -87,8 +87,6 @@ class ProofRatings_Shortcodes {
             return false;
         }
 
-		
-
 		$total_reviews = array_sum(array_column($review_sites, 'count'));
 		$has_reviews = array_filter($review_sites, function($item) {
 			return $item['count'] > 0;
@@ -111,27 +109,21 @@ class ProofRatings_Shortcodes {
         $atts = shortcode_atts([
 			'mobile' => 'yes',
 			'tablet' => 'yes',
+			'float' => false,
+			'badge_style' => 'style1',
             //'url' => '#proofratings_widgets'
         ], $atts, 'proofratings_floating_badge');
-
-        $review_sites = $this->get_active_review_sites();
-        if ( !$review_sites ) {
-            return;
-        }
-
-		$total_reviews = array_sum(array_column($review_sites, 'count'));
-		$has_reviews = array_filter($review_sites, function($item) {
-			return $item['count'] > 0;
-		});
 		
-		$total_score = 0.0;
-		if (count($has_reviews) > 0) {
-			$total_score = array_sum(array_column($review_sites, 'rating')) / count($has_reviews);
+		$review_data = $this->get_overall_reviews();
+        if ( !$review_data ) {
+			return;
+        }
+				
+		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['badge_style']];
+
+		if ( $atts['float'] == true ) {
+			array_push($classes, 'badge-float');
 		}
-
-		$total_score = number_format(floor($total_score*100)/100, 1);
-
-		$classes = ['proofratings-badge', 'proofratings-floating-badge'];
 
 		$badget_settings = get_option( 'proofratings_floating_badge_settings');
 
@@ -154,33 +146,60 @@ class ProofRatings_Shortcodes {
 			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
 		}
 
-
         ob_start();
         printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
-			if ( @$badget_settings['close_button'] != 'no' ) {
+			if ( @$badget_settings['close_button'] != 'no' && $atts['float'] == true ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
-			echo '<div class="proofratings-inner">';
-		        echo '<div class="proofratings-logos">';
-		        foreach ($review_sites as $key => $site) {
-		            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site['icon']), $key);
-		        }
-				echo '</div>';
-
-		        echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-		            printf('<span class="proofratings-score">%s</span>', $total_score);
-		            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $total_score * 20);
-
-					echo '<meta itemprop="worstRating" content = "1">';
-					echo '<meta itemprop="ratingValue" content="'.$total_score.'">';
-					echo '<meta itemprop="bestRating" content="5">';
-		        echo '</div>';
-	        echo '</div>';
-
-        	printf('<div class="proofratings-review-count">%d %s</div>', $total_reviews, __('reviews', 'proofratings'));
+			if($atts['badge_style'] == 'style2') {
+				$this->floating_badge_style2($review_data);
+			} else {				
+				$this->floating_badge_style1($review_data);
+			}
+			
         printf('</%s>', $tag);
         return ob_get_clean();
+	}
+
+	private function floating_badge_style1($review_data) {
+		echo '<div class="proofratings-inner">';
+			echo '<div class="proofratings-logos">';
+			foreach ($review_data['sites'] as $key => $site) {
+				printf('<img src="%1$s" alt="%2$s" >', esc_attr($site['icon']), $key);
+			}
+			echo '</div>';
+
+			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+				printf('<span class="proofratings-score">%s</span>', $review_data['rating']);
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $review_data['percent']);
+
+				echo '<meta itemprop="worstRating" content = "1">';
+				echo '<meta itemprop="ratingValue" content="'.$review_data['rating'].'">';
+				echo '<meta itemprop="bestRating" content="5">';
+			echo '</div>';
+		echo '</div>';
+
+		printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
+	}
+
+	private function floating_badge_style2($review_data) {
+		echo '<div class="proofratings-logos">';
+        foreach ($review_data['sites'] as $key => $site) {
+            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site['icon']), $key);
+        }
+		echo '</div>';
+
+        echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+            printf('<span class="proofratings-score">%s</span>', $review_data['rating']);
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $review_data['percent']);
+
+			echo '<meta itemprop="worstRating" content = "1">';
+			echo '<meta itemprop="ratingValue" content="'.$review_data['rating'].'">';
+			echo '<meta itemprop="bestRating" content="5">';
+        echo '</div>';
+
+    	printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
 	}
 
 	/**

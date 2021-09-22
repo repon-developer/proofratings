@@ -117,31 +117,23 @@ class Wordpress_ProofRatings {
 			return;
 		}
 
-		$banner_badge_settings = get_option( 'proofratings_banner_badge_settings');
-		if ( @$banner_badge_settings['type'] == 'float' ) {
-
-			if ( @$banner_badge_settings['position'] == 'center-bottom') {
-				echo '<div class="proofratings-banner-badge-tab">';
-			}
-
-			echo do_shortcode('[proofratings_banner type="float"]' );
-			echo do_shortcode('[proofratings_floating_widgets]' );
-
-			if ( @$banner_badge_settings['position'] == 'center-bottom') {
-				echo '</div>';
-			}
-
-			return;
-		}
-
 		$badge_settings = get_option( 'proofratings_floating_badge_settings');
 		$on_pages = (array) @$badge_settings['on_pages'];
 
 		$has_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
 		$show_badge = @$badge_settings['show'];
 		if ( !($show_badge != 'yes') && $has_page ) {
-			echo do_shortcode(sprintf('[proofratings_floating_badge mobile="%s" tablet="%s"]', $badge_settings['mobile'], $badge_settings['tablet']) );
+			
+			if ( @$badge_settings['position'] == 'center') {
+				echo '<div class="proofratings-banner-badge-tab">';
+			}
+
+			echo do_shortcode(sprintf('[proofratings_floating_badge float="true" badge_style="%s" mobile="%s" tablet="%s"]', $badge_settings['badge_style'], $badge_settings['mobile'], $badge_settings['tablet']) );
 			echo do_shortcode('[proofratings_floating_widgets]' );
+
+			if ( @$badge_settings['position'] == 'center') {
+				echo '</div>';
+			}
 		}
 	}
 

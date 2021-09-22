@@ -110,7 +110,7 @@ class ProofRatings_Admin {
 			echo "}\n\n";
 		}
 
-		echo ".proofratings-floating-badge {\n";			
+		echo ".proofratings-badge {\n";			
 			if ( $badge_settings['shadow_color'] ) {
 				printf("\t--shadowColor: %s;\n", $badge_settings['shadow_color']);
 			}
@@ -124,7 +124,7 @@ class ProofRatings_Admin {
 			}
 		echo "}\n\n";
 
-		echo ".proofratings-floating-badge .proofratings-stars i {\n";			
+		echo ".proofratings-badge .proofratings-stars i {\n";			
 			if ( $badge_settings['star_color'] ) {
 				printf("\tbackground-color: %s;\n", $badge_settings['star_color']);
 			}
@@ -136,43 +136,17 @@ class ProofRatings_Admin {
 			}
 		echo "}\n\n";
 
-		echo ".proofratings-floating-badge .proofratings-review-count {\n";
+		echo ".proofratings-badge .proofratings-review-count {\n";
 			if ( $badge_settings['review_text_color'] ) {
 				printf("\tcolor: %s!important;\n", $badge_settings['review_text_color']);
 			}
+		echo "}";
 
-			if ( $badge_settings['review_background'] ) {
+		if ( $badge_settings['review_background'] ) {
+			echo ".proofratings-badge.proofratings-badge-style1 .proofratings-review-count {\n";
 				printf("\tbackground-color: %s!important;\n", $badge_settings['review_background']);
-			}
-		echo "}";
-
-		$banner_badge_settings = $postdata['proofratings_banner_badge_settings'];
-
-		echo ".proofratings-badge.proofratings-banner-badge {\n";			
-			if ( $banner_badge_settings['shadow_color'] ) {
-				printf("\t--shadowColor: %s;\n", $banner_badge_settings['shadow_color']);
-			}
-
-			if ( $banner_badge_settings['shadow_hover'] ) {
-				printf("\t--shadowHover: %s;\n", $banner_badge_settings['shadow_hover']);
-			}
-
-			if ( $banner_badge_settings['background_color'] ) {
-				printf("\tbackground-color: %s;\n", $banner_badge_settings['background_color']);
-			}
-		echo "}\n\n";
-
-		echo ".proofratings-badge.proofratings-banner-badge .proofratings-stars i {\n";			
-			if ( $banner_badge_settings['star_color'] ) {
-				printf("\tbackground-color: %s;\n", $banner_badge_settings['star_color']);
-			}
-		echo "}\n\n";
-
-		echo ".proofratings-badge.proofratings-banner-badge .proofratings-review-count {\n";
-			if ( $banner_badge_settings['review_text_color'] ) {
-				printf("\tcolor: %s!important;\n", $banner_badge_settings['review_text_color']);
-			}
-		echo "}";
+			echo "}";
+		}
 			
 		$styles = ob_get_clean();
 

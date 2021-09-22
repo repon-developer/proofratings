@@ -1,5 +1,5 @@
 (function ($) {
-    $('.proofratings-banner-badge.badge-float, .proofratings-floating-badge').on('click', function () {
+    $('.proofratings-badge.badge-float').on('click', function () {
 
         has_tab = $(this).closest('.proofratings-banner-badge-tab');
         if ( has_tab.length) {
