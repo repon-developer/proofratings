@@ -69,7 +69,9 @@ function get_proofratings_settings() {
             'name' => __('Solar', 'proofratings'),
             'title' => __('Solar Reviews Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.png',
+            'rating_title' => __('Solar Reviews Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews-black.png',
         ],
 
         'yelp' => [
@@ -77,7 +79,9 @@ function get_proofratings_settings() {
             'name' => __('Yelp', 'proofratings'),
             'title' => __('Yelp Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-yelp.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-yelp.png',
+            'rating_title' => __('Yelp Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp-black.png',
         ],
 
         'bbb' => [
@@ -85,7 +89,9 @@ function get_proofratings_settings() {
             'name' => __('BBB', 'proofratings'),
             'title' => __('BBB Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bbb.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bbb.png',
+            'rating_title' => __('BBB Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb-black.png',
         ],
 
         'guildquality' => [
@@ -93,7 +99,9 @@ function get_proofratings_settings() {
             'name' => __('Guild Quality', 'proofratings'),
             'title' => __('Guild Quality Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.png',
+            'rating_title' => __('Guild Quality Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality-black.png',
         ],
 
         'solarquotes' => [
@@ -101,7 +109,9 @@ function get_proofratings_settings() {
             'name' => __('Solarquotes', 'proofratings'),
             'title' => __('Solarquotes Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarquotes.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarquotes.png',
+            'rating_title' => __('Solarquotes Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes-black.png',
         ],
 
         'trustpilot' => [
@@ -109,7 +119,9 @@ function get_proofratings_settings() {
             'name' => __('Trustpilot', 'proofratings'),
             'title' => __('Trustpilot Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-trustpilot.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-trustpilot.png',
+            'rating_title' => __('Trustpilot Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot-black.png',
         ],
 
         'wordpress' => [
@@ -117,7 +129,9 @@ function get_proofratings_settings() {
             'name' => __('Wordpress', 'proofratings'),
             'title' => __('Wordpress Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wordpress.jpg'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wordpress.jpg',
+            'rating_title' => __('Wordpress Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress-black.png',
         ],
 
         'bestcompany' => [
@@ -125,7 +139,9 @@ function get_proofratings_settings() {
             'name' => __('Best Comapny', 'proofratings'),
             'title' => __('Best Company Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bestcompany.jpg'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bestcompany.jpg',
+            'rating_title' => __('Best Comapny Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany-black.png',
         ],
 
         'solartribune' => [
@@ -133,7 +149,9 @@ function get_proofratings_settings() {
             'name' => __('Solar Tribune', 'proofratings'),
             'title' => __('Solar Tribune Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solartribune.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solartribune.png',
+            'rating_title' => __('Solar Tribune Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune-black.png',
         ],
 
         'oneflare' => [
@@ -141,7 +159,9 @@ function get_proofratings_settings() {
             'name' => __('Oneflare', 'proofratings'),
             'title' => __('Oneflare Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-oneflare.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-oneflare.png',
+            'rating_title' => __('Oneflare Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare-black.png',
         ],
 
         'capterra' => [
@@ -149,7 +169,9 @@ function get_proofratings_settings() {
             'name' => __('Capterra', 'proofratings'),
             'title' => __('Capterra Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/capterra.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-capterra.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-capterra.png',
+            'rating_title' => __('Capterra Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/capterra-black.png',
         ],
 
         'g2' => [
@@ -157,7 +179,9 @@ function get_proofratings_settings() {
             'name' => __('G2', 'proofratings'),
             'title' => __('G2 Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/g2.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-g2.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-g2.png',
+            'rating_title' => __('G2 Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/g2-black.png',
         ],
 
         'getapp' => [
@@ -165,7 +189,9 @@ function get_proofratings_settings() {
             'name' => __('Getapp', 'proofratings'),
             'title' => __('Getapp Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/getapp.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-getapp.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-getapp.png',
+            'rating_title' => __('Getapp Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/getapp-black.png',
         ],
 
         'softwareadvice' => [
@@ -173,7 +199,9 @@ function get_proofratings_settings() {
             'name' => __('Software Advice', 'proofratings'),
             'title' => __('Software Advice Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/softwareadvice.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-softwareadvice.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-softwareadvice.png',
+            'rating_title' => __('Software Advice Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/softwareadvice-black.png',
         ],
 
         'saasworthy' => [
@@ -181,7 +209,9 @@ function get_proofratings_settings() {
             'name' => __('SaaSworthy', 'proofratings'),
             'title' => __('SaaSworthy Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/saasworthy.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-saasworthy.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-saasworthy.png',
+            'rating_title' => __('SaaSworthy Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/saasworthy-black.png',
         ],
 
         'crozdesk' => [
@@ -189,7 +219,9 @@ function get_proofratings_settings() {
             'name' => __('Crozdesk', 'proofratings'),
             'title' => __('Crozdesk Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/crozdesk.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-crozdesk.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-crozdesk.png',
+            'rating_title' => __('Crozdesk Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/crozdesk-black.png',
         ],
 
         'quickbooks' => [
@@ -197,7 +229,9 @@ function get_proofratings_settings() {
             'name' => __('Quickbooks', 'proofratings'),
             'title' => __('Quickbooks Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks.png',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-quickbooks.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-quickbooks.png',
+            'rating_title' => __('Quickbooks Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks-black.png',
         ],
 
         'angi' => [
@@ -205,7 +239,9 @@ function get_proofratings_settings() {
             'name' => __('Angi', 'proofratings'),
             'title' => __('Angi Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/angi.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-angi.png'
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-angi.png',
+            'rating_title' => __('Angi Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/angi-black.png',
         ]
     ];
 

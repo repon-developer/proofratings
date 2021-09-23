@@ -56,14 +56,12 @@ class Wordpress_Proofratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
-		$this->ping_review();
 	}
 		
 	/**
 	 * proofratings rest api for getting data
 	 */
-	public function register_rest_api() {
-		
+	public function register_rest_api() {		
 		register_rest_route( 'proofratings/v1', 'set_reviews', array(
 			'methods' => 'POST',
 			'callback' => [$this, 'set_reviews'],
@@ -75,38 +73,14 @@ class Wordpress_Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
-		return $request;
+		$reviews_info = wp_parse_args($request->get_params(), ['status' => false, 'message' => '', 'reviews' => array()]);
 
-		$response = wp_remote_get($request_url);
-		if ( is_wp_error( $response ) ) {
-			return;
-		}
+		$reviews = $reviews_info['reviews'];
+		unset($reviews_info['reviews']);
 
-		$data = json_decode(wp_remote_retrieve_body($response));
-		if ( isset($data->data) ) {
-			unset($data->data);
-		}
-
-		if( $response['response']['code'] === 412) {
-			$data->status = $data->code;
-			unset($data->code);
-			return update_option('proofratings_status', $data );
-		}
-
-		if( $response['response']['code'] !== 200) {
-			return;
-		}
-
-		if( is_object($data) ) {
-			update_option( 'proofratings_reviews', $data);
-			update_option('proofratings_status', ['status' => 'active']);		
-		}
-
-
-		return $request;
+		update_option('proofratings_status', $reviews_info );
+		update_option( 'proofratings_reviews', $reviews);
 	}
-
-	
 
 	/**
 	 * proof ratings activate
@@ -132,9 +106,6 @@ class Wordpress_Proofratings {
 		$data = json_decode(wp_remote_retrieve_body($response));
 		if ( is_object($data) && $data->success ) {
 			update_option('proofratings_status', $data );
-			if ( $data->status == 'active' ) {
-				$this->proofratings_get_reviews();
-			}
 		}
 	}
 
@@ -190,42 +161,4 @@ class Wordpress_Proofratings {
 			}
 		}
 	}
-
-	public function ping_review() {
-		if ( isset($_GET['ping-proofratings'])) {
-			exit($this->proofratings_get_reviews());
-		}
-	}	
-
-	public function proofratings_get_reviews() {
-		$request_url = add_query_arg(array(
-			'domain' => get_site_url()
-		), PROOFRATINGS_API_URL . '/get-reviews');
-
-		$response = wp_remote_get($request_url);
-		if ( is_wp_error( $response ) ) {
-			return;
-		}
-
-		$data = json_decode(wp_remote_retrieve_body($response));
-		if ( isset($data->data) ) {
-			unset($data->data);
-		}
-
-		if( $response['response']['code'] === 412) {
-			$data->status = $data->code;
-			unset($data->code);
-			return update_option('proofratings_status', $data );
-		}
-
-		if( $response['response']['code'] !== 200) {
-			return;
-		}
-
-		if( is_object($data) ) {
-			update_option( 'proofratings_reviews', $data);
-			update_option('proofratings_status', ['status' => 'active']);		
-		}
-	}
-
 }

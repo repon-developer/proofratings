@@ -60,7 +60,6 @@ class ProofRatings_Shortcodes {
                 $review_sites[$key] = $site;
             }
         }
-
 		
         if ( empty($review_sites) ) {
 			return false;
@@ -71,12 +70,12 @@ class ProofRatings_Shortcodes {
 			return false;
 		}
 		
-		
 		array_walk($review_sites, function(&$item, $key) use($proofratings_reviews) {
-			$site_rating = isset($proofratings_reviews->{$key}) ? $proofratings_reviews->{$key} : [];
+			$site_rating = isset($proofratings_reviews[$key]) ? $proofratings_reviews[$key] : [];
+
 			$item = new Proofratings_Site_Data(wp_parse_args( $item, wp_parse_args( $site_rating , ['rating' => 0, 'count' => 0, 'percent' => 0, 'review_url' => ''])));
 		});
-		
+
 		return $review_sites;
 	}
 
