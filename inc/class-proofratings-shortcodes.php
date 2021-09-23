@@ -69,7 +69,9 @@ class ProofRatings_Shortcodes {
 		if ( !$proofratings_reviews ) {
 			return false;
 		}
-		
+
+		$proofratings_reviews = (array) $proofratings_reviews;
+
 		array_walk($review_sites, function(&$item, $key) use($proofratings_reviews) {
 			$site_rating = isset($proofratings_reviews[$key]) ? $proofratings_reviews[$key] : [];
 
