@@ -39,9 +39,11 @@
         jQuery('.nav-tab-wrapper a:first').click();
     }
 
-    $('[name="proofratings_widget_settings[badge_style]"]').on('change', function(){
+    $('#proofratings_widget_style').on('change', function(){
         demo_image = $(this).find(':selected').data('img');
         $(this).next('img').prop('src', demo_image);
+
+        $('#proofratings-widgets-shortcode').html(`[proofratings_widgets badge_style="${$(this).val()}"]`)
 
         
         

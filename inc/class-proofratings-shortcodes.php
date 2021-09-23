@@ -231,20 +231,20 @@ class ProofRatings_Shortcodes {
 				$tag = 'div';
 				$attribue= '';
 				
-				if( !empty($site['review_url']) ) {
+				if( !empty($site->review_url) ) {
 					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', esc_url($site['review_url']));
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
 				}
 				
 				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
-	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site['logo']), esc_attr($site['name']));
+	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
 					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
-						printf('<span class="proofratings-score">%s</span>', number_format($site['rating'], 1));
-						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site['rating'] * 20));
+						printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
+						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percenter));
 			        echo '</div>';
 
-					printf('<div class="review-count"> %d %s </div>', esc_html($site['count']), __('reviews', 'proofratings'));
+					printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('reviews', 'proofratings'));
 
 					echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
 
@@ -262,16 +262,20 @@ class ProofRatings_Shortcodes {
 	 */
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
-			'badge_style' => 'style1',
+			'badge_style' => '',
             'id' => 'proofratings_widgets'
         ], $atts);
 
-		var_dump($atts);
-
+		
 		$review_sites = $this->get_active_review_sites();
         if ( !$review_sites ) {
-            return;
+			return;
         }
+
+		$badge_style = sanitize_key($atts['badge_style']);
+		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
+			$badge_style = 'style1';
+		}
 
         ob_start();		
         printf('<div id="%s" class="proofratings-review-widgets-grid">', esc_attr($atts['id']));
@@ -282,11 +286,6 @@ class ProofRatings_Shortcodes {
 				if( !empty($site->review_url) ) {
 					$tag = 'a';
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
-				}
-
-				$badge_style = sanitize_key($atts['badge_style']);
-				if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
-					$badge_style = 'style1';
 				}
 				
 				printf('<%s class="proofratings-widget proofratings-widget-%s proofratings-widget-%s" %s>', $tag, $badge_style, $key, $attribue);

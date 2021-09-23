@@ -117,8 +117,6 @@ class WP_ProofRatings_Settings {
 				</h2>
 
 				<div id="settings-review-sites" class="settings_panel">
-					<div class="shortcode-info">Use shortcode where you want to display review widgets <code>[proofratings_widgets]</code></div>
-
 					<table class="form-table">
 						<tr>
 							<th scope="row"><?php _e('Font Family', 'proofratings') ?></th>
@@ -133,13 +131,23 @@ class WP_ProofRatings_Settings {
 							<th scope="row" style="vertical-align:middle"><?php _e('Badge Type', 'proofratings') ?></th>
 							<td>
 								<div class="proofratings-styles">
-									<select name="proofratings_widget_settings[badge_style]">
-										<option value="style1" <?php selected('style1', $widget_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
-										<option value="style2" <?php selected('style2', $widget_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
+									<select id="proofratings_widget_style">
+										<option value="style1" data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
+										<option value="style2" data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
 									</select>
 
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
 								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row" style="vertical-align:middle">
+								<?php _e('Shortcode', 'proofratings') ?>
+								<p class="description" style="font-weight: normal">Use shortcode where you want to display review widgets</p>
+							</th>
+							<td>
+								<code class="shortocde-area" id="proofratings-widgets-shortcode">[proofratings_widgets]</code>
 							</td>
 						</tr>
 					</table>
@@ -248,7 +256,7 @@ class WP_ProofRatings_Settings {
 										<option value="style2" <?php selected('style2', $badge_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
 									</select>
 
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/style1.png" alt="Proofratings style">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
 								</div>
 							</td>
 						</tr>

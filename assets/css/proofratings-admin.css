@@ -168,6 +168,8 @@ table.form-table.banner-badge-embed #banner-badge-position {
     display: none!important;
 }
 
+.shortocde-area {user-select: all}
+
 .proofratings-styles {
     display: flex;
     align-items: center;
