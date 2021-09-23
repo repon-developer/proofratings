@@ -31,12 +31,12 @@ require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
 
 /**
  * Main instance of Wordpress Proofratings.
- * Returns the main instance of Wordpress_ProofRatings to prevent the need to use globals.
+ * Returns the main instance of Wordpress_Proofratings to prevent the need to use globals.
  * @since  1.0.1
- * @return Wordpress_ProofRatings
+ * @return Wordpress_Proofratings
  */
 function WP_Proofratings() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
-	return Wordpress_ProofRatings::instance();
+	return Wordpress_Proofratings::instance();
 }
 
 $GLOBALS['proofratings'] = WP_Proofratings();

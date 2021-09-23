@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Wordpress_ProofRatings {
+class Wordpress_Proofratings {
 	/**
 	 * The single instance of the class.
 	 *
@@ -50,12 +50,63 @@ class Wordpress_ProofRatings {
 		$this->admin = ProofRatings_Admin::instance();
 		$this->shortcodes = ProofRatings_Shortcodes::instance();
 
+		add_action( 'rest_api_init', [$this, 'register_rest_api']);
+
 		// Actions.
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
 		$this->ping_review();
 	}
+		
+	/**
+	 * proofratings rest api for getting data
+	 */
+	public function register_rest_api() {
+		
+		register_rest_route( 'proofratings/v1', 'set_reviews', array(
+			'methods' => 'POST',
+			'callback' => [$this, 'set_reviews'],
+			'permission_callback' => '__return_true'
+		));
+	}
+
+	/**
+	 * proofratings rest api callback
+	 */
+	public function set_reviews(WP_REST_Request $request) {
+		return $request;
+
+		$response = wp_remote_get($request_url);
+		if ( is_wp_error( $response ) ) {
+			return;
+		}
+
+		$data = json_decode(wp_remote_retrieve_body($response));
+		if ( isset($data->data) ) {
+			unset($data->data);
+		}
+
+		if( $response['response']['code'] === 412) {
+			$data->status = $data->code;
+			unset($data->code);
+			return update_option('proofratings_status', $data );
+		}
+
+		if( $response['response']['code'] !== 200) {
+			return;
+		}
+
+		if( is_object($data) ) {
+			update_option( 'proofratings_reviews', $data);
+			update_option('proofratings_status', ['status' => 'active']);		
+		}
+
+
+		return $request;
+	}
+
+	
 
 	/**
 	 * proof ratings activate
@@ -70,6 +121,9 @@ class Wordpress_ProofRatings {
 		), PROOFRATINGS_API_URL . '/register');
 
 		$response = wp_remote_get($request_url);
+		if ( is_wp_error( $response ) ) {
+			return;
+		}
 
 		if( $response['response']['code'] !== 200) {
 			return;			
