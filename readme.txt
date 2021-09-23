@@ -37,6 +37,7 @@ Proofratings monitors all your third party sites for reviews by your customers. 
 18. Crozdesk
 19. Quickbooks
 20. Angi
++ More
 
 All your reviews are collected to one dashboard, where you can decide which of them to feature in widgets.
 Easily add these beautiful widgets to your website:
