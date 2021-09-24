@@ -146,9 +146,24 @@ class Wordpress_Proofratings {
 		$on_pages = (array) @$badge_settings['on_pages'];
 
 		$has_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
-		$show_badge = @$badge_settings['show'];
+		$show_badge = @$badge_settings['float'];
 		if ( !($show_badge != 'yes') && $has_page ) {
-			echo do_shortcode(sprintf('[proofratings_floating_badge float="true" badge_style="%s" mobile="%s" tablet="%s"]', $badge_settings['badge_style'], $badge_settings['mobile'], $badge_settings['tablet']) );
+
+			$attributes = [];
+
+			$supported_keys = ['badge_style', 'mobile', 'tablet', 'star_color', 'shadow', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'];
+
+			array_walk($supported_keys, function($key) use (&$attributes, $badge_settings) {
+				if ( !empty($badge_settings[$key])) {
+					$attributes[$key] = $badge_settings[$key];
+				}
+			});
+
+			$attributes = array_map(function($item, $key){
+				return "$key=\"$item\"";
+			}, $attributes, array_keys($attributes));
+
+			echo do_shortcode(sprintf('[proofratings_floating_badge float="yes" %s]', implode(' ', $attributes)) );
 			echo do_shortcode('[proofratings_floating_widgets]' );
 		}
 	}

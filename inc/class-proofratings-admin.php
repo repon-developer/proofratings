@@ -119,43 +119,11 @@ class ProofRatings_Admin {
 			echo "}";
 		}
 
-		echo ".proofratings-badge {\n";			
-			if ( $badge_settings['shadow_color'] ) {
-				printf("\t--shadowColor: %s;\n", $badge_settings['shadow_color']);
-			}
-
-			if ( $badge_settings['shadow_hover'] ) {
-				printf("\t--shadowHover: %s;\n", $badge_settings['shadow_hover']);
-			}
-
-			if ( $badge_settings['background_color'] ) {
-				printf("\tbackground-color: %s;\n", $badge_settings['background_color']);
-			}
-		echo "}\n\n";
-
-		echo ".proofratings-badge .proofratings-stars i {\n";			
-			if ( $badge_settings['star_color'] ) {
-				printf("\tbackground-color: %s;\n", $badge_settings['star_color']);
-			}
-		echo "}\n\n";
-
 		echo "#proofratings-floating-embed .proofrating-close {\n";			
 			if ( $badge_settings['star_color'] ) {
 				printf("\tcolor: %s;\n", $badge_settings['star_color']);
 			}
 		echo "}\n\n";
-
-		echo ".proofratings-badge .proofratings-review-count {\n";
-			if ( $badge_settings['review_text_color'] ) {
-				printf("\tcolor: %s!important;\n", $badge_settings['review_text_color']);
-			}
-		echo "}";
-
-		if ( $badge_settings['review_background'] ) {
-			echo ".proofratings-badge.proofratings-badge-style1 .proofratings-review-count {\n";
-				printf("\tbackground-color: %s!important;\n", $badge_settings['review_background']);
-			echo "}";
-		}
 			
 		$styles = ob_get_clean();
 

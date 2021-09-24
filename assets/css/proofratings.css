@@ -14,16 +14,13 @@ html {
     background-color: #fff;
     border-radius: 10px;
     transition: all 200ms;
-    box-shadow: 0 0 4px 4px var(--shadowColor, rgba(246,211,0,0.4))!important
+    box-shadow: 0 0 4px 4px var(--shadow_color, rgba(246,211,0,0.4))!important
 }
 
-.proofratings-badge.right {
-    left: auto;
-    right: 30px
-}
+.proofratings-badge.right {left: auto; right: 30px}
 
 .proofratings-badge:hover {
-    box-shadow: 0 0 4px 4px var(--shadowHover, #377dbc66)!important;
+    box-shadow: 0 0 4px 4px var(--shadow_hover, #377dbc66)!important;
 }
 
 .proofratings-badge .proofratings-inner {padding: 15px var(--padx) 10px}
@@ -36,7 +33,6 @@ html {
     text-align: center;
     letter-spacing: 1px;
 }
-
 
 .proofratings-badge .proofratings-close {
     --size: 22px;
@@ -56,9 +52,7 @@ html {
     background-color: #e9e9e9;
 }
 
-.proofratings-badge:hover .proofratings-close {
-    display: block;
-}
+.proofratings-badge:hover .proofratings-close {display: block}
 
 .proofratings-logos {display: flex; text-align: center; justify-content: center; line-height: 1; margin-bottom: 7px; flex: 0 0 auto}
 
@@ -100,7 +94,7 @@ html {
 .proofratings-stars i {
     display: block;
     width: 87%;
-    background-color: #212A3D
+    background-color: var(--star_color, #212A3D)
 }
 
 .proofratings-badge.opened {visibility: hidden;}

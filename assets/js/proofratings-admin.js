@@ -1,5 +1,14 @@
 (function ($) {
-    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker();
+    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker({
+        change: function(event, ui){
+            field_name = $(event.target).data('name');
+            if ( field_name ) {
+                $('#form-table-floating-badge').trigger('update', {
+                    [field_name]: ui.color.toString()
+                });
+            }
+        }
+    });
 
     $('.checkbox-review-site input').on('change', function () {
         fieldset = $('#review-site-settings-' + $(this).parent().data('site'))
@@ -44,12 +53,37 @@
         $(this).next('img').prop('src', demo_image);
 
         $('#proofratings-widgets-shortcode').html(`[proofratings_widgets badge_style="${$(this).val()}"]`)
-
-        
-        
     }).trigger('change');
 
-    $('[name="proofratings_floating_badge_settings[show]"]').on('change', function(){
+
+    let float_badge_form = {}
+
+    $('#form-table-floating-badge').on('update', function(e, data){
+        $(this).find('[data-name]').each(function(){
+            field_name = $(this).data('name');
+            field_value = $(this).val();
+
+            float_badge_form[field_name] = field_value;
+        });
+
+        float_badge_form = Object.assign(float_badge_form, data);
+        
+        const attributes = Object.keys(float_badge_form).filter(key => float_badge_form[key].length).map(key => {
+            return `${key}="${float_badge_form[key]}"`;
+        })
+
+        $('#floating-badge-shortcode').html(`[proofratings_floating_badge ${attributes.join(' ')}]`)
+
+
+
+        
+    }).trigger('update');
+
+    $('#form-table-floating-badge').on('input change', 'input:not([type="checkbox"]), select', function(){
+        $('#form-table-floating-badge').trigger('update');
+    })
+
+    $('[name="proofratings_floating_badge_settings[float]"]').on('change', function(){
         next_rows = $(this).closest('tr').nextAll();        
         if ( $(this).is(':checked') ) {
             return next_rows.show();
@@ -59,6 +93,21 @@
 
     }).trigger('change');
 
+    $('[name="proofratings_floating_badge_settings[shadow]"]').on('change', function(){
+
+        $('#form-table-floating-badge').trigger('update', {
+            shadow: $('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ? 'yes' : 'no'
+        });
+
+
+        if ($('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ) {
+            return $('#badge-shadow-color, #badge-shadow-hover-color').show();
+        }
+
+        $('#badge-shadow-color, #badge-shadow-hover-color').hide();
+    }).trigger('change');
+
+
     $('[name="proofratings_floating_badge_settings[badge_style]"]').on('change', function(){
         demo_image = $(this).find(':selected').data('img');
 
@@ -67,8 +116,6 @@
         $(this).next('img').prop('src', demo_image);
 
         style = $(this).val();
-
-        $('#floating-badge-shortcode').html(`[proofratings_floating_badge badge_style="${style}"]`)
 
         let positions = ['Left', 'Center', 'Right'];
 

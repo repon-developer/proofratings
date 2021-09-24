@@ -110,11 +110,17 @@ class ProofRatings_Shortcodes {
 	 */
 	public function floating_badge($atts, $content = null) {
         $atts = shortcode_atts([
+			'float' => 'no',
 			'mobile' => 'yes',
 			'tablet' => 'yes',
-			'float' => false,
 			'badge_style' => 'style1',
-            //'url' => '#proofratings_widgets'
+			'star_color' => '',
+			'shadow' => '',
+			'shadow_color' => '',
+			'shadow_hover' => '',
+			'background_color' => '',
+			'review_text_color' => '',
+			'review_background' => ''
         ], $atts, 'proofratings_floating_badge');
 		
 		$review_data = $this->get_overall_reviews();
@@ -124,22 +130,24 @@ class ProofRatings_Shortcodes {
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['badge_style']];
 
-		if ( $atts['float'] == true ) {
+		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
 		}
 
 		$badget_settings = get_option( 'proofratings_floating_badge_settings');
 
-		if ( !empty($badget_settings['position']) ) {
-			$classes[] = $badget_settings['position'];
-		}
+		if ( $atts['float'] == 'yes' ) {
+			if ( !empty($badget_settings['position']) ) {
+				$classes[] = $badget_settings['position'];
+			}
 
-		if ( $atts['mobile'] == 'no') {
-			$classes[] = 'badge-hidden-mobile';
-		}
+			if ( $atts['mobile'] == 'no') {
+				$classes[] = 'badge-hidden-mobile';
+			}
 
-		if ( $atts['tablet'] == 'no') {
-			$classes[] = 'badge-hidden-tablet';
+			if ( $atts['tablet'] == 'no') {
+				$classes[] = 'badge-hidden-tablet';
+			}
 		}
 
 		$url_attribute = '';
@@ -149,9 +157,28 @@ class ProofRatings_Shortcodes {
 			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
 		}
 
+		
+		$styles = [];
+		$supported_keys = ['star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'];
+
+		if ( $atts['shadow'] == 'no') {
+			$atts['shadow_color'] = $atts['shadow_hover'] = 'transparent';
+		}
+
+		array_walk($supported_keys, function($key) use (&$styles, $atts) {
+			if ( !empty($atts[$key])) {
+				$styles[$key] = $atts[$key];
+			}
+		});
+
+		$styles = array_map(function($item, $key){
+			return "--$key:$item";
+		}, $styles, array_keys($styles));
+
+
         ob_start();
-        printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
-			if ( @$badget_settings['close_button'] != 'no' && $atts['float'] == true ) {
+        printf('<%s %s class="%s" style="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), implode(';', $styles));
+			if ( @$badget_settings['close_button'] != 'no' && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 

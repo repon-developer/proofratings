@@ -63,6 +63,7 @@ class WP_ProofRatings_Settings {
 			'close_button' => 'yes',
 			'position' => '',
 			'star_color' => '',
+			'shadow' => 'yes',
 			'shadow_color' => '',
 			'shadow_hover' => '',
 			'background_color' => '',
@@ -201,17 +202,23 @@ class WP_ProofRatings_Settings {
 					<?php 
 						$badge_settings = $this->get_floating_badge_settings(); ?>
 
-					<table class="form-table">
+					<table id="form-table-floating-badge" class="form-table">
+						<tr>
+							<th scope="row">
+								<?php _e('Shortcode', 'proofratings') ?>
+								<p class="description" style="font-weight: normal">Embed shortcode</p>
+							</th>
+							<td><code class="shortocde-area" id="floating-badge-shortcode">[proofratings_floating_badge badge_style="style1"]</code></td>
+						</tr>
+
 						<tr>
 							<th scope="row"><?php _e('Badge Visibility', 'proofratings') ?></th>
 							<td>
 								<label>
-									<input name="proofratings_floating_badge_settings[show]" value="no" type="hidden">
-									<input class="checkbox-switch" name="proofratings_floating_badge_settings[show]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['show'] ) ?>>
-									<?php _e('Show/Hide', 'proofratings'); ?>
+									<input name="proofratings_floating_badge_settings[float]" value="no" type="hidden">
+									<input class="checkbox-switch checkbox-float-embed" name="proofratings_floating_badge_settings[float]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['show'] ) ?>>
+									<?php _e('Float/Embed only option', 'proofratings'); ?>
 								</label>
-
-								<p>Use shortcode where you want to display review widgets <code id="floating-badge-shortcode">[proofratings_floating_badge badge_style="style1"]</code></p>
 							</td>
 						</tr>
 
@@ -251,7 +258,7 @@ class WP_ProofRatings_Settings {
 							<th scope="row" style="vertical-align:middle"><?php _e('Badge Type', 'proofratings') ?></th>
 							<td>
 								<div class="proofratings-styles">
-									<select name="proofratings_floating_badge_settings[badge_style]">
+									<select name="proofratings_floating_badge_settings[badge_style]" data-name="badge_style">
 										<option value="style1" <?php selected('style1', $badge_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
 										<option value="style2" <?php selected('style2', $badge_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
 									</select>
@@ -276,25 +283,33 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[star_color]"
-									value="<?php esc_attr_e($badge_settings['star_color']) ?>" data-default-color="#212A3D">
+									value="<?php esc_attr_e($badge_settings['star_color']) ?>" data-default-color="#212A3D" data-name="star_color">
 							</td>
 						</tr>
 
 						<tr>
+							<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
+							<td>
+								<input name="proofratings_floating_badge_settings[shadow]" value="no" type="hidden">
+								<input class="checkbox-switch" name="proofratings_floating_badge_settings[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['shadow'] ) ?>>
+							</td>
+						</tr>
+
+						<tr id="badge-shadow-color">
 							<th scope="row"><?php _e('Shadow Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_color]"
-									value="<?php esc_attr_e($badge_settings['shadow_color']) ?>" data-default-color="#f6d300">
+									value="<?php esc_attr_e($badge_settings['shadow_color']) ?>" data-default-color="#f6d300" data-name="shadow_color">
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="badge-shadow-hover-color">
 							<th scope="row"><?php _e('Shadow Hover Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_hover]"
-									value="<?php esc_attr_e($badge_settings['shadow_hover']) ?>" data-default-color="#377dbc">
+									value="<?php esc_attr_e($badge_settings['shadow_hover']) ?>" data-default-color="#377dbc" data-name="shadow_hover">
 							</td>
 						</tr>
 
@@ -303,7 +318,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[background_color]" 
-									value="<?php esc_attr_e($badge_settings['background_color']) ?>" data-default-color="#fff">
+									value="<?php esc_attr_e($badge_settings['background_color']) ?>" data-default-color="#fff" data-name="background_color">
 							</td>
 						</tr>
 
@@ -312,7 +327,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[review_text_color]" 
-									value="<?php esc_attr_e($badge_settings['review_text_color']) ?>">
+									value="<?php esc_attr_e($badge_settings['review_text_color']) ?>" data-name="review_text_color">
 							</td>
 						</tr>
 
@@ -321,7 +336,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[review_background]" 
-									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d">
+									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d" data-name="review_background">
 							</td>
 						</tr>
 					</table>
