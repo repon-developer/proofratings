@@ -148,17 +148,8 @@ class Wordpress_Proofratings {
 		$has_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
 		$show_badge = @$badge_settings['show'];
 		if ( !($show_badge != 'yes') && $has_page ) {
-			
-			if ( @$badge_settings['position'] == 'center') {
-				echo '<div class="proofratings-banner-badge-tab">';
-			}
-
 			echo do_shortcode(sprintf('[proofratings_floating_badge float="true" badge_style="%s" mobile="%s" tablet="%s"]', $badge_settings['badge_style'], $badge_settings['mobile'], $badge_settings['tablet']) );
 			echo do_shortcode('[proofratings_floating_widgets]' );
-
-			if ( @$badge_settings['position'] == 'center') {
-				echo '</div>';
-			}
 		}
 	}
 }

@@ -405,23 +405,6 @@ html {
 }
 
 @media screen and (max-width: 575px) {
-
-    .proofratings-floating-widgets-box {
-        --column: 2!important;
-    }
-
-    .proofratings-floating-widgets-box {
-        overflow-x: inherit;
-        max-height: 80vh;
-        overflow-y: auto;
-        
-    }
-    
-    .proofratings-floating-widgets-box .proofratings-widget {
-        padding: 8px;
-        margin-right: 0!important;
-    }
-
     .proofratings-floating-widgets-box {
         --column: 1!important;
         justify-content: center;
@@ -434,16 +417,6 @@ html {
         right: 0;
         height: 1px;
         width: auto;
-    }
-
-    .proofratings-badge.proofratings-badge-style2.badge-float:not(.center) + .proofratings-floating-widgets-box {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-    }
-
-    .proofratings-badge.proofratings-badge-style2.badge-float.center + #proofratings-floating-embed {
-        min-width: 90vw
     }
 }
 
