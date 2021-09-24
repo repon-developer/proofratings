@@ -11,9 +11,9 @@ html {
     line-height: 1.3;
     cursor: pointer;
     text-decoration: none!important;
-    background-color: #fff;
     border-radius: 10px;
     transition: all 200ms;
+    background-color: var(--background_color, #fff);
     box-shadow: 0 0 4px 4px var(--shadow_color, rgba(246,211,0,0.4))!important
 }
 
@@ -117,10 +117,10 @@ html {
 }
 
 .proofratings-badge.proofratings-badge-style1 .proofratings-review-count {
-    color: #fff;
+    color: var(--review_text_color, #212a3d);
     padding: 10px var(--padx);
-    background-color: #212a3d;
     border-radius: 0 0 10px 10px;
+    background-color: var(--review_background, #212a3d);
 }
 
 
