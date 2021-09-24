@@ -405,7 +405,6 @@ html {
 }
 
 @media screen and (max-width: 575px) {
-    #proofratings-floating-embed {min-width: min(420px, 94vw)}
 
     .proofratings-floating-widgets-box {
         --column: 2!important;
@@ -422,9 +421,7 @@ html {
         padding: 8px;
         margin-right: 0!important;
     }
-}
 
-@media screen and (max-width: 430px) {
     .proofratings-floating-widgets-box {
         --column: 1!important;
         justify-content: center;
@@ -437,6 +434,16 @@ html {
         right: 0;
         height: 1px;
         width: auto;
+    }
+
+    .proofratings-badge.proofratings-badge-style2.badge-float:not(.center) + .proofratings-floating-widgets-box {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .proofratings-badge.proofratings-badge-style2.badge-float.center + #proofratings-floating-embed {
+        min-width: 90vw
     }
 }
 

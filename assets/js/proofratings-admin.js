@@ -68,6 +68,8 @@
 
         style = $(this).val();
 
+        $('#floating-badge-shortcode').html(`[proofratings_floating_badge badge_style="${style}"]`)
+
         let positions = ['Left', 'Center', 'Right'];
 
         if ( style == 'style1') {

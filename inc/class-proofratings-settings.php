@@ -211,7 +211,7 @@ class WP_ProofRatings_Settings {
 									<?php _e('Show/Hide', 'proofratings'); ?>
 								</label>
 
-								<p>Use shortcode where you want to display review widgets <code>[proofratings_floating_badge badge_style="style1"]</code></p>
+								<p>Use shortcode where you want to display review widgets <code id="floating-badge-shortcode">[proofratings_floating_badge badge_style="style1"]</code></p>
 							</td>
 						</tr>
 
