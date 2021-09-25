@@ -60,12 +60,6 @@
 
     $('#form-table-floating-badge').on('update', function(e, data){
         float_badge_form = Object.assign(float_badge_form, data);
-        
-        if ( float_badge_form.shadow != 'yes') {
-            delete float_badge_form.shadow;
-            delete float_badge_form.shadow_color;
-            delete float_badge_form.shadow_hover;
-        }
 
         const attributes = Object.keys(float_badge_form).filter(key => float_badge_form[key].length).map(key => {
             return `${key}="${float_badge_form[key]}"`;
@@ -80,7 +74,7 @@
     })
 
     $('[name="proofratings_floating_badge_settings[float]"]').on('change', function(){
-        fields = $('#badge-tablet-visibility, #badge-mobile-visibility, #badge-close-options, #badge-position');
+        fields = $('#badge-tablet-visibility, #badge-mobile-visibility, #badge-close-options, #badge-position, #floating-badge-pages');
                
         if ( $(this).is(':checked') ) {
             $('#badge-hide-shadow').hide();
