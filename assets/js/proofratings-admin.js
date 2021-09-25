@@ -46,6 +46,8 @@
         $('#proofratings-widgets-shortcode').html(`[proofratings_widgets badge_style="${$(this).val()}"]`)
     }).trigger('change');
 
+
+
     $('[name="proofratings_floating_badge_settings[shadow]"]').on('change', function(){
         if ($('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ) {
             return $('#badge-shadow-color, #badge-shadow-hover-color').show();
@@ -56,43 +58,21 @@
     }).trigger('change');
 
 
-    let float_badge_form = {}
-
-    $('#form-table-floating-badge').on('update', function(e, data){
-        float_badge_form = Object.assign(float_badge_form, data);
-
-        const attributes = Object.keys(float_badge_form).filter(key => float_badge_form[key].length).map(key => {
-            return `${key}="${float_badge_form[key]}"`;
-        })
-
-        $('#floating-badge-shortcode').html(`[proofratings_floating_badge ${attributes.join(' ')}]`)
-
-    }).trigger('update');
-
-    $('#form-table-floating-badge').on('input change', 'input:not([type="checkbox"]), select', function(){
-        $('#form-table-floating-badge').trigger('update');
-    })
-
     $('[name="proofratings_floating_badge_settings[float]"]').on('change', function(){
         fields = $('#badge-tablet-visibility, #badge-mobile-visibility, #badge-close-options, #badge-position, #floating-badge-pages');
                
         if ( $(this).is(':checked') ) {
             $('#badge-hide-shadow').hide();
             $('[name="proofratings_floating_badge_settings[shadow]"]').prop('checked', true).trigger('change');
-            $('.nav-tab-wrapper a[href="#settings-floating-pages"]').show();
             return fields.show();
         }
 
         $('#badge-hide-shadow').show();
-        $('.nav-tab-wrapper a[href="#settings-floating-pages"]').hide();
-
         fields.hide();
 
     }).trigger('change');
 
     
-
-
     $('[name="proofratings_floating_badge_settings[badge_style]"]').on('change', function(){
         $('#form-table-floating-badge').trigger('update', {
             badge_style: $(this).val()
@@ -105,6 +85,7 @@
         $(this).next('img').prop('src', demo_image);
 
         style = $(this).val();
+        $('#floating-badge-shortcode').html(`[proofratings_floating_badge badge_style="${style}""]`)
 
         let positions = ['Left', 'Center', 'Right'];
 
@@ -119,6 +100,7 @@
         });
 
         position_select.html(position_options.join(''))
+
     }).trigger('change');
 
     

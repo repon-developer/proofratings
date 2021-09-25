@@ -294,7 +294,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[star_color]"
-									value="<?php esc_attr_e($badge_settings['star_color']) ?>" data-default-color="#212A3D" data-name="star_color">
+									value="<?php esc_attr_e($badge_settings['star_color']) ?>" data-default-color="#212A3D">
 							</td>
 						</tr>
 
@@ -311,7 +311,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_color]"
-									value="<?php esc_attr_e($badge_settings['shadow_color']) ?>" data-default-color="#f6d300" data-name="shadow_color">
+									value="<?php esc_attr_e($badge_settings['shadow_color']) ?>" data-default-color="#f6d300">
 							</td>
 						</tr>
 
@@ -320,7 +320,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[shadow_hover]"
-									value="<?php esc_attr_e($badge_settings['shadow_hover']) ?>" data-default-color="#377dbc" data-name="shadow_hover">
+									value="<?php esc_attr_e($badge_settings['shadow_hover']) ?>" data-default-color="#377dbc">
 							</td>
 						</tr>
 
@@ -329,7 +329,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[background_color]" 
-									value="<?php esc_attr_e($badge_settings['background_color']) ?>" data-default-color="#fff" data-name="background_color">
+									value="<?php esc_attr_e($badge_settings['background_color']) ?>" data-default-color="#fff">
 							</td>
 						</tr>
 
@@ -338,7 +338,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[review_text_color]" 
-									value="<?php esc_attr_e($badge_settings['review_text_color']) ?>" data-name="review_text_color">
+									value="<?php esc_attr_e($badge_settings['review_text_color']) ?>">
 							</td>
 						</tr>
 
@@ -347,7 +347,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<input class="proofratings-color-field" type="text" 
 									name="proofratings_floating_badge_settings[review_background]" 
-									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d" data-name="review_background">
+									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d">
 							</td>
 						</tr>
 
