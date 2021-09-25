@@ -1,14 +1,5 @@
 (function ($) {
-    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker({
-        change: function(event, ui){
-            field_name = $(event.target).data('name');
-            if ( field_name ) {
-                $('#form-table-floating-badge').trigger('update', {
-                    [field_name]: ui.color.toString()
-                });
-            }
-        }
-    });
+    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker();
 
     $('.checkbox-review-site input').on('change', function () {
         fieldset = $('#review-site-settings-' + $(this).parent().data('site'))
@@ -56,11 +47,6 @@
     }).trigger('change');
 
     $('[name="proofratings_floating_badge_settings[shadow]"]').on('change', function(){
-
-        $('#form-table-floating-badge').trigger('update', {
-            shadow: $('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ? 'yes' : 'no'
-        });
-
         if ($('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ) {
             return $('#badge-shadow-color, #badge-shadow-hover-color').show();
         }
@@ -73,14 +59,8 @@
     let float_badge_form = {}
 
     $('#form-table-floating-badge').on('update', function(e, data){
-        $(this).find('[data-name]').each(function(){
-            field_name = $(this).data('name');
-            field_value = $(this).val();
-
-            float_badge_form[field_name] = field_value;
-        });
-
-        float_badge_form = Object.assign(float_badge_form, data);        
+        float_badge_form = Object.assign(float_badge_form, data);
+        
         if ( float_badge_form.shadow != 'yes') {
             delete float_badge_form.shadow;
             delete float_badge_form.shadow_color;
@@ -120,6 +100,10 @@
 
 
     $('[name="proofratings_floating_badge_settings[badge_style]"]').on('change', function(){
+        $('#form-table-floating-badge').trigger('update', {
+            badge_style: $(this).val()
+        })
+
         demo_image = $(this).find(':selected').data('img');
 
         position_select = $('[name="proofratings_floating_badge_settings[position]"]');

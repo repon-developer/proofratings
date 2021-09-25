@@ -130,13 +130,11 @@ class ProofRatings_Shortcodes {
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['badge_style']];
 
+		$atts = wp_parse_args(get_option( 'proofratings_floating_badge_settings'), $atts);
+
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
-		}
 
-		$badget_settings = get_option( 'proofratings_floating_badge_settings');
-
-		if ( $atts['float'] == 'yes' ) {
 			if ( !empty($badget_settings['position']) ) {
 				$classes[] = $badget_settings['position'];
 			}
@@ -148,6 +146,8 @@ class ProofRatings_Shortcodes {
 			if ( $atts['tablet'] == 'no') {
 				$classes[] = 'badge-hidden-tablet';
 			}
+
+			$atts['shadow'] = 'yes';
 		}
 
 		$url_attribute = '';
