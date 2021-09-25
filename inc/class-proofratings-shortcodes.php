@@ -115,7 +115,7 @@ class ProofRatings_Shortcodes {
 			'tablet' => 'yes',
 			'badge_style' => 'style1',
 			'star_color' => '',
-			'shadow' => '',
+			'shadow' => 'no',
 			'shadow_color' => '',
 			'shadow_hover' => '',
 			'background_color' => '',
@@ -269,7 +269,7 @@ class ProofRatings_Shortcodes {
 				
 					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
-						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percenter));
+						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
 			        echo '</div>';
 
 					printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('reviews', 'proofratings'));

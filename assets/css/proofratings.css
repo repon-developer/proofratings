@@ -117,7 +117,7 @@ html {
 }
 
 .proofratings-badge.proofratings-badge-style1 .proofratings-review-count {
-    color: var(--review_text_color, #212a3d);
+    color: var(--review_text_color, #fff);
     padding: 10px var(--padx);
     border-radius: 0 0 10px 10px;
     background-color: var(--review_background, #212a3d);

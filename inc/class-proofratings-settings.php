@@ -56,7 +56,7 @@ class WP_ProofRatings_Settings {
 
 	public function get_floating_badge_settings() {
 		return wp_parse_args((array)get_option( 'proofratings_floating_badge_settings'), [
-			'show' => 'yes',
+			'float' => 'yes',
 			'tablet' => 'yes',
 			'mobile' => 'yes',
 			'on_pages' => [],
@@ -200,7 +200,8 @@ class WP_ProofRatings_Settings {
 
 				<div id="settings-floating-badge" class="settings_panel" style="display:none">
 					<?php 
-						$badge_settings = $this->get_floating_badge_settings(); ?>
+						$badge_settings = $this->get_floating_badge_settings();
+						?>
 
 					<table id="form-table-floating-badge" class="form-table">
 						<tr>
@@ -216,13 +217,13 @@ class WP_ProofRatings_Settings {
 							<td>
 								<label>
 									<input name="proofratings_floating_badge_settings[float]" value="no" type="hidden">
-									<input class="checkbox-switch checkbox-float-embed" name="proofratings_floating_badge_settings[float]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['show'] ) ?>>
+									<input class="checkbox-switch checkbox-float-embed" name="proofratings_floating_badge_settings[float]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['float'] ) ?>>
 									<?php _e('Float/Embed only option', 'proofratings'); ?>
 								</label>
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="badge-tablet-visibility">
 							<th scope="row"><?php _e('Tablet Visibility', 'proofratings') ?></th>
 							<td>
 								<label>
@@ -233,7 +234,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="badge-mobile-visibility">
 							<th scope="row"><?php _e('Mobile Visibility', 'proofratings') ?></th>
 							<td>
 								<label>
@@ -244,7 +245,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="badge-close-options">
 							<th scope="row"><?php _e('Close option', 'proofratings') ?></th>
 							<td>
 								<label>
@@ -268,7 +269,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="badge-position">
 							<th scope="row"><?php _e('Position', 'proofratings') ?></th>
 							<td>
 								<select name="proofratings_floating_badge_settings[position]" data-position="<?php echo @$badge_settings['position']; ?>">
@@ -287,7 +288,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="badge-hide-shadow">
 							<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
 							<td>
 								<input name="proofratings_floating_badge_settings[shadow]" value="no" type="hidden">

@@ -55,6 +55,20 @@
         $('#proofratings-widgets-shortcode').html(`[proofratings_widgets badge_style="${$(this).val()}"]`)
     }).trigger('change');
 
+    $('[name="proofratings_floating_badge_settings[shadow]"]').on('change', function(){
+
+        $('#form-table-floating-badge').trigger('update', {
+            shadow: $('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ? 'yes' : 'no'
+        });
+
+        if ($('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ) {
+            return $('#badge-shadow-color, #badge-shadow-hover-color').show();
+        }
+
+        $('#badge-shadow-color, #badge-shadow-hover-color').hide();
+        
+    }).trigger('change');
+
 
     let float_badge_form = {}
 
@@ -66,17 +80,19 @@
             float_badge_form[field_name] = field_value;
         });
 
-        float_badge_form = Object.assign(float_badge_form, data);
-        
+        float_badge_form = Object.assign(float_badge_form, data);        
+        if ( float_badge_form.shadow != 'yes') {
+            delete float_badge_form.shadow;
+            delete float_badge_form.shadow_color;
+            delete float_badge_form.shadow_hover;
+        }
+
         const attributes = Object.keys(float_badge_form).filter(key => float_badge_form[key].length).map(key => {
             return `${key}="${float_badge_form[key]}"`;
         })
 
         $('#floating-badge-shortcode').html(`[proofratings_floating_badge ${attributes.join(' ')}]`)
 
-
-
-        
     }).trigger('update');
 
     $('#form-table-floating-badge').on('input change', 'input:not([type="checkbox"]), select', function(){
@@ -84,28 +100,23 @@
     })
 
     $('[name="proofratings_floating_badge_settings[float]"]').on('change', function(){
-        next_rows = $(this).closest('tr').nextAll();        
+        fields = $('#badge-tablet-visibility, #badge-mobile-visibility, #badge-close-options, #badge-position');
+               
         if ( $(this).is(':checked') ) {
-            return next_rows.show();
+            $('#badge-hide-shadow').hide();
+            $('[name="proofratings_floating_badge_settings[shadow]"]').prop('checked', true).trigger('change');
+            $('.nav-tab-wrapper a[href="#settings-floating-pages"]').show();
+            return fields.show();
         }
 
-        next_rows.hide();
+        $('#badge-hide-shadow').show();
+        $('.nav-tab-wrapper a[href="#settings-floating-pages"]').hide();
+
+        fields.hide();
 
     }).trigger('change');
 
-    $('[name="proofratings_floating_badge_settings[shadow]"]').on('change', function(){
-
-        $('#form-table-floating-badge').trigger('update', {
-            shadow: $('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ? 'yes' : 'no'
-        });
-
-
-        if ($('[name="proofratings_floating_badge_settings[shadow]"]:checked').length ) {
-            return $('#badge-shadow-color, #badge-shadow-hover-color').show();
-        }
-
-        $('#badge-shadow-color, #badge-shadow-hover-color').hide();
-    }).trigger('change');
+    
 
 
     $('[name="proofratings_floating_badge_settings[badge_style]"]').on('change', function(){
