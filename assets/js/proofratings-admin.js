@@ -105,17 +105,32 @@
 
 
     const BannerBadge = () => {
+        $('[name="proofratings_banner_badge[button1_border]"]').on('change', function(){            
+            targeted = $('#button1-border-hover-color, #button1-border-color');
 
+            if ( $(this).is(':checked') ) {
+                return targeted.show();
+            }
 
-        
-        
-        
+            targeted.hide();
+        }).trigger('change')
+
         $('[name="proofratings_banner_badge[button2]"]').on('change', function(){
             if ( $(this).is(':checked') ) {
                 return $('#cta-button2-options').show();
             }
 
             $('#cta-button2-options').hide();
+        }).trigger('change')
+
+        $('[name="proofratings_banner_badge[button2_border]"]').on('change', function(){            
+            targeted = $('#button2-border-hover-color, #button2-border-color');
+
+            if ( $(this).is(':checked') ) {
+                return targeted.show();
+            }
+
+            targeted.hide();
         }).trigger('change')
     }
 

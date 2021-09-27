@@ -1,3 +1,9 @@
+table.form-table caption {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .proofratings-status {
     font-size: 16px;
     padding: 10px;
@@ -163,7 +169,9 @@ input[type="checkbox"].checkbox-shape {width: 80px;}
 input[type="checkbox"].checkbox-shape:after {content: "Round"; flex: 1; text-align: center;}
 input[type="checkbox"].checkbox-shape:checked:after {content: "Rectangle";}
 
-
+input[type="checkbox"].checkbox-onoff {width: 45px;}
+input[type="checkbox"].checkbox-onoff:after {content: "Off"; flex: 1; text-align: center;}
+input[type="checkbox"].checkbox-onoff:checked:after {content: "On";}
 
 
 #pfb-exclude-page {min-width: 300px}

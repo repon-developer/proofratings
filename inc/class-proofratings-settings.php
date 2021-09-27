@@ -88,18 +88,20 @@ class WP_ProofRatings_Settings {
 
 			'button1_text' => '',
 			'button1_url' => '',
+			'button1_blank' => 'no',
 			'button1_textcolor' => '',
+			'button1_hover_textcolor' => '',
 			'button1_shape' => 'rectangle',
 			'button1_background_color' => '',
+			'button1_hover_background_color' => '',
 			'button1_border' => 'yes',
 			'button1_border_color' => '',
-			'button1_hover_textcolor' => '',
-			'button1_hover_background_color' => '',
 			'button1_hover_border_color' => '',
 			
 			'button2' => 'no',
 			'button2_text' => '',
 			'button2_url' => '',
+			'button2_blank' => 'no',
 			'button2_textcolor' => '',
 			'button2_shape' => '',
 			'button2_background_color' => '',
@@ -386,8 +388,9 @@ class WP_ProofRatings_Settings {
 						</tr>
 					</table>
 
-					<h3>Page to show on</h3>
+					
 					<table id="floating-badge-pages" class="form-table">
+						<caption>Page to show on</caption>
 						<?php foreach (get_pages() as $page) : ?>
 						<tr>
 							<th scope="row"><?php echo $page->post_title ?></th>
@@ -514,6 +517,16 @@ class WP_ProofRatings_Settings {
 						</tr>
 
 						<tr>
+							<th scope="row"><?php _e('Open in new tab', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_banner_badge[button1_blank]" value="no" type="hidden">
+									<input class="checkbox-switch checkbox-onoff" name="proofratings_banner_badge[button1_blank]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['button1_blank'] ) ?>>
+								</label>
+							</td>
+						</tr>
+
+						<tr>
 							<th scope="row"><?php _e('Button1 Text Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
@@ -551,7 +564,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 						
-						<tr>
+						<tr id="button1-border-color">
 							<th scope="row"><?php _e('Button1 Border Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text"  name="proofratings_banner_badge[button1_border_color]" value="<?php esc_attr_e($banner_badge['button1_border_color']) ?>">
@@ -576,7 +589,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr>
+						<tr id="button1-border-hover-color">
 							<th scope="row"><?php _e('Button1 Hover Border Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
@@ -610,6 +623,16 @@ class WP_ProofRatings_Settings {
 									<input type="text" name="proofratings_banner_badge[button2_url]" value="<?php esc_attr_e($banner_badge['button2_url']) ?>">
 								</td>
 							</tr>
+
+							<tr>
+							<th scope="row"><?php _e('Open in new tab', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_banner_badge[button2_blank]" value="no" type="hidden">
+									<input class="checkbox-switch checkbox-onoff" name="proofratings_banner_badge[button2_blank]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['button2_blank'] ) ?>>
+								</label>
+							</td>
+						</tr>
 
 							<tr>
 								<th scope="row"><?php _e('Button2 Text Color', 'proofratings') ?></th>
@@ -649,7 +672,7 @@ class WP_ProofRatings_Settings {
 								</td>
 							</tr>
 							
-							<tr>
+							<tr id="button2-border-color">
 								<th scope="row"><?php _e('Button2 Border Color', 'proofratings') ?></th>
 								<td>
 									<input class="proofratings-color-field" type="text"  name="proofratings_banner_badge[button2_border_color]" value="<?php esc_attr_e($banner_badge['button2_border_color']) ?>">
@@ -674,7 +697,7 @@ class WP_ProofRatings_Settings {
 								</td>
 							</tr>
 
-							<tr>
+							<tr id="button2-border-hover-color">
 								<th scope="row"><?php _e('Button2 Hover Border Color', 'proofratings') ?></th>
 								<td>
 									<input class="proofratings-color-field" type="text" 
@@ -683,6 +706,24 @@ class WP_ProofRatings_Settings {
 								</td>
 							</tr>
 						</tbody>
+					</table>
+
+					<table class="form-table">
+						<?php foreach (get_pages() as $page) : ?>
+						<tr>
+							<th scope="row"><?php echo $page->post_title ?></th>
+							<td>	
+							<?php
+								$checked = !isset($banner_badge['on_pages'][$page->ID]) || $banner_badge['on_pages'][$page->ID] == 'yes'? 'checked' : '';
+								printf('<input name="banner_badge[on_pages][%s]" value="no" type="hidden">', $page->ID);
+								printf(
+									'<label><input class="checkbox-switch" name="banner_badge[on_pages][%s]" value="yes" %s type="checkbox"></label>',
+									$page->ID, $checked
+								);
+							?>
+							</td>
+						</tr>
+						<?php endforeach; ?>
 					</table>
 
 					

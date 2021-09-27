@@ -18,4 +18,29 @@
             $(this).remove();
         });
     })
+
+    $('.proofratings-banner-badge .proofratings-banner-close').on('click', function(e){
+        e.preventDefault();
+        $(this).closest('.proofratings-banner-badge').fadeOut(100, function(){
+            $(this).remove();
+        })
+    })
+
+    last_scroll = 0;
+    $(window).on('scroll', function(){
+        current_position = $(window).scrollTop();
+
+        going_down = current_position > last_scroll;
+        last_scroll = current_position;
+
+        if ( going_down ) {
+            return $('.proofratings-banner-badge').addClass('going-down');
+        }
+        
+        $('.proofratings-banner-badge').removeClass('going-down')
+
+
+    })
+
+
 })(jQuery)

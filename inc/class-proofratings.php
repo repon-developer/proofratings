@@ -196,24 +196,34 @@ class Wordpress_Proofratings {
 
 		$button1 = '';
 		if ( !empty($badge_settings['button1_text']) ) {
-			$button1_class = 'proofratings-button';
+			$button1_class = 'proofratings-button button1';
 			if ( $badge_settings['button1_border'] == 'yes' ) {
 				$button1_class .= ' has-border';
 			}
 
-			$button1 .= sprintf('<a href="%s" class="%s">', esc_url( $badge_settings['button1_url']), trim($button1_class));
+			$target = '';
+			if ( @$badge_settings['button1_blank'] == 'yes') {
+				$target = 'target="_blank"';
+			}
+
+			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings['button1_url']), trim($button1_class), $target);
 			$button1 .= $badge_settings['button1_text'];			
 			$button1 .= '</a>';			
 		}
 
 		$button2 = '';
-		if ( $badge_settings['button2'] == 'yes' && !empty($badge_settings['button2_text']) ) {
-			$button2_class = 'proofratings-button';
+		if ( @$badge_settings['button2'] == 'yes' && !empty($badge_settings['button2_text']) ) {
+			$button2_class = 'proofratings-button button2';
 			if ( $badge_settings['button2_border'] == 'yes' ) {
 				$button2_class .= ' has-border';
 			}
 
-			$button2 .= sprintf('<a href="%s" class="%s">', esc_url( $badge_settings['button2_url']), trim($button2_class));			
+			$target = '';
+			if ( @$badge_settings['button2_blank'] == 'yes') {
+				$target = 'target="_blank"';
+			}
+
+			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings['button2_url']), trim($button2_class), $target);			
 			$button2 .= $badge_settings['button2_text'];			
 			$button2 .= '</a>';			
 		}
@@ -222,6 +232,7 @@ class Wordpress_Proofratings {
 		?>
 
 		<div class="<?php echo $class; ?>">
+			<a class="proofratings-banner-close" href="#"><?php _e('Close', 'proofratings') ?></a>
 
 			<?php $this->reviews->get_review_logos() ?>
 

@@ -359,17 +359,51 @@ html {
 }
 
 .proofratings-banner-badge {
+    --reviewCountTextcolor: inherit;
     min-height: 90px;
     padding: 15px 20px;
-    /* position: fixed; */
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     background-color: var(--backgroundColor, #fff);
+    box-shadow: 0 1px 4px rgba(0,0,0,.6);
+    transform: translateY(calc(100% + 40px));
+    transition: all 200ms;
 }
+
+.proofratings-banner-badge.going-down {
+    transform: translateY(0);
+}
+
+.proofratings-banner-badge .proofratings-banner-close {
+    color: var(--reviewCountTextcolor);
+    font-size: 13px;
+    line-height: 1;
+    position: absolute;
+    top: 1px;
+    left: 50%;
+    z-index: 999;
+    padding: 6px 16px;
+    text-decoration: none!important;
+    transform: translate(-50%, -50%);
+    background-color: var(--backgroundColor, #fff);
+    border-radius: 100px;
+}
+
+.proofratings-banner-badge .proofratings-banner-close:before {
+    content: "×";
+    font-size: 120%;
+    line-height: 0.6;
+    margin-right: 2px;
+    display: inline-block;
+    margin-left: -5px;
+}
+
 
 .proofratings-banner-badge .proofratings-logos {margin: 0 30px 0 0;}
 
@@ -382,7 +416,7 @@ html {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #f5f8ff;
+    background-color: var(--backgroundColor, #f5f8ff);
     border-radius: 100px
 }
 
@@ -390,9 +424,9 @@ html {
 
 .proofratings-banner-badge .rating-box .proofratings-stars {margin-right: 15px;}
 
-.proofratings-banner-badge .rating-box .rating {font-size: 14px; font-weight: bold}
+.proofratings-banner-badge .rating-box .rating {color: inherit; font-size: 14px; font-weight: bold}
 
-.proofratings-banner-badge .proofratings-review-count {margin: 0 70px 0 0}
+.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); margin: 0 70px 0 0}
 
 .proofratings-banner-badge .proofratings-button {
     color: #fff;
@@ -406,9 +440,8 @@ html {
     justify-content: center;
     margin-right: 30px;
     text-decoration: none;
-    background-color: #312ED1;
     border-radius: 100px;
-    border: 3px solid var(--borderColor, #312ED1)
+    background-color: #312ED1;
 }
 
 .proofratings-banner-badge .proofratings-button:last-child {margin-right: 0;}
@@ -418,8 +451,45 @@ html {
     background-color: #fff;
 }
 
+.proofratings-banner-badge .proofratings-button.button1, .proofratings-banner-badge .proofratings-button.button2 {
+    --textColor: #fff;
+    --backgroundColor: #312ED1;
+    --borderColor: transparent;
+
+    color: var(--textColor);
+    background-color: var(--backgroundColor);
+    border: 3px solid var(--borderColor);
+    border-radius: var(--radius, 5px);
+    transition: all 150ms;
+}
+
+
+.proofratings-banner-badge .proofratings-button.button1:hover {
+    color: var(--textHoverColor, var(--textColor));
+    border-color: var(--borderHoverColor, var(--borderColor));
+    background-color: var(--backgroundHoverColor, var(--backgroundColor));
+}
+
+.proofratings-banner-badge .proofratings-button.button2 {
+    --textColor: #312ED1;
+    --backgroundColor: #fff;
+    --borderColor: transparent;
+}
+
+.proofratings-banner-badge .proofratings-button.button2:hover {
+    color: var(--textHoverColor, var(--textColor));
+    border-color: var(--borderHoverColor, var(--borderColor));
+    background-color: var(--backgroundHoverColor, var(--backgroundColor));
+}
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .proofratings-badge.badge-hidden-tablet {display: none!important}
+}
+
+@media screen and (max-width: 950px) {
+    .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
+    .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
+    .proofratings-banner-badge .button-container {display: flex; flex: 0 0 100%; align-items: center; justify-content: center; margin-top: 20px}
 }
 
 @media screen and (max-width: 767px) {
@@ -427,6 +497,13 @@ html {
 }
 
 @media screen and (max-width: 575px) {
+    .proofratings-banner-badge .rating-box {margin-right: 0;}
+    .proofratings-banner-badge .proofratings-review-count {
+        order: -2;
+        flex: 0 0 100%;
+        margin-bottom: 5px;
+    }
+
     .proofratings-floating-widgets-box {
         --column: 1!important;
         justify-content: center;
