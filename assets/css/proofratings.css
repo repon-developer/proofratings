@@ -372,6 +372,7 @@ html {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    z-index: 50000;
     background-color: var(--backgroundColor, #fff);
     box-shadow: 0 1px 4px rgba(0,0,0,.6);
     transform: translateY(calc(100% + 40px));
@@ -436,6 +437,7 @@ html {
     height: 48px;
     text-align: center;
     font-size: 15px;
+    font-weight: bold;
     padding: 0 15px;
     display: inline-flex;
     align-items: center;
