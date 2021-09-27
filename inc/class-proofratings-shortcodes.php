@@ -131,7 +131,10 @@ class ProofRatings_Shortcodes {
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['badge_style']];
 
-		$atts = wp_parse_args(get_option( 'proofratings_floating_badge_settings'), $atts);
+		$badget_settings = get_option( 'proofratings_floating_badge_settings');
+		unset($badget_settings['float'], $badget_settings['badge_style']);
+
+		$atts = wp_parse_args($badget_settings, $atts);
 
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
@@ -308,7 +311,7 @@ class ProofRatings_Shortcodes {
 		}
 
         ob_start();		
-        printf('<div id="%s" class="proofratings-review-widgets-grid">', esc_attr($atts['id']));
+        printf('<div id="%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
 				$attribue= '';

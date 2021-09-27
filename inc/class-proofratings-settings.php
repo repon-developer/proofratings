@@ -192,9 +192,9 @@ class WP_ProofRatings_Settings {
 							<th scope="row" style="vertical-align:middle"><?php _e('Badge Type', 'proofratings') ?></th>
 							<td>
 								<div class="proofratings-styles">
-									<select id="proofratings_widget_style">
-										<option value="style1" data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
-										<option value="style2" data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
+									<select name="proofratings_widget_settings[badge_style]" id="proofratings_widget_style">
+										<option value="style1" <?php selected('style1', $widget_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
+										<option value="style2" <?php selected('style2', $widget_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
 									</select>
 
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
@@ -414,6 +414,17 @@ class WP_ProofRatings_Settings {
 						$banner_badge = $this->get_banner_badge_settings(); ?>
 
 					<table class="form-table">
+						<tr>
+							<th scope="row"><?php _e('Banner Visibility', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_banner_badge[show]" value="no" type="hidden">
+									<input class="checkbox-switch" name="proofratings_banner_badge[show]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['show'] ) ?>>
+									<?php _e('Show/Hide on desktop', 'proofratings'); ?>
+								</label>
+							</td>
+						</tr>
+
 						<tr>
 							<th scope="row"><?php _e('Tablet Visibility', 'proofratings') ?></th>
 							<td>

@@ -182,10 +182,14 @@ class Wordpress_Proofratings {
 			return;
 		}
 
+		if($badge_settings['show'] == 'no') {
+			return;
+		}
+
 		$on_pages = (array) @$badge_settings['on_pages'];
 		$is_targeted_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
 
-		if ( !$is_targeted_page ) {
+		if (!$is_targeted_page ) {
 			return;
 		}
 
@@ -196,6 +200,10 @@ class Wordpress_Proofratings {
 
 		if ( $badge_settings['mobile'] == 'no') {
 			$classes[] = 'badge-hidden-mobile';
+		}
+
+		if ( $badge_settings['top_shadow'] != 'no' ) {
+			$classes[] = 'has-shadow';
 		}
 
 		$class = implode(' ', $classes);
@@ -235,12 +243,13 @@ class Wordpress_Proofratings {
 			$button2 .= '</a>';			
 		}
 
-		
-		?>
+		$close_button = '';
+		if ( $badge_settings['close_button'] != 'no' ) {
+			$close_button = sprintf('<a class="proofratings-banner-close" href="#">%s</a>', __('Close', 'proofratings'));
+		}  ?>
 
 		<div class="<?php echo $class; ?>">
-			<a class="proofratings-banner-close" href="#"><?php _e('Close', 'proofratings') ?></a>
-
+			<?php echo $close_button; ?>
 			<?php $this->reviews->get_review_logos() ?>
 
 			<div class="rating-box">
