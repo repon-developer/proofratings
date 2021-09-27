@@ -149,8 +149,8 @@ class Wordpress_Proofratings {
 
 		$badge_settings = get_option( 'proofratings_floating_badge_settings');
 		$on_pages = (array) @$badge_settings['on_pages'];
-
 		$has_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
+
 		$show_badge = @$badge_settings['float'];
 		if ( !($show_badge != 'yes') && $has_page ) {
 
@@ -179,6 +179,13 @@ class Wordpress_Proofratings {
 	public function banner_badge() {
 		$badge_settings = get_option( 'proofratings_banner_badge' );
 		if ( !$badge_settings) {
+			return;
+		}
+
+		$on_pages = (array) @$badge_settings['on_pages'];
+		$is_targeted_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
+
+		if ( !$is_targeted_page ) {
 			return;
 		}
 

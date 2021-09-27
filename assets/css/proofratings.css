@@ -148,6 +148,8 @@ html {
     grid-template-columns: repeat(auto-fit, minmax(200px, 260px))
 }
 
+.proofratings-review-widgets-grid > * {margin-left: auto; margin-right: auto;}
+
 .proofratings-widget {
     color: var(--textColor, inherit)!important;
     display: flex;

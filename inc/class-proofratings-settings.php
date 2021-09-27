@@ -715,18 +715,16 @@ class WP_ProofRatings_Settings {
 							<td>	
 							<?php
 								$checked = !isset($banner_badge['on_pages'][$page->ID]) || $banner_badge['on_pages'][$page->ID] == 'yes'? 'checked' : '';
-								printf('<input name="banner_badge[on_pages][%s]" value="no" type="hidden">', $page->ID);
+								printf('<input name="proofratings_banner_badge[on_pages][%s]" value="no" type="hidden">', $page->ID);
 								printf(
-									'<label><input class="checkbox-switch" name="banner_badge[on_pages][%s]" value="yes" %s type="checkbox"></label>',
+									'<label><input class="checkbox-switch" name="proofratings_banner_badge[on_pages][%s]" value="yes" %s type="checkbox"></label>',
 									$page->ID, $checked
 								);
 							?>
 							</td>
 						</tr>
 						<?php endforeach; ?>
-					</table>
-
-					
+					</table>					
 				</div>
 
 				<p class="submit">
