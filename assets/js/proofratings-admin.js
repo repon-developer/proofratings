@@ -103,5 +103,23 @@
 
     }).trigger('change');
 
+
+    const BannerBadge = () => {
+
+
+        
+        
+        
+        $('[name="proofratings_banner_badge[button2]"]').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                return $('#cta-button2-options').show();
+            }
+
+            $('#cta-button2-options').hide();
+        }).trigger('change')
+    }
+
+    BannerBadge();
+
     
 })(jQuery)

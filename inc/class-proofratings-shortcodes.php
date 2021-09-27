@@ -60,7 +60,7 @@ class ProofRatings_Shortcodes {
                 $review_sites[$key] = $site;
             }
         }
-		
+	
         if ( empty($review_sites) ) {
 			return false;
         }
@@ -77,6 +77,7 @@ class ProofRatings_Shortcodes {
 
 			$item = new Proofratings_Site_Data(wp_parse_args( $item, wp_parse_args( $site_rating , ['rating' => 0, 'count' => 0, 'percent' => 0, 'review_url' => ''])));
 		});
+
 
 		return $review_sites;
 	}
@@ -299,6 +300,7 @@ class ProofRatings_Shortcodes {
         if ( !$review_sites ) {
 			return;
         }
+
 
 		$badge_style = sanitize_key($atts['badge_style']);
 		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {

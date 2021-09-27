@@ -129,7 +129,7 @@ input[type="checkbox"].checkbox-switch:before {
 
 input[type="checkbox"].checkbox-switch:after {
     font-size: 11px;
-    line-height: 1;
+    line-height: 0.9;
     font-weight: normal;
     margin-left: 13px;
     color: #fff;
@@ -159,14 +159,15 @@ input[type="checkbox"].checkbox-float-embed:after {content: "Embed"; flex: 1; te
 input[type="checkbox"].checkbox-float-embed:checked:after {content: "Float";}
 
 
+input[type="checkbox"].checkbox-shape {width: 80px;}
+input[type="checkbox"].checkbox-shape:after {content: "Round"; flex: 1; text-align: center;}
+input[type="checkbox"].checkbox-shape:checked:after {content: "Rectangle";}
+
+
+
+
 #pfb-exclude-page {min-width: 300px}
 
-table.form-table.banner-badge-embed #tablet-visibility-option,
-table.form-table.banner-badge-embed #mobile-visibility-option,
-table.form-table.banner-badge-embed #close-button-option,
-table.form-table.banner-badge-embed #banner-badge-position {
-    display: none!important;
-}
 
 .shortocde-area {user-select: all}
 

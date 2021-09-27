@@ -44,11 +44,15 @@ class Wordpress_Proofratings {
 	 */
 	public function __construct() {
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-review.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 
+		$this->reviews = Proofratings_Review::instance();
+
 		$this->admin = ProofRatings_Admin::instance();
 		$this->shortcodes = ProofRatings_Shortcodes::instance();
+
 
 		add_action( 'rest_api_init', [$this, 'register_rest_api']);
 
@@ -56,6 +60,7 @@ class Wordpress_Proofratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
+		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
 	}
 		
 	/**
@@ -166,5 +171,71 @@ class Wordpress_Proofratings {
 			echo do_shortcode(sprintf('[proofratings_floating_badge float="yes" %s]', implode(' ', $attributes)) );
 			echo do_shortcode('[proofratings_floating_widgets]' );
 		}
+	}
+
+	/**
+	 * Banner badge on frontend
+	 */
+	public function banner_badge() {
+		$badge_settings = get_option( 'proofratings_banner_badge' );
+		if ( !$badge_settings) {
+			return;
+		}
+
+		$classes = ['proofratings-banner-badge'];
+		if ( $badge_settings['tablet'] == 'no') {
+			$classes[] = 'badge-hidden-tablet';
+		}
+
+		if ( $badge_settings['mobile'] == 'no') {
+			$classes[] = 'badge-hidden-mobile';
+		}
+
+		$class = implode(' ', $classes);
+
+
+		$button1 = '';
+		if ( !empty($badge_settings['button1_text']) ) {
+			$button1_class = 'proofratings-button';
+			if ( $badge_settings['button1_border'] == 'yes' ) {
+				$button1_class .= ' has-border';
+			}
+
+			$button1 .= sprintf('<a href="%s" class="%s">', esc_url( $badge_settings['button1_url']), trim($button1_class));
+			$button1 .= $badge_settings['button1_text'];			
+			$button1 .= '</a>';			
+		}
+
+		$button2 = '';
+		if ( $badge_settings['button2'] == 'yes' && !empty($badge_settings['button2_text']) ) {
+			$button2_class = 'proofratings-button';
+			if ( $badge_settings['button2_border'] == 'yes' ) {
+				$button2_class .= ' has-border';
+			}
+
+			$button2 .= sprintf('<a href="%s" class="%s">', esc_url( $badge_settings['button2_url']), trim($button2_class));			
+			$button2 .= $badge_settings['button2_text'];			
+			$button2 .= '</a>';			
+		}
+
+		
+		?>
+
+		<div class="<?php echo $class; ?>">
+
+			<?php $this->reviews->get_review_logos() ?>
+
+			<div class="rating-box">
+				<?php $this->reviews->get_rating_star('medium') ?> <span class="rating"><?php echo $this->reviews->rating; ?> / 5</span>
+			</div>
+
+			<div class="proofratings-review-count"><?php echo $this->reviews->count; ?> customer reviews</div>
+
+			<div class="button-container">
+				<?php echo $button1 . $button2; ?>
+			</div>
+		</div>
+		<?php
+
 	}
 }

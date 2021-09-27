@@ -77,12 +77,40 @@ class WP_ProofRatings_Settings {
 		return wp_parse_args((array)get_option( 'proofratings_banner_badge'), [
 			'show' => 'yes',
 			'tablet' => 'yes',
+			'close_button' => 'yes',
 			'mobile' => 'yes',
 			'star_color' => '',
+			'top_shadow' => 'yes',
 			'background_color' => '',
-			'review_text_color' => '',
-			'review_background' => ''
+			'rating_text_color' => '',
+			'review_rating_background_color' => '',
+			'number_review_text_color' => '',
+
+			'button1_text' => '',
+			'button1_url' => '',
+			'button1_textcolor' => '',
+			'button1_shape' => 'rectangle',
+			'button1_background_color' => '',
+			'button1_border' => 'yes',
+			'button1_border_color' => '',
+			'button1_hover_textcolor' => '',
+			'button1_hover_background_color' => '',
+			'button1_hover_border_color' => '',
+			
+			'button2' => 'no',
+			'button2_text' => '',
+			'button2_url' => '',
+			'button2_textcolor' => '',
+			'button2_shape' => '',
+			'button2_background_color' => '',
+			'button2_border' => 'yes',
+			'button2_border_color' => '',
+			'button2_hover_textcolor' => '',
+			'button2_hover_background_color' => '',
+			'button2_hover_border_color' => '',
 		]);
+						
+						
 	}
 
 	/**
@@ -122,10 +150,13 @@ class WP_ProofRatings_Settings {
 				$widget_settings = wp_parse_args(get_option( 'proofratings_widget_settings'), [
 					'proofratings_font' => 'inherit',
 					'badge_style' => 'style1'
-				]); ?>
+				]);
+
+				$proofratings_settings = get_proofratings_settings(); ?>
 
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
+					<a href="#settings-embeddable-badges" class="nav-tab"><?php _e('Embeddable Badges', 'proofratings'); ?></a>
 					<a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
 					<a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a>
 				</h2>
@@ -140,7 +171,21 @@ class WP_ProofRatings_Settings {
 								</select>
 							</td>
 						</tr>
+					</table>
 
+					<?php
+					echo '<div class="review-sites-checkboxes">';
+					foreach ($proofratings_settings as $key => $site) {
+						printf(
+							'<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_settings[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
+							$key, esc_attr($site->logo), checked('yes', $site->active, false)
+						);
+					}
+					echo '</div>'; ?>
+				</div>
+
+				<div id="settings-embeddable-badges" class="settings_panel" style="display:none">
+					<table class="form-table">
 						<tr>
 							<th scope="row" style="vertical-align:middle"><?php _e('Badge Type', 'proofratings') ?></th>
 							<td>
@@ -166,18 +211,7 @@ class WP_ProofRatings_Settings {
 						</tr>
 					</table>
 
-
 					<?php
-					$proofratings_settings = get_proofratings_settings();
-					echo '<div class="review-sites-checkboxes">';
-					foreach ($proofratings_settings as $key => $site) {
-						printf(
-							'<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_settings[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
-							$key, esc_attr($site->logo), checked('yes', $site->active, false)
-						);
-					}
-					echo '</div>';
-
 					foreach ($proofratings_settings as $key => $site) {
 						printf('<fieldset id="review-site-settings-%s" class="fieldset-site-review">', $key);
 							if ( $site->title) {
@@ -350,55 +384,34 @@ class WP_ProofRatings_Settings {
 									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d">
 							</td>
 						</tr>
+					</table>
 
-						<tbody id="floating-badge-pages">
-							<?php foreach (get_pages() as $page) : ?>
-							<tr>
-								<th scope="row"><?php echo $page->post_title ?></th>
-								<td>	
-								<?php
-									$checked = !isset($badge_settings['on_pages'][$page->ID]) || $badge_settings['on_pages'][$page->ID] == 'yes'? 'checked' : '';
-									printf('<input name="proofratings_floating_badge_settings[on_pages][%s]" value="no" type="hidden">', $page->ID);
-									printf(
-										'<label><input class="checkbox-switch" name="proofratings_floating_badge_settings[on_pages][%s]" value="yes" %s type="checkbox"></label>',
-										$page->ID, $checked
-									);
-								?>
-								</td>
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
+					<h3>Page to show on</h3>
+					<table id="floating-badge-pages" class="form-table">
+						<?php foreach (get_pages() as $page) : ?>
+						<tr>
+							<th scope="row"><?php echo $page->post_title ?></th>
+							<td>	
+							<?php
+								$checked = !isset($badge_settings['on_pages'][$page->ID]) || $badge_settings['on_pages'][$page->ID] == 'yes'? 'checked' : '';
+								printf('<input name="proofratings_floating_badge_settings[on_pages][%s]" value="no" type="hidden">', $page->ID);
+								printf(
+									'<label><input class="checkbox-switch" name="proofratings_floating_badge_settings[on_pages][%s]" value="yes" %s type="checkbox"></label>',
+									$page->ID, $checked
+								);
+							?>
+							</td>
+						</tr>
+						<?php endforeach; ?>
 					</table>
 				</div>
 
 				<div id="settings-banner-badge" class="settings_panel" style="display:none">
 					<?php 
-						$banner_badge = $this->get_banner_badge_settings();
+						$banner_badge = $this->get_banner_badge_settings(); ?>
 
-						var_dump($banner_badge);
-						?>
-
-					<table id="form-table-floating-badge" class="form-table">
+					<table class="form-table">
 						<tr>
-							<th scope="row">
-								<?php _e('Shortcode', 'proofratings') ?>
-								<p class="description" style="font-weight: normal">Embed shortcode</p>
-							</th>
-							<td><code class="shortocde-area" id="banner-badge-shortcode">[proofratings_banner_badge]</code></td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Badge Visibility', 'proofratings') ?></th>
-							<td>
-								<label>
-									<input name="proofratings_banner_badge[show]" value="no" type="hidden">
-									<input class="checkbox-switch" name="proofratings_banner_badge[show]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['show'] ) ?>>
-									<?php _e('Show/Hide', 'proofratings'); ?>
-								</label>
-							</td>
-						</tr>
-
-						<tr id="banner-badge-tablet-visibility">
 							<th scope="row"><?php _e('Tablet Visibility', 'proofratings') ?></th>
 							<td>
 								<label>
@@ -409,7 +422,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr id="banner-badge-mobile-visibility">
+						<tr>
 							<th scope="row"><?php _e('Mobile Visibility', 'proofratings') ?></th>
 							<td>
 								<label>
@@ -420,7 +433,7 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr id="banner-badge-close-options">
+						<tr>
 							<th scope="row"><?php _e('Close option', 'proofratings') ?></th>
 							<td>
 								<label>
@@ -439,59 +452,240 @@ class WP_ProofRatings_Settings {
 							</td>
 						</tr>
 
-						<tr id="banner-badge-hide-shadow">
-							<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
+						<tr>
+							<th scope="row"><?php _e('Top Shadow', 'proofratings') ?></th>
 							<td>
-								<input name="proofratings_banner_badge[shadow]" value="no" type="hidden">
-								<input class="checkbox-switch" name="proofratings_banner_badge[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['shadow'] ) ?>>
+								<input name="proofratings_banner_badge[top_shadow]" value="no" type="hidden">
+								<input class="checkbox-switch" name="proofratings_banner_badge[top_shadow]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['top_shadow'] ) ?>>
 							</td>
 						</tr>
 
 						<tr id="banner-badge-shadow-color">
-							<th scope="row"><?php _e('Shadow Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_banner_badge[shadow_color]"
-									value="<?php esc_attr_e($banner_badge['shadow_color']) ?>" data-default-color="#f6d300">
-							</td>
-						</tr>
-
-						<tr id="banner-badge-shadow-hover-color">
-							<th scope="row"><?php _e('Shadow Hover Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_banner_badge[shadow_hover]"
-									value="<?php esc_attr_e($banner_badge['shadow_hover']) ?>" data-default-color="#377dbc">
-							</td>
-						</tr>
-
-						<tr>
 							<th scope="row"><?php _e('Background Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
-									name="proofratings_banner_badge[background_color]" 
-									value="<?php esc_attr_e($banner_badge['background_color']) ?>" data-default-color="#fff">
+									name="proofratings_banner_badge[background_color]"
+									value="<?php esc_attr_e($banner_badge['background_color']) ?>" data-default-color="#f6d300">
 							</td>
 						</tr>
 
 						<tr>
-							<th scope="row"><?php _e('Review Text Color', 'proofratings') ?></th>
+							<th scope="row"><?php _e('Rating Text Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
-									name="proofratings_banner_badge[review_text_color]" 
-									value="<?php esc_attr_e($banner_badge['review_text_color']) ?>">
+									name="proofratings_banner_badge[rating_text_color]"
+									value="<?php esc_attr_e($banner_badge['rating_text_color']) ?>" data-default-color="#377dbc">
 							</td>
 						</tr>
 
 						<tr>
-							<th scope="row"><?php _e('Review Background Color', 'proofratings') ?></th>
+							<th scope="row"><?php _e('Review Rating Background Color', 'proofratings') ?></th>
 							<td>
 								<input class="proofratings-color-field" type="text" 
-									name="proofratings_banner_badge[review_background]" 
-									value="<?php esc_attr_e($banner_badge['review_background']) ?>" data-default-color="#212a3d">
+									name="proofratings_banner_badge[review_rating_background_color]" 
+									value="<?php esc_attr_e($banner_badge['review_rating_background_color']) ?>" data-default-color="#fff">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Number of Review Text Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_banner_badge[number_review_text_color]" 
+									value="<?php esc_attr_e($banner_badge['number_review_text_color']) ?>">
 							</td>
 						</tr>
 					</table>
+
+					<h2><?php _e('Call-to-action Button', 'proofratings') ?></h2>
+					<table class="form-table">
+						<tr>
+							<th scope="row"><?php _e('Button 1 Text', 'proofratings') ?></th>
+							<td>
+								<input type="text" name="proofratings_banner_badge[button1_text]" value="<?php esc_attr_e($banner_badge['button1_text']) ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 URL', 'proofratings') ?></th>
+							<td>
+								<input type="text" name="proofratings_banner_badge[button1_url]" value="<?php esc_attr_e($banner_badge['button1_url']) ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 Text Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_banner_badge[button1_textcolor]"
+									value="<?php esc_attr_e($banner_badge['button1_textcolor']) ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 Background Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_banner_badge[button1_background_color]"
+									value="<?php esc_attr_e($banner_badge['button1_background_color']) ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 Shape', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input name="proofratings_banner_badge[button1_shape]" value="round" type="hidden">
+									<input class="checkbox-switch checkbox-shape" name="proofratings_banner_badge[button1_shape]" value="rectangle" type="checkbox" <?php checked( 'rectangle', $banner_badge['button1_shape'] ) ?>>
+								</label>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 Border', 'proofratings') ?></th>
+							<td>
+								<input  name="proofratings_banner_badge[button1_border]" value="no" type="hidden">
+								<label>
+									<input class="checkbox-switch" name="proofratings_banner_badge[button1_border]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['button1_border'] ) ?>>
+								</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<th scope="row"><?php _e('Button1 Border Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text"  name="proofratings_banner_badge[button1_border_color]" value="<?php esc_attr_e($banner_badge['button1_border_color']) ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 Hover Text Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_banner_badge[button1_hover_textcolor]"
+									value="<?php esc_attr_e($banner_badge['button1_hover_textcolor']) ?>">
+							</td>
+						</tr>
+						
+						<tr>
+							<th scope="row"><?php _e('Button1 Hover Background Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_banner_badge[button1_hover_background_color]"
+									value="<?php esc_attr_e($banner_badge['button1_hover_background_color']) ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Button1 Hover Border Color', 'proofratings') ?></th>
+							<td>
+								<input class="proofratings-color-field" type="text" 
+									name="proofratings_banner_badge[button1_hover_border_color]"
+									value="<?php esc_attr_e($banner_badge['button1_hover_border_color']) ?>">
+							</td>
+						</tr>
+
+
+						<!-- Button 2 settings -->
+						<tr>
+							<th scope="row"><?php _e('Button2', 'proofratings') ?></th>
+							<td>
+								<label>
+									<input class="checkbox-switch" name="proofratings_banner_badge[button2]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['button2'] ) ?>>
+								</label>
+							</td>
+						</tr>
+
+						<tbody id="cta-button2-options">
+							<tr>
+								<th scope="row"><?php _e('Button2 Text', 'proofratings') ?></th>
+								<td>
+									<input type="text" name="proofratings_banner_badge[button2_text]" value="<?php esc_attr_e($banner_badge['button2_text']) ?>">
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 URL', 'proofratings') ?></th>
+								<td>
+									<input type="text" name="proofratings_banner_badge[button2_url]" value="<?php esc_attr_e($banner_badge['button2_url']) ?>">
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 Text Color', 'proofratings') ?></th>
+								<td>
+									<input class="proofratings-color-field" type="text" 
+										name="proofratings_banner_badge[button2_textcolor]"
+										value="<?php esc_attr_e($banner_badge['button2_textcolor']) ?>">
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 Background Color', 'proofratings') ?></th>
+								<td>
+									<input class="proofratings-color-field" type="text" 
+										name="proofratings_banner_badge[button2_background_color]"
+										value="<?php esc_attr_e($banner_badge['button2_background_color']) ?>">
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 Shape', 'proofratings') ?></th>
+								<td>
+									<label>
+										<input name="proofratings_banner_badge[button2_shape]" value="round" type="hidden">
+										<input class="checkbox-switch checkbox-shape" name="proofratings_banner_badge[button2_shape]" value="rectangle" type="checkbox" <?php checked( 'rectangle', $banner_badge['button2_shape'] ) ?>>
+									</label>
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 Border', 'proofratings') ?></th>
+								<td>
+									<label>
+										<input name="proofratings_banner_badge[button2_border]" value="no" type="hidden">
+										<input class="checkbox-switch" name="proofratings_banner_badge[button2_border]" value="yes" type="checkbox" <?php checked( 'yes', $banner_badge['button2_border'] ) ?>>
+									</label>
+								</td>
+							</tr>
+							
+							<tr>
+								<th scope="row"><?php _e('Button2 Border Color', 'proofratings') ?></th>
+								<td>
+									<input class="proofratings-color-field" type="text"  name="proofratings_banner_badge[button2_border_color]" value="<?php esc_attr_e($banner_badge['button2_border_color']) ?>">
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 Hover Text Color', 'proofratings') ?></th>
+								<td>
+									<input class="proofratings-color-field" type="text" 
+										name="proofratings_banner_badge[button2_hover_textcolor]"
+										value="<?php esc_attr_e($banner_badge['button2_hover_textcolor']) ?>">
+								</td>
+							</tr>
+							
+							<tr>
+								<th scope="row"><?php _e('Button2 Hover Background Color', 'proofratings') ?></th>
+								<td>
+									<input class="proofratings-color-field" type="text" 
+										name="proofratings_banner_badge[button2_hover_background_color]"
+										value="<?php esc_attr_e($banner_badge['button2_hover_background_color']) ?>">
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row"><?php _e('Button2 Hover Border Color', 'proofratings') ?></th>
+								<td>
+									<input class="proofratings-color-field" type="text" 
+										name="proofratings_banner_badge[button2_hover_border_color]"
+										value="<?php esc_attr_e($banner_badge['button2_hover_border_color']) ?>">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					
 				</div>
 
 				<p class="submit">
