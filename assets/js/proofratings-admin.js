@@ -85,7 +85,7 @@
         $(this).next('img').prop('src', demo_image);
 
         style = $(this).val();
-        $('#floating-badge-shortcode').html(`[proofratings_floating_badge badge_style="${style}""]`)
+        $('#floating-badge-shortcode').html(`[proofratings_floating_badge badge_style="${style}"]`)
 
         let positions = ['Left', 'Center', 'Right'];
 

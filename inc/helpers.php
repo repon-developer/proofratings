@@ -246,18 +246,16 @@ function get_proofratings_settings() {
     ];
 
     $settings = get_option('proofratings_settings', []);
-    
-    if ( !is_array($settings) || empty($settings)) {
-        return $default;
-    }    
 
     array_walk($default, function(&$item, $key) use($settings) {
         if ( !isset($settings[$key]) ) {
-            return new Proofratings_Site_Data($item);
+            return $item = new Proofratings_Site_Data($item);
         }
 
         $item = new Proofratings_Site_Data(array_merge($item, $settings[$key]));
     });
+
+    
 
     return $default;
 }
