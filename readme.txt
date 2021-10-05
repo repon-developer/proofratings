@@ -70,8 +70,11 @@ This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" ta
 
 == Changelog ==
 
-= 1.0.2 =
+= 1.0.3 =
 * Add Banner Badge
+* Fix minor bugs
+
+= 1.0.2 =
 * Add Angi Site
 
 = 1.0.1 =
