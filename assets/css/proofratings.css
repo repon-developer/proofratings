@@ -111,7 +111,7 @@ html {
     position: fixed;
     left: 30px;
     bottom: 30px;
-    z-index: 30000;
+    z-index: 150001;
 }
 
 .proofratings-badge.badge-float.right {
@@ -261,11 +261,6 @@ html {
     -webkit-mask-size: 30px auto
 }
 
-
-
-
-
-
 .proofratings-floating-widgets-box::-webkit-scrollbar {
     height: 5px;
     width: 5px;
@@ -286,7 +281,7 @@ html {
     position: fixed;
     left: 20px;
     bottom: 20px;
-    z-index: 50000;
+    z-index: 150002;
     opacity: 0;
     visibility: hidden;
     padding: 8px;
@@ -379,7 +374,7 @@ html {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    z-index: 50000;
+    z-index: 150000;
     background-color: var(--backgroundColor, #fff);
     transform: translateY(calc(100% + 40px));
     transition: all 200ms;
