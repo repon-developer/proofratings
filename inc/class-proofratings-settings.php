@@ -170,11 +170,11 @@ class WP_ProofRatings_Settings {
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
 					<a href="#settings-badges" class="nav-tab"><?php _e('Badges', 'proofratings'); ?></a>
 
-					<a href="#settings-badge-sites_square" class="nav-tab"><?php _e('Sites (Square)', 'proofratings'); ?></a>
+					<a href="#settings-badge-sites_square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
 
-					<a href="#settings-embeddable-badges" class="nav-tab"><?php _e('Embeddable Badges', 'proofratings'); ?></a>
+					<!-- <a href="#settings-embeddable-badges" class="nav-tab"><?php _e('Embeddable Badges', 'proofratings'); ?></a>
 					<a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
-					<a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a>
+					<a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a> -->
 				</h2>
 
 				<div id="settings-review-sites" class="settings_panel">
@@ -209,7 +209,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
-									<label>
+									<label data-tab-button="#settings-badge-sites_square">
 										<input name="proofratings_display_badge[sites_square]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['sites_square'] ) ?>>
 										<?php _e('Embed only', 'proofratings') ?>
 									</label>
@@ -222,7 +222,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png" alt="Proofratings style">
-									<label>
+									<label data-tab-button="#settings-badge-sites_rectangle">
 										<input name="proofratings_display_badge[sites_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['sites_rectangle'] ) ?>>
 										<?php _e('Embed only', 'proofratings') ?>
 									</label>

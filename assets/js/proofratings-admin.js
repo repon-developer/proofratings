@@ -47,6 +47,21 @@
         jQuery('.nav-tab-wrapper a:first').click();
     }
 
+    var nav_buttons = $('.nav-tab-wrapper > a');
+    $('[data-tab-button] > input').on('change', function(){
+        button = $(this).parent().data('tab-button');
+        current_button = nav_buttons.filter(`[href="${button}"]`).show();
+        if ( !current_button.length ) {
+            return;
+        }
+
+        if ( $(this).is(':checked') ) {
+            return current_button.show()
+        }
+
+        current_button.hide();
+    }).trigger('change')
+
     $('#proofratings_widget_style').on('change', function(){
         demo_image = $(this).find(':selected').data('img');
         $(this).next('img').prop('src', demo_image);
@@ -149,12 +164,12 @@
         square_badges = $('#proofratings-badge-sites-square > :is(a, div)');
 
         badge_css = {
-            '--themeColor': '',
-            '--textColor': '',
+            '--themeColor': $('[name="proofratings_badges_sites_square[star_color]"]').val(),
+            '--textColor': $('[name="proofratings_badges_sites_square[text_color]"]').val(),
             '--borderColor': '',
-            '--shadowColor': '',
-            '--shadowHoverColor': '',
-            'background-color': '',
+            '--shadowColor': $('[name="proofratings_badges_sites_square[shadow_color]"]').val(),
+            '--shadowHoverColor': $('[name="proofratings_badges_sites_square[shadow_hover_color]"]').val(),
+            'background-color': $('[name="proofratings_badges_sites_square[background]"]').val(),
         }
 
         function change_shadow_color(object = {}){
@@ -168,6 +183,8 @@
         }
 
         $('[name="proofratings_badges_sites_square[customize]"]').on('change', function(){
+            change_shadow_color();
+
             if ( $(this).is(":checked") ) {
                 return $('#sites-square-badge-customize').show();
             }
@@ -198,6 +215,10 @@
         })
 
         $('[name="proofratings_badges_sites_square[background]"]').on('update', function(e, color){
+            if ( !color ) {
+                color = '#fff';
+            }
+
             change_shadow_color({'background-color': color})
         })
 
@@ -208,11 +229,5 @@
         $('[name="proofratings_badges_sites_square[shadow_hover_color]"]').on('update', function(e, color){
             change_shadow_color({'--shadowHoverColor': color})
         })
-    })()
-
-
-
-    
-
-    
+    })()    
 })(jQuery)
