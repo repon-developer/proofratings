@@ -158,7 +158,6 @@ html {
 
 .proofratings-widget {
     --shadowColor: rgba(0,0,0, 0.25);
-    --shadowHoverColor: rgba(0,0,0, 0.25);
     --reviewCountTextColor: #fff;
     
     color: var(--textColor, inherit)!important;
@@ -181,7 +180,6 @@ html {
 
 .proofratings-widget:hover {
     --borderColor: var(--themeColor);
-    --shadowColor: var(--shadowHoverColor)!important
 }
 
 .proofratings-widget .review-site-logo {

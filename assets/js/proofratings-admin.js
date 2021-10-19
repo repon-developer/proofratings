@@ -172,23 +172,59 @@
             'background-color': $('[name="proofratings_badges_sites_square[background]"]').val(),
         }
 
+        var generated_style_element = $('style#proofratings-generated-style');
+        if ( !generated_style_element.length ) {
+            generated_style_element = $('<style id="proofratings-generated-style" />').appendTo('body')
+        }
+
         function change_shadow_color(object = {}){
             badge_css = {...badge_css, ...object};
 
-            if ( !$('[name="proofratings_badges_sites_square[shadow]"]').is(':checked') ) {
-                return square_badges.css({...badge_css, '--borderColor': 'transparent', '--shadowColor': 'transparent', '--shadowHoverColor': 'transparent'})
+            console.log(badge_css);
+
+            proofratings_widget = new Array();
+            proofratings_widget.push(`--themeColor: ${badge_css['--themeColor']}`);
+            proofratings_widget.push(`--textColor: ${badge_css['--textColor']}`);
+            proofratings_widget.push(`--shadowColor: ${badge_css['--shadowColor']}`);
+
+            if ( badge_css['--reviewCountTextColor'] ) {
+                proofratings_widget.push(`--reviewCountTextColor: ${badge_css['--reviewCountTextColor']}`);
             }
 
-            square_badges.css(badge_css)
+            if ( badge_css['background-color'] ) {
+                proofratings_widget.push(`background-color: ${badge_css['background-color']}`);
+            }
+
+            proofratings_widget_hover = new Array();
+            proofratings_widget_hover.push(`--borderColor: ${badge_css['--themeColor']}`);
+            proofratings_widget_hover.push(`--shadowColor: ${badge_css['--shadowHoverColor']}`);
+
+            css_style = `
+                .proofratings-widget {${proofratings_widget.join(';')}}
+                .proofratings-widget:hover {${proofratings_widget_hover.join(';')}}
+            `;
+
+            if ( !$('[name="proofratings_badges_sites_square[shadow]"]').is(':checked') ) {
+                css_style += `
+                    .proofratings-widget, .proofratings-widget:hover {
+                        --borderColor: transparent;
+                        --shadowColor: transparent;
+                    }
+                `;
+            }
+            
+            generated_style_element.html(css_style)
         }
 
         $('[name="proofratings_badges_sites_square[customize]"]').on('change', function(){
             change_shadow_color();
 
             if ( $(this).is(":checked") ) {
+                square_badges.addClass('proofratings-widget-customized');
                 return $('#sites-square-badge-customize').show();
             }
-            
+
+            square_badges.removeClass('proofratings-widget-customized');            
             $('#sites-square-badge-customize').hide()
         }).trigger('change')       
     
@@ -207,7 +243,7 @@
         })
 
         $('[name="proofratings_badges_sites_square[text_color]"]').on('update', function(e, color){
-            square_badges.css({'--textColor': color})
+            change_shadow_color({'--textColor': color})
         })
 
         $('[name="proofratings_badges_sites_square[review_count_textcolor]"]').on('update', function(e, color){
