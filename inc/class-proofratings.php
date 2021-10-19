@@ -133,7 +133,7 @@ class Wordpress_Proofratings {
 		$upload_dir = wp_upload_dir();
 		$generated_css = $upload_dir['basedir'] . '/proofratings-generated.css';
 		if ( file_exists($generated_css) ) {
-			wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));			
+			wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));	
 		}
 
 		wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings.js', ['jquery', 'js-cookie'], PROOFRATINGS_VERSION, true);

@@ -1,5 +1,13 @@
 (function ($) {
-    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker();
+    $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker({
+        change: function(event, ui) {
+            $(event.target).trigger('update', ui.color.toString());
+        },
+
+        clear: function (event) {
+            $(event.target).prev().find('input').trigger('update', '');
+        }
+    });
 
     $('.checkbox-review-site input').on('change', function () {
         fieldset = $('#review-site-settings-' + $(this).parent().data('site'))
@@ -135,6 +143,76 @@
     }
 
     BannerBadge();
+
+
+    (function SiteSquare(){
+        square_badges = $('#proofratings-badge-sites-square > :is(a, div)');
+
+        badge_css = {
+            '--themeColor': '',
+            '--textColor': '',
+            '--shadowColor': '',
+            'border-color': '',
+            '--shadowHoverColor': '',
+            'background-color': '',
+        }
+
+        function change_shadow_color(object = {}){
+            badge_css = {...badge_css, ...object};
+
+            if ( !$('[name="proofratings_badges_sites_square[shadow]"]').is(':checked') ) {
+                return square_badges.css({...badge_css, 'border-color': 'transparent', '--shadowColor': 'transparent', '--shadowHoverColor': 'transparent'})
+            }
+
+            square_badges.css(badge_css)
+        }
+
+        $('[name="proofratings_badges_sites_square[customize]"]').on('change', function(){
+            if ( $(this).is(":checked") ) {
+                return $('#sites-square-badge-customize').show();
+            }
+            
+            $('#sites-square-badge-customize').hide()
+        }).trigger('change')       
+    
+        $('[name="proofratings_badges_sites_square[shadow]"]').on('change', function(){
+            change_shadow_color();
+
+            if ( $(this).is(":checked") ) {
+                return $('#proofratings-badges-sites-square-shadow-options').show();
+            }
+            
+            $('#proofratings-badges-sites-square-shadow-options').hide()
+        }).trigger('change');
+
+        $('[name="proofratings_badges_sites_square[star_color]"]').on('update', function(e, color){
+            change_shadow_color({'--themeColor': color});
+        })
+
+        $('[name="proofratings_badges_sites_square[text_color]"]').on('update', function(e, color){
+            square_badges.css({'--textColor': color})
+        })
+
+        $('[name="proofratings_badges_sites_square[review_count_textcolor]"]').on('update', function(e, color){
+            change_shadow_color({'--reviewCountTextColor': color})
+        })
+
+        $('[name="proofratings_badges_sites_square[background]"]').on('update', function(e, color){
+            change_shadow_color({'background-color': color})
+        })
+
+        $('[name="proofratings_badges_sites_square[shadow_color]"]').on('update', function(e, color){
+            change_shadow_color({'--shadowColor': color})
+        })
+
+        $('[name="proofratings_badges_sites_square[shadow_hover_color]"]').on('update', function(e, color){
+            change_shadow_color({'--shadowHoverColor': color})
+        })
+    })()
+
+
+
+    
 
     
 })(jQuery)

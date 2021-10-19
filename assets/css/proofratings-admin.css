@@ -1,3 +1,5 @@
+.gap-30 {height: 30px;}
+
 table.form-table caption {
     text-align: left;
     font-size: 18px;
@@ -173,11 +175,22 @@ input[type="checkbox"].checkbox-onoff {width: 45px;}
 input[type="checkbox"].checkbox-onoff:after {content: "Off"; flex: 1; text-align: center;}
 input[type="checkbox"].checkbox-onoff:checked:after {content: "On";}
 
+input[type="checkbox"].checkbox-yesno {width: 45px;}
+input[type="checkbox"].checkbox-yesno:after {content: "No"; flex: 1; text-align: center;}
+input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
+
 
 #pfb-exclude-page {min-width: 300px}
 
 
 .shortocde-area {user-select: all}
+
+.proofratings-image-option {
+    display: flex;
+    align-items: center;
+}
+
+.proofratings-image-option > img {margin-right: 20px;}
 
 .proofratings-styles {
     display: flex;
@@ -187,4 +200,18 @@ input[type="checkbox"].checkbox-onoff:checked:after {content: "On";}
 .proofratings-styles img {
     margin-left: 30px;
     height: 100px;
+}
+
+.proofratings-settings-wrap .proofratings-review-widgets-grid * {
+    box-sizing: border-box;
+}
+
+.proofratings-settings-wrap .proofratings-review-widgets-grid {
+    display: inline-flex;
+    justify-content: flex-start;
+    margin-bottom: 40px;
+}
+
+#sites-square-badge-customize {
+    display: none;
 }

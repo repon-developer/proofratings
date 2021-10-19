@@ -236,6 +236,15 @@ class ProofRatings_Admin {
 	public function admin_enqueue_scripts() {	
 		$screen = get_current_screen();
 		if ( in_array( $screen->id, [ 'toplevel_page_proofratings' ] ) ) {
+			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
+			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
+			
+			$upload_dir = wp_upload_dir();
+			$generated_css = $upload_dir['basedir'] . '/proofratings-generated.css';
+			if ( file_exists($generated_css) ) {
+				wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));	
+			}
+
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}

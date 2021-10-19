@@ -50,6 +50,9 @@ class WP_ProofRatings_Settings {
 	 */
 	public function register_settings() {
 		register_setting( $this->settings_group, 'proofratings_widget_settings' );
+		register_setting( $this->settings_group, 'proofratings_display_badge' );
+		register_setting( $this->settings_group, 'proofratings_badges_sites_square' );
+
 		register_setting( $this->settings_group, 'proofratings_settings' );
 		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
 		register_setting( $this->settings_group, 'proofratings_banner_badge' );
@@ -111,8 +114,6 @@ class WP_ProofRatings_Settings {
 			'button2_hover_background_color' => '',
 			'button2_hover_border_color' => '',
 		]);
-						
-						
 	}
 
 	/**
@@ -154,10 +155,23 @@ class WP_ProofRatings_Settings {
 					'badge_style' => 'style1'
 				]);
 
+
+				$display_badges = wp_parse_args(get_option( 'proofratings_display_badge'), [
+					'sites_square' => 'no',
+					'sites_rectangle' => 'no',
+					'overall_rating_rectangle' => 'no',
+					'overall_rating_narrow' => 'no',
+					'overall_rating_cta' => 'no',
+				]);
+
 				$proofratings_settings = get_proofratings_settings(); ?>
 
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
+					<a href="#settings-badges" class="nav-tab"><?php _e('Badges', 'proofratings'); ?></a>
+
+					<a href="#settings-badge-sites_square" class="nav-tab"><?php _e('Sites (Square)', 'proofratings'); ?></a>
+
 					<a href="#settings-embeddable-badges" class="nav-tab"><?php _e('Embeddable Badges', 'proofratings'); ?></a>
 					<a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
 					<a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a>
@@ -175,15 +189,91 @@ class WP_ProofRatings_Settings {
 						</tr>
 					</table>
 
-					<?php
-					echo '<div class="review-sites-checkboxes">';
-					foreach ($proofratings_settings as $key => $site) {
-						printf(
-							'<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_settings[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
-							$key, esc_attr($site->logo), checked('yes', $site->active, false)
-						);
-					}
-					echo '</div>'; ?>
+					<h2><?php _e('General Review Sites', 'proofratings') ?></h2>
+					<?php get_proofratings_review_sites('general'); ?>
+
+					<h2><?php _e('Home Services Review Sites', 'proofratings') ?></h2>
+					<?php get_proofratings_review_sites('home-service'); ?>
+
+					<h2><?php _e('Solar Review Sites', 'proofratings') ?></h2>
+					<?php get_proofratings_review_sites('solar'); ?>
+
+					<h2><?php _e('SaaS/Software Review Sites', 'proofratings') ?></h2>
+					<?php get_proofratings_review_sites('software'); ?>
+				</div>
+
+				<div id="settings-badges" class="settings_panel">
+					<table class="form-table">
+						<tr>
+							<th scope="row" style="vertical-align:middle"><?php _e('Sites (Square)', 'proofratings') ?></th>
+							<td>
+								<div class="proofratings-image-option">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
+									<label>
+										<input name="proofratings_display_badge[sites_square]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['sites_square'] ) ?>>
+										<?php _e('Embed only', 'proofratings') ?>
+									</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row" style="vertical-align:middle"><?php _e('Sites (Rectangle)', 'proofratings') ?></th>
+							<td>
+								<div class="proofratings-image-option">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png" alt="Proofratings style">
+									<label>
+										<input name="proofratings_display_badge[sites_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['sites_rectangle'] ) ?>>
+										<?php _e('Embed only', 'proofratings') ?>
+									</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating (Rectangle)', 'proofratings') ?></th>
+							<td>
+								<div class="proofratings-image-option">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
+									<label>
+										<input name="proofratings_display_badge[overall_rating_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_rectangle'] ) ?>>
+										<?php _e('Embed and/or float', 'proofratings') ?>
+									</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating (Narrow)', 'proofratings') ?></th>
+							<td>
+								<div class="proofratings-image-option">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png" alt="Proofratings style">
+									<label>
+										<input name="proofratings_display_badge[overall_rating_narrow]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_narrow'] ) ?>>
+										<?php _e('Embed and/or float', 'proofratings') ?>
+									</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating CTA Banner', 'proofratings') ?></th>
+							<td>
+								<div class="proofratings-image-option">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/cta-badge.png" alt="Proofratings style">
+									<label>
+										<input name="proofratings_display_badge[overall_rating_cta]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_cta'] ) ?>>
+										<?php _e('Float only', 'proofratings') ?>
+									</label>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+
+				<div id="settings-badge-sites_square" class="settings_panel" style="display:none">
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-sites-square.php' ?>
 				</div>
 
 				<div id="settings-embeddable-badges" class="settings_panel" style="display:none">
