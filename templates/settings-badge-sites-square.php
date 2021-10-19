@@ -13,7 +13,7 @@
 	</tr>
 </table>
 
-<label><input name="proofratings_badges_sites_square[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $sites_square['customize']) ?>> Customize</label>
+<label><input name="proofratings_badges_sites_square[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $sites_square['customize']) ?>> Customize (this will customize all badges)</label>
 <div class="gap-30"></div>
 <div id="sites-square-badge-customize">
 
