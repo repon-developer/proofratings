@@ -283,6 +283,23 @@ function get_proofratings_settings() {
     return $default;
 }
 
+/**
+ * get sites square badges settings
+ * @since  1.0.4
+ */
+function get_proofratings_badges_sites_square() {
+    return wp_parse_args(get_option('proofratings_badges_sites_square'), [
+		'customize' => 'no',
+		'star_color' => '',
+		'text_color' => '',
+		'review_count_textcolor' => '',
+		'background' => '',
+		'shadow' => 'yes',
+		'shadow_color' => '',
+		'shadow_hover_color' => '',
+	]);
+}
+
 
 /**
  * get current status

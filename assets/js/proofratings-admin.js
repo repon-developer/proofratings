@@ -151,8 +151,8 @@
         badge_css = {
             '--themeColor': '',
             '--textColor': '',
+            '--borderColor': '',
             '--shadowColor': '',
-            'border-color': '',
             '--shadowHoverColor': '',
             'background-color': '',
         }
@@ -161,7 +161,7 @@
             badge_css = {...badge_css, ...object};
 
             if ( !$('[name="proofratings_badges_sites_square[shadow]"]').is(':checked') ) {
-                return square_badges.css({...badge_css, 'border-color': 'transparent', '--shadowColor': 'transparent', '--shadowHoverColor': 'transparent'})
+                return square_badges.css({...badge_css, '--borderColor': 'transparent', '--shadowColor': 'transparent', '--shadowHoverColor': 'transparent'})
             }
 
             square_badges.css(badge_css)

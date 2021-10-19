@@ -1,14 +1,4 @@
-<?php
-	$sites_square = wp_parse_args(get_option('proofratings_badges_sites_square'), [
-		'customize' => 'no',
-		'star_color' => '',
-		'text_color' => '',
-		'review_count_textcolor' => '',
-		'background' => '',
-		'shadow' => 'yes',
-		'shadow_color' => '',
-		'shadow_hover_color' => '',
-	]);
+<?php $sites_square = get_proofratings_badges_sites_square();
 
 ?>
 <table class="form-table">
@@ -29,7 +19,6 @@
 
 <?php
 echo do_shortcode( '[proofratings_widgets id="proofratings-badge-sites-square"]');  ?>
-
 
 <table class="form-table">
 	<tr>
@@ -52,6 +41,7 @@ echo do_shortcode( '[proofratings_widgets id="proofratings-badge-sites-square"]'
 		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_sites_square[background]" type="text" value="%s">', esc_attr( $sites_square['background'])) ?></td>
 	</tr>
 
+	<input class="checkbox-switch" name="proofratings_badges_sites_square[shadow]" value="no" type="hidden">
 	<tr>
 		<th scope="row">Shadow</th>
 		<td><input class="checkbox-switch" name="proofratings_badges_sites_square[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $sites_square['shadow']) ?>></td>

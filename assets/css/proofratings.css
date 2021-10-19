@@ -174,13 +174,13 @@ html {
     flex-direction: column;
     background-color: #fff;
     text-decoration: none!important;
-    border: 3px solid transparent;
+    border: 3px solid var(--borderColor, transparent);
     transition: 150ms all;
     box-shadow: 1px 1px 4px 0px var(--shadowColor) !important;
 }
 
 .proofratings-widget:hover {
-    border-color: var(--themeColor);
+    --borderColor: var(--themeColor);
     --shadowColor: var(--shadowHoverColor)!important
 }
 
@@ -266,28 +266,27 @@ html {
     -webkit-mask-size: 30px auto
 }
 
-
-.proofratings-widget.proofratings-widget-google {--themeColor: #03AB4E}
-.proofratings-widget.proofratings-widget-facebook {--themeColor: #0f7ff3}
-.proofratings-widget.proofratings-widget-yelp {--themeColor: #e21c21}
-.proofratings-widget.proofratings-widget-bbb {--themeColor: #136796}
-.proofratings-widget.proofratings-widget-trustpilot {--themeColor: #01B67B}
-.proofratings-widget.proofratings-widget-bestcompany {--themeColor: #3c5170}
-.proofratings-widget.proofratings-widget-angi {--themeColor: #FF5E4F}
-.proofratings-widget.proofratings-widget-guildquality {--themeColor: #032e57}
-.proofratings-widget.proofratings-widget-energysage {--themeColor: #bf793f}
-.proofratings-widget.proofratings-widget-solarreviews {--themeColor: #0f92d7}
-.proofratings-widget.proofratings-widget-solarquotes {--themeColor: #208ECD}
-.proofratings-widget.proofratings-widget-solartribune {--themeColor: #fbcb38}
-.proofratings-widget.proofratings-widget-oneflare {--themeColor: #3D9EA0}
-.proofratings-widget.proofratings-widget-wordpress {--themeColor: #00769D}
-.proofratings-widget.proofratings-widget-capterra {--themeColor: #044D80}
-.proofratings-widget.proofratings-widget-g2 {--themeColor: #EF4D35}
-.proofratings-widget.proofratings-widget-getapp {--themeColor: #41E3E2}
-.proofratings-widget.proofratings-widget-softwareadvice {--themeColor: #FD810D}
-.proofratings-widget.proofratings-widget-saasworthy {--themeColor: #FEBA52}
-.proofratings-widget.proofratings-widget-crozdesk {--themeColor: #015BE3}
-.proofratings-widget.proofratings-widget-quickbooks {--themeColor: #2C9F1C}
+.proofratings-widget.proofratings-widget-google:not(.proofratings-widget-customized) {--themeColor: #03AB4E}
+.proofratings-widget.proofratings-widget-facebook:not(.proofratings-widget-customized) {--themeColor: #0f7ff3}
+.proofratings-widget.proofratings-widget-yelp:not(.proofratings-widget-customized) {--themeColor: #e21c21}
+.proofratings-widget.proofratings-widget-bbb:not(.proofratings-widget-customized) {--themeColor: #136796}
+.proofratings-widget.proofratings-widget-trustpilot:not(.proofratings-widget-customized) {--themeColor: #01B67B}
+.proofratings-widget.proofratings-widget-bestcompany:not(.proofratings-widget-customized) {--themeColor: #3c5170}
+.proofratings-widget.proofratings-widget-angi:not(.proofratings-widget-customized) {--themeColor: #FF5E4F}
+.proofratings-widget.proofratings-widget-guildquality:not(.proofratings-widget-customized) {--themeColor: #032e57}
+.proofratings-widget.proofratings-widget-energysage:not(.proofratings-widget-customized) {--themeColor: #bf793f}
+.proofratings-widget.proofratings-widget-solarreviews:not(.proofratings-widget-customized) {--themeColor: #0f92d7}
+.proofratings-widget.proofratings-widget-solarquotes:not(.proofratings-widget-customized) {--themeColor: #208ECD}
+.proofratings-widget.proofratings-widget-solartribune:not(.proofratings-widget-customized) {--themeColor: #fbcb38}
+.proofratings-widget.proofratings-widget-oneflare:not(.proofratings-widget-customized) {--themeColor: #3D9EA0}
+.proofratings-widget.proofratings-widget-wordpress:not(.proofratings-widget-customized) {--themeColor: #00769D}
+.proofratings-widget.proofratings-widget-capterra:not(.proofratings-widget-customized) {--themeColor: #044D80}
+.proofratings-widget.proofratings-widget-g2:not(.proofratings-widget-customized) {--themeColor: #EF4D35}
+.proofratings-widget.proofratings-widget-getapp:not(.proofratings-widget-customized) {--themeColor: #41E3E2}
+.proofratings-widget.proofratings-widget-softwareadvice:not(.proofratings-widget-customized) {--themeColor: #FD810D}
+.proofratings-widget.proofratings-widget-saasworthy:not(.proofratings-widget-customized) {--themeColor: #FEBA52}
+.proofratings-widget.proofratings-widget-crozdesk:not(.proofratings-widget-customized) {--themeColor: #015BE3}
+.proofratings-widget.proofratings-widget-quickbooks:not(.proofratings-widget-customized) {--themeColor: #2C9F1C}
 
 .proofratings-floating-widgets-box::-webkit-scrollbar {
     height: 5px;

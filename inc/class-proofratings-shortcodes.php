@@ -294,7 +294,7 @@ class ProofRatings_Shortcodes {
 	 */
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
-			'badge_style' => '',
+			'badge_style' => 'sites_square',
             'id' => 'proofratings_widgets'
         ], $atts);
 
@@ -304,27 +304,35 @@ class ProofRatings_Shortcodes {
 			return;
         }
 
+		$badge_class = ['proofratings-widget'];
+
+		$badges_sites_square = get_proofratings_badges_sites_square();
+		if ( $badges_sites_square['customize'] == 'yes' && $atts['badge_style'] == 'sites_square' ) {
+			$badge_class[] = 'proofratings-widget-customized';
+		}
+
 
 		$badge_style = sanitize_key($atts['badge_style']);
 		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
-			$badge_style = 'style1';
+			$badge_style = 'sites_square';
 		}
 
         ob_start();		
         printf('<div id="%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
-				$attribue= '';
+				$attribue = '';
 				
 				if( !empty($site->review_url) ) {
 					$tag = 'a';
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
 				}
+
+				$badge_class[] = 'proofratings-widget-' . $badge_style;
+				$badge_class[] = 'proofratings-widget-' . $key;
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s proofratings-widget-%s" %s>', $tag, $badge_style, $key, $attribue);
-
+				printf('<%s class="%s" %s>', $tag, implode(' ', $badge_class), $attribue);
 					$this->{'proofratings_widgets_' . $badge_style}($site);
-
 				printf('</%s>', $tag);
 	        }
 
@@ -333,9 +341,9 @@ class ProofRatings_Shortcodes {
 	}
 
 	/**
-	 * Embed badge style1
+	 * Embed badge sites square
 	 */
-	public function proofratings_widgets_style1($site) {			
+	public function proofratings_widgets_sites_square($site) {			
     	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews" itemprop="reviewRating">';

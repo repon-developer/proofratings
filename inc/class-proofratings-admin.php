@@ -96,31 +96,75 @@ class ProofRatings_Admin {
 			echo "}\n\n";
 		}
 
-		foreach ($settings as $key => $site) {
-			if ( empty($key)) continue;
-			printf(".proofratings-widget.proofratings-widget-%s {\n", $key);
+		$badges_sites_square = get_proofratings_badges_sites_square();
 
-				if ( $site['theme_color'] ) {
-					printf("\t--themeColor: %s;\n", $site['theme_color']);
+		// if ( $badges_sites_square['customize'] != 'yes' ) {
+		// 	foreach ($settings as $key => $site) {
+		// 		if ( empty($key)) continue;
+		// 		printf(".proofratings-widget.proofratings-widget-%s {\n", $key);
+	
+		// 			if ( $site['theme_color'] ) {
+		// 				printf("\t--themeColor: %s;\n", $site['theme_color']);
+		// 			}
+	
+		// 			if ( $site['text_color'] ) {
+		// 				printf("\t--textColor: %s;\n", $site['text_color']);
+		// 			}
+	
+		// 			if ( $site['background'] ) {
+		// 				printf("\tbackground-color: %s;\n", $site['background']);
+		// 			}
+					
+		// 		echo "}\n\n";
+	
+		// 		printf(".proofratings-widget.proofratings-widget-style2.proofratings-widget-%s .review-count {\n", $key);
+		// 			if ( $site['review_count_textcolor'] ) {
+		// 				printf("\t--color: %s!important;\n", $site['review_count_textcolor']);
+		// 			}
+		// 		echo "}";
+		// 	}
+		// }
+
+
+		if ( $badges_sites_square['customize'] == 'yes' ) {
+			echo ".proofratings-widget {\n";
+				if ( $badges_sites_square['star_color'] ) {
+					printf("\t--themeColor: %s;\n", $badges_sites_square['star_color']);
 				}
 
-				if ( $site['text_color'] ) {
-					printf("\t--textColor: %s;\n", $site['text_color']);
+				if ( $badges_sites_square['text_color'] ) {
+					printf("\t--textColor: %s;\n", $badges_sites_square['text_color']);
 				}
 
-				if ( $site['background'] ) {
-					printf("\tbackground-color: %s;\n", $site['background']);
+				if ( $badges_sites_square['background'] ) {
+					printf("\tbackground-color: %s;\n", $badges_sites_square['background']);
 				}
-				
+
+				if ( $badges_sites_square['shadow'] == 'yes' ) {					
+					if ( $badges_sites_square['shadow_color'] ) {
+						printf("\t--shadowColor: %s;\n", $badges_sites_square['shadow_color']);
+					}
+
+					if ( $badges_sites_square['shadow_hover_color'] ) {
+						printf("\t--shadowHoverColor: %s;\n", $badges_sites_square['shadow_hover_color']);
+					}
+				}
+
+				if ( $badges_sites_square['shadow'] == 'no' ) {
+					echo "\tborder-color: transparent;\n";
+
+					if ( $badges_sites_square['shadow_color'] ) {
+						echo "\t--shadowColor: transparent;\n";
+					}
+
+					if ( $badges_sites_square['shadow_hover_color'] ) {
+						echo "\t--shadowHoverColor: transparent;\n";
+					}
+				}
 			echo "}\n\n";
-
-			printf(".proofratings-widget.proofratings-widget-style2.proofratings-widget-%s .review-count {\n", $key);
-				if ( $site['review_count_textcolor'] ) {
-					printf("\t--color: %s!important;\n", $site['review_count_textcolor']);
-				}
-			echo "}";
 		}
 
+		
 		echo "#proofratings-floating-embed .proofrating-close {\n";			
 			if ( $badge_settings['star_color'] ) {
 				printf("\tcolor: %s;\n", $badge_settings['star_color']);
