@@ -173,9 +173,9 @@ class WP_ProofRatings_Settings {
 
 					<a href="#settings-badge-square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
 					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
+					<a href="#settings-overall-rating-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
 
-					<!-- <a href="#settings-embeddable-badges" class="nav-tab"><?php _e('Embeddable Badges', 'proofratings'); ?></a>
-					<a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
+					<!-- <a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
 					<a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a> -->
 				</h2>
 
@@ -237,7 +237,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
-									<label>
+									<label data-tab-button="#settings-overall-rating-rectangle">
 										<input name="proofratings_display_badge[overall_rating_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_rectangle'] ) ?>>
 										<?php _e('Embed and/or float', 'proofratings') ?>
 									</label>
@@ -273,7 +273,6 @@ class WP_ProofRatings_Settings {
 					</table>
 				</div>
 
-
 				<div id="settings-badge-square" class="settings_panel" style="display:none">
 					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-square.php' ?>
 				</div>
@@ -282,65 +281,9 @@ class WP_ProofRatings_Settings {
 					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-rectangle.php' ?>
 				</div>
 
-				<div id="settings-embeddable-badges" class="settings_panel" style="display:none">
-					<table class="form-table">
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Badge Type', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-styles">
-									<select name="proofratings_widget_settings[badge_style]" id="proofratings_widget_style">
-										<option value="style1" <?php selected('style1', $widget_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
-										<option value="style2" <?php selected('style2', $widget_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
-									</select>
-
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row" style="vertical-align:middle">
-								<?php _e('Shortcode', 'proofratings') ?>
-								<p class="description" style="font-weight: normal">Use shortcode where you want to display review widgets</p>
-							</th>
-							<td>
-								<code class="shortocde-area" id="proofratings-widgets-shortcode">[proofratings_widgets]</code>
-							</td>
-						</tr>
-					</table>
-
-					<?php
-					foreach ($proofratings_settings as $key => $site) {
-						printf('<fieldset id="review-site-settings-%s" class="fieldset-site-review">', $key);
-							if ( $site->title) {
-								echo '<h2 class="title">'. esc_html($site->title).'</h2>';
-							}
-
-							echo '<table class="form-table form-table-review-sites settings">';
-								echo '<tr>';
-									echo '<th scope="row"><label for="mailserver_url">Theme Color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][theme_color]" type="text" value="%2$s"></td>', $key, esc_attr($site->theme_color));
-								echo '</tr>';
-
-								echo '<tr>';
-									echo '<th scope="row"><label>Text Color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][text_color]" type="text" value="%2$s"></td>', $key, esc_attr($site->text_color));
-								echo '</tr>';
-
-								echo '<tr>';
-									echo '<th scope="row"><label>Review count text color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][review_count_textcolor]" type="text" value="%2$s"></td>', $key, esc_attr($site->review_count_textcolor));
-								echo '</tr>';
-								
-								echo '<tr>';
-									echo '<th scope="row"><label for="mailserver_url">Background Color</label></th>';
-									printf('<td><input class="proofratings-color-field" name="proofratings_settings[%1$s][background]" type="text" value="%2$s"></td>', $key, esc_attr($site->background));
-								echo '</tr>';
-
-							echo '</table>';
-							echo '<hr>';
-						echo '</fieldset>';
-					} ?>
+				<div id="settings-overall-rating-rectangle" class="settings_panel" style="display:none">
+					<?php $overall_rating = $this->get_floating_badge_settings(); ?>
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-rating-rectangle.php' ?>
 				</div>
 
 				<div id="settings-floating-badge" class="settings_panel" style="display:none">
