@@ -212,6 +212,8 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
     margin-bottom: 40px;
 }
 
-#sites-square-badge-customize {
-    display: none;
+#sites-square-badge-customize {display: none}
+
+.proofratings-settings-wrap .proofratings-widget.proofratings-widget-rectangle .rating-title {
+    margin: 0 0 8px 0;
 }

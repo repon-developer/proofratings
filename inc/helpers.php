@@ -284,11 +284,28 @@ function get_proofratings_settings() {
 }
 
 /**
- * get sites square badges settings
+ * get square badges settings
  * @since  1.0.4
  */
-function get_proofratings_badges_sites_square() {
-    return wp_parse_args(get_option('proofratings_badges_sites_square'), [
+function get_proofratings_badges_square() {
+    return wp_parse_args(get_option('proofratings_badges_square'), [
+		'customize' => 'no',
+		'star_color' => '',
+		'text_color' => '',
+		'review_count_textcolor' => '',
+		'background' => '',
+		'shadow' => 'yes',
+		'shadow_color' => '',
+		'shadow_hover_color' => '',
+	]);
+}
+
+/**
+ * get rectangle badges settings
+ * @since  1.0.4
+ */
+function get_proofratings_badges_rectangle() {
+    return wp_parse_args(get_option('proofratings_badges_rectangle'), [
 		'customize' => 'no',
 		'star_color' => '',
 		'text_color' => '',

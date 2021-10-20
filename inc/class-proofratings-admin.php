@@ -96,72 +96,94 @@ class ProofRatings_Admin {
 			echo "}\n\n";
 		}
 
-		$badges_sites_square = get_proofratings_badges_sites_square();
-
-		// if ( $badges_sites_square['customize'] != 'yes' ) {
-		// 	foreach ($settings as $key => $site) {
-		// 		if ( empty($key)) continue;
-		// 		printf(".proofratings-widget.proofratings-widget-%s {\n", $key);
-	
-		// 			if ( $site['theme_color'] ) {
-		// 				printf("\t--themeColor: %s;\n", $site['theme_color']);
-		// 			}
-	
-		// 			if ( $site['text_color'] ) {
-		// 				printf("\t--textColor: %s;\n", $site['text_color']);
-		// 			}
-	
-		// 			if ( $site['background'] ) {
-		// 				printf("\tbackground-color: %s;\n", $site['background']);
-		// 			}
-					
-		// 		echo "}\n\n";
-	
-		// 		printf(".proofratings-widget.proofratings-widget-style2.proofratings-widget-%s .review-count {\n", $key);
-		// 			if ( $site['review_count_textcolor'] ) {
-		// 				printf("\t--color: %s!important;\n", $site['review_count_textcolor']);
-		// 			}
-		// 		echo "}";
-		// 	}
-		// }
-
-
-		if ( $badges_sites_square['customize'] == 'yes' ) {
-			echo ".proofratings-widget {\n";
-				if ( $badges_sites_square['star_color'] ) {
-					printf("\t--themeColor: %s;\n", $badges_sites_square['star_color']);
+		$badges_square = get_proofratings_badges_square();
+		if ( $badges_square['customize'] == 'yes' ) {
+			echo ".proofratings-widget.proofratings-widget-square {\n";
+				if ( $badges_square['star_color'] ) {
+					printf("\t--themeColor: %s;\n", $badges_square['star_color']);
 				}
 
-				if ( $badges_sites_square['text_color'] ) {
-					printf("\t--textColor: %s;\n", $badges_sites_square['text_color']);
+				if ( $badges_square['text_color'] ) {
+					printf("\t--textColor: %s;\n", $badges_square['text_color']);
 				}
 
-				if ( $badges_sites_square['background'] ) {
-					printf("\tbackground-color: %s;\n", $badges_sites_square['background']);
+				if ( $badges_square['background'] ) {
+					printf("\tbackground-color: %s;\n", $badges_square['background']);
 				}
 
-				if ( $badges_sites_square['shadow'] == 'yes' ) {					
-					if ( $badges_sites_square['shadow_color'] ) {
-						printf("\t--shadowColor: %s;\n", $badges_sites_square['shadow_color']);
-					}
-
-					if ( $badges_sites_square['shadow_hover_color'] ) {
-						printf("\t--shadowHoverColor: %s;\n", $badges_sites_square['shadow_hover_color']);
+				if ( $badges_square['shadow'] == 'yes' ) {					
+					if ( $badges_square['shadow_color'] ) {
+						printf("\t--shadowColor: %s;\n", $badges_square['shadow_color']);
 					}
 				}
 
-				if ( $badges_sites_square['shadow'] == 'no' ) {
-					echo "\tborder-color: transparent;\n";
-
-					if ( $badges_sites_square['shadow_color'] ) {
-						echo "\t--shadowColor: transparent;\n";
-					}
-
-					if ( $badges_sites_square['shadow_hover_color'] ) {
-						echo "\t--shadowHoverColor: transparent;\n";
-					}
-				}
 			echo "}\n\n";
+
+			if ( $badges_square['shadow'] == 'yes' ) {
+				echo ".proofratings-widget.proofratings-widget-square:hover {\n";
+					if ( $badges_square['star_color'] ) {
+						printf("\t--borderColor: %s;\n", $badges_square['star_color']);
+					}
+
+					if ( $badges_square['shadow_hover_color'] ) {
+						printf("\t--shadowColor: %s;\n", $badges_square['shadow_hover_color']);
+					}
+				echo "}\n\n";
+			}
+
+			if ( $badges_square['shadow'] == 'no' ) {
+				echo ".proofratings-widget.proofratings-widget-square, .proofratings-widget.proofratings-widget-square:hover {\n";
+					echo "\t--borderColor: transparent;\n";
+					echo "\t--shadowColor: transparent;\n";
+				echo "}\n\n";
+			}
+		}
+
+		$badges_rectangle = get_proofratings_badges_rectangle();
+		if ( $badges_rectangle['customize'] == 'yes' ) {
+			echo ".proofratings-widget.proofratings-widget-rectangle {\n";
+				if ( $badges_rectangle['star_color'] ) {
+					printf("\t--themeColor: %s;\n", $badges_rectangle['star_color']);
+				}
+
+				if ( $badges_rectangle['text_color'] ) {
+					printf("\t--textColor: %s;\n", $badges_rectangle['text_color']);
+				}
+
+				if ( $badges_rectangle['review_count_textcolor'] ) {
+					printf("\t--reviewCountTextColor: %s;\n", $badges_rectangle['review_count_textcolor']);
+				}
+
+				if ( $badges_rectangle['background'] ) {
+					printf("\tbackground-color: %s;\n", $badges_rectangle['background']);
+				}
+
+				if ( $badges_rectangle['shadow'] == 'yes' ) {					
+					if ( $badges_rectangle['shadow_color'] ) {
+						printf("\t--shadowColor: %s;\n", $badges_rectangle['shadow_color']);
+					}
+				}
+
+			echo "}\n\n";
+
+			if ( $badges_rectangle['shadow'] == 'yes' ) {
+				echo ".proofratings-widget.proofratings-widget-rectangle:hover {\n";
+					if ( $badges_rectangle['star_color'] ) {
+						printf("\t--borderColor: %s;\n", $badges_rectangle['star_color']);
+					}
+
+					if ( $badges_rectangle['shadow_hover_color'] ) {
+						printf("\t--shadowColor: %s;\n", $badges_rectangle['shadow_hover_color']);
+					}
+				echo "}\n\n";
+			}
+
+			if ( $badges_rectangle['shadow'] == 'no' ) {
+				echo ".proofratings-widget.proofratings-widget-rectangle, .proofratings-widget.proofratings-widget-rectangle:hover {\n";
+					echo "\t--borderColor: transparent;\n";
+					echo "\t--shadowColor: transparent;\n";
+				echo "}\n\n";
+			}
 		}
 
 		
@@ -282,13 +304,6 @@ class ProofRatings_Admin {
 		if ( in_array( $screen->id, [ 'toplevel_page_proofratings' ] ) ) {
 			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
-			
-			$upload_dir = wp_upload_dir();
-			$generated_css = $upload_dir['basedir'] . '/proofratings-generated.css';
-			if ( file_exists($generated_css) ) {
-				wp_enqueue_style( 'proofratings-generated', $upload_dir['baseurl'] . '/proofratings-generated.css', [], filemtime($generated_css));	
-			}
-
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}

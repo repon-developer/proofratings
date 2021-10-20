@@ -51,7 +51,8 @@ class WP_ProofRatings_Settings {
 	public function register_settings() {
 		register_setting( $this->settings_group, 'proofratings_widget_settings' );
 		register_setting( $this->settings_group, 'proofratings_display_badge' );
-		register_setting( $this->settings_group, 'proofratings_badges_sites_square' );
+		register_setting( $this->settings_group, 'proofratings_badges_square' );
+		register_setting( $this->settings_group, 'proofratings_badges_rectangle' );
 
 		register_setting( $this->settings_group, 'proofratings_settings' );
 		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
@@ -157,8 +158,8 @@ class WP_ProofRatings_Settings {
 
 
 				$display_badges = wp_parse_args(get_option( 'proofratings_display_badge'), [
-					'sites_square' => 'no',
-					'sites_rectangle' => 'no',
+					'square' => 'no',
+					'rectangle' => 'no',
 					'overall_rating_rectangle' => 'no',
 					'overall_rating_narrow' => 'no',
 					'overall_rating_cta' => 'no',
@@ -170,7 +171,8 @@ class WP_ProofRatings_Settings {
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
 					<a href="#settings-badges" class="nav-tab"><?php _e('Badges', 'proofratings'); ?></a>
 
-					<a href="#settings-badge-sites_square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
+					<a href="#settings-badge-square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
+					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
 
 					<!-- <a href="#settings-embeddable-badges" class="nav-tab"><?php _e('Embeddable Badges', 'proofratings'); ?></a>
 					<a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
@@ -209,8 +211,8 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
-									<label data-tab-button="#settings-badge-sites_square">
-										<input name="proofratings_display_badge[sites_square]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['sites_square'] ) ?>>
+									<label data-tab-button="#settings-badge-square">
+										<input name="proofratings_display_badge[square]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['square'] ) ?>>
 										<?php _e('Embed only', 'proofratings') ?>
 									</label>
 								</div>
@@ -222,8 +224,8 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png" alt="Proofratings style">
-									<label data-tab-button="#settings-badge-sites_rectangle">
-										<input name="proofratings_display_badge[sites_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['sites_rectangle'] ) ?>>
+									<label data-tab-button="#settings-badge-rectangle">
+										<input name="proofratings_display_badge[rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['rectangle'] ) ?>>
 										<?php _e('Embed only', 'proofratings') ?>
 									</label>
 								</div>
@@ -272,8 +274,12 @@ class WP_ProofRatings_Settings {
 				</div>
 
 
-				<div id="settings-badge-sites_square" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-sites-square.php' ?>
+				<div id="settings-badge-square" class="settings_panel" style="display:none">
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-square.php' ?>
+				</div>
+
+				<div id="settings-badge-rectangle" class="settings_panel" style="display:none">
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-rectangle.php' ?>
 				</div>
 
 				<div id="settings-embeddable-badges" class="settings_panel" style="display:none">

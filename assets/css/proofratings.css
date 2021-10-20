@@ -124,23 +124,23 @@ html {
     transform: translateX(calc(50vw - 50%));
 }
 
-.proofratings-badge.proofratings-badge-style1 .proofratings-review-count {
+.proofratings-badge.proofratings-badges-square .proofratings-review-count {
     color: var(--review_text_color, #fff);
     padding: 10px var(--padx);
     border-radius: 0 0 10px 10px;
     background-color: var(--review_background, #212a3d);
 }
 
-.proofratings-badge.proofratings-badge-style2 {
+.proofratings-badge.proofratings-badges-rectangle {
     min-height: 62px;
     padding: 15px 20px;
     display: inline-flex;
     align-items: center;
 }
 
-.proofratings-badge.proofratings-badge-style2 .proofratings-inner {display: flex; padding: 0;}
-.proofratings-badge.proofratings-badge-style2 .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
-.proofratings-badge.proofratings-badge-style2 .proofratings-reviews {margin-right: 20px;}
+.proofratings-badge.proofratings-badges-rectangle .proofratings-inner {display: flex; padding: 0;}
+.proofratings-badge.proofratings-badges-rectangle .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
+.proofratings-badge.proofratings-badges-rectangle .proofratings-reviews {margin-right: 20px;}
 
 .proofratings-review-widgets-grid {
     display: grid;
@@ -150,7 +150,7 @@ html {
 }
 
 
-.proofratings-review-widgets-grid.proofratings-widgets-grid-style2 {
+.proofratings-review-widgets-grid.proofratings-widgets-grid-rectangle {
     grid-template-columns: repeat(auto-fit, minmax(200px, 260px))
 }
 
@@ -216,8 +216,8 @@ html {
     letter-spacing: 1px;
 }
 
-
-.proofratings-widget.proofratings-widget-style2 {
+.proofratings-widget.proofratings-widget-rectangle {
+    --reviewCountTextColor: #767676;
     width: 250px;
     display: unset;
     min-height: 121px;
@@ -225,7 +225,7 @@ html {
     padding-bottom: 14px;
 }
 
-.proofratings-widget.proofratings-widget-style2 .review-site-logo {
+.proofratings-widget.proofratings-widget-rectangle .review-site-logo {
     position: absolute;
     top: 15px;
     right: 10px;
@@ -233,33 +233,32 @@ html {
     max-height: 24px;
 }
 
-.proofratings-widget.proofratings-widget-style2 .rating-title {
+.proofratings-widget.proofratings-widget-rectangle .rating-title {
     font-size: 16px;
     letter-spacing:0.05em;
     margin-bottom: 8px;
 }
 
-.proofratings-widget.proofratings-widget-style2 .proofratings-reviews {
+.proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {
     text-align: left;
     justify-content: unset;
 }
 
-.proofratings-widget.proofratings-widget-style2 .proofratings-score {
+.proofratings-widget.proofratings-widget-rectangle .proofratings-score {
     font-size: 28px;
     font-weight: bold;
 }
 
-.proofratings-widget.proofratings-widget-style2 .review-count {
-    color: var(--color, #767676);
+.proofratings-widget.proofratings-widget-rectangle .review-count {
     padding: unset;
     font-weight: unset;
     letter-spacing:0.05em;
     background-color: transparent;
 }
 
-.proofratings-widget.proofratings-widget-style2 .proofratings-stars {width: 146px!important}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-stars {width: 146px!important}
 
-.proofratings-widget.proofratings-widget-style2 .proofratings-stars, .proofratings-widget.proofratings-widget-style2 .proofratings-stars i {
+.proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {
     height: 22px!important;
     -webkit-mask-size: 30px auto
 }

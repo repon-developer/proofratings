@@ -294,7 +294,7 @@ class ProofRatings_Shortcodes {
 	 */
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
-			'badge_style' => 'sites_square',
+			'style' => 'square',
             'id' => 'proofratings_widgets'
         ], $atts);
 
@@ -306,15 +306,15 @@ class ProofRatings_Shortcodes {
 
 		$badge_class = ['proofratings-widget'];
 
-		$badges_sites_square = get_proofratings_badges_sites_square();
-		if ( $badges_sites_square['customize'] == 'yes' && $atts['badge_style'] == 'sites_square' ) {
+		$badges_sites_square = get_proofratings_badges_square();
+		if ( $badges_sites_square['customize'] == 'yes' ) {
 			$badge_class[] = 'proofratings-widget-customized';
 		}
 
 
-		$badge_style = sanitize_key($atts['badge_style']);
+		$badge_style = sanitize_key($atts['style']);
 		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
-			$badge_style = 'sites_square';
+			$badge_style = 'square';
 		}
 
         ob_start();		
@@ -343,7 +343,7 @@ class ProofRatings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function proofratings_widgets_sites_square($site) {			
+	public function proofratings_widgets_square($site) {			
     	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
@@ -359,7 +359,7 @@ class ProofRatings_Shortcodes {
 	/**
 	 * Embed badge style2
 	 */
-	public function proofratings_widgets_style2($site) {		
+	public function proofratings_widgets_rectangle($site) {		
     	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon2), esc_attr($site->rating_title));
 
 		if ( $site->rating_title ) {
