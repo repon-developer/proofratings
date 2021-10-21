@@ -287,6 +287,20 @@ function get_proofratings_settings() {
  * get square badges settings
  * @since  1.0.4
  */
+function get_proofratings_display_settings() {
+    return wp_parse_args(get_option( 'proofratings_display_badge'), [
+        'square' => 'no',
+        'rectangle' => 'no',
+        'overall_ratings_rectangle' => 'no',
+        'overall_ratings_narrow' => 'no',
+        'overall_ratings_cta' => 'no',
+    ]);
+}
+
+/**
+ * get square badges settings
+ * @since  1.0.4
+ */
 function get_proofratings_badges_square() {
     return wp_parse_args(get_option('proofratings_badges_square'), [
 		'customize' => 'no',
@@ -314,6 +328,29 @@ function get_proofratings_badges_rectangle() {
 		'shadow' => 'yes',
 		'shadow_color' => '',
 		'shadow_hover_color' => '',
+	]);
+}
+
+/**
+ * get overall rectangle settings
+ * @since  1.0.4
+ */
+function get_proofratings_overall_rectangle() {
+    return wp_parse_args(get_option('proofratings_overall_rectangle'), [
+		'float' => 'yes',
+        'tablet' => 'yes',
+        'mobile' => 'yes',
+        'close_button' => 'yes',
+        'position' => '',
+        'customize' => 'no',
+        'star_color' => '',
+        'shadow' => 'yes',
+        'shadow_color' => '',
+        'shadow_hover' => '',
+        'background_color' => '',
+        'review_text_color' => '',
+        'review_background' => '',
+        'pages' => [],
 	]);
 }
 

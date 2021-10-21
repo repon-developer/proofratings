@@ -60,6 +60,7 @@ class Wordpress_Proofratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
+		add_action( 'wp_footer', [ $this, 'overall_ratings_rectangle' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
 	}
 		
@@ -174,9 +175,31 @@ class Wordpress_Proofratings {
 	}
 
 	/**
+	 * Overrall Ratings Rectangle  badge on frontend
+	 * @since 1.0.4
+	 */
+	public function overall_ratings_rectangle() {
+		$badge_settings = get_proofratings_overall_rectangle();
+		if ($badge_settings['float'] !== 'yes') {
+			return;
+		}
+
+		$on_pages = (array) @$badge_settings['pages'];
+		$has_page = !isset($badge_settings['pages'][get_the_ID()]) || $badge_settings['pages'][get_the_ID()] == 'yes'? true : false;
+
+		if ($has_page ) {
+			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
+		}
+	}
+
+	/**
 	 * Banner badge on frontend
 	 */
 	public function banner_badge() {
+		if ( get_proofratings_display_settings()['overall_ratings_cta'] !== 'yes' ) {
+			return;
+		}
+
 		$badge_settings = get_option( 'proofratings_banner_badge' );
 		if ( !$badge_settings) {
 			return;

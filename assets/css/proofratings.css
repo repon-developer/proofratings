@@ -42,7 +42,7 @@ html {
     top: -8px;
     right: -8px;
     display: none;
-    background-color: #e9e9e9;
+    background-color: var(--star_color, #e9e9e9);
 }
 
 .proofratings-badge:hover .proofratings-close {display: block}
@@ -124,12 +124,13 @@ html {
     transform: translateX(calc(50vw - 50%));
 }
 
-.proofratings-badge.proofratings-badges-square .proofratings-review-count {
+.proofratings-badge.proofratings-badge-rectangle .proofratings-review-count {
     color: var(--review_text_color, #fff);
     padding: 10px var(--padx);
     border-radius: 0 0 10px 10px;
     background-color: var(--review_background, #212a3d);
 }
+
 
 .proofratings-badge.proofratings-badges-rectangle {
     min-height: 62px;

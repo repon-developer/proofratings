@@ -54,27 +54,12 @@ class WP_ProofRatings_Settings {
 		register_setting( $this->settings_group, 'proofratings_badges_square' );
 		register_setting( $this->settings_group, 'proofratings_badges_rectangle' );
 
+		//settings for overall ratings		
+		register_setting( $this->settings_group, 'proofratings_overall_rectangle' );
+
 		register_setting( $this->settings_group, 'proofratings_settings' );
 		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
 		register_setting( $this->settings_group, 'proofratings_banner_badge' );
-	}
-
-	public function get_floating_badge_settings() {
-		return wp_parse_args((array)get_option( 'proofratings_floating_badge_settings'), [
-			'float' => 'yes',
-			'tablet' => 'yes',
-			'mobile' => 'yes',
-			'on_pages' => [],
-			'close_button' => 'yes',
-			'position' => '',
-			'star_color' => '',
-			'shadow' => 'yes',
-			'shadow_color' => '',
-			'shadow_hover' => '',
-			'background_color' => '',
-			'review_text_color' => '',
-			'review_background' => ''
-		]);
 	}
 
 	public function get_banner_badge_settings() {
@@ -157,13 +142,7 @@ class WP_ProofRatings_Settings {
 				]);
 
 
-				$display_badges = wp_parse_args(get_option( 'proofratings_display_badge'), [
-					'square' => 'no',
-					'rectangle' => 'no',
-					'overall_rating_rectangle' => 'no',
-					'overall_rating_narrow' => 'no',
-					'overall_rating_cta' => 'no',
-				]);
+				$display_badges = get_proofratings_display_settings();
 
 				$proofratings_settings = get_proofratings_settings(); ?>
 
@@ -175,8 +154,7 @@ class WP_ProofRatings_Settings {
 					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
 					<a href="#settings-overall-rating-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
 
-					<!-- <a href="#settings-floating-badge" class="nav-tab"><?php _e('Floating Badge', 'proofratings'); ?></a>
-					<a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a> -->
+					<!-- <a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a> -->
 				</h2>
 
 				<div id="settings-review-sites" class="settings_panel">
@@ -238,7 +216,7 @@ class WP_ProofRatings_Settings {
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
 									<label data-tab-button="#settings-overall-rating-rectangle">
-										<input name="proofratings_display_badge[overall_rating_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_rectangle'] ) ?>>
+										<input name="proofratings_display_badge[overall_ratings_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_rectangle'] ) ?>>
 										<?php _e('Embed and/or float', 'proofratings') ?>
 									</label>
 								</div>
@@ -251,7 +229,7 @@ class WP_ProofRatings_Settings {
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png" alt="Proofratings style">
 									<label>
-										<input name="proofratings_display_badge[overall_rating_narrow]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_narrow'] ) ?>>
+										<input name="proofratings_display_badge[overall_ratings_narrow]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_narrow'] ) ?>>
 										<?php _e('Embed and/or float', 'proofratings') ?>
 									</label>
 								</div>
@@ -264,7 +242,7 @@ class WP_ProofRatings_Settings {
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/cta-badge.png" alt="Proofratings style">
 									<label>
-										<input name="proofratings_display_badge[overall_rating_cta]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_rating_cta'] ) ?>>
+										<input name="proofratings_display_badge[overall_ratings_cta]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_cta'] ) ?>>
 										<?php _e('Float only', 'proofratings') ?>
 									</label>
 								</div>
@@ -282,171 +260,9 @@ class WP_ProofRatings_Settings {
 				</div>
 
 				<div id="settings-overall-rating-rectangle" class="settings_panel" style="display:none">
-					<?php $overall_rating = $this->get_floating_badge_settings(); ?>
 					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-rating-rectangle.php' ?>
 				</div>
 
-				<div id="settings-floating-badge" class="settings_panel" style="display:none">
-					<?php $badge_settings = $this->get_floating_badge_settings(); ?>
-					<table id="form-table-floating-badge" class="form-table">
-						<tr>
-							<th scope="row">
-								<?php _e('Shortcode', 'proofratings') ?>
-								<p class="description" style="font-weight: normal">Embed shortcode</p>
-							</th>
-							<td><code class="shortocde-area" id="floating-badge-shortcode">[proofratings_floating_badge badge_style="style1"]</code></td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Badge Visibility', 'proofratings') ?></th>
-							<td>
-								<label>
-									<input name="proofratings_floating_badge_settings[float]" value="no" type="hidden">
-									<input class="checkbox-switch checkbox-float-embed" name="proofratings_floating_badge_settings[float]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['float'] ) ?>>
-									<?php _e('Float/Embed only option', 'proofratings'); ?>
-								</label>
-							</td>
-						</tr>
-
-						<tr id="badge-tablet-visibility">
-							<th scope="row"><?php _e('Tablet Visibility', 'proofratings') ?></th>
-							<td>
-								<label>
-									<input name="proofratings_floating_badge_settings[tablet]" value="no" type="hidden">
-									<input class="checkbox-switch" name="proofratings_floating_badge_settings[tablet]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['tablet'] ) ?>>
-									<?php _e('Show/Hide on tablet', 'proofratings'); ?>
-								</label>
-							</td>
-						</tr>
-
-						<tr id="badge-mobile-visibility">
-							<th scope="row"><?php _e('Mobile Visibility', 'proofratings') ?></th>
-							<td>
-								<label>
-									<input name="proofratings_floating_badge_settings[mobile]" value="no" type="hidden">
-									<input class="checkbox-switch" name="proofratings_floating_badge_settings[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['mobile'] ) ?>>
-									<?php _e('Show/Hide on mobile', 'proofratings'); ?>
-								</label>
-							</td>
-						</tr>
-
-						<tr id="badge-close-options">
-							<th scope="row"><?php _e('Close option', 'proofratings') ?></th>
-							<td>
-								<label>
-									<input name="proofratings_floating_badge_settings[close_button]" value="no" type="hidden">
-									<input class="checkbox-switch" name="proofratings_floating_badge_settings[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['close_button'] ) ?>>
-								</label>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Badge Type', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-styles">
-									<select name="proofratings_floating_badge_settings[badge_style]" data-name="badge_style">
-										<option value="style1" <?php selected('style1', @$badge_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png"><?php _e('Style 1', 'proofratings'); ?></option>
-										<option value="style2" <?php selected('style2', @$badge_settings['badge_style']) ?> data-img="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png"><?php _e('Style 2', 'proofratings'); ?></option>
-									</select>
-
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
-								</div>
-							</td>
-						</tr>
-
-						<tr id="badge-position">
-							<th scope="row"><?php _e('Position', 'proofratings') ?></th>
-							<td>
-								<select name="proofratings_floating_badge_settings[position]" data-position="<?php echo @$badge_settings['position']; ?>">
-									<option value="left" <?php selected('left', $badge_settings['position']) ?>><?php _e('Left', 'proofratings') ?></option>
-									<option value="right" <?php selected('right', $badge_settings['position']) ?>><?php _e('Right', 'proofratings') ?></option>
-								</select>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Star Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_floating_badge_settings[star_color]"
-									value="<?php esc_attr_e($badge_settings['star_color']) ?>" data-default-color="#212A3D">
-							</td>
-						</tr>
-
-						<tr id="badge-hide-shadow">
-							<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
-							<td>
-								<input name="proofratings_floating_badge_settings[shadow]" value="no" type="hidden">
-								<input class="checkbox-switch" name="proofratings_floating_badge_settings[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $badge_settings['shadow'] ) ?>>
-							</td>
-						</tr>
-
-						<tr id="badge-shadow-color">
-							<th scope="row"><?php _e('Shadow Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_floating_badge_settings[shadow_color]"
-									value="<?php esc_attr_e($badge_settings['shadow_color']) ?>" data-default-color="#f6d300">
-							</td>
-						</tr>
-
-						<tr id="badge-shadow-hover-color">
-							<th scope="row"><?php _e('Shadow Hover Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_floating_badge_settings[shadow_hover]"
-									value="<?php esc_attr_e($badge_settings['shadow_hover']) ?>" data-default-color="#377dbc">
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Background Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_floating_badge_settings[background_color]" 
-									value="<?php esc_attr_e($badge_settings['background_color']) ?>" data-default-color="#fff">
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Review Text Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_floating_badge_settings[review_text_color]" 
-									value="<?php esc_attr_e($badge_settings['review_text_color']) ?>">
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Review Background Color', 'proofratings') ?></th>
-							<td>
-								<input class="proofratings-color-field" type="text" 
-									name="proofratings_floating_badge_settings[review_background]" 
-									value="<?php esc_attr_e($badge_settings['review_background']) ?>" data-default-color="#212a3d">
-							</td>
-						</tr>
-					</table>
-
-					
-					<table id="floating-badge-pages" class="form-table">
-						<caption>Page to show on</caption>
-						<?php foreach (get_pages() as $page) : ?>
-						<tr>
-							<th scope="row"><?php echo $page->post_title ?></th>
-							<td>	
-							<?php
-								$checked = !isset($badge_settings['on_pages'][$page->ID]) || $badge_settings['on_pages'][$page->ID] == 'yes'? 'checked' : '';
-								printf('<input name="proofratings_floating_badge_settings[on_pages][%s]" value="no" type="hidden">', $page->ID);
-								printf(
-									'<label><input class="checkbox-switch" name="proofratings_floating_badge_settings[on_pages][%s]" value="yes" %s type="checkbox"></label>',
-									$page->ID, $checked
-								);
-							?>
-							</td>
-						</tr>
-						<?php endforeach; ?>
-					</table>
-				</div>
 
 				<div id="settings-banner-badge" class="settings_panel" style="display:none">
 					<?php 

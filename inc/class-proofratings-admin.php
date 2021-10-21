@@ -80,8 +80,7 @@ class ProofRatings_Admin {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		$settings = $postdata['proofratings_settings'];
-		$badge_settings = $postdata['proofratings_floating_badge_settings'];
-
+		
 		$widget_settings = wp_parse_args($postdata['proofratings_widget_settings'], [
 			'proofratings_font' => 'inherit',
 		]);
@@ -185,13 +184,6 @@ class ProofRatings_Admin {
 				echo "}\n\n";
 			}
 		}
-
-		
-		echo "#proofratings-floating-embed .proofrating-close {\n";			
-			if ( $badge_settings['star_color'] ) {
-				printf("\tcolor: %s;\n", $badge_settings['star_color']);
-			}
-		echo "}\n\n";
 
 		echo ".proofratings-banner-badge {\n";
 			if ( $banner_badge['number_review_text_color'] ) {

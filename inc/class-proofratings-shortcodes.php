@@ -43,7 +43,7 @@ class ProofRatings_Shortcodes {
 	 * Constructor.
 	 */
 	public function __construct() {
-        add_shortcode('proofratings_floating_badge', [$this, 'floating_badge']);
+        add_shortcode('proofratings_overall_ratings', [$this, 'proofratings_overall_ratings']);
         
         add_shortcode('proofratings_floating_widgets', [$this, 'proofratings_floating_widgets']);
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
@@ -109,32 +109,21 @@ class ProofRatings_Shortcodes {
 	/**
 	 * floating badge shortcode
 	 */
-	public function floating_badge($atts, $content = null) {
+	public function proofratings_overall_ratings($atts, $content = null) {
         $atts = shortcode_atts([
 			'float' => 'no',
-			'mobile' => 'yes',
-			'tablet' => 'yes',
-			'badge_style' => 'style1',
-			'star_color' => '',
-			'shadow' => 'no',
-			'shadow_color' => '',
-			'shadow_hover' => '',
-			'background_color' => '',
-			'review_text_color' => '',
-			'review_background' => ''
-        ], $atts, 'proofratings_floating_badge');
+			'type' => 'rectangle',
+        ], $atts);
 		
 		$review_data = $this->get_overall_reviews();
         if ( !$review_data ) {
 			return;
         }
 				
-		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['badge_style']];
+		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['type']];
 
-		$badget_settings = get_option( 'proofratings_floating_badge_settings');
-		unset($badget_settings['float'], $badget_settings['badge_style']);
-
-		$atts = wp_parse_args($badget_settings, $atts);
+		$badget_settings = get_proofratings_overall_rectangle();
+		
 
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
@@ -143,15 +132,15 @@ class ProofRatings_Shortcodes {
 				$classes[] = $badget_settings['position'];
 			}
 
-			if ( $atts['mobile'] == 'no') {
+			if ( $badget_settings['mobile'] == 'no') {
 				$classes[] = 'badge-hidden-mobile';
 			}
 
-			if ( $atts['tablet'] == 'no') {
+			if ( $badget_settings['tablet'] == 'no') {
 				$classes[] = 'badge-hidden-tablet';
 			}
 
-			$atts['shadow'] = 'yes';
+			$badget_settings['shadow'] = 'yes';
 		}
 
 		$url_attribute = '';
@@ -165,13 +154,17 @@ class ProofRatings_Shortcodes {
 		$styles = [];
 		$supported_keys = ['star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'];
 
-		if ( $atts['shadow'] == 'no') {
-			$atts['shadow_color'] = $atts['shadow_hover'] = 'transparent';
+		if ( $badget_settings['shadow'] == 'no') {
+			$badget_settings['shadow_color'] = $badget_settings['shadow_hover'] = 'transparent';
 		}
 
-		array_walk($supported_keys, function($key) use (&$styles, $atts) {
-			if ( !empty($atts[$key])) {
-				$styles[$key] = $atts[$key];
+		array_walk($supported_keys, function($key) use (&$styles, $badget_settings) {
+			if ( $badget_settings['customize'] != 'yes') {
+				return;
+			}
+
+			if ( !empty($badget_settings[$key])) {
+				$styles[$key] = $badget_settings[$key];
 			}
 		});
 
@@ -179,24 +172,23 @@ class ProofRatings_Shortcodes {
 			return "--$key:$item";
 		}, $styles, array_keys($styles));
 
-
         ob_start();
         printf('<%s %s class="%s" style="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), implode(';', $styles));
 			if ( @$badget_settings['close_button'] != 'no' && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
-			if($atts['badge_style'] == 'style2') {
-				$this->floating_badge_style2($review_data);
+			if($atts['type'] == 'style2') {
+				$this->overall_ratings_style2($review_data);
 			} else {				
-				$this->floating_badge_style1($review_data);
+				$this->overall_ratings_rectangle($review_data);
 			}
 			
         printf('</%s>', $tag);
         return ob_get_clean();
 	}
 
-	private function floating_badge_style1($review_data) {
+	private function overall_ratings_rectangle($review_data) {
 		echo '<div class="proofratings-inner">';
 			echo '<div class="proofratings-logos">';
 			foreach ($review_data['sites'] as $key => $site) {
@@ -217,7 +209,7 @@ class ProofRatings_Shortcodes {
 		printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
 	}
 
-	private function floating_badge_style2($review_data) {
+	private function overall_ratings_style2($review_data) {
 		echo '<div class="proofratings-logos">';
         foreach ($review_data['sites'] as $key => $site) {
             printf('<img src="%1$s" alt="%2$s" >', esc_attr($site->icon), $key);
