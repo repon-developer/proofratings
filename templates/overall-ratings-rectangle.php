@@ -13,7 +13,7 @@
 		<td>
 			<label>
 				<input name="proofratings_overall_ratings_rectangle[float]" value="no" type="hidden">
-				<input class="checkbox-switch checkbox-float-embed" name="proofratings_overall_ratings_rectangle[float]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle['float'] ) ?>>
+				<input class="checkbox-switch checkbox-float-embed" name="proofratings_overall_ratings_rectangle[float]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle->float ) ?>>
 				<?php _e('Float/Embed only', 'proofratings'); ?>
 			</label>
 		</td>
@@ -24,7 +24,7 @@
 		<td>
 			<label>
 				<input name="proofratings_overall_ratings_rectangle[tablet]" value="no" type="hidden">
-				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[tablet]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle['tablet'] ) ?>>
+				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[tablet]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle->tablet ) ?>>
 				<?php _e('Show/Hide on tablet', 'proofratings'); ?>
 			</label>
 		</td>
@@ -35,7 +35,7 @@
 		<td>
 			<label>
 				<input name="proofratings_overall_ratings_rectangle[mobile]" value="no" type="hidden">
-				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle['mobile'] ) ?>>
+				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle->mobile ) ?>>
 				<?php _e('Show/Hide on mobile', 'proofratings'); ?>
 			</label>
 		</td>
@@ -46,7 +46,7 @@
 		<td>
 			<label>
 				<input name="proofratings_overall_ratings_rectangle[close_button]" value="no" type="hidden">
-				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle['close_button'] ) ?>>
+				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle->close_button ) ?>>
 			</label>
 		</td>
 	</tr>
@@ -54,16 +54,16 @@
 	<tr id="badge-position">
 		<th scope="row"><?php _e('Position', 'proofratings') ?></th>
 		<td>
-			<select name="proofratings_overall_ratings_rectangle[position]" data-position="<?php echo @$overall_rectangle['position']; ?>">
-				<option value="left" <?php selected('left', $overall_rectangle['position']) ?>><?php _e('Left', 'proofratings') ?></option>
-				<option value="right" <?php selected('right', $overall_rectangle['position']) ?>><?php _e('Right', 'proofratings') ?></option>
+			<select name="proofratings_overall_ratings_rectangle[position]">
+				<option value="left" <?php selected('left', $overall_rectangle->position) ?>><?php _e('Left', 'proofratings') ?></option>
+				<option value="right" <?php selected('right', $overall_rectangle->position) ?>><?php _e('Right', 'proofratings') ?></option>
 			</select>
 		</td>
 	</tr>
 
 	<tr>
 		<td style="padding-left: 0" colspan="2">
-			<label><input name="proofratings_overall_ratings_rectangle[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle['customize']) ?>> Customize</label>
+			<label><input name="proofratings_overall_ratings_rectangle[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle->customize) ?>> Customize</label>
 		</td>
 	</tr>
 
@@ -73,7 +73,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_rectangle[star_color]"
-					value="<?php esc_attr_e($overall_rectangle['star_color']) ?>" data-default-color="#212A3D">
+					value="<?php esc_attr_e($overall_rectangle->star_color) ?>" data-default-color="#212A3D">
 			</td>
 		</tr>
 
@@ -81,7 +81,7 @@
 			<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
 			<td>
 				<input name="proofratings_overall_ratings_rectangle[shadow]" value="no" type="hidden">
-				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle['shadow'] ) ?>>
+				<input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $overall_rectangle->shadow ) ?>>
 			</td>
 		</tr>
 
@@ -90,7 +90,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_rectangle[shadow_color]"
-					value="<?php esc_attr_e($overall_rectangle['shadow_color']) ?>" data-default-color="#f6d300">
+					value="<?php esc_attr_e($overall_rectangle->shadow_color) ?>" data-default-color="#f6d300">
 			</td>
 		</tr>
 
@@ -99,7 +99,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_rectangle[shadow_hover]"
-					value="<?php esc_attr_e($overall_rectangle['shadow_hover']) ?>" data-default-color="#377dbc">
+					value="<?php esc_attr_e($overall_rectangle->shadow_hover) ?>" data-default-color="#377dbc">
 			</td>
 		</tr>
 
@@ -108,7 +108,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_rectangle[background_color]" 
-					value="<?php esc_attr_e($overall_rectangle['background_color']) ?>" data-default-color="#fff">
+					value="<?php esc_attr_e($overall_rectangle->background_color) ?>" data-default-color="#fff">
 			</td>
 		</tr>
 
@@ -117,7 +117,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_rectangle[review_text_color]" 
-					value="<?php esc_attr_e($overall_rectangle['review_text_color']) ?>">
+					value="<?php esc_attr_e($overall_rectangle->review_text_color) ?>">
 			</td>
 		</tr>
 
@@ -126,7 +126,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_rectangle[review_background]" 
-					value="<?php esc_attr_e($overall_rectangle['review_background']) ?>" data-default-color="#212a3d">
+					value="<?php esc_attr_e($overall_rectangle->review_background) ?>" data-default-color="#212a3d">
 			</td>
 		</tr>
 	</tbody>
@@ -140,7 +140,7 @@
 		<th scope="row"><?php echo $page->post_title ?></th>
 		<td>	
 		<?php
-			$checked = !isset($overall_rectangle['pages'][$page->ID]) || $overall_rectangle['pages'][$page->ID] == 'yes'? 'checked' : '';
+			$checked = !isset($overall_rectangle->pages[$page->ID]) || $overall_rectangle->pages[$page->ID] == 'yes'? 'checked' : '';
 			printf('<input name="proofratings_overall_ratings_rectangle[pages][%s]" value="no" type="hidden">', $page->ID);
 			printf(
 				'<label><input class="checkbox-switch" name="proofratings_overall_ratings_rectangle[pages][%s]" value="yes" %s type="checkbox"></label>',

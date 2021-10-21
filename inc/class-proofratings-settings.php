@@ -51,15 +51,14 @@ class WP_ProofRatings_Settings {
 	public function register_settings() {
 		register_setting( $this->settings_group, 'proofratings_widget_settings' );
 		register_setting( $this->settings_group, 'proofratings_display_badge' );
+
+		//Widget settings
 		register_setting( $this->settings_group, 'proofratings_badges_square' );
 		register_setting( $this->settings_group, 'proofratings_badges_rectangle' );
 
 		//settings for overall ratings		
 		register_setting( $this->settings_group, 'proofratings_overall_ratings_rectangle' );
 		register_setting( $this->settings_group, 'proofratings_overall_ratings_narrow' );
-
-		register_setting( $this->settings_group, 'proofratings_settings' );
-		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
 		register_setting( $this->settings_group, 'proofratings_banner_badge' );
 	}
 
@@ -139,13 +138,7 @@ class WP_ProofRatings_Settings {
 
 				$widget_settings = wp_parse_args(get_option( 'proofratings_widget_settings'), [
 					'proofratings_font' => 'inherit',
-					'badge_style' => 'style1'
-				]);
-
-
-				$display_badges = get_proofratings_display_settings();
-
-				$proofratings_settings = get_proofratings_settings(); ?>
+				]); ?>
 
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
@@ -185,6 +178,7 @@ class WP_ProofRatings_Settings {
 				</div>
 
 				<div id="settings-display-badges" class="settings_panel">
+					<?php $display_badges = get_proofratings_display_settings(); ?>
 					<table class="form-table">
 						<tr>
 							<th scope="row" style="vertical-align:middle"><?php _e('Sites (Square)', 'proofratings') ?></th>

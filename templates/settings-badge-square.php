@@ -11,52 +11,52 @@
 	</tr>
 </table>
 
-<label><input name="proofratings_badges_square[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $sites_square['customize']) ?>> Customize (this will customize all badges)</label>
+<label><input name="proofratings_badges_square[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $sites_square->customize) ?>> Customize (this will customize all badges)</label>
 <div class="gap-30"></div>
 
 <div id="square-badge-customize">
 <?php
-echo do_shortcode( '[proofratings_widgets id="proofratings-badge-square"]');  ?>
+	echo do_shortcode( '[proofratings_widgets id="proofratings-badge-square"]');  ?>
 
-<table class="form-table">
-	<tr>
-		<th scope="row">Star Color</th>
-		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[star_color]" type="text" value="%s">', esc_attr( $sites_square['star_color'])) ?></td>
-	</tr>
-
-	<tr>
-		<th scope="row">Text Color</th>
-		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[text_color]" type="text" value="%s">', esc_attr( $sites_square['text_color'])) ?></td>
-	</tr>
-
-	<tr>
-		<th scope="row">Review count text color</th>
-		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[review_count_textcolor]" type="text" value="%s">', esc_attr( $sites_square['review_count_textcolor'])) ?></td>
-	</tr>
-								
-	<tr>
-		<th scope="row">Background Color</th>
-		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[background]" type="text" value="%s">', esc_attr( $sites_square['background'])) ?></td>
-	</tr>
-
-	<input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="no" type="hidden">
-	<tr>
-		<th scope="row">Shadow</th>
-		<td><input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $sites_square['shadow']) ?>></td>
-	</tr>
-
-	<tbody id="proofratings-badges-sites-square-shadow-options" style="display: none">
+	<table class="form-table">
 		<tr>
-			<th scope="row">Shadow Color</th>
-			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[shadow_color]" type="text" value="%s">', esc_attr( $sites_square['shadow_color'])) ?></td>
+			<th scope="row">Star Color</th>
+			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[star_color]" type="text" value="%s">', esc_attr( $sites_square->star_color)) ?></td>
 		</tr>
 
 		<tr>
-			<th scope="row">Shadow Hover Color</th>
-			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[shadow_hover_color]" type="text" value="%s">', esc_attr($sites_square['shadow_hover_color'])) ?></td>
+			<th scope="row">Text Color</th>
+			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[text_color]" type="text" value="%s">', esc_attr( $sites_square->text_color)) ?></td>
 		</tr>
-	</tbody>
 
-</table>
+		<tr>
+			<th scope="row">Review count text color</th>
+			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[review_count_textcolor]" type="text" value="%s">', esc_attr( $sites_square->review_count_textcolor)) ?></td>
+		</tr>
+									
+		<tr>
+			<th scope="row">Background Color</th>
+			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[background]" type="text" value="%s">', esc_attr( $sites_square->background)) ?></td>
+		</tr>
+
+		<input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="no" type="hidden">
+		<tr>
+			<th scope="row">Shadow</th>
+			<td><input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $sites_square->shadow) ?>></td>
+		</tr>
+
+		<tbody id="proofratings-badges-sites-square-shadow-options" style="display: none">
+			<tr>
+				<th scope="row">Shadow Color</th>
+				<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[shadow_color]" type="text" value="%s">', esc_attr( $sites_square->shadow_color)) ?></td>
+			</tr>
+
+			<tr>
+				<th scope="row">Shadow Hover Color</th>
+				<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[shadow_hover_color]" type="text" value="%s">', esc_attr($sites_square->shadow_hover_color)) ?></td>
+			</tr>
+		</tbody>
+
+	</table>
 
 </div>

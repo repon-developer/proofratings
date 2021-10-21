@@ -151,12 +151,12 @@ class Wordpress_Proofratings {
 		}
 
 		$badge_settings = get_proofratings_overall_ratings_rectangle();
-		if ($badge_settings['float'] !== 'yes') {
+		if ($badge_settings->float !== 'yes') {
 			return;
 		}
 
-		$on_pages = (array) @$badge_settings['pages'];
-		$has_page = !isset($badge_settings['pages'][get_the_ID()]) || $badge_settings['pages'][get_the_ID()] == 'yes'? true : false;
+		$on_pages = (array) @$badge_settings->pages;
+		$has_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
 
 		if ($has_page ) {
 			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
@@ -174,12 +174,12 @@ class Wordpress_Proofratings {
 		}
 
 		$badge_settings = get_proofratings_overall_ratings_narrow();
-		if ($badge_settings['float'] !== 'yes') {
+		if ($badge_settings->float !== 'yes') {
 			return;
 		}
 
-		$on_pages = (array) @$badge_settings['pages'];
-		$has_page = !isset($badge_settings['pages'][get_the_ID()]) || $badge_settings['pages'][get_the_ID()] == 'yes'? true : false;
+		$on_pages = (array) @$badge_settings->pages;
+		$has_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
 
 		if ($has_page ) {
 			echo do_shortcode('[proofratings_overall_ratings type="narrow" float="yes"]' );

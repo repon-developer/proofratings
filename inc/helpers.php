@@ -28,6 +28,7 @@ class Proofratings_Site_Data {
     }
 }
 
+
 /**
  * get settings of proof ratings settings
  * @since  1.0.1
@@ -302,16 +303,10 @@ function get_proofratings_display_settings() {
  * @since  1.0.4
  */
 function get_proofratings_badges_square() {
-    return wp_parse_args(get_option('proofratings_badges_square'), [
+    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_square'), [
 		'customize' => 'no',
-		'star_color' => '',
-		'text_color' => '',
-		'review_count_textcolor' => '',
-		'background' => '',
-		'shadow' => 'yes',
-		'shadow_color' => '',
-		'shadow_hover_color' => '',
-	]);
+		'shadow' => 'yes'
+	]));
 }
 
 /**
@@ -319,16 +314,10 @@ function get_proofratings_badges_square() {
  * @since  1.0.4
  */
 function get_proofratings_badges_rectangle() {
-    return wp_parse_args(get_option('proofratings_badges_rectangle'), [
+    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_rectangle'), [
 		'customize' => 'no',
-		'star_color' => '',
-		'text_color' => '',
-		'review_count_textcolor' => '',
-		'background' => '',
 		'shadow' => 'yes',
-		'shadow_color' => '',
-		'shadow_hover_color' => '',
-	]);
+	]));
 }
 
 /**
@@ -336,22 +325,15 @@ function get_proofratings_badges_rectangle() {
  * @since  1.0.4
  */
 function get_proofratings_overall_ratings_rectangle() {
-    return wp_parse_args(get_option('proofratings_overall_ratings_rectangle'), [
+    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_overall_ratings_rectangle'), [
 		'float' => 'yes',
         'tablet' => 'yes',
         'mobile' => 'yes',
         'close_button' => 'yes',
-        'position' => '',
         'customize' => 'no',
-        'star_color' => '',
         'shadow' => 'yes',
-        'shadow_color' => '',
-        'shadow_hover' => '',
-        'background_color' => '',
-        'review_text_color' => '',
-        'review_background' => '',
         'pages' => [],
-	]);
+	]));
 }
 
 /**
@@ -359,24 +341,16 @@ function get_proofratings_overall_ratings_rectangle() {
  * @since  1.0.4
  */
 function get_proofratings_overall_ratings_narrow() {
-    return wp_parse_args(get_option('proofratings_overall_ratings_narrow'), [
+    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_overall_ratings_narrow'), [
 		'float' => 'yes',
         'tablet' => 'yes',
         'mobile' => 'yes',
         'close_button' => 'yes',
-        'position' => '',
         'customize' => 'no',
-        'star_color' => '',
         'shadow' => 'yes',
-        'shadow_color' => '',
-        'shadow_hover' => '',
-        'background_color' => '',
-        'review_text_color' => '',
         'pages' => [],
-	]);
+	]));
 }
-
-
 
 /**
  * get current status

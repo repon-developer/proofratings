@@ -13,7 +13,7 @@
 		<td>
 			<label>
 				<input name="proofratings_overall_ratings_narrow[float]" value="no" type="hidden">
-				<input class="checkbox-switch checkbox-float-embed" name="proofratings_overall_ratings_narrow[float]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings['float'] ) ?>>
+				<input class="checkbox-switch checkbox-float-embed" name="proofratings_overall_ratings_narrow[float]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->float ) ?>>
 				<?php _e('Float/Embed only', 'proofratings'); ?>
 			</label>
 		</td>
@@ -25,7 +25,7 @@
 			<td>
 				<label>
 					<input name="proofratings_overall_ratings_narrow[tablet]" value="no" type="hidden">
-					<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[tablet]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings['tablet'] ) ?>>
+					<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[tablet]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->tablet ) ?>>
 					<?php _e('Show/Hide on tablet', 'proofratings'); ?>
 				</label>
 			</td>
@@ -36,7 +36,7 @@
 			<td>
 				<label>
 					<input name="proofratings_overall_ratings_narrow[mobile]" value="no" type="hidden">
-					<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings['mobile'] ) ?>>
+					<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[mobile]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->mobile ) ?>>
 					<?php _e('Show/Hide on mobile', 'proofratings'); ?>
 				</label>
 			</td>
@@ -47,7 +47,7 @@
 			<td>
 				<label>
 					<input name="proofratings_overall_ratings_narrow[close_button]" value="no" type="hidden">
-					<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings['close_button'] ) ?>>
+					<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[close_button]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->close_button ) ?>>
 				</label>
 			</td>
 		</tr>
@@ -55,10 +55,10 @@
 		<tr>
 			<th scope="row"><?php _e('Position', 'proofratings') ?></th>
 			<td>
-				<select name="proofratings_overall_ratings_narrow[position]" data-position="<?php echo @$narrow_ratings['position']; ?>">
-					<option value="left" <?php selected('left', $narrow_ratings['position']) ?>><?php _e('Left', 'proofratings') ?></option>
-					<option value="center" <?php selected('center', $narrow_ratings['position']) ?>><?php _e('Center', 'proofratings') ?></option>
-					<option value="right" <?php selected('right', $narrow_ratings['position']) ?>><?php _e('Right', 'proofratings') ?></option>
+				<select name="proofratings_overall_ratings_narrow[position]">
+					<option value="left" <?php selected('left', $narrow_ratings->position) ?>><?php _e('Left', 'proofratings') ?></option>
+					<option value="center" <?php selected('center', $narrow_ratings->position) ?>><?php _e('Center', 'proofratings') ?></option>
+					<option value="right" <?php selected('right', $narrow_ratings->position) ?>><?php _e('Right', 'proofratings') ?></option>
 				</select>
 			</td>
 		</tr>
@@ -66,7 +66,7 @@
 
 	<tr>
 		<td style="padding-left: 0" colspan="2">
-			<label><input name="proofratings_overall_ratings_narrow[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings['customize']) ?>> Customize</label>
+			<label><input name="proofratings_overall_ratings_narrow[customize]" class="checkbox-switch checkbox-yesno" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->customize) ?>> Customize</label>
 		</td>
 	</tr>
 
@@ -76,7 +76,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_narrow[star_color]"
-					value="<?php esc_attr_e($narrow_ratings['star_color']) ?>" data-default-color="#212A3D">
+					value="<?php esc_attr_e($narrow_ratings->star_color) ?>" data-default-color="#212A3D">
 			</td>
 		</tr>
 
@@ -84,7 +84,7 @@
 			<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
 			<td>
 				<input name="proofratings_overall_ratings_narrow[shadow]" value="no" type="hidden">
-				<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings['shadow'] ) ?>>
+				<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->shadow ) ?>>
 			</td>
 		</tr>
 
@@ -94,7 +94,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_narrow[shadow_color]"
-					value="<?php esc_attr_e($narrow_ratings['shadow_color']) ?>" data-default-color="#f6d300">
+					value="<?php esc_attr_e($narrow_ratings->shadow_color) ?>" data-default-color="#f6d300">
 			</td>
 		</tr>
 
@@ -103,7 +103,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_narrow[shadow_hover]"
-					value="<?php esc_attr_e($narrow_ratings['shadow_hover']) ?>" data-default-color="#377dbc">
+					value="<?php esc_attr_e($narrow_ratings->shadow_hover) ?>" data-default-color="#377dbc">
 			</td>
 		</tr>
 
@@ -112,7 +112,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_narrow[background_color]" 
-					value="<?php esc_attr_e($narrow_ratings['background_color']) ?>" data-default-color="#fff">
+					value="<?php esc_attr_e($narrow_ratings->background_color) ?>" data-default-color="#fff">
 			</td>
 		</tr>
 
@@ -121,7 +121,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_narrow[review_text_color]" 
-					value="<?php esc_attr_e($narrow_ratings['review_text_color']) ?>">
+					value="<?php esc_attr_e($narrow_ratings->review_text_color) ?>">
 			</td>
 		</tr>
 	</tbody>
@@ -135,7 +135,7 @@
 		<th scope="row"><?php echo $page->post_title ?></th>
 		<td>	
 		<?php
-			$checked = !isset($narrow_ratings['pages'][$page->ID]) || $narrow_ratings['pages'][$page->ID] == 'yes'? 'checked' : '';
+			$checked = !isset($narrow_ratings->pages[$page->ID]) || $narrow_ratings->pages[$page->ID] == 'yes'? 'checked' : '';
 			printf('<input name="proofratings_overall_ratings_narrow[pages][%s]" value="no" type="hidden">', $page->ID);
 			printf(
 				'<label><input class="checkbox-switch" name="proofratings_overall_ratings_narrow[pages][%s]" value="yes" %s type="checkbox"></label>',

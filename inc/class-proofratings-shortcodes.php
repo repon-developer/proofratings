@@ -130,19 +130,19 @@ class ProofRatings_Shortcodes {
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
 
-			if ( !empty($badget_settings['position']) ) {
-				$classes[] = $badget_settings['position'];
+			if ( !empty($badget_settings->position) ) {
+				$classes[] = $badget_settings->position;
 			}
 
-			if ( $badget_settings['mobile'] == 'no') {
+			if ( $badget_settings->mobile == 'no') {
 				$classes[] = 'badge-hidden-mobile';
 			}
 
-			if ( $badget_settings['tablet'] == 'no') {
+			if ( $badget_settings->tablet == 'no') {
 				$classes[] = 'badge-hidden-tablet';
 			}
 
-			$badget_settings['shadow'] = 'yes';
+			$badget_settings->shadow = 'yes';
 		}
 
 		$url_attribute = '';
@@ -156,17 +156,17 @@ class ProofRatings_Shortcodes {
 		$styles = [];
 		$supported_keys = ['star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'];
 
-		if ( $badget_settings['shadow'] == 'no') {
-			$badget_settings['shadow_color'] = $badget_settings['shadow_hover'] = 'transparent';
+		if ( $badget_settings->shadow == 'no') {
+			$badget_settings->shadow_color = $badget_settings->shadow_hover = 'transparent';
 		}
 
 		array_walk($supported_keys, function($key) use (&$styles, $badget_settings) {
-			if ( $badget_settings['customize'] != 'yes') {
+			if ( $badget_settings->customize != 'yes') {
 				return;
 			}
 
-			if ( !empty($badget_settings[$key])) {
-				$styles[$key] = $badget_settings[$key];
+			if ( !empty($badget_settings->$key)) {
+				$styles[$key] = $badget_settings->$key;
 			}
 		});
 
@@ -176,7 +176,7 @@ class ProofRatings_Shortcodes {
 
         ob_start();
         printf('<%s %s class="%s" style="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), implode(';', $styles));
-			if ( @$badget_settings['close_button'] != 'no' && $atts['float'] == 'yes' ) {
+			if ( @$badget_settings->close_button != 'no' && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
@@ -301,7 +301,7 @@ class ProofRatings_Shortcodes {
 		$badge_class = ['proofratings-widget'];
 
 		$badges_sites_square = get_proofratings_badges_square();
-		if ( $badges_sites_square['customize'] == 'yes' ) {
+		if ( $badges_sites_square->customize == 'yes' ) {
 			$badge_class[] = 'proofratings-widget-customized';
 		}
 
