@@ -1,7 +1,4 @@
-<?php $sites_rectangle = get_proofratings_badges_rectangle();
-
-var_dump($sites_rectangle);
-?>
+<?php $sites_rectangle = get_proofratings_badges_rectangle(); ?>
 <table class="form-table">
 	<tr>
 		<th scope="row" style="vertical-align:middle">
