@@ -132,16 +132,17 @@ html {
 }
 
 
-.proofratings-badge.proofratings-badges-rectangle {
+.proofratings-badge.proofratings-badge-narrow {
     min-height: 62px;
     padding: 15px 20px;
     display: inline-flex;
     align-items: center;
 }
 
-.proofratings-badge.proofratings-badges-rectangle .proofratings-inner {display: flex; padding: 0;}
-.proofratings-badge.proofratings-badges-rectangle .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
-.proofratings-badge.proofratings-badges-rectangle .proofratings-reviews {margin-right: 20px;}
+.proofratings-badge.proofratings-badge-narrow .proofratings-inner {display: flex; padding: 0;}
+.proofratings-badge.proofratings-badge-narrow .proofratings-logos {margin-bottom: 0; margin-right: 20px;}
+.proofratings-badge.proofratings-badge-narrow .proofratings-reviews {margin-right: 20px;}
+.proofratings-badge.proofratings-badge-narrow .proofratings-review-count {color: var(--review_text_color);}
 
 .proofratings-review-widgets-grid {
     display: grid;

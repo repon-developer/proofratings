@@ -122,8 +122,10 @@ class ProofRatings_Shortcodes {
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['type']];
 
-		$badget_settings = get_proofratings_overall_rectangle();
-		
+		$badget_settings = get_proofratings_overall_ratings_rectangle();
+		if ( $atts['type'] == 'narrow') {
+			$badget_settings = get_proofratings_overall_ratings_narrow();			
+		}		
 
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
@@ -178,8 +180,8 @@ class ProofRatings_Shortcodes {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
-			if($atts['type'] == 'style2') {
-				$this->overall_ratings_style2($review_data);
+			if($atts['type'] == 'narrow') {
+				$this->overall_ratings_narrow($review_data);
 			} else {				
 				$this->overall_ratings_rectangle($review_data);
 			}
@@ -209,7 +211,7 @@ class ProofRatings_Shortcodes {
 		printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
 	}
 
-	private function overall_ratings_style2($review_data) {
+	private function overall_ratings_narrow($review_data) {
 		echo '<div class="proofratings-logos">';
         foreach ($review_data['sites'] as $key => $site) {
             printf('<img src="%1$s" alt="%2$s" >', esc_attr($site->icon), $key);

@@ -59,7 +59,8 @@ class Wordpress_Proofratings {
 		// Actions.
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-		add_action( 'wp_footer', [ $this, 'embed_floating_badge' ] );
+
+		add_action( 'wp_footer', [ $this, 'overall_ratings_narrow' ] );
 		add_action( 'wp_footer', [ $this, 'overall_ratings_rectangle' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
 	}
@@ -141,40 +142,6 @@ class Wordpress_Proofratings {
 	}
 
 	/**
-	 * Embed floating badge on frontend
-	 */
-	public function embed_floating_badge() {
-		if ( isset($_COOKIE['hide_proofratings_float_badge'])) {
-			return;
-		}
-
-		$badge_settings = get_option( 'proofratings_floating_badge_settings');
-		$on_pages = (array) @$badge_settings['on_pages'];
-		$has_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
-
-		$show_badge = @$badge_settings['float'];
-		if ( !($show_badge != 'yes') && $has_page ) {
-
-			$attributes = [];
-
-			$supported_keys = ['badge_style', 'mobile', 'tablet', 'star_color', 'shadow', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'];
-
-			array_walk($supported_keys, function($key) use (&$attributes, $badge_settings) {
-				if ( !empty($badge_settings[$key])) {
-					$attributes[$key] = $badge_settings[$key];
-				}
-			});
-
-			$attributes = array_map(function($item, $key){
-				return "$key=\"$item\"";
-			}, $attributes, array_keys($attributes));
-
-			echo do_shortcode(sprintf('[proofratings_floating_badge float="yes" %s]', implode(' ', $attributes)) );
-			echo do_shortcode('[proofratings_floating_widgets]' );
-		}
-	}
-
-	/**
 	 * Overrall Ratings Rectangle  badge on frontend
 	 * @since 1.0.4
 	 */
@@ -183,7 +150,7 @@ class Wordpress_Proofratings {
 			return;
 		}
 
-		$badge_settings = get_proofratings_overall_rectangle();
+		$badge_settings = get_proofratings_overall_ratings_rectangle();
 		if ($badge_settings['float'] !== 'yes') {
 			return;
 		}
@@ -193,6 +160,29 @@ class Wordpress_Proofratings {
 
 		if ($has_page ) {
 			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
+			echo do_shortcode('[proofratings_floating_widgets]' );
+		}
+	}
+
+	/**
+	 * Overrall Ratings Narrow on frontend
+	 * @since 1.0.4
+	 */
+	public function overall_ratings_narrow() {
+		if ( get_proofratings_display_settings()['overall_ratings_narrow'] !== 'yes' ) {
+			return;
+		}
+
+		$badge_settings = get_proofratings_overall_ratings_narrow();
+		if ($badge_settings['float'] !== 'yes') {
+			return;
+		}
+
+		$on_pages = (array) @$badge_settings['pages'];
+		$has_page = !isset($badge_settings['pages'][get_the_ID()]) || $badge_settings['pages'][get_the_ID()] == 'yes'? true : false;
+
+		if ($has_page ) {
+			echo do_shortcode('[proofratings_overall_ratings type="narrow" float="yes"]' );
 			echo do_shortcode('[proofratings_floating_widgets]' );
 		}
 	}

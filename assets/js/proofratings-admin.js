@@ -315,12 +315,12 @@
 
 
     function overall_ratings_rectangle() {
-        $('[name="proofratings_overall_rectangle[float]"]').on('change', function(){
+        $('[name="proofratings_overall_ratings_rectangle[float]"]').on('change', function(){
             float_options = $('#badge-tablet-visibility, #badge-mobile-visibility, #badge-close-options, #badge-position, #floating-badge-pages');
                    
             if ( $(this).is(':checked') ) {
                 $('#badge-hide-shadow').hide();
-                $('[name="proofratings_overall_rectangle[shadow]"]').prop('checked', true).trigger('change');
+                $('[name="proofratings_overall_ratings_rectangle[shadow]"]').prop('checked', true).trigger('change');
                 return float_options.show();
             }
     
@@ -330,7 +330,7 @@
         }).trigger('change');
 
 
-        $('[name="proofratings_overall_rectangle[customize]"]').on('change', function(){
+        $('[name="proofratings_overall_ratings_rectangle[customize]"]').on('change', function(){
             
             if ( $(this).is(':checked') ) {
                 return $('#overall-ratings-customize-options').show();
@@ -341,10 +341,10 @@
         }).trigger('change');
 
 
-        $('[name="proofratings_overall_rectangle[shadow]"]').on('change', function(){
+        $('[name="proofratings_overall_ratings_rectangle[shadow]"]').on('change', function(){
             shadow_options = $('#badge-shadow-color, #badge-shadow-hover-color');
     
-            if ($('[name="proofratings_overall_rectangle[shadow]"]:checked').length ) {
+            if ( $(this).is(':checked') ) {
                 return shadow_options.show();
             }
     
@@ -354,6 +354,48 @@
     }
 
     overall_ratings_rectangle();
+
+
+    function overall_ratings_narrow() {
+        $('[name="proofratings_overall_ratings_narrow[float]"]').on('change', function(){
+            float_options = $('#overall-ratings-narrow-float-options, #overall-narrow-ratings-pages');
+                   
+            if ( $(this).is(':checked') ) {
+                $('#overall-ratings-shadow').hide();
+                $('[name="proofratings_overall_ratings_narrow[shadow]"]').prop('checked', true).trigger('change');
+                return float_options.show();
+            }
+    
+            $('#overall-ratings-shadow').show();
+            float_options.hide();
+    
+        }).trigger('change');
+
+
+        $('[name="proofratings_overall_ratings_narrow[customize]"]').on('change', function(){
+            
+            if ( $(this).is(':checked') ) {
+                return $('#overall-ratings-narrow-customize-options').show();
+            }
+    
+            $('#overall-ratings-narrow-customize-options').hide();
+            
+        }).trigger('change');
+
+
+        $('[name="proofratings_overall_ratings_narrow[shadow]"]').on('change', function(){
+            shadow_options = $('.overall-ratings-narrow-shadow-options');
+    
+            if ( $(this).is(':checked') ) {
+                return shadow_options.show();
+            }
+    
+            shadow_options.hide();
+            
+        }).trigger('change');
+    }
+
+    overall_ratings_narrow();
    
 
 

@@ -55,7 +55,8 @@ class WP_ProofRatings_Settings {
 		register_setting( $this->settings_group, 'proofratings_badges_rectangle' );
 
 		//settings for overall ratings		
-		register_setting( $this->settings_group, 'proofratings_overall_rectangle' );
+		register_setting( $this->settings_group, 'proofratings_overall_ratings_rectangle' );
+		register_setting( $this->settings_group, 'proofratings_overall_ratings_narrow' );
 
 		register_setting( $this->settings_group, 'proofratings_settings' );
 		register_setting( $this->settings_group, 'proofratings_floating_badge_settings' );
@@ -148,11 +149,12 @@ class WP_ProofRatings_Settings {
 
 				<h2 class="nav-tab-wrapper">
 					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
-					<a href="#settings-badges" class="nav-tab"><?php _e('Badges', 'proofratings'); ?></a>
+					<a href="#settings-display-badges" class="nav-tab"><?php _e('Badges', 'proofratings'); ?></a>
 
 					<a href="#settings-badge-square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
 					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
-					<a href="#settings-overall-rating-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
+					<a href="#settings-overall-ratings-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Ratings (Rectangle)', 'proofratings'); ?></a>
+					<a href="#settings-overall-ratings-narrow" class="nav-tab" style="display:none"><?php _e('Overall Ratings (Narrow)', 'proofratings'); ?></a>
 
 					<!-- <a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a> -->
 				</h2>
@@ -182,7 +184,7 @@ class WP_ProofRatings_Settings {
 					<?php get_proofratings_review_sites('software'); ?>
 				</div>
 
-				<div id="settings-badges" class="settings_panel">
+				<div id="settings-display-badges" class="settings_panel">
 					<table class="form-table">
 						<tr>
 							<th scope="row" style="vertical-align:middle"><?php _e('Sites (Square)', 'proofratings') ?></th>
@@ -215,7 +217,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
-									<label data-tab-button="#settings-overall-rating-rectangle">
+									<label data-tab-button="#settings-overall-ratings-rectangle">
 										<input name="proofratings_display_badge[overall_ratings_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_rectangle'] ) ?>>
 										<?php _e('Embed and/or float', 'proofratings') ?>
 									</label>
@@ -228,7 +230,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png" alt="Proofratings style">
-									<label>
+									<label data-tab-button="#settings-overall-ratings-narrow">
 										<input name="proofratings_display_badge[overall_ratings_narrow]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_narrow'] ) ?>>
 										<?php _e('Embed and/or float', 'proofratings') ?>
 									</label>
@@ -259,8 +261,12 @@ class WP_ProofRatings_Settings {
 					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-rectangle.php' ?>
 				</div>
 
-				<div id="settings-overall-rating-rectangle" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-rating-rectangle.php' ?>
+				<div id="settings-overall-ratings-rectangle" class="settings_panel" style="display:none">
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-ratings-rectangle.php' ?>
+				</div>
+
+				<div id="settings-overall-ratings-narrow" class="settings_panel" style="display:none">
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-ratings-narrow.php' ?>
 				</div>
 
 

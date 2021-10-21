@@ -335,8 +335,8 @@ function get_proofratings_badges_rectangle() {
  * get overall rectangle settings
  * @since  1.0.4
  */
-function get_proofratings_overall_rectangle() {
-    return wp_parse_args(get_option('proofratings_overall_rectangle'), [
+function get_proofratings_overall_ratings_rectangle() {
+    return wp_parse_args(get_option('proofratings_overall_ratings_rectangle'), [
 		'float' => 'yes',
         'tablet' => 'yes',
         'mobile' => 'yes',
@@ -353,6 +353,29 @@ function get_proofratings_overall_rectangle() {
         'pages' => [],
 	]);
 }
+
+/**
+ * get overall ratings narrow settings
+ * @since  1.0.4
+ */
+function get_proofratings_overall_ratings_narrow() {
+    return wp_parse_args(get_option('proofratings_overall_ratings_narrow'), [
+		'float' => 'yes',
+        'tablet' => 'yes',
+        'mobile' => 'yes',
+        'close_button' => 'yes',
+        'position' => '',
+        'customize' => 'no',
+        'star_color' => '',
+        'shadow' => 'yes',
+        'shadow_color' => '',
+        'shadow_hover' => '',
+        'background_color' => '',
+        'review_text_color' => '',
+        'pages' => [],
+	]);
+}
+
 
 
 /**
