@@ -200,7 +200,7 @@ class WP_ProofRatings_Settings {
 								<div class="proofratings-image-option">
 									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/cta-badge.png" alt="Proofratings style">
 									<label data-tab-button="#settings-overall-ratings-cta-banner">
-										<input name="proofratings_display_badge[overall_ratings_cta]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_cta'] ) ?>>
+										<input name="proofratings_display_badge[overall_ratings_cta_banner]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_cta_banner'] ) ?>>
 										<?php _e('Float only', 'proofratings') ?>
 									</label>
 								</div>

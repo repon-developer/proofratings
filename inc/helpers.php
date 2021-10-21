@@ -314,7 +314,7 @@ function get_proofratings_display_settings() {
         'rectangle' => 'no',
         'overall_ratings_rectangle' => 'no',
         'overall_ratings_narrow' => 'no',
-        'overall_ratings_cta' => 'no',
+        'overall_ratings_cta_banner' => 'no',
     ]);
 }
 
@@ -377,19 +377,18 @@ function get_proofratings_overall_ratings_narrow() {
  * @since  1.0.4
  */
 function get_proofratings_overall_ratings_cta_banner() {
-    return new Proofratings_Site_Data(wp_parse_args((array)get_option( 'proofratings_banner_badge'), [
-        'show' => 'yes',
+    return new Proofratings_Site_Data(wp_parse_args((array)get_option( 'proofratings_overall_ratings_cta_banner'), [
         'tablet' => 'yes',
         'close_button' => 'yes',
         'mobile' => 'yes',
         'star_color' => '',
-        'top_shadow' => 'yes',
+        'shadow' => 'yes',
         'background_color' => '',
         'rating_text_color' => '',
         'review_rating_background_color' => '',
         'number_review_text_color' => '',
 
-        'button1_text' => '',
+        'button1_text' => 'Sign Up',
         'button1_url' => '',
         'button1_blank' => 'no',
         'button1_textcolor' => '',

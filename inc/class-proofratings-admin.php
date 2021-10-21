@@ -82,8 +82,6 @@ class ProofRatings_Admin {
 		$widget_settings = wp_parse_args($postdata['proofratings_widget_settings'], [
 			'proofratings_font' => 'inherit',
 		]);
-
-		$banner_badge = get_option( 'proofratings_banner_badge', [] );
 		
 		ob_start();
 
@@ -183,95 +181,100 @@ class ProofRatings_Admin {
 			}
 		}
 
-		echo ".proofratings-banner-badge {\n";
-			if ( $banner_badge['number_review_text_color'] ) {
-				printf("\t--reviewCountTextcolor: %s;\n", $banner_badge['number_review_text_color']);
-			}
-			
-			if ( $banner_badge['background_color'] ) {
-				printf("\t--backgroundColor: %s;\n", $banner_badge['background_color']);
-			}
-		echo "}\n\n";
+		$banner_badge = get_proofratings_overall_ratings_cta_banner();
 
-		echo ".proofratings-banner-badge .rating-box {\n";
-			if ( $banner_badge['rating_text_color'] ) {
-				printf("\tcolor: %s;\n", $banner_badge['rating_text_color']);
-			}
+		if ($banner_badge->customize == 'yes' ) {
+			echo ".proofratings-banner-badge {\n";
+				if ( $banner_badge->number_review_text_color ) {
+					printf("\t--reviewCountTextcolor: %s;\n", $banner_badge->number_review_text_color);
+				}
+				
+				if ( $banner_badge->background_color ) {
+					printf("\t--backgroundColor: %s;\n", $banner_badge->background_color);
+				}
+			echo "}\n\n";
 
-			if ( $banner_badge['review_rating_background_color'] ) {
-				printf("\t--backgroundColor: %s;\n", $banner_badge['review_rating_background_color']);
-			}
-		echo "}\n\n";
+			echo ".proofratings-banner-badge .rating-box {\n";
+				if ( $banner_badge->rating_text_color ) {
+					printf("\tcolor: %s;\n", $banner_badge->rating_text_color);
+				}
 
-		echo ".proofratings-banner-badge .proofratings-stars {\n";
-			if ( $banner_badge['star_color'] ) {
-				printf("\t--star_color: %s;\n", $banner_badge['star_color']);
-			}
-		echo "}\n\n";
+				if ( $banner_badge->review_rating_background_color ) {
+					printf("\t--backgroundColor: %s;\n", $banner_badge->review_rating_background_color);
+				}
+			echo "}\n\n";
+
+			echo ".proofratings-banner-badge .proofratings-stars {\n";
+				if ( $banner_badge->star_color ) {
+					printf("\t--star_color: %s;\n", $banner_badge->star_color);
+				}
+			echo "}\n\n";
+		}
 
 		echo ".proofratings-banner-badge .proofratings-button.button1 {\n";
-			if ( $banner_badge['button1_shape'] == 'round' ) {
+			if ( $banner_badge->button1_shape == 'round' ) {
 				printf("\t--radius: 100px;\n");
 			}
 
-			if ( $banner_badge['button1_textcolor'] ) {
-				printf("\t--textColor: %s;\n", $banner_badge['button1_textcolor']);
+			if ( $banner_badge->button1_textcolor ) {
+				printf("\t--textColor: %s;\n", $banner_badge->button1_textcolor);
 			}
 
-			if ( $banner_badge['button1_hover_textcolor'] ) {
-				printf("\t--textHoverColor: %s;\n", $banner_badge['button1_hover_textcolor']);
+			if ( $banner_badge->button1_hover_textcolor ) {
+				printf("\t--textHoverColor: %s;\n", $banner_badge->button1_hover_textcolor);
 			}
 
-			if ( $banner_badge['button1_background_color'] ) {
-				printf("\t--backgroundColor: %s;\n", $banner_badge['button1_background_color']);
+			if ( $banner_badge->button1_background_color ) {
+				printf("\t--backgroundColor: %s;\n", $banner_badge->button1_background_color);
 			}
 
-			if ( $banner_badge['button1_hover_background_color'] ) {
-				printf("\t--backgroundHoverColor: %s;\n", $banner_badge['button1_hover_background_color']);
+			if ( $banner_badge->button1_hover_background_color ) {
+				printf("\t--backgroundHoverColor: %s;\n", $banner_badge->button1_hover_background_color);
 			}
 
-			if ( $banner_badge['button1_border'] == 'yes' ) {
-				if ( $banner_badge['button1_border_color'] ) {
-					printf("\t--borderColor: %s;\n", $banner_badge['button1_border_color']);
+			if ( $banner_badge->button1_border == 'yes' ) {
+				if ( $banner_badge->button1_border_color ) {
+					printf("\t--borderColor: %s;\n", $banner_badge->button1_border_color);
 				}
 				
-				if ( $banner_badge['button1_hover_border_color'] ) {
-					printf("\t--borderHoverColor: %s;\n", $banner_badge['button1_hover_border_color']);
+				if ( $banner_badge->button1_hover_border_color ) {
+					printf("\t--borderHoverColor: %s;\n", $banner_badge->button1_hover_border_color);
 				}
 			}
 		echo "}\n\n";
 		
 		echo ".proofratings-banner-badge .proofratings-button.button2 {\n";
-			if ( $banner_badge['button2_shape'] == 'round' ) {
+			if ( $banner_badge->button2_shape == 'round' ) {
 				printf("\t--radius: 100px;\n");
 			}
 
-			if ( $banner_badge['button2_textcolor'] ) {
-				printf("\t--textColor: %s;\n", $banner_badge['button2_textcolor']);
+			if ( $banner_badge->button2_textcolor ) {
+				printf("\t--textColor: %s;\n", $banner_badge->button2_textcolor);
 			}
 
-			if ( $banner_badge['button2_hover_textcolor'] ) {
-				printf("\t--textHoverColor: %s;\n", $banner_badge['button2_hover_textcolor']);
+			if ( $banner_badge->button2_hover_textcolor ) {
+				printf("\t--textHoverColor: %s;\n", $banner_badge->button2_hover_textcolor);
 			}
 
-			if ( $banner_badge['button2_background_color'] ) {
-				printf("\t--backgroundColor: %s;\n", $banner_badge['button2_background_color']);
+			if ( $banner_badge->button2_background_color ) {
+				printf("\t--backgroundColor: %s;\n", $banner_badge->button2_background_color);
 			}
 
-			if ( $banner_badge['button2_hover_background_color'] ) {
-				printf("\t--backgroundHoverColor: %s;\n", $banner_badge['button2_hover_background_color']);
+			if ( $banner_badge->button2_hover_background_color ) {
+				printf("\t--backgroundHoverColor: %s;\n", $banner_badge->button2_hover_background_color);
 			}
 
-			if ( $banner_badge['button2_border'] == 'yes' ) {
-				if ( $banner_badge['button2_border_color'] ) {
-					printf("\t--borderColor: %s;\n", $banner_badge['button2_border_color']);
+			if ( $banner_badge->button2_border == 'yes' ) {
+				if ( $banner_badge->button2_border_color ) {
+					printf("\t--borderColor: %s;\n", $banner_badge->button2_border_color);
 				}
 				
-				if ( $banner_badge['button2_hover_border_color'] ) {
-					printf("\t--borderHoverColor: %s;\n", $banner_badge['button2_hover_border_color']);
+				if ( $banner_badge->button2_hover_border_color ) {
+					printf("\t--borderHoverColor: %s;\n", $banner_badge->button2_hover_border_color);
 				}
 			}
 		echo "}\n\n";
+		
 			
 		$styles = ob_get_clean();
 

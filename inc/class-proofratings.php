@@ -191,36 +191,29 @@ class Wordpress_Proofratings {
 	 * Banner badge on frontend
 	 */
 	public function banner_badge() {
-		if ( get_proofratings_display_settings()['overall_ratings_cta'] !== 'yes' ) {
+		if ( get_proofratings_display_settings()['overall_ratings_cta_banner'] !== 'yes' ) {
 			return;
 		}
 
-		$badge_settings = get_option( 'proofratings_banner_badge' );
-		if ( !$badge_settings) {
-			return;
-		}
+		$badge_settings = get_proofratings_overall_ratings_cta_banner();
 
-		if($badge_settings['show'] == 'no') {
-			return;
-		}
-
-		$on_pages = (array) @$badge_settings['on_pages'];
-		$is_targeted_page = !isset($badge_settings['on_pages'][get_the_ID()]) || $badge_settings['on_pages'][get_the_ID()] == 'yes'? true : false;
+		$on_pages = (array) @$badge_settings->pages;
+		$is_targeted_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
 
 		if (!$is_targeted_page ) {
 			return;
 		}
 
 		$classes = ['proofratings-banner-badge'];
-		if ( $badge_settings['tablet'] == 'no') {
+		if ( $badge_settings->tablet == 'no') {
 			$classes[] = 'badge-hidden-tablet';
 		}
 
-		if ( $badge_settings['mobile'] == 'no') {
+		if ( $badge_settings->mobile == 'no') {
 			$classes[] = 'badge-hidden-mobile';
 		}
 
-		if ( $badge_settings['top_shadow'] != 'no' ) {
+		if ( $badge_settings->shadow != 'no' ) {
 			$classes[] = 'has-shadow';
 		}
 
@@ -228,41 +221,41 @@ class Wordpress_Proofratings {
 
 
 		$button1 = '';
-		if ( !empty($badge_settings['button1_text']) ) {
+		if ( !empty($badge_settings->button1_text) ) {
 			$button1_class = 'proofratings-button button1';
-			if ( $badge_settings['button1_border'] == 'yes' ) {
+			if ( $badge_settings->button1_border == 'yes' ) {
 				$button1_class .= ' has-border';
 			}
 
 			$target = '';
-			if ( @$badge_settings['button1_blank'] == 'yes') {
+			if ( $badge_settings->button1_blank == 'yes') {
 				$target = 'target="_blank"';
 			}
 
-			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings['button1_url']), trim($button1_class), $target);
-			$button1 .= $badge_settings['button1_text'];			
+			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button1_url), trim($button1_class), $target);
+			$button1 .= $badge_settings->button1_text;
 			$button1 .= '</a>';			
 		}
 
 		$button2 = '';
-		if ( @$badge_settings['button2'] == 'yes' && !empty($badge_settings['button2_text']) ) {
+		if ( $badge_settings->button2 == 'yes' && !empty($badge_settings->button2_text) ) {
 			$button2_class = 'proofratings-button button2';
-			if ( $badge_settings['button2_border'] == 'yes' ) {
+			if ( $badge_settings->button2_border == 'yes' ) {
 				$button2_class .= ' has-border';
 			}
 
 			$target = '';
-			if ( @$badge_settings['button2_blank'] == 'yes') {
+			if ( $badge_settings->button2_blank == 'yes') {
 				$target = 'target="_blank"';
 			}
 
-			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings['button2_url']), trim($button2_class), $target);			
-			$button2 .= $badge_settings['button2_text'];			
+			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button2_url), trim($button2_class), $target);			
+			$button2 .= $badge_settings->button2_text;
 			$button2 .= '</a>';			
 		}
 
 		$close_button = '';
-		if ( $badge_settings['close_button'] != 'no' ) {
+		if ( $badge_settings->close_button != 'no' ) {
 			$close_button = sprintf('<a class="proofratings-banner-close" href="#">%s</a>', __('Close', 'proofratings'));
 		}  ?>
 

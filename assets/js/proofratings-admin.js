@@ -51,41 +51,7 @@
         current_button.hide();
     }).trigger('change')
 
-
-    const BannerBadge = () => {
-        $('[name="proofratings_banner_badge[button1_border]"]').on('change', function(){            
-            targeted = $('#button1-border-hover-color, #button1-border-color');
-
-            if ( $(this).is(':checked') ) {
-                return targeted.show();
-            }
-
-            targeted.hide();
-        }).trigger('change')
-
-        $('[name="proofratings_banner_badge[button2]"]').on('change', function(){
-            if ( $(this).is(':checked') ) {
-                return $('#cta-button2-options').show();
-            }
-
-            $('#cta-button2-options').hide();
-        }).trigger('change')
-
-        $('[name="proofratings_banner_badge[button2_border]"]').on('change', function(){            
-            targeted = $('#button2-border-hover-color, #button2-border-color');
-
-            if ( $(this).is(':checked') ) {
-                return targeted.show();
-            }
-
-            targeted.hide();
-        }).trigger('change')
-    }
-
-    BannerBadge();
-
-
-    (function(){
+    function square_badge_tab() {
         square_badges = $('#proofratings-badge-square > :is(a, div)');
 
         badge_css = {
@@ -196,7 +162,8 @@
         $('[name="proofratings_badges_square[shadow_hover_color]"]').on('update', function(e, color){
             generate_square_style({'shadowHoverColor': color})
         })
-    })()
+    };
+    square_badge_tab();
 
     const rectangle_badge_tab = function(){
         rectangle_badges = $('#proofratings-badge-rectangle > :is(a, div)');
@@ -396,6 +363,49 @@
     }
 
     overall_ratings_narrow();
+
+    const CTA_Banner_Badge = () => {
+        $('[name="proofratings_overall_ratings_cta_banner[customize]"]').on('change', function(){            
+            targeted = $('#overall-ratings-cta-banner-customize-options');
+
+            if ( $(this).is(':checked') ) {
+                return targeted.show();
+            }
+
+            targeted.hide();
+
+        }).trigger('change')
+
+        $('[name="proofratings_overall_ratings_cta_banner[button1_border]"]').on('change', function(){            
+            targeted = $('#button1-border-hover-color, #button1-border-color');
+
+            if ( $(this).is(':checked') ) {
+                return targeted.show();
+            }
+
+            targeted.hide();
+        }).trigger('change')
+
+        $('[name="proofratings_overall_ratings_cta_banner[button2]"]').on('change', function(){
+            if ( $(this).is(':checked') ) {
+                return $('#cta-button2-options').show();
+            }
+
+            $('#cta-button2-options').hide();
+        }).trigger('change')
+
+        $('[name="proofratings_overall_ratings_cta_banner[button2_border]"]').on('change', function(){            
+            targeted = $('#button2-border-hover-color, #button2-border-color');
+
+            if ( $(this).is(':checked') ) {
+                return targeted.show();
+            }
+
+            targeted.hide();
+        }).trigger('change')
+    }
+
+    CTA_Banner_Badge();
    
 
 
