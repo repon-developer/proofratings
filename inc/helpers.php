@@ -337,6 +337,7 @@ function get_proofratings_badges_rectangle() {
     return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_rectangle'), [
 		'customize' => 'no',
 		'shadow' => 'yes',
+        'icon_color' => '#000'
 	]));
 }
 

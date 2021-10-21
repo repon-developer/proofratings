@@ -25,6 +25,11 @@ echo do_shortcode( '[proofratings_widgets id="proofratings-badge-rectangle" styl
 	</tr>
 
 	<tr>
+		<th scope="row">Site Icon Color</th>
+		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_rectangle[icon_color]" type="text" value="%s" data-default-color="#000">', esc_attr( $sites_rectangle->icon_color)) ?></td>
+	</tr>
+
+	<tr>
 		<th scope="row">Text Color</th>
 		<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_rectangle[text_color]" type="text" value="%s">', esc_attr( $sites_rectangle->text_color)) ?></td>
 	</tr>
