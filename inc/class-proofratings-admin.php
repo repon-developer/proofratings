@@ -286,7 +286,14 @@ class ProofRatings_Admin {
 	 * Add menu page
 	 */
 	public function admin_menu() {
-		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', [$this->settings_page, 'output'], 'dashicons-star-filled', 25);
+		$setting_output = 'account_inactive_output';
+		
+		$proofratings_status = get_proofratings_current_status();
+		if ( $proofratings_status->status == 'active' ) {
+			$setting_output = 'output';
+		}
+
+		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', [$this->settings_page, $setting_output], 'dashicons-star-filled', 25);
 	}
 
 	/**
@@ -301,6 +308,4 @@ class ProofRatings_Admin {
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
 	}
-
-
 }

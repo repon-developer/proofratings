@@ -68,6 +68,35 @@ class WP_ProofRatings_Settings {
 	/**
 	 * Shows the plugin's settings page.
 	 */
+	public function account_inactive_output() { ?>
+		<div class="wrap proofratings-settings-wrap">
+			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
+			<hr class="wp-header-end">
+			<?php
+			$proofratings_status = get_proofratings_current_status();
+				if ( !$proofratings_status || 'not_registered' == $proofratings_status->status ) {
+					echo '<div class="proofratings-status">';
+					printf('<p>You have not registered your site. For register, we will collect your website name, admin email, and domain. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
+					echo '</div>';
+
+				}
+			?>
+
+			<h2 class="nav-tab-wrapper">
+				<a href="#proofratings-activation-tab" class="nav-tab"><?php _e('Activation', 'proofratings'); ?></a>
+			</h2>
+
+			<div id="proofratings-activation-tab" class="settings_panel">
+				<h3><?php _e('Please wait while we activate and connect your account.', 'proofratings') ?></h3>
+				<p>If you do not have a Prooratings account, please register to activate your plugin at <a href="https://proofratings.com/sign-up" target="_blank">proofratings.com/sign-up</a></p>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Shows the plugin's settings page.
+	 */
 	public function output() {
 		?>
 		<div class="wrap proofratings-settings-wrap">
@@ -81,22 +110,6 @@ class WP_ProofRatings_Settings {
 				<?php
 				if ( ! empty( $_GET['settings-updated'] ) ) {
 					echo '<div class="updated fade"><p>' . esc_html__( 'Settings successfully saved', 'proofratings' ) . '</p></div>';
-				}
-
-				$proofratings_status = get_proofratings_current_status();
-				if ( !$proofratings_status || 'not_registered' == $proofratings_status->status ) {
-					echo '<div class="proofratings-status">';
-					printf('<p>You have not registered your site. For register, we will collect your website name, admin email, and domain. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
-					echo '</div>';
-
-				} else if ( in_array($proofratings_status->status, ['pending', 'pause', 'suspend', 'no_sheetid']) ) {
-					echo '<div class="proofratings-status">';
-						if ($proofratings_status->status == 'suspend') {
-							printf('<p>'. __('Your application has been suspended.', 'proofratings') .'</p>');
-						} else {							
-							printf('<p>%s</p>', esc_html__($proofratings_status->message));
-						}
-					echo '</div>';
 				}
 
 				$widget_settings = wp_parse_args(get_option( 'proofratings_widget_settings'), [
