@@ -235,6 +235,8 @@ html {
     max-height: 24px;
 }
 
+.proofratings-widget.proofratings-widget-rectangle .review-site-logo img {width: 100%;}
+
 .proofratings-widget.proofratings-widget-rectangle .rating-title {
     font-size: 16px;
     letter-spacing:0.05em;

@@ -141,6 +141,10 @@ class ProofRatings_Admin {
 					printf("\t--themeColor: %s;\n", $badges_rectangle->star_color);
 				}
 
+				if ( $badges_rectangle->icon_color ) {
+					printf("\t--iconColor: %s;\n", $badges_rectangle->icon_color);
+				}
+
 				if ( $badges_rectangle->text_color ) {
 					printf("\t--textColor: %s;\n", $badges_rectangle->text_color);
 				}

@@ -42,7 +42,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-google.png',
             'rating_title' => __('Google Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/google-black.svg',
             'category' => 'general'
         ],
 
