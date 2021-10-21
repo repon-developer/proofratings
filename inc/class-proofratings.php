@@ -193,6 +193,7 @@ class Wordpress_Proofratings {
 
 		if ($has_page ) {
 			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
+			echo do_shortcode('[proofratings_floating_widgets]' );
 		}
 	}
 
