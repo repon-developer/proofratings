@@ -354,7 +354,8 @@ class ProofRatings_Shortcodes {
 	 * Embed badge style2
 	 */
 	public function proofratings_widgets_rectangle($site) {		
-    	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon2), esc_attr($site->rating_title));
+    	//printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon2), esc_attr($site->rating_title));
+    	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
 
 		if ( $site->rating_title ) {
 			echo '<h4 class="rating-title">'.$site->rating_title.'</h4>';

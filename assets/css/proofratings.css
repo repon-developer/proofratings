@@ -231,11 +231,15 @@ html {
     position: absolute;
     top: 15px;
     right: 10px;
-    max-width: 24px;
-    max-height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
-.proofratings-widget.proofratings-widget-rectangle .review-site-logo img {width: 100%;}
+.proofratings-widget.proofratings-widget-rectangle .review-site-logo img,
+.proofratings-widget.proofratings-widget-rectangle .review-site-logo svg {width: 100%;}
+
+.proofratings-widget.proofratings-widget-rectangle .review-site-logo svg {fill: var(--iconColor, #000)}
+
 
 .proofratings-widget.proofratings-widget-rectangle .rating-title {
     font-size: 16px;

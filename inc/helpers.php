@@ -53,7 +53,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-facebook.png',
             'rating_title' => __('Facebook Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/facebook-black.svg',
             'category' => 'general'
         ],
 
@@ -64,7 +64,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-yelp.png',
             'rating_title' => __('Yelp Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/yelp-black.svg',
             'category' => 'general'
         ],
 
@@ -75,7 +75,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bbb.png',
             'rating_title' => __('BBB Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bbb-black.svg',
             'category' => 'general'
         ],
         
@@ -86,7 +86,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-trustpilot.png',
             'rating_title' => __('Trustpilot Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot-black.svg',
             'category' => 'general'
         ],
 
@@ -97,7 +97,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bestcompany.jpg',
             'rating_title' => __('Best Comapny Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany-black.svg',
             'category' => 'general'
         ],
 
@@ -109,7 +109,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/angi.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-angi.png',
             'rating_title' => __('Angi Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/angi-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/angi-black.svg',
             'category' => 'home-service'
         ],
 
@@ -120,7 +120,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.png',
             'rating_title' => __('Guild Quality Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality-black.svg',
             'category' => 'home-service'
         ],
 
@@ -132,7 +132,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.png',
             'rating_title' => __('Energy Sage Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage-black.svg',
             'category' => 'solar'
         ],
 
@@ -143,7 +143,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.png',
             'rating_title' => __('Solar Reviews Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews-black.svg',
             'category' => 'solar'
         ],
 
@@ -154,7 +154,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarquotes.png',
             'rating_title' => __('Solarquotes Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarquotes-black.svg',
             'category' => 'solar'
         ],
 
@@ -165,7 +165,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solartribune.png',
             'rating_title' => __('Solar Tribune Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune-black.svg',
             'category' => 'solar'
         ],
 
@@ -176,7 +176,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-oneflare.png',
             'rating_title' => __('Oneflare Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/oneflare-black.svg',
             'category' => 'solar'
         ],
 
@@ -188,7 +188,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wordpress.jpg',
             'rating_title' => __('Wordpress Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wordpress-black.svg',
             'category' => 'software'
         ],
 
@@ -199,7 +199,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/capterra.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-capterra.png',
             'rating_title' => __('Capterra Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/capterra-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/capterra-black.svg',
             'category' => 'software'
         ],
 
@@ -210,7 +210,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/g2.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-g2.png',
             'rating_title' => __('G2 Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/g2-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/g2-black.svg',
             'category' => 'software'
         ],
 
@@ -221,7 +221,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/getapp.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-getapp.png',
             'rating_title' => __('Getapp Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/getapp-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/getapp-black.svg',
             'category' => 'software'
         ],
 
@@ -232,7 +232,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/softwareadvice.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-softwareadvice.png',
             'rating_title' => __('Software Advice Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/softwareadvice-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/softwareadvice-black.svg',
             'category' => 'software'
         ],
 
@@ -243,7 +243,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/saasworthy.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-saasworthy.png',
             'rating_title' => __('SaaSworthy Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/saasworthy-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/saasworthy-black.svg',
             'category' => 'software'
         ],
 
@@ -254,7 +254,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/crozdesk.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-crozdesk.png',
             'rating_title' => __('Crozdesk Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/crozdesk-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/crozdesk-black.svg',
             'category' => 'software'
         ],
 
@@ -265,7 +265,7 @@ function get_proofratings_settings() {
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks.png',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-quickbooks.png',
             'rating_title' => __('Quickbooks Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks-black.png',
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks-black.svg',
             'category' => 'software'
         ]
     ];
