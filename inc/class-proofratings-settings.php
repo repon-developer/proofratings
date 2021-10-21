@@ -50,6 +50,9 @@ class WP_ProofRatings_Settings {
 	 */
 	public function register_settings() {
 		register_setting( $this->settings_group, 'proofratings_widget_settings' );
+		register_setting( $this->settings_group, 'proofratings_review_sites' );
+
+
 		register_setting( $this->settings_group, 'proofratings_display_badge' );
 
 		//Widget settings
@@ -109,8 +112,6 @@ class WP_ProofRatings_Settings {
 					<a href="#settings-overall-ratings-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-narrow" class="nav-tab" style="display:none"><?php _e('Overall Rating (Narrow)', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-cta-banner" class="nav-tab" style="display:none"><?php _e('Overall Rating (CTA Banner)', 'proofratings'); ?></a>
-
-					<!-- <a href="#settings-banner-badge" class="nav-tab"><?php _e('Banner Badge', 'proofratings'); ?></a> -->
 				</h2>
 
 				<div id="settings-review-sites" class="settings_panel">

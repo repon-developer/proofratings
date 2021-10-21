@@ -78,8 +78,6 @@ class ProofRatings_Admin {
 		}
 
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-		$settings = $postdata['proofratings_settings'];
 		
 		$widget_settings = wp_parse_args($postdata['proofratings_widget_settings'], [
 			'proofratings_font' => 'inherit',

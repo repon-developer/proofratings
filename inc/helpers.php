@@ -270,7 +270,7 @@ function get_proofratings_settings() {
         ]
     ];
 
-    $settings = get_option('proofratings_settings', []);
+    $settings = get_option('proofratings_review_sites', []);
 
     
     array_walk($default, function(&$item, $key) use($settings) {
@@ -282,6 +282,26 @@ function get_proofratings_settings() {
     });    
 
     return $default;
+}
+
+
+/**
+ * get review sites
+ * @since  1.0.4
+ */
+function get_proofratings_review_sites($group) {
+    $group_sites = array_filter(get_proofratings_settings(), function($item) use($group) {
+        return $item->category == $group;
+    });
+
+    echo '<div class="review-sites-checkboxes">';
+    foreach ($group_sites as $key => $site) {
+        printf(
+            '<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_review_sites[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
+            $key, esc_attr($site->logo), checked('yes', $site->active, false)
+        );
+    }
+    echo '</div>';
 }
 
 /**
@@ -410,23 +430,4 @@ function get_proofratings_current_status() {
         'status' => 'pending',
         'message' => ''
     ]);
-}
-
-/**
- * get review sites
- * @since  1.0.4
- */
-function get_proofratings_review_sites($group) {
-    $group_sites = array_filter(get_proofratings_settings(), function($item) use($group) {
-        return $item->category == $group;
-    });
-
-    echo '<div class="review-sites-checkboxes">';
-    foreach ($group_sites as $key => $site) {
-        printf(
-            '<label class="checkbox-review-site" data-site="%1$s"><input type="checkbox" name="proofratings_settings[%1$s][active]" value="yes" %3$s /><img src="%2$s" alt="%1$s" /></label>', 
-            $key, esc_attr($site->logo), checked('yes', $site->active, false)
-        );
-    }
-    echo '</div>';
 }
