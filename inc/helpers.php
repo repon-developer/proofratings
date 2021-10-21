@@ -353,6 +353,49 @@ function get_proofratings_overall_ratings_narrow() {
 }
 
 /**
+ * get overall ratings CTA Banner settings
+ * @since  1.0.4
+ */
+function get_proofratings_overall_ratings_cta_banner() {
+    return new Proofratings_Site_Data(wp_parse_args((array)get_option( 'proofratings_banner_badge'), [
+        'show' => 'yes',
+        'tablet' => 'yes',
+        'close_button' => 'yes',
+        'mobile' => 'yes',
+        'star_color' => '',
+        'top_shadow' => 'yes',
+        'background_color' => '',
+        'rating_text_color' => '',
+        'review_rating_background_color' => '',
+        'number_review_text_color' => '',
+
+        'button1_text' => '',
+        'button1_url' => '',
+        'button1_blank' => 'no',
+        'button1_textcolor' => '',
+        'button1_hover_textcolor' => '',
+        'button1_shape' => 'rectangle',
+        'button1_background_color' => '',
+        'button1_hover_background_color' => '',
+        'button1_border' => 'yes',
+        'button1_border_color' => '',
+        'button1_hover_border_color' => '',
+        
+        'button2' => 'no',
+        'button2_text' => '',
+        'button2_url' => '',
+        'button2_blank' => 'no',
+        'button2_textcolor' => '',
+        'button2_shape' => '',
+        'button2_background_color' => '',
+        'button2_border' => 'yes',
+        'button2_border_color' => '',
+        'button2_hover_textcolor' => '',
+        'button2_hover_background_color' => '',
+        'button2_hover_border_color' => '',
+    ]));
+}
+/**
  * get current status
  * @since  1.0.1
  */
