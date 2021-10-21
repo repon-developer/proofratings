@@ -298,14 +298,17 @@ class ProofRatings_Shortcodes {
 			return;
         }
 
-		$badge_class = ['proofratings-widget'];
-
-		$badges_sites_square = get_proofratings_badges_square();
-		if ( $badges_sites_square->customize == 'yes' ) {
+		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $atts['style']];
+		
+		$badges_settings = get_proofratings_badges_square();
+		if ( $atts['style'] == 'rectangle') {
+			$badges_settings = get_proofratings_badges_rectangle();			
+		}
+		
+		if ( $badges_settings->customize == 'yes' ) {
 			$badge_class[] = 'proofratings-widget-customized';
 		}
-
-
+		
 		$badge_style = sanitize_key($atts['style']);
 		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
 			$badge_style = 'square';
@@ -321,11 +324,8 @@ class ProofRatings_Shortcodes {
 					$tag = 'a';
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
 				}
-
-				$badge_class[] = 'proofratings-widget-' . $badge_style;
-				$badge_class[] = 'proofratings-widget-' . $key;
 				
-				printf('<%s class="%s" %s>', $tag, implode(' ', $badge_class), $attribue);
+				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $key, $attribue);
 					$this->{'proofratings_widgets_' . $badge_style}($site);
 				printf('</%s>', $tag);
 	        }

@@ -293,7 +293,7 @@ class ProofRatings_Admin {
 		$setting_output = 'account_inactive_output';
 		
 		$proofratings_status = get_proofratings_current_status();
-		if ( $proofratings_status->status == 'active' ) {
+		if (isset($proofratings_status->status) && $proofratings_status->status == 'active' ) {
 			$setting_output = 'output';
 		}
 
