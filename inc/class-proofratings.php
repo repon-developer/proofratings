@@ -179,6 +179,10 @@ class Wordpress_Proofratings {
 	 * @since 1.0.4
 	 */
 	public function overall_ratings_rectangle() {
+		if ( get_proofratings_display_settings()['overall_ratings_rectangle'] !== 'yes' ) {
+			return;
+		}
+
 		$badge_settings = get_proofratings_overall_rectangle();
 		if ($badge_settings['float'] !== 'yes') {
 			return;
