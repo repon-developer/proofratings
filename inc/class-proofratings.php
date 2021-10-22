@@ -48,11 +48,8 @@ class Wordpress_Proofratings {
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 
-		$this->reviews = Proofratings_Review::instance();
-
 		$this->admin = ProofRatings_Admin::instance();
 		$this->shortcodes = ProofRatings_Shortcodes::instance();
-
 
 		add_action( 'rest_api_init', [$this, 'register_rest_api']);
 
@@ -196,84 +193,14 @@ class Wordpress_Proofratings {
 		}
 
 		$badge_settings = get_proofratings_overall_ratings_cta_banner();
-
 		$on_pages = (array) @$badge_settings->pages;
 		$is_targeted_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
 
+		
 		if (!$is_targeted_page ) {
 			return;
 		}
-
-		$classes = ['proofratings-banner-badge'];
-		if ( $badge_settings->tablet == 'no') {
-			$classes[] = 'badge-hidden-tablet';
-		}
-
-		if ( $badge_settings->mobile == 'no') {
-			$classes[] = 'badge-hidden-mobile';
-		}
-
-		if ( $badge_settings->shadow != 'no' ) {
-			$classes[] = 'has-shadow';
-		}
-
-		$class = implode(' ', $classes);
-
-
-		$button1 = '';
-		if ( !empty($badge_settings->button1_text) ) {
-			$button1_class = 'proofratings-button button1';
-			if ( $badge_settings->button1_border == 'yes' ) {
-				$button1_class .= ' has-border';
-			}
-
-			$target = '';
-			if ( $badge_settings->button1_blank == 'yes') {
-				$target = 'target="_blank"';
-			}
-
-			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button1_url), trim($button1_class), $target);
-			$button1 .= $badge_settings->button1_text;
-			$button1 .= '</a>';			
-		}
-
-		$button2 = '';
-		if ( $badge_settings->button2 == 'yes' && !empty($badge_settings->button2_text) ) {
-			$button2_class = 'proofratings-button button2';
-			if ( $badge_settings->button2_border == 'yes' ) {
-				$button2_class .= ' has-border';
-			}
-
-			$target = '';
-			if ( $badge_settings->button2_blank == 'yes') {
-				$target = 'target="_blank"';
-			}
-
-			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button2_url), trim($button2_class), $target);			
-			$button2 .= $badge_settings->button2_text;
-			$button2 .= '</a>';			
-		}
-
-		$close_button = '';
-		if ( $badge_settings->close_button != 'no' ) {
-			$close_button = sprintf('<a class="proofratings-banner-close" href="#">%s</a>', __('Close', 'proofratings'));
-		}  ?>
-
-		<div class="<?php echo $class; ?>">
-			<?php echo $close_button; ?>
-			<?php $this->reviews->get_review_logos() ?>
-
-			<div class="rating-box">
-				<?php $this->reviews->get_rating_star('medium') ?> <span class="rating"><?php echo $this->reviews->rating; ?> / 5</span>
-			</div>
-
-			<div class="proofratings-review-count"><?php echo $this->reviews->count; ?> customer reviews</div>
-
-			<div class="button-container">
-				<?php echo $button1 . $button2; ?>
-			</div>
-		</div>
-		<?php
-
+		
+		echo do_shortcode('[proofratings_overall_ratings_cta_banner]' );
 	}
 }

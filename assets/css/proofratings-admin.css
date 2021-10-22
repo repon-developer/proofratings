@@ -193,10 +193,22 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-styles img {margin-left: 30px; height: 100px}
 
-.proofratings-settings-wrap .proofratings-review-widgets-grid *, .proofratings-badge {box-sizing: border-box}
+.proofratings-settings-wrap .proofratings-review-widgets-grid *, .proofratings-badge, .proofratings-banner-badge, .proofratings-banner-badge * {box-sizing: border-box}
 
 .proofratings-settings-wrap .proofratings-review-widgets-grid {display: inline-flex; justify-content: flex-start; margin-bottom: 40px}
 
 #sites-square-badge-customize {display: none}
 
 .proofratings-settings-wrap .proofratings-widget.proofratings-widget-rectangle .rating-title {margin: 0 0 8px 0}
+
+.proofratings-banner-badge {
+    padding-left: 40px;
+    padding-right: 40px;
+    position: static;
+    display: inline-flex;
+    transform: scale(0.85);
+    transform-origin: left;
+    clip-path: polygon(0 -30px, 100% -30px, 100% 100%, 0 100%);
+}
+
+.proofratings-banner-badge .proofratings-banner-close {display: none!important}

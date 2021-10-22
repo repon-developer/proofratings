@@ -189,6 +189,10 @@ class ProofRatings_Admin {
 
 		if ($banner_badge->customize == 'yes' ) {
 			echo ".proofratings-banner-badge {\n";
+				if ( $banner_badge->star_color ) {
+					printf("\t--star_color: %s;\n", $banner_badge->star_color);
+				}
+
 				if ( $banner_badge->number_review_text_color ) {
 					printf("\t--reviewCountTextcolor: %s;\n", $banner_badge->number_review_text_color);
 				}
@@ -196,21 +200,13 @@ class ProofRatings_Admin {
 				if ( $banner_badge->background_color ) {
 					printf("\t--backgroundColor: %s;\n", $banner_badge->background_color);
 				}
-			echo "}\n\n";
 
-			echo ".proofratings-banner-badge .rating-box {\n";
 				if ( $banner_badge->rating_text_color ) {
-					printf("\tcolor: %s;\n", $banner_badge->rating_text_color);
+					printf("\t--rating_text_color: %s;\n", $banner_badge->rating_text_color);
 				}
 
 				if ( $banner_badge->review_rating_background_color ) {
-					printf("\t--backgroundColor: %s;\n", $banner_badge->review_rating_background_color);
-				}
-			echo "}\n\n";
-
-			echo ".proofratings-banner-badge .proofratings-stars {\n";
-				if ( $banner_badge->star_color ) {
-					printf("\t--star_color: %s;\n", $banner_badge->star_color);
+					printf("\t--review_rating_background_color: %s;\n", $banner_badge->review_rating_background_color);
 				}
 			echo "}\n\n";
 		}

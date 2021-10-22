@@ -40,11 +40,17 @@
 
 	<tbody id="overall-ratings-cta-banner-customize-options" style="display: none">
 		<tr>
+			<td style="padding: 0" colspan="2">
+				<?php echo do_shortcode('[proofratings_overall_ratings_cta_banner]' ); ?>				
+			</td>
+		</tr>
+
+		<tr>
 			<th scope="row"><?php _e('Star Color', 'proofratings') ?></th>
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_cta_banner[star_color]"
-					value="<?php esc_attr_e($cta_banner->star_color) ?>" data-default-color="#212A3D">
+					value="<?php esc_attr_e($cta_banner->star_color) ?>">
 			</td>
 		</tr>
 
@@ -61,7 +67,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_cta_banner[background_color]"
-					value="<?php esc_attr_e($cta_banner->background_color) ?>" data-default-color="#f6d300">
+					value="<?php esc_attr_e($cta_banner->background_color) ?>">
 			</td>
 		</tr>
 
@@ -70,7 +76,7 @@
 			<td>
 				<input class="proofratings-color-field" type="text" 
 					name="proofratings_overall_ratings_cta_banner[rating_text_color]"
-					value="<?php esc_attr_e($cta_banner->rating_text_color) ?>" data-default-color="#377dbc">
+					value="<?php esc_attr_e($cta_banner->rating_text_color) ?>">
 			</td>
 		</tr>
 

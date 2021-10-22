@@ -395,6 +395,9 @@ html {
 
 .proofratings-banner-badge {
     --reviewCountTextcolor: inherit;
+    --rating_text_color: #000;
+    --review_rating_background_color: #f5f8ff;
+
     font-family: "Didact Gothic"!important;
     min-height: 90px;
     padding: 15px 20px;
@@ -456,7 +459,7 @@ html {
 .proofratings-banner-badge .proofratings-logos {margin: 0 30px 0 0;}
 
 .proofratings-banner-badge .rating-box {
-    color: #000;
+    color: var(--rating_text_color, #000);
     min-width: 230px;
     height: 48px;
     margin-right: 30px;
@@ -466,7 +469,7 @@ html {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--backgroundColor, #f5f8ff);
+    background-color: var(--review_rating_background_color, #f5f8ff);
     border-radius: 100px
 }
 

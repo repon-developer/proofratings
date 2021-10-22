@@ -51,7 +51,7 @@
         current_button.hide();
     }).trigger('change')
 
-    const generate_css_style = (styles, keys = [], prefix = '') => {
+    const generate_css_style = (styles, keys = [], prefix = '--') => {
         properties = new Array();
 
         keys.forEach(key => {
@@ -330,8 +330,6 @@
                 css_style += '.proofratings-badge.proofratings-badge-rectangle {--shadow_color: transparent; --shadow_hover: transparent}'
             }
 
-            console.log(css_style)
-
             proofratings_overall_rectangle_style.html(css_style)
         }
 
@@ -406,8 +404,6 @@
                 css_style += '.proofratings-badge.proofratings-badge-narrow {--shadow_color: transparent!important; --shadow_hover: transparent!important}'
             }
 
-            console.log(css_style)
-
             proofratings_overall_narrow_style.html(css_style)
         }
 
@@ -457,18 +453,57 @@
             
         }).trigger('change');
     }
-
     overall_ratings_narrow();
 
     const CTA_Banner_Badge = () => {
+
+        const cta_banner = $('.proofratings-banner-badge');
+
+        proofratings_cta_banner_style = $('style#proofratings-cta-banner');
+        if ( !proofratings_cta_banner_style.length ) {
+            proofratings_cta_banner_style = $('<style id="proofratings-cta-banner" />').appendTo('body')
+        }
+
+        let ovarall_cta_css = {
+            'star_color': $('[name="proofratings_overall_ratings_cta_banner[star_color]"]').val(),
+            'backgroundColor': $('[name="proofratings_overall_ratings_cta_banner[background_color]"]').val(),
+            'rating_text_color': $('[name="proofratings_overall_ratings_cta_banner[rating_text_color]"]').val(),
+            'review_rating_background_color': $('[name="proofratings_overall_ratings_cta_banner[review_rating_background_color]"]').val(),
+            'reviewCountTextcolor': $('[name="proofratings_overall_ratings_cta_banner[number_review_text_color]"]').val()
+        };
+
+        function generate_css(object = {}) {
+            ovarall_cta_css = {...ovarall_cta_css, ...object};
+            css_style = '.proofratings-banner-badge {' + generate_css_style(ovarall_cta_css, [
+                'star_color', 'backgroundColor', 'rating_text_color', 'rating_text_color', 'review_rating_background_color', 'reviewCountTextcolor'
+            ]) + '}';
+
+            proofratings_cta_banner_style.html(css_style)
+        }
+
+        generate_css();
+
+        $('[name="proofratings_overall_ratings_cta_banner[star_color]"]').on('update', (e, star_color) => generate_css({star_color}))
+        $('[name="proofratings_overall_ratings_cta_banner[background_color]"]').on('update', (e, backgroundColor) => generate_css({backgroundColor}))
+        $('[name="proofratings_overall_ratings_cta_banner[rating_text_color]"]').on('update', (e, rating_text_color) => generate_css({rating_text_color}))
+        $('[name="proofratings_overall_ratings_cta_banner[review_rating_background_color]"]').on('update', (e, review_rating_background_color) => generate_css({review_rating_background_color}))
+        $('[name="proofratings_overall_ratings_cta_banner[number_review_text_color]"]').on('update', (e, reviewCountTextcolor) => generate_css({reviewCountTextcolor}))
+
+
         $('[name="proofratings_overall_ratings_cta_banner[customize]"]').on('change', function(){            
             targeted = $('#overall-ratings-cta-banner-customize-options');
-
             if ( $(this).is(':checked') ) {
                 return targeted.show();
             }
-
             targeted.hide();
+        }).trigger('change')
+
+        $('[name="proofratings_overall_ratings_cta_banner[shadow]"]').on('change', function(){            
+            if ($(this).is(':checked')) {
+                cta_banner.addClass('has-shadow')
+            } else {
+                cta_banner.removeClass('has-shadow')
+            }
 
         }).trigger('change')
 
