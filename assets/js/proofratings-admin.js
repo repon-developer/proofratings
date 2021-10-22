@@ -367,8 +367,8 @@
         }).trigger('change');
 
         $('[name="proofratings_overall_ratings_rectangle[star_color]"]').on('update', (e, star_color) => generate_css({star_color}))
-        $('[name="proofratings_overall_ratings_rectangle[shadow_color]"]').on('update', (e, shadow_color) => generate_css(shadow_color))
-        $('[name="proofratings_overall_ratings_rectangle[shadow_hover]"]').on('update', (e, shadow_hover) => generate_css(shadow_hover))
+        $('[name="proofratings_overall_ratings_rectangle[shadow_color]"]').on('update', (e, shadow_color) => generate_css({shadow_color}))
+        $('[name="proofratings_overall_ratings_rectangle[shadow_hover]"]').on('update', (e, shadow_hover) => generate_css({shadow_hover}))
         $('[name="proofratings_overall_ratings_rectangle[background_color]"]').on('update', (e, background_color) => generate_css({background_color}))
         $('[name="proofratings_overall_ratings_rectangle[review_text_color]"]').on('update', (e, review_text_color) => generate_css({review_text_color}))
         $('[name="proofratings_overall_ratings_rectangle[review_background]"]').on('update', (e, review_background) => generate_css({review_background}))
