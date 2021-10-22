@@ -185,35 +185,18 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .shortocde-area {user-select: all}
 
-.proofratings-image-option {
-    display: flex;
-    align-items: center;
-}
+.proofratings-image-option {display: flex; align-items: center}
 
 .proofratings-image-option > img {margin-right: 20px;}
 
-.proofratings-styles {
-    display: flex;
-    align-items: center;
-}
+.proofratings-styles {display: flex; align-items: center}
 
-.proofratings-styles img {
-    margin-left: 30px;
-    height: 100px;
-}
+.proofratings-styles img {margin-left: 30px; height: 100px}
 
-.proofratings-settings-wrap .proofratings-review-widgets-grid * {
-    box-sizing: border-box;
-}
+.proofratings-settings-wrap .proofratings-review-widgets-grid *, .proofratings-badge {box-sizing: border-box}
 
-.proofratings-settings-wrap .proofratings-review-widgets-grid {
-    display: inline-flex;
-    justify-content: flex-start;
-    margin-bottom: 40px;
-}
+.proofratings-settings-wrap .proofratings-review-widgets-grid {display: inline-flex; justify-content: flex-start; margin-bottom: 40px}
 
 #sites-square-badge-customize {display: none}
 
-.proofratings-settings-wrap .proofratings-widget.proofratings-widget-rectangle .rating-title {
-    margin: 0 0 8px 0;
-}
+.proofratings-settings-wrap .proofratings-widget.proofratings-widget-rectangle .rating-title {margin: 0 0 8px 0}

@@ -379,7 +379,48 @@
 
 
     function overall_ratings_narrow() {
+        $('.proofratings-badge.proofratings-badge-narrow').attr('style', '')
+
+        proofratings_overall_narrow_style = $('style#proofratings-widget-narrow');
+        if ( !proofratings_overall_narrow_style.length ) {
+            proofratings_overall_narrow_style = $('<style id="proofratings-widget-narrow" />').appendTo('body')
+        }
+
+        let ovarall_narrow_css = {
+            'star_color': $('[name="proofratings_overall_ratings_narrow[star_color]"]').val(),
+            'shadow_color': $('[name="proofratings_overall_ratings_narrow[shadow_color]"]').val(),
+            'shadow_hover': $('[name="proofratings_overall_ratings_narrow[shadow_hover]"]').val(),
+            'background_color': $('[name="proofratings_overall_ratings_narrow[background_color]"]').val(),
+            'review_text_color': $('[name="proofratings_overall_ratings_narrow[review_text_color]"]').val(),
+            'review_background': $('[name="proofratings_overall_ratings_narrow[review_background]"]').val(),
+        };
+
+        function generate_css(object = {}) {
+            ovarall_narrow_css = {...ovarall_narrow_css, ...object};
+
+            css_style = '.proofratings-badge.proofratings-badge-narrow {' + generate_css_style(ovarall_narrow_css, [
+                'star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'
+            ], '--') + '}';
+
+            if (!$('[name="proofratings_overall_ratings_narrow[float]"]:checked').length && !$('[name="proofratings_overall_ratings_narrow[shadow]"]:checked').length) {
+                css_style += '.proofratings-badge.proofratings-badge-narrow {--shadow_color: transparent!important; --shadow_hover: transparent!important}'
+            }
+
+            console.log(css_style)
+
+            proofratings_overall_narrow_style.html(css_style)
+        }
+
+        $('[name="proofratings_overall_ratings_narrow[star_color]"]').on('update', (e, star_color) => generate_css({star_color}))
+        $('[name="proofratings_overall_ratings_narrow[shadow_color]"]').on('update', (e, shadow_color) => generate_css({shadow_color}))
+        $('[name="proofratings_overall_ratings_narrow[shadow_hover]"]').on('update', (e, shadow_hover) => generate_css({shadow_hover}))
+        $('[name="proofratings_overall_ratings_narrow[background_color]"]').on('update', (e, background_color) => generate_css({background_color}))
+        $('[name="proofratings_overall_ratings_narrow[review_text_color]"]').on('update', (e, review_text_color) => generate_css({review_text_color}))
+        $('[name="proofratings_overall_ratings_narrow[review_background]"]').on('update', (e, review_background) => generate_css({review_background}))
+
+
         $('[name="proofratings_overall_ratings_narrow[float]"]').on('change', function(){
+            generate_css()
             float_options = $('#overall-ratings-narrow-float-options, #overall-narrow-ratings-pages');
                    
             if ( $(this).is(':checked') ) {
@@ -395,7 +436,6 @@
 
 
         $('[name="proofratings_overall_ratings_narrow[customize]"]').on('change', function(){
-            
             if ( $(this).is(':checked') ) {
                 return $('#overall-ratings-narrow-customize-options').show();
             }
@@ -406,6 +446,7 @@
 
 
         $('[name="proofratings_overall_ratings_narrow[shadow]"]').on('change', function(){
+            generate_css()
             shadow_options = $('.overall-ratings-narrow-shadow-options');
     
             if ( $(this).is(':checked') ) {

@@ -73,7 +73,7 @@
 	<tbody id="overall-ratings-narrow-customize-options" style="display: none">
 		<tr>
 			<td style="padding-left: 0" colspan="2">
-				<?php echo do_shortcode( '[proofratings_overall_ratings type="rectangle"]');  ?>
+				<?php echo do_shortcode( '[proofratings_overall_ratings type="narrow"]');  ?>
 			</td>
 		</tr>
 
