@@ -77,9 +77,7 @@
 		<tr>
 			<th scope="row"><?php _e('Star Color', 'proofratings') ?></th>
 			<td>
-				<input class="proofratings-color-field" type="text" 
-					name="proofratings_overall_ratings_rectangle[star_color]"
-					value="<?php esc_attr_e($overall_rectangle->star_color) ?>" data-default-color="#212A3D">
+				<input class="proofratings-color-field" type="text" name="proofratings_overall_ratings_rectangle[star_color]" value="<?php esc_attr_e($overall_rectangle->star_color) ?>">
 			</td>
 		</tr>
 
@@ -94,27 +92,21 @@
 		<tr id="badge-shadow-color">
 			<th scope="row"><?php _e('Shadow Color', 'proofratings') ?></th>
 			<td>
-				<input class="proofratings-color-field" type="text" 
-					name="proofratings_overall_ratings_rectangle[shadow_color]"
-					value="<?php esc_attr_e($overall_rectangle->shadow_color) ?>" data-default-color="#f6d300">
+				<input class="proofratings-color-field" type="text" name="proofratings_overall_ratings_rectangle[shadow_color]" value="<?php esc_attr_e($overall_rectangle->shadow_color) ?>">
 			</td>
 		</tr>
 
 		<tr id="badge-shadow-hover-color">
 			<th scope="row"><?php _e('Shadow Hover Color', 'proofratings') ?></th>
 			<td>
-				<input class="proofratings-color-field" type="text" 
-					name="proofratings_overall_ratings_rectangle[shadow_hover]"
-					value="<?php esc_attr_e($overall_rectangle->shadow_hover) ?>" data-default-color="#377dbc">
+				<input class="proofratings-color-field" type="text" name="proofratings_overall_ratings_rectangle[shadow_hover]" value="<?php esc_attr_e($overall_rectangle->shadow_hover) ?>">
 			</td>
 		</tr>
 
 		<tr>
 			<th scope="row"><?php _e('Background Color', 'proofratings') ?></th>
 			<td>
-				<input class="proofratings-color-field" type="text" 
-					name="proofratings_overall_ratings_rectangle[background_color]" 
-					value="<?php esc_attr_e($overall_rectangle->background_color) ?>" data-default-color="#fff">
+				<input class="proofratings-color-field" type="text"  name="proofratings_overall_ratings_rectangle[background_color]"  value="<?php esc_attr_e($overall_rectangle->background_color) ?>" data-default-color="#fff">
 			</td>
 		</tr>
 

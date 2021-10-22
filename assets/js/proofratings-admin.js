@@ -301,10 +301,9 @@
 
     rectangle_badge_tab();
 
-    
-
 
     function overall_ratings_rectangle() {
+        $('.proofratings-badge.proofratings-badge-rectangle').attr('style', '')
 
         proofratings_overall_rectangle_style = $('style#proofratings-widget-rectangle');
         if ( !proofratings_overall_rectangle_style.length ) {
