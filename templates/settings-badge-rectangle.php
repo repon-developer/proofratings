@@ -15,8 +15,7 @@
 <div class="gap-30"></div>
 <div id="rectangle-badge-customize">
 
-<?php
-echo do_shortcode( '[proofratings_widgets id="proofratings-badge-rectangle" style="rectangle"]');  ?>
+<?php echo do_shortcode( '[proofratings_widgets id="proofratings-badge-rectangle" style="rectangle"]');  ?>
 
 <table class="form-table">
 	<tr>

@@ -51,6 +51,18 @@
         current_button.hide();
     }).trigger('change')
 
+    const generate_css_style = (styles, keys = [], prefix = '') => {
+        properties = new Array();
+
+        keys.forEach(key => {
+            if ( styles[key] ) {
+                properties.push(prefix + key + ':' + styles[key]);
+            }
+        })
+
+        return properties.join(';');
+    }
+
     function square_badge_tab() {
         square_badges = $('#proofratings-badge-square > :is(a, div)');
 
@@ -170,6 +182,7 @@
 
         rectangle_badge_css = {
             'themeColor': $('[name="proofratings_badges_rectangle[star_color]"]').val(),
+            'iconColor': $('[name="proofratings_badges_rectangle[icon_color]"]').val(),
             'textColor': $('[name="proofratings_badges_rectangle[text_color]"]').val(),
             'reviewCountTextColor': $('[name="proofratings_badges_rectangle[review_count_textcolor]"]').val(),
             'shadowColor': $('[name="proofratings_badges_rectangle[shadow_color]"]').val(),
@@ -188,6 +201,10 @@
             proofratings_widget = new Array();
             if ( rectangle_badge_css['themeColor'] ) {
                 proofratings_widget.push(`--themeColor: ${rectangle_badge_css['themeColor']}`);
+            }
+
+            if ( rectangle_badge_css['iconColor'] ) {
+                proofratings_widget.push(`--iconColor: ${rectangle_badge_css['iconColor']}`);
             }
 
             if ( rectangle_badge_css['textColor'] ) {
@@ -253,6 +270,10 @@
             change_shadow_color({'themeColor': color});
         })
 
+        $('[name="proofratings_badges_rectangle[icon_color]"]').on('update', function(e, color){
+            change_shadow_color({'iconColor': color});
+        })
+
         $('[name="proofratings_badges_rectangle[text_color]"]').on('update', function(e, color){
             change_shadow_color({'textColor': color})
         })
@@ -280,9 +301,41 @@
 
     rectangle_badge_tab();
 
+    
+
 
     function overall_ratings_rectangle() {
+
+        proofratings_overall_rectangle_style = $('style#proofratings-widget-rectangle');
+        if ( !proofratings_overall_rectangle_style.length ) {
+            proofratings_overall_rectangle_style = $('<style id="proofratings-widget-rectangle" />').appendTo('body')
+        }
+
+        let ovarall_rectangle_css = {
+            'star_color': $('[name="proofratings_overall_ratings_rectangle[star_color]"]').val(),
+            'shadow_color': $('[name="proofratings_overall_ratings_rectangle[shadow_color]"]').val(),
+            'shadow_hover': $('[name="proofratings_overall_ratings_rectangle[shadow_hover]"]').val(),
+            'background_color': $('[name="proofratings_overall_ratings_rectangle[background_color]"]').val(),
+            'review_text_color': $('[name="proofratings_overall_ratings_rectangle[review_text_color]"]').val(),
+            'review_background': $('[name="proofratings_overall_ratings_rectangle[review_background]"]').val(),
+        };
+
+        function generate_css(object = {}) {
+            ovarall_rectangle_css = {...ovarall_rectangle_css, ...object};
+
+            css_style = '.proofratings-badge.proofratings-badge-rectangle {' + generate_css_style(ovarall_rectangle_css, [
+                'star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'
+            ], '--') + '}';
+
+            if (!$('[name="proofratings_overall_ratings_rectangle[float]"]:checked').length && !$('[name="proofratings_overall_ratings_rectangle[shadow]"]:checked').length) {
+                css_style += '.proofratings-badge.proofratings-badge-rectangle {--shadow_color: transparent; --shadow_hover: transparent}'
+            }
+
+            proofratings_overall_rectangle_style.html(css_style)
+        }
+
         $('[name="proofratings_overall_ratings_rectangle[float]"]').on('change', function(){
+            generate_css()
             float_options = $('#badge-tablet-visibility, #badge-mobile-visibility, #badge-close-options, #badge-position, #floating-badge-pages');
                    
             if ( $(this).is(':checked') ) {
@@ -296,28 +349,29 @@
     
         }).trigger('change');
 
-
-        $('[name="proofratings_overall_ratings_rectangle[customize]"]').on('change', function(){
-            
+        $('[name="proofratings_overall_ratings_rectangle[customize]"]').on('change', function(){            
             if ( $(this).is(':checked') ) {
                 return $('#overall-ratings-customize-options').show();
-            }
-    
-            $('#overall-ratings-customize-options').hide();
-            
+            }    
+            $('#overall-ratings-customize-options').hide();            
         }).trigger('change');
 
-
         $('[name="proofratings_overall_ratings_rectangle[shadow]"]').on('change', function(){
-            shadow_options = $('#badge-shadow-color, #badge-shadow-hover-color');
-    
+            generate_css()
+            shadow_options = $('#badge-shadow-color, #badge-shadow-hover-color');    
             if ( $(this).is(':checked') ) {
                 return shadow_options.show();
             }
     
-            shadow_options.hide();
-            
+            shadow_options.hide();            
         }).trigger('change');
+
+        $('[name="proofratings_overall_ratings_rectangle[star_color]"]').on('update', (e, star_color) => generate_css({star_color}))
+        $('[name="proofratings_overall_ratings_rectangle[shadow_color]"]').on('update', (e, shadow_color) => generate_css(shadow_color))
+        $('[name="proofratings_overall_ratings_rectangle[shadow_hover]"]').on('update', (e, shadow_hover) => generate_css(shadow_hover))
+        $('[name="proofratings_overall_ratings_rectangle[background_color]"]').on('update', (e, background_color) => generate_css({background_color}))
+        $('[name="proofratings_overall_ratings_rectangle[review_text_color]"]').on('update', (e, review_text_color) => generate_css({review_text_color}))
+        $('[name="proofratings_overall_ratings_rectangle[review_background]"]').on('update', (e, review_background) => generate_css({review_background}))
     }
 
     overall_ratings_rectangle();

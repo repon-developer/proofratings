@@ -295,6 +295,7 @@
 </table>
 
 <table class="form-table">
+	<caption>Page to show on</caption>
 	<?php foreach (get_pages() as $page) : ?>
 	<tr>
 		<th scope="row"><?php echo $page->post_title ?></th>
