@@ -86,8 +86,8 @@ class ProofRatings_Admin {
 		ob_start();
 
 		if ( $widget_settings['proofratings_font'] ) {
-			echo ".proofratings-widget, .proofratings-floating-badge {\n";
-				printf("\tfont-family: %s!important;\n", $widget_settings['proofratings_font']);
+			echo ":root {\n";
+				printf("\t--proofratingsFont: %s;\n", $widget_settings['proofratings_font']);
 			echo "}\n\n";
 		}
 

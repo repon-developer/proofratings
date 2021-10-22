@@ -134,6 +134,7 @@ class WP_ProofRatings_Settings {
 							<td>
 								<select name="proofratings_widget_settings[proofratings_font]">
 									<option value="Didact Gothic" <?php selected('Didact Gothic', $widget_settings['proofratings_font']) ?>><?php _e( 'Didact Gothic', 'proofratings') ?></option>
+									<option value="Avenir" <?php selected('Avenir', $widget_settings['proofratings_font']) ?>><?php _e( 'Avenir', 'proofratings') ?></option>
 								</select>
 							</td>
 						</tr>

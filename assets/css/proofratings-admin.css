@@ -212,3 +212,6 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 }
 
 .proofratings-banner-badge .proofratings-banner-close {display: none!important}
+
+.proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
+.proofratings-banner-badge .button-container {display: none}

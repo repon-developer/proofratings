@@ -1,3 +1,7 @@
+:root {
+    --proofratingsFont: "Didact Gothic";
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -171,7 +175,7 @@ html {
     border-radius: 10px;
     width: 200px;
     min-height: 185px;
-    font-family: "Didact Gothic"!important;
+    font-family: var(--proofratingsFont)!important;
     flex-direction: column;
     background-color: #fff;
     text-decoration: none!important;
@@ -398,7 +402,7 @@ html {
     --rating_text_color: #000;
     --review_rating_background_color: #f5f8ff;
 
-    font-family: "Didact Gothic"!important;
+    font-family: var(--proofratingsFont)!important;
     min-height: 90px;
     padding: 15px 20px;
     position: fixed;
