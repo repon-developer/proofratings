@@ -56,7 +56,7 @@
 
         keys.forEach(key => {
             if ( styles[key] ) {
-                properties.push(prefix + key + ':' + styles[key]);
+                properties.push(prefix + key + ':' + styles[key] + '!important');
             }
         })
 
@@ -330,6 +330,8 @@
             if (!$('[name="proofratings_overall_ratings_rectangle[float]"]:checked').length && !$('[name="proofratings_overall_ratings_rectangle[shadow]"]:checked').length) {
                 css_style += '.proofratings-badge.proofratings-badge-rectangle {--shadow_color: transparent; --shadow_hover: transparent}'
             }
+
+            console.log(css_style)
 
             proofratings_overall_rectangle_style.html(css_style)
         }
