@@ -247,8 +247,9 @@ html {
 
 .proofratings-widget.proofratings-widget-rectangle .rating-title {
     font-size: 16px;
-    letter-spacing:0.05em;
     margin-bottom: 8px;
+    font-family: inherit;
+    letter-spacing:0.05em;
 }
 
 .proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {
