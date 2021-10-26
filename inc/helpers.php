@@ -162,7 +162,7 @@ function get_proofratings_settings() {
             'theme_color' => '#fbcb38',
             'name' => __('Solar Tribune', 'proofratings'),
             'title' => __('Solar Tribune Review Settings', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune.png',
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solartribune.png',
             'rating_title' => __('Solar Tribune Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solartribune-black.svg',
