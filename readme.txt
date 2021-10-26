@@ -68,6 +68,9 @@ This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" ta
 
 
 == Changelog ==
+= 1.0.4 =
+* Update Interface
+* Update images
 
 = 1.0.3 =
 * Add Banner Badge
