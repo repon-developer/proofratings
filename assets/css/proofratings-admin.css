@@ -215,3 +215,6 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
 .proofratings-banner-badge .button-container {display: none}
+
+
+.proofratings-review-widgets-grid > *:nth-child(n+5) {display: none}
