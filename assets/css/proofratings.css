@@ -491,7 +491,7 @@ html {
 
 .proofratings-banner-badge .proofratings-button {
     color: #fff;
-    width: 140px;
+    min-width: 140px;
     height: 48px;
     text-align: center;
     font-size: 16px;
