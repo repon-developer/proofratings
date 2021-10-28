@@ -218,3 +218,15 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 
 .proofratings-review-widgets-grid > *:nth-child(n+5) {display: none}
+
+.proofratings-badges-popup {
+    opacity: 1;
+    position: static;
+    visibility: visible;
+    display: inline-block;
+    transform: translate(0);
+}
+
+.proofratings-badges-popup .proofrating-close {display: none;}
+
+.proofratings-popup-widgets-box > * {box-sizing: border-box;}

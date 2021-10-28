@@ -46,7 +46,7 @@ class ProofRatings_Shortcodes {
 		$this->reviews = Proofratings_Review::instance();
 		
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
-		add_shortcode('proofratings_floating_widgets', [$this, 'proofratings_floating_widgets']);
+		add_shortcode('proofratings_popup_widgets', [$this, 'proofratings_popup_widgets']);
 
         add_shortcode('proofratings_overall_ratings', [$this, 'proofratings_overall_ratings']);
         add_shortcode('proofratings_overall_ratings_cta_banner', [$this, 'overall_ratings_cta_banner']);
@@ -236,7 +236,7 @@ class ProofRatings_Shortcodes {
 	/**
 	 * Floating widgets shortcode
 	 */
-	public function proofratings_floating_widgets($atts, $content = null) {
+	public function proofratings_popup_widgets($atts, $content = null) {
 		$review_sites = $this->get_active_review_sites();
         if ( !$review_sites ) {
             return;
@@ -254,8 +254,8 @@ class ProofRatings_Shortcodes {
 
         ob_start(); 
 		
-        printf('<div id="proofratings-floating-embed">');
-			printf ('<div class="proofratings-floating-widgets-box" data-column="%d">', $column);
+        printf('<div class="proofratings-badges-popup">');
+			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
 				$attribue= '';

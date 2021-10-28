@@ -3,7 +3,7 @@
         $(this).addClass('opened');
     })
 
-    $('#proofratings-floating-embed .proofrating-close').on('click', function () {
+    $('.proofratings-badges-popup .proofrating-close').on('click', function () {
         $('.proofratings-badge').removeClass('opened');
     })
 

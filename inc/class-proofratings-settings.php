@@ -122,6 +122,7 @@ class WP_ProofRatings_Settings {
 
 					<a href="#settings-badge-square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
 					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
+					<a href="#settings-badge-popup" class="nav-tab" style="display:none"><?php _e('Popup Badges', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-narrow" class="nav-tab" style="display:none"><?php _e('Overall Rating (Narrow)', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-cta-banner" class="nav-tab" style="display:none"><?php _e('Overall Rating (CTA Banner)', 'proofratings'); ?></a>
@@ -183,6 +184,19 @@ class WP_ProofRatings_Settings {
 						</tr>
 
 						<tr>
+							<th scope="row" style="vertical-align:middle"><?php _e('Popup Badges', 'proofratings') ?></th>
+							<td>
+								<div class="proofratings-image-option">
+									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/popup-badge.png" alt="Proofratings style">
+									<label data-tab-button="#settings-badge-popup">
+										<input name="proofratings_display_badge[popup]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['popup'] ) ?>>
+										<?php _e('Popup', 'proofratings') ?>
+									</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
 							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating (Rectangle)', 'proofratings') ?></th>
 							<td>
 								<div class="proofratings-image-option">
@@ -229,6 +243,10 @@ class WP_ProofRatings_Settings {
 
 				<div id="settings-badge-rectangle" class="settings_panel" style="display:none">
 					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-rectangle.php' ?>
+				</div>
+
+				<div id="settings-badge-popup" class="settings_panel" style="display:none">
+					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-popup.php' ?>
 				</div>
 
 				<div id="settings-overall-ratings-rectangle" class="settings_panel" style="display:none">
