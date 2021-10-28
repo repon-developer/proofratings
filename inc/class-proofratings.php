@@ -158,7 +158,7 @@ class Wordpress_Proofratings {
 
 		if ($has_page ) {
 			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
-			echo do_shortcode('[proofratings_popup_widgets]' );
+			echo do_shortcode('[proofratings_badges_popup]' );
 		}
 	}
 
@@ -181,7 +181,7 @@ class Wordpress_Proofratings {
 
 		if ($has_page ) {
 			echo do_shortcode('[proofratings_overall_ratings type="narrow" float="yes"]' );
-			echo do_shortcode('[proofratings_popup_widgets]' );
+			echo do_shortcode('[proofratings_badges_popup]' );
 		}
 	}
 

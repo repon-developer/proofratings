@@ -6,7 +6,7 @@
 			<p class="description" style="font-weight: normal">Use shortcode where you want to display review widgets</p>
 		</th>
 		<td>
-			<code class="shortocde-area">[proofratings_popup_widgets]</code>
+			<code class="shortocde-area">[proofratings_badges_popup]</code>
 		</td>
 	</tr>
 </table>
@@ -16,7 +16,7 @@
 
 <div id="square-badge-customize">
 <?php
-	echo do_shortcode( '[proofratings_popup_widgets]');  ?>
+	echo do_shortcode( '[proofratings_badges_popup]');  ?>
 
 	<table class="form-table">
 		<tr>
