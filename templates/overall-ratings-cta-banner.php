@@ -308,9 +308,9 @@
 		<td>	
 		<?php
 			$checked = !isset($cta_banner->pages[$page->ID]) || $cta_banner->pages[$page->ID] == 'yes'? 'checked' : '';
-			printf('<input name="proofratings_overall_ratings_cta_banner[on_pages][%s]" value="no" type="hidden">', $page->ID);
+			printf('<input name="proofratings_overall_ratings_cta_banner[pages][%s]" value="no" type="hidden">', $page->ID);
 			printf(
-				'<label><input class="checkbox-switch" name="proofratings_overall_ratings_cta_banner[on_pages][%s]" value="yes" %s type="checkbox"></label>',
+				'<label><input class="checkbox-switch" name="proofratings_overall_ratings_cta_banner[pages][%s]" value="yes" %s type="checkbox"></label>',
 				$page->ID, $checked
 			);
 		?>
