@@ -185,6 +185,28 @@ class ProofRatings_Admin {
 			}
 		}
 
+		$badges_popup = get_proofratings_badges_popup();
+		if ( $badges_popup->customize == 'yes' ) {
+			echo ".proofratings-badges-popup .proofratings-widget {\n";
+				if ( $badges_popup->star_color ) {
+					printf("\t--themeColor: %s;\n", $badges_popup->star_color);
+				}
+
+				if ( $badges_popup->text_color ) {
+					printf("\t--reviewCountTextColor: %s;\n", $badges_popup->reviewCountTextColor);
+				}
+
+				if ( $badges_popup->review_text_background ) {
+					printf("\t--review_text_background: %s;\n", $badges_popup->review_text_background);
+				}
+
+				if ( $badges_popup->view_review_color ) {
+					printf("\t--view_review_color: %s;\n", $badges_popup->view_review_color);
+				}
+
+			echo "}\n\n";
+		}
+
 		$banner_badge = get_proofratings_overall_ratings_cta_banner();
 
 		if ($banner_badge->customize == 'yes' ) {

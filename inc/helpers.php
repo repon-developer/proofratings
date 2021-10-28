@@ -343,6 +343,14 @@ function get_proofratings_badges_rectangle() {
 }
 
 /**
+ * get popup badges settings
+ * @since  1.0.4
+ */
+function get_proofratings_badges_popup() {
+    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_popup'), ['customize' => 'no']));
+}
+
+/**
  * get overall rectangle settings
  * @since  1.0.4
  */

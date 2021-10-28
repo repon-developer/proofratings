@@ -222,6 +222,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 .proofratings-badges-popup {
     opacity: 1;
     position: static;
+    pointer-events: all;
     visibility: visible;
     display: inline-block;
     transform: translate(0);

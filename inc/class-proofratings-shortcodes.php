@@ -252,6 +252,13 @@ class ProofRatings_Shortcodes {
 			$column = count($review_sites);
 		}
 
+		$badges_popup = get_proofratings_badges_popup();
+
+		$classes = '';
+		if ( $badges_popup->customize == 'yes' ) {
+			$classes = 'proofratings-widget-customized';
+		}
+
         ob_start(); 
 		
         printf('<div class="proofratings-badges-popup">');
@@ -265,7 +272,7 @@ class ProofRatings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s" %s>', $tag, $key, $attribue);
+				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s>', $tag, $key, $classes, $attribue);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
 					echo '<div class="proofratings-reviews" itemprop="reviewRating">';

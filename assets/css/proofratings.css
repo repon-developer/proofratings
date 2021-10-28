@@ -214,11 +214,12 @@ html {
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
-    background-color: var(--themeColor, #0f7ff3);
+    background-color: var(--review_text_background, var(--themeColor, #0f7ff3));
     border-radius: 2px;
 }
 
 .proofratings-widget .view-reviews {
+    color: var(--view_review_color, inherit);
     font-size: 12px;
     margin-top: 8px;
     letter-spacing: 1px;

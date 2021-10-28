@@ -301,6 +301,55 @@
 
     rectangle_badge_tab();
 
+    const Badges_Popup = () => {
+        popup_badge_style = $('style#proofratings-badges-popup');
+        if ( !popup_badge_style.length ) {
+            popup_badge_style = $('<style id="proofratings-badges-popup" />').appendTo('body')
+        }
+
+        let badges_style = {
+            'themeColor': $('[name="proofratings_badges_popup[star_color]"]').val(),
+            'reviewCountTextColor': $('[name="proofratings_badges_popup[review_text_color]"]').val(),
+            'review_text_background': $('[name="proofratings_badges_popup[review_text_background]"]').val(),
+            'view_review_color': $('[name="proofratings_badges_popup[view_review_color]"]').val(),
+        };
+
+        function generate_css(object = {}) {
+            badges_style = {...badges_style, ...object};
+            css_style = '.proofratings-popup-widgets-box .proofratings-widget {' + generate_css_style(badges_style, [
+                'themeColor', 'reviewCountTextColor', 'review_text_background', 'view_review_color'
+            ]) + '}';
+
+            popup_badge_style.html(css_style)
+        }
+
+        generate_css();
+
+        $('[name="proofratings_badges_popup[star_color]"]').on('update', (e, themeColor) => generate_css({themeColor}))
+        $('[name="proofratings_badges_popup[review_text_color]"]').on('update', (e, reviewCountTextColor) => generate_css({reviewCountTextColor}))
+        $('[name="proofratings_badges_popup[review_text_background]"]').on('update', (e, review_text_background) => generate_css({review_text_background}))
+        $('[name="proofratings_badges_popup[view_review_color]"]').on('update', (e, view_review_color) => generate_css({view_review_color}))
+
+
+        $('[name="proofratings_badges_popup[customize]"]').on('change', function(){            
+            targeted = $('#popup-badge-customize');
+            if ( $(this).is(':checked') ) {
+                return targeted.show();
+            }
+            targeted.hide();
+        }).trigger('change')
+    }
+
+    Badges_Popup();
+
+
+
+
+
+
+
+
+
 
     function overall_ratings_rectangle() {
         $('.proofratings-badge.proofratings-badge-rectangle').attr('style', '')

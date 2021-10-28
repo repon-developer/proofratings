@@ -58,6 +58,7 @@ class WP_ProofRatings_Settings {
 		//Widget settings
 		register_setting( $this->settings_group, 'proofratings_badges_square' );
 		register_setting( $this->settings_group, 'proofratings_badges_rectangle' );
+		register_setting( $this->settings_group, 'proofratings_badges_popup' );
 
 		//settings for overall ratings		
 		register_setting( $this->settings_group, 'proofratings_overall_ratings_rectangle' );
