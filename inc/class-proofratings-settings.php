@@ -90,6 +90,39 @@ class WP_ProofRatings_Settings {
 			<div id="proofratings-activation-tab" class="settings_panel">
 				<h3><?php _e('Please wait while we activate and connect your account.', 'proofratings') ?></h3>
 				<p>If you do not have a Prooratings account, please register to activate your plugin at <a href="https://proofratings.com/sign-up" target="_blank">proofratings.com/sign-up</a></p>
+
+				<form method="POST">
+
+					<table class="form-table">
+						<tr>
+							<th scope="row"><?php _e('Name', 'proofratings') ?></th>
+							<td>
+								<input type="text" placeholder="<?php _e('First name', 'proofratings') ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Company', 'proofratings') ?></th>
+							<td>
+								<input type="text" placeholder="<?php _e('Company name', 'proofratings') ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Email', 'proofratings') ?></th>
+							<td>
+								<input type="email" placeholder="<?php _e('Email', 'proofratings') ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"><?php _e('Phone', 'proofratings') ?></th>
+							<td>
+								<input type="text">
+							</td>
+						</tr>
+					</table>
+				</form>
 			</div>
 		</div>
 		<?php
