@@ -185,19 +185,6 @@ class WP_ProofRatings_Settings {
 						</tr>
 
 						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Popup Badges', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-image-option">
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/popup-badge.png" alt="Proofratings style">
-									<label data-tab-button="#settings-badge-popup">
-										<input name="proofratings_display_badge[popup]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['popup'] ) ?>>
-										<?php _e('Popup', 'proofratings') ?>
-									</label>
-								</div>
-							</td>
-						</tr>
-
-						<tr>
 							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating (Rectangle)', 'proofratings') ?></th>
 							<td>
 								<div class="proofratings-image-option">

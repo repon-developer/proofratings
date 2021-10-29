@@ -40,6 +40,7 @@
     $('[data-tab-button] > input').on('change', function(){
         button = $(this).parent().data('tab-button');
         current_button = nav_buttons.filter(`[href="${button}"]`).show();
+
         if ( !current_button.length ) {
             return;
         }
@@ -50,6 +51,16 @@
 
         current_button.hide();
     }).trigger('change')
+    
+    $('[name="proofratings_display_badge[overall_ratings_rectangle]"], [name="proofratings_display_badge[overall_ratings_narrow]"]').on('change', function(){
+        popup_button = nav_buttons.filter(`[href="#settings-badge-popup"]`).show();
+        if ( $('[name="proofratings_display_badge[overall_ratings_rectangle]"]').is(':checked') || $('[name="proofratings_display_badge[overall_ratings_narrow]"]').is(':checked') ) {
+            return popup_button.show();
+        }
+
+        popup_button.hide();
+    }).trigger('change')
+
 
     const generate_css_style = (styles, keys = [], prefix = '--') => {
         properties = new Array();

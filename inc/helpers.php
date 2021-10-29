@@ -312,7 +312,6 @@ function get_proofratings_display_settings() {
     return wp_parse_args(get_option( 'proofratings_display_badge'), [
         'square' => 'no',
         'rectangle' => 'no',
-        'popup' => 'no',
         'overall_ratings_rectangle' => 'no',
         'overall_ratings_narrow' => 'no',
         'overall_ratings_cta_banner' => 'no',
