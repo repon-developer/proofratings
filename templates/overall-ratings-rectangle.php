@@ -81,6 +81,13 @@
 			</td>
 		</tr>
 
+		<tr>
+			<th scope="row"><?php _e('Rating Color', 'proofratings') ?></th>
+			<td>
+				<input class="proofratings-color-field" type="text" name="proofratings_overall_ratings_rectangle[rating_color]" value="<?php esc_attr_e($overall_rectangle->rating_color) ?>">
+			</td>
+		</tr>
+
 		<tr id="badge-hide-shadow">
 			<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
 			<td>

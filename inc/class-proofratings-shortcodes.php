@@ -155,30 +155,8 @@ class ProofRatings_Shortcodes {
 			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
 		}
 
-		
-		$styles = [];
-		$supported_keys = ['star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'];
-
-		if ( $badget_settings->shadow == 'no') {
-			$badget_settings->shadow_color = $badget_settings->shadow_hover = 'transparent';
-		}
-
-		array_walk($supported_keys, function($key) use (&$styles, $badget_settings) {
-			if ( $badget_settings->customize != 'yes') {
-				return;
-			}
-
-			if ( !empty($badget_settings->$key)) {
-				$styles[$key] = $badget_settings->$key;
-			}
-		});
-
-		$styles = array_map(function($item, $key){
-			return "--$key:$item";
-		}, $styles, array_keys($styles));
-
         ob_start();
-        printf('<%s %s class="%s" style="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), implode(';', $styles));
+        printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
 			if ( @$badget_settings->close_button != 'no' && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}

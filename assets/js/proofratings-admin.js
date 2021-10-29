@@ -343,14 +343,6 @@
     Badges_Popup();
 
 
-
-
-
-
-
-
-
-
     function overall_ratings_rectangle() {
         $('.proofratings-badge.proofratings-badge-rectangle').attr('style', '')
 
@@ -361,6 +353,7 @@
 
         let ovarall_rectangle_css = {
             'star_color': $('[name="proofratings_overall_ratings_rectangle[star_color]"]').val(),
+            'rating_color': $('[name="proofratings_overall_ratings_rectangle[rating_color]"]').val(),
             'shadow_color': $('[name="proofratings_overall_ratings_rectangle[shadow_color]"]').val(),
             'shadow_hover': $('[name="proofratings_overall_ratings_rectangle[shadow_hover]"]').val(),
             'background_color': $('[name="proofratings_overall_ratings_rectangle[background_color]"]').val(),
@@ -372,7 +365,7 @@
             ovarall_rectangle_css = {...ovarall_rectangle_css, ...object};
 
             css_style = '.proofratings-badge.proofratings-badge-rectangle {' + generate_css_style(ovarall_rectangle_css, [
-                'star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'
+                'star_color', 'rating_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'
             ], '--') + '}';
 
             if (!$('[name="proofratings_overall_ratings_rectangle[float]"]:checked').length && !$('[name="proofratings_overall_ratings_rectangle[shadow]"]:checked').length) {
@@ -415,6 +408,7 @@
         }).trigger('change');
 
         $('[name="proofratings_overall_ratings_rectangle[star_color]"]').on('update', (e, star_color) => generate_css({star_color}))
+        $('[name="proofratings_overall_ratings_rectangle[rating_color]"]').on('update', (e, rating_color) => generate_css({rating_color}))
         $('[name="proofratings_overall_ratings_rectangle[shadow_color]"]').on('update', (e, shadow_color) => generate_css({shadow_color}))
         $('[name="proofratings_overall_ratings_rectangle[shadow_hover]"]').on('update', (e, shadow_hover) => generate_css({shadow_hover}))
         $('[name="proofratings_overall_ratings_rectangle[background_color]"]').on('update', (e, background_color) => generate_css({background_color}))
@@ -435,6 +429,7 @@
 
         let ovarall_narrow_css = {
             'star_color': $('[name="proofratings_overall_ratings_narrow[star_color]"]').val(),
+            'rating_color': $('[name="proofratings_overall_ratings_narrow[rating_color]"]').val(),
             'shadow_color': $('[name="proofratings_overall_ratings_narrow[shadow_color]"]').val(),
             'shadow_hover': $('[name="proofratings_overall_ratings_narrow[shadow_hover]"]').val(),
             'background_color': $('[name="proofratings_overall_ratings_narrow[background_color]"]').val(),
@@ -446,7 +441,7 @@
             ovarall_narrow_css = {...ovarall_narrow_css, ...object};
 
             css_style = '.proofratings-badge.proofratings-badge-narrow {' + generate_css_style(ovarall_narrow_css, [
-                'star_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'
+                'star_color', 'rating_color', 'shadow_color', 'shadow_hover', 'background_color', 'review_text_color', 'review_background'
             ], '--') + '}';
 
             if (!$('[name="proofratings_overall_ratings_narrow[float]"]:checked').length && !$('[name="proofratings_overall_ratings_narrow[shadow]"]:checked').length) {
@@ -457,6 +452,7 @@
         }
 
         $('[name="proofratings_overall_ratings_narrow[star_color]"]').on('update', (e, star_color) => generate_css({star_color}))
+        $('[name="proofratings_overall_ratings_narrow[rating_color]"]').on('update', (e, rating_color) => generate_css({rating_color}))
         $('[name="proofratings_overall_ratings_narrow[shadow_color]"]').on('update', (e, shadow_color) => generate_css({shadow_color}))
         $('[name="proofratings_overall_ratings_narrow[shadow_hover]"]').on('update', (e, shadow_hover) => generate_css({shadow_hover}))
         $('[name="proofratings_overall_ratings_narrow[background_color]"]').on('update', (e, background_color) => generate_css({background_color}))

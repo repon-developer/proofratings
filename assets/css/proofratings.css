@@ -30,7 +30,7 @@ html {
 
 .proofratings-badge .proofratings-inner {padding: 15px var(--padx) 10px}
 
-.proofratings-badge .proofratings-score {font-size: 18px}
+.proofratings-badge .proofratings-score {color: var(--rating_color, inherit); font-size: 18px}
 
 .proofratings-badge .proofratings-close {
     --size: 22px;
@@ -40,7 +40,7 @@ html {
     width: var(--size);
     height: var(--size);
     text-align: center;
-    line-height: 0.9;
+    line-height: 1em;
     border-radius: 100px;
     position: absolute;
     z-index: 56;
@@ -118,6 +118,10 @@ html {
     left: 30px;
     bottom: 30px;
     z-index: 150001;
+}
+
+.proofratings-badge.badge-float:hover {
+    z-index: 8888888888888888;
 }
 
 .proofratings-badge.badge-float.right {

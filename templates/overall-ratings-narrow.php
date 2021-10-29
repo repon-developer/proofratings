@@ -86,6 +86,13 @@
 			</td>
 		</tr>
 
+		<tr>
+			<th scope="row"><?php _e('Rating Color', 'proofratings') ?></th>
+			<td>
+				<input class="proofratings-color-field" type="text" name="proofratings_overall_ratings_narrow[rating_color]" value="<?php esc_attr_e($narrow_ratings->rating_color) ?>">
+			</td>
+		</tr>
+
 		<tr id="overall-ratings-shadow">
 			<th scope="row"><?php _e('Shadow', 'proofratings') ?></th>
 			<td>

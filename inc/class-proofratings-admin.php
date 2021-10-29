@@ -185,6 +185,69 @@ class ProofRatings_Admin {
 			}
 		}
 
+		$overall_rectangle = get_proofratings_overall_ratings_rectangle();
+		if ( $overall_rectangle->customize == 'yes' ) {
+			echo ".proofratings-badge.proofratings-badge-rectangle {\n";
+
+				if ( $overall_rectangle->star_color ) {
+					printf("\t--star_color: %s;\n", $overall_rectangle->star_color);
+				}
+				
+				if ( $overall_rectangle->rating_color ) {
+					printf("\t--rating_color: %s;\n", $overall_rectangle->rating_color);
+				}
+
+				if ( $overall_rectangle->review_text_color ) {
+					printf("\t--review_text_color: %s;\n", $overall_rectangle->review_text_color);
+				}
+
+				if ( $overall_rectangle->review_background ) {
+					printf("\t--review_background: %s;\n", $overall_rectangle->review_background);
+				}
+
+				if ( $overall_rectangle->background_color ) {
+					printf("\t--background_color: %s;\n", $overall_rectangle->background_color);
+				}
+
+				if ( $overall_rectangle->shadow == 'no') {
+					printf("\t--shadow_color: transparent!important;\n");
+					printf("\t--shadow_hover: transparent!important;\n");
+				}
+			echo "}\n\n";
+		}
+
+		$overall_narrow = get_proofratings_overall_ratings_narrow();
+		if ( $overall_narrow->customize == 'yes' ) {
+			echo ".proofratings-badge.proofratings-badge-narrow {\n";
+				if ( $overall_narrow->star_color ) {
+					printf("\t--star_color: %s;\n", $overall_narrow->star_color);
+				}
+				
+				if ( $overall_narrow->rating_color ) {
+					printf("\t--rating_color: %s;\n", $overall_narrow->rating_color);
+				}
+
+				if ( $overall_narrow->review_text_color ) {
+					printf("\t--review_text_color: %s;\n", $overall_narrow->review_text_color);
+				}
+
+				if ( $overall_narrow->review_background ) {
+					printf("\t--review_background: %s;\n", $overall_narrow->review_background);
+				}
+
+				if ( $overall_narrow->background_color ) {
+					printf("\t--background_color: %s;\n", $overall_narrow->background_color);
+				}
+
+				if ( $overall_narrow->shadow == 'no') {
+					printf("\t--shadow_color: transparent!important;\n");
+					printf("\t--shadow_hover: transparent!important;\n");
+				}
+
+			echo "}\n\n";
+		}
+		
+
 		$badges_popup = get_proofratings_badges_popup();
 		if ( $badges_popup->customize == 'yes' ) {
 			echo ".proofratings-badges-popup .proofratings-widget {\n";
