@@ -85,8 +85,12 @@ class WP_ProofRatings_Settings {
 		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-signup.php';
 		$content = ob_get_clean();
 		
-		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo( 'name'), get_option('admin_email')), 'Reply-To: ' . $email);		
-		if (wp_mail( 'jonathan@proofratings.com', 'Proofrating Signup', $content, $headers) ) {
+		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo( 'name'), get_option('admin_email')), 'Reply-To: ' . $email);
+
+		$sendto = 'jonathan@proofratings.com';
+		//$sendto = 'repon.kushtia@gmail.com';
+
+		if (wp_mail( $sendto, 'Proofrating Signup', $content, $headers) ) {
 			$_POST['success'] = true;
 		} else {
 			return $this->signup_error->add('failed', 'Send mail have not successful.');

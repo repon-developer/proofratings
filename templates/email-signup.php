@@ -16,14 +16,16 @@
 
         <tr>
             <td align="center"
-                style="font-size:14px;font-weight:700;line-height:150%;color:rgb(64,34,254);text-align:center; padding-bottom: 40px">
-                Proofratings Account</td>
+                style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center">
+                I want to use your service. Please activate my application.</td>
         </tr>
 
         <tr>
-            <td align="center"
-                style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center">
-                I want to use your service. Please activate my application.</td>
+            <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Phone:</strong> <?php echo $phone ?></td>
+        </tr>
+
+        <tr>
+            <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Website:</strong> <?php echo home_url() ?></td>
         </tr>
     </tbody>
 </table>
