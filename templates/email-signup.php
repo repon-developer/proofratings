@@ -27,5 +27,9 @@
         <tr>
             <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Website:</strong> <?php echo home_url() ?></td>
         </tr>
+
+        <tr>
+            <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Company:</strong> <?php echo @$postdata['company'] ?></td>
+        </tr>
     </tbody>
 </table>
