@@ -37,12 +37,60 @@ class WP_ProofRatings_Settings {
 	}
 
 
+	var $signup_error;
+
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
+		$this->signup_error = new WP_Error;
+
 		$this->settings_group = 'proofratings';
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
+		add_action( 'init', [$this, 'handle_signup_form'] );
+	}
+
+	public function handle_signup_form() {
+		if ( !isset($_POST['_nonce']) ) {
+			return;
+		}
+
+		if ( !wp_verify_nonce( $_POST['_nonce'], 'proofratings_signup_nonce')) {
+			return;
+		}
+
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		$name = @$postdata['name'];
+		if ( strlen($name) <= 3) {
+			return $this->signup_error->add('name', 'Name should be more than 3 characters.');
+		}
+
+		$email = sanitize_email( $postdata['email'] );
+		if ( empty($email)) {
+			return $this->signup_error->add('email', 'Please fill email field with correct value.');
+		}
+
+		$phone = @$postdata['phone'];
+		if ( empty($phone)) {
+			return $this->signup_error->add('phone', 'Please fill phone no field.');
+		}
+
+		$_POST['name'] = '';
+		$_POST['company'] = '';
+		$_POST['email'] = '';
+		$_POST['phone'] = '';
+
+		ob_start();
+		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-signup.php';
+		$content = ob_get_clean();
+		
+		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo( 'name'), get_option('admin_email')), 'Reply-To: ' . $email);		
+		if (wp_mail( 'jonathan@proofratings.com', 'Proofrating Signup', $content, $headers) ) {
+			$_POST['success'] = true;
+		} else {
+			return $this->signup_error->add('failed', 'Send mail have not successful.');
+		};
 	}
 
 	/**
@@ -92,33 +140,54 @@ class WP_ProofRatings_Settings {
 				<p>If you do not have a Prooratings account, please register to activate your plugin at <a href="https://proofratings.com/sign-up" target="_blank">proofratings.com/sign-up</a></p>
 
 				<form method="POST">
+					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
+					if( $this->signup_error->has_errors() ) {
+						echo '<div class="notice notice-error settings-error is-dismissible">';
+							echo '<p><strong>'.$this->signup_error->get_error_message().'</strong></p>';
+						echo '</div>';
+					}
+
+					if( @$_POST['success'] === true ) {
+						echo '<div  class="notice notice-success settings-error is-dismissible">';
+							echo '<p><strong>' . __('Successfully sent message', 'proofratings') . '</strong></p>';
+						echo '</div>';
+					}
+					
+					?>
 
 					<table class="form-table">
 						<tr>
-							<th scope="row"><?php _e('Name', 'proofratings') ?></th>
+							<th scope="row"><?php _e('Name', 'proofratings') ?>*</th>
 							<td>
-								<input type="text" placeholder="<?php _e('First name', 'proofratings') ?>">
+								<input name="name" type="text" placeholder="<?php _e('Name', 'proofratings') ?>" value="<?php echo @$_POST['name'] ?>">
 							</td>
 						</tr>
 
 						<tr>
 							<th scope="row"><?php _e('Company', 'proofratings') ?></th>
 							<td>
-								<input type="text" placeholder="<?php _e('Company name', 'proofratings') ?>">
+								<input name="company" type="text" placeholder="<?php _e('Company name', 'proofratings') ?>" value="<?php echo @$_POST['company'] ?>">
 							</td>
 						</tr>
 
 						<tr>
-							<th scope="row"><?php _e('Email', 'proofratings') ?></th>
+							<th scope="row"><?php _e('Email', 'proofratings') ?>*</th>
 							<td>
-								<input type="email" placeholder="<?php _e('Email', 'proofratings') ?>">
+								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo @$_POST['email'] ?>">
 							</td>
 						</tr>
 
 						<tr>
-							<th scope="row"><?php _e('Phone', 'proofratings') ?></th>
+							<th scope="row"><?php _e('Phone', 'proofratings') ?>*</th>
 							<td>
-								<input type="text">
+								<input name="phone" type="text" placeholder="<?php _e('Phone no', 'proofratings') ?>" value="<?php echo @$_POST['phone'] ?>">
+							</td>
+						</tr>
+
+						<tr>
+							<th scope="row"></th>
+							<td>
+								<button class="button-primary">Sign up</button>
 							</td>
 						</tr>
 					</table>
