@@ -15,9 +15,11 @@
         </tr>
 
         <tr>
-            <td align="center"
-                style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center">
-                I want to use your service. Please activate my application.</td>
+            <td align="center" style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center">You have a new request to register for the Wordpress plugin.</td>
+        </tr>
+
+        <tr>
+            <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Name:</strong> <?php echo $name ?></td>
         </tr>
 
         <tr>
@@ -30,10 +32,6 @@
 
         <tr>
             <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Website:</strong> <?php echo home_url() ?></td>
-        </tr>
-
-        <tr>
-            <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Company:</strong> <?php echo @$postdata['company'] ?></td>
         </tr>
     </tbody>
 </table>
