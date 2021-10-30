@@ -90,7 +90,7 @@ class WP_ProofRatings_Settings {
 		$sendto = 'jonathan@proofratings.com';
 		//$sendto = 'repon.kushtia@gmail.com';
 		
-		if (!wp_mail( $sendto, 'Proofrating Signup', $content, $headers) ) {
+		if (!wp_mail( $sendto, 'New Account Signup Request', $content, $headers) ) {
 			return $this->signup_error->add('failed', 'Send mail have not successful.');
 		}
 		
