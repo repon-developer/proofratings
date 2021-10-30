@@ -89,12 +89,13 @@ class WP_ProofRatings_Settings {
 
 		$sendto = 'jonathan@proofratings.com';
 		//$sendto = 'repon.kushtia@gmail.com';
-
-		if (wp_mail( $sendto, 'Proofrating Signup', $content, $headers) ) {
-			$_POST['success'] = true;
-		} else {
+		
+		if (!wp_mail( $sendto, 'Proofrating Signup', $content, $headers) ) {
 			return $this->signup_error->add('failed', 'Send mail have not successful.');
-		};
+		}
+		
+		WP_ProofRatings()->activate();
+		$_POST['success'] = true;
 	}
 
 	/**
@@ -125,23 +126,14 @@ class WP_ProofRatings_Settings {
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
-			<?php
-			$proofratings_status = get_proofratings_current_status();
-				if ( !$proofratings_status || 'not_registered' == $proofratings_status->status ) {
-					echo '<div class="proofratings-status">';
-					printf('<p>You have not registered your site. For register, we will collect your website name, admin email, and domain. <a href="%s">Register now</a></p>', add_query_arg(['_regsiter_nonce' => wp_create_nonce( 'register_proofratings' )], menu_page_url('proofratings', false)) );
-					echo '</div>';
-
-				}
-			?>
-
 			<h2 class="nav-tab-wrapper">
 				<a href="#proofratings-activation-tab" class="nav-tab"><?php _e('Activation', 'proofratings'); ?></a>
 			</h2>
 
 			<div id="proofratings-activation-tab" class="settings_panel">
 				<h3><?php _e('Please wait while we activate and connect your account.', 'proofratings') ?></h3>
-				<p>If you do not have a Prooratings account, please register to activate your plugin at <a href="https://proofratings.com/sign-up" target="_blank">proofratings.com/sign-up</a></p>
+
+				<p>If you do not have a Proofratings account, please register below to begin activation.</p>
 
 				<form method="POST">
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
@@ -184,14 +176,14 @@ class WP_ProofRatings_Settings {
 						<tr>
 							<th scope="row"><?php _e('Phone', 'proofratings') ?>*</th>
 							<td>
-								<input name="phone" type="text" placeholder="<?php _e('Phone no', 'proofratings') ?>" value="<?php echo @$_POST['phone'] ?>">
+								<input name="phone" type="text" placeholder="<?php _e('Phone', 'proofratings') ?>" value="<?php echo @$_POST['phone'] ?>">
 							</td>
 						</tr>
 
 						<tr>
 							<th scope="row"></th>
 							<td>
-								<button class="button-primary">Sign up</button>
+								<button class="button-primary"><?php _e('Register', 'proofratings') ?></button>
 							</td>
 						</tr>
 					</table>
@@ -200,6 +192,25 @@ class WP_ProofRatings_Settings {
 		</div>
 		<?php
 	}
+
+	/**
+	 * Shows the plugin's settings page.
+	 */
+	public function awaiting() {
+		?>
+		<div class="wrap proofratings-settings-wrap">
+			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
+			<hr class="wp-header-end">
+			<h2 class="nav-tab-wrapper">
+				<a href="#proofratings-activation-tab" class="nav-tab"><?php _e('Activation', 'proofratings'); ?></a>
+			</h2>
+
+			<div id="proofratings-activation-tab" class="settings_panel">
+				<h3><?php _e('Awaiting Activation...', 'proofratings') ?></h3>
+			</div>
+		</div>
+		<?php
+	}	
 
 	/**
 	 * Shows the plugin's settings page.

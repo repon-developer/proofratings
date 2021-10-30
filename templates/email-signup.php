@@ -21,6 +21,10 @@
         </tr>
 
         <tr>
+            <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Email:</strong> <?php echo $email ?></td>
+        </tr>
+
+        <tr>
             <td style="font-size:19px;line-height:150%;color:rgb(0,0,0);text-align:center"><strong>Phone:</strong> <?php echo $phone ?></td>
         </tr>
 

@@ -371,9 +371,14 @@ class ProofRatings_Admin {
 	 * Add menu page
 	 */
 	public function admin_menu() {
-		$setting_output = 'account_inactive_output';
 		
+		$setting_output = 'awaiting';
+
 		$proofratings_status = get_proofratings_current_status();
+		if ( !$proofratings_status || 'not_registered' == $proofratings_status->status) {
+			$setting_output = 'account_inactive_output';
+		}
+		
 		if (isset($proofratings_status->status) && $proofratings_status->status == 'active' ) {
 			$setting_output = 'output';
 		}
