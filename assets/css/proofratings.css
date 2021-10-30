@@ -210,6 +210,8 @@ html {
     background-color: var(--themeColor, #0f7ff3);
 }
 
+.proofratings-widget .proofratings-score {color: var(--rating_color, inherit)}
+
 .proofratings-widget .review-count {
     color: var(--reviewCountTextColor);
     line-height: 1.3;

@@ -267,6 +267,9 @@ class ProofRatings_Admin {
 					printf("\t--view_review_color: %s;\n", $badges_popup->view_review_color);
 				}
 
+				if ( $badges_popup->rating_color ) {
+					printf("\t--rating_color: %s;\n", $badges_popup->rating_color);
+				}
 			echo "}\n\n";
 		}
 

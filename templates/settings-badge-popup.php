@@ -31,6 +31,13 @@
 	</tr>
 
 	<tr>
+		<th scope="row"><?php _e('Rating Color', 'proofratings') ?></th>
+		<td>
+			<input class="proofratings-color-field" type="text" name="proofratings_badges_popup[rating_color]" value="<?php esc_attr_e($badges_popup->rating_color) ?>">
+		</td>
+	</tr>
+
+	<tr>
 		<th scope="row"><?php _e('View Review Color', 'proofratings') ?></th>
 		<td>
 			<input class="proofratings-color-field" type="text" name="proofratings_badges_popup[view_review_color]" value="<?php esc_attr_e($badges_popup->view_review_color) ?>">

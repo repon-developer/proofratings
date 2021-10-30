@@ -52,9 +52,20 @@
         current_button.hide();
     }).trigger('change')
     
-    $('[name="proofratings_display_badge[overall_ratings_rectangle]"], [name="proofratings_display_badge[overall_ratings_narrow]"]').on('change', function(){
+    $('[name="proofratings_display_badge[overall_ratings_rectangle]"], [name="proofratings_display_badge[overall_ratings_narrow]"], [name="proofratings_overall_ratings_rectangle[float]"], [name="proofratings_overall_ratings_narrow[float]"]').on('change', function(){
         popup_button = nav_buttons.filter(`[href="#settings-badge-popup"]`).show();
-        if ( $('[name="proofratings_display_badge[overall_ratings_rectangle]"]').is(':checked') || $('[name="proofratings_display_badge[overall_ratings_narrow]"]').is(':checked') ) {
+
+        popup_button_show = false;
+
+        if ( $('[name="proofratings_display_badge[overall_ratings_rectangle]"]').is(':checked') && $('[name="proofratings_overall_ratings_rectangle[float]"]').is(':checked') ) {
+            popup_button_show = true;
+        }
+
+        if ( $('[name="proofratings_display_badge[overall_ratings_narrow]"]').is(':checked') && $('[name="proofratings_overall_ratings_narrow[float]"]').is(':checked') ) {
+            popup_button_show = true;
+        }
+
+        if ( popup_button_show ) {
             return popup_button.show();
         }
 
@@ -322,13 +333,14 @@
             'themeColor': $('[name="proofratings_badges_popup[star_color]"]').val(),
             'reviewCountTextColor': $('[name="proofratings_badges_popup[review_text_color]"]').val(),
             'review_text_background': $('[name="proofratings_badges_popup[review_text_background]"]').val(),
+            'rating_color': $('[name="proofratings_badges_popup[rating_color]"]').val(),
             'view_review_color': $('[name="proofratings_badges_popup[view_review_color]"]').val(),
         };
 
         function generate_css(object = {}) {
             badges_style = {...badges_style, ...object};
             css_style = '.proofratings-popup-widgets-box .proofratings-widget {' + generate_css_style(badges_style, [
-                'themeColor', 'reviewCountTextColor', 'review_text_background', 'view_review_color'
+                'themeColor', 'reviewCountTextColor', 'review_text_background', 'rating_color', 'view_review_color'
             ]) + '}';
 
             popup_badge_style.html(css_style)
@@ -339,6 +351,7 @@
         $('[name="proofratings_badges_popup[star_color]"]').on('update', (e, themeColor) => generate_css({themeColor}))
         $('[name="proofratings_badges_popup[review_text_color]"]').on('update', (e, reviewCountTextColor) => generate_css({reviewCountTextColor}))
         $('[name="proofratings_badges_popup[review_text_background]"]').on('update', (e, review_text_background) => generate_css({review_text_background}))
+        $('[name="proofratings_badges_popup[rating_color]"]').on('update', (e, rating_color) => generate_css({rating_color}))
         $('[name="proofratings_badges_popup[view_review_color]"]').on('update', (e, view_review_color) => generate_css({view_review_color}))
 
 

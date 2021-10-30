@@ -240,9 +240,9 @@ class WP_ProofRatings_Settings {
 
 					<a href="#settings-badge-square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
 					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
-					<a href="#settings-badge-popup" class="nav-tab" style="display:none"><?php _e('Popup Badges', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-narrow" class="nav-tab" style="display:none"><?php _e('Overall Rating (Narrow)', 'proofratings'); ?></a>
+					<a href="#settings-badge-popup" class="nav-tab" style="display:none"><?php _e('Popup Badges', 'proofratings'); ?></a>
 					<a href="#settings-overall-ratings-cta-banner" class="nav-tab" style="display:none"><?php _e('Overall Rating (CTA Banner)', 'proofratings'); ?></a>
 				</h2>
 
