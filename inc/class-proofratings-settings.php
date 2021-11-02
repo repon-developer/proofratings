@@ -134,7 +134,7 @@ class WP_ProofRatings_Settings {
 				<h3><?php _e('Please wait while we activate and connect your account.', 'proofratings') ?></h3>
 
 				<p>If you do not have a Proofratings account, please register below to begin activation.</p>
-				<p style="font-style:italic">Plans start at $600/year</p>
+				<p style="font-style:italic">Plans are only $249/year.</p>
 
 				<form method="POST">
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
