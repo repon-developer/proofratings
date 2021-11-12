@@ -1,4 +1,4 @@
-=== Proofratings ===
+=== Proofratings (Pro Plan) ===
 Contributors: proofratings
 Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
