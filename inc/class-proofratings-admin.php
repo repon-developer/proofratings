@@ -188,7 +188,6 @@ class ProofRatings_Admin {
 		$overall_rectangle = get_proofratings_overall_ratings_rectangle();
 		if ( $overall_rectangle->customize == 'yes' ) {
 			echo ".proofratings-badge.proofratings-badge-rectangle {\n";
-
 				if ( $overall_rectangle->star_color ) {
 					printf("\t--star_color: %s;\n", $overall_rectangle->star_color);
 				}
@@ -212,6 +211,24 @@ class ProofRatings_Admin {
 				if ( $overall_rectangle->shadow == 'no') {
 					printf("\t--shadow_color: transparent!important;\n");
 					printf("\t--shadow_hover: transparent!important;\n");
+				} else {
+					if ( $overall_rectangle->shadow_color ) {
+						printf("\t--shadow_color: %s;\n", $overall_rectangle->shadow_color);
+					}
+					
+					if ( $overall_rectangle->shadow_hover ) {
+						printf("\t--shadow_hover: %s;\n", $overall_rectangle->shadow_hover);
+					}
+				}
+			echo "}\n\n";
+
+			echo ".proofratings-badge.proofratings-badge-rectangle.badge-float {\n";
+				if ( $overall_rectangle->shadow_color ) {
+					printf("\t--shadow_color: %s;\n", $overall_rectangle->shadow_color);
+				}
+				
+				if ( $overall_rectangle->shadow_hover ) {
+					printf("\t--shadow_hover: %s;\n", $overall_rectangle->shadow_hover);
 				}
 			echo "}\n\n";
 		}
@@ -242,8 +259,26 @@ class ProofRatings_Admin {
 				if ( $overall_narrow->shadow == 'no') {
 					printf("\t--shadow_color: transparent!important;\n");
 					printf("\t--shadow_hover: transparent!important;\n");
+				} else {
+					if ( $overall_narrow->shadow_color ) {
+						printf("\t--shadow_color: %s;\n", $overall_narrow->shadow_color);
+					}
+	
+					if ( $overall_narrow->shadow_hover ) {
+						printf("\t--shadow_hover: %s;\n", $overall_narrow->shadow_hover);
+					}
 				}
 
+			echo "}\n\n";
+
+			echo ".proofratings-badge.proofratings-badge-narrow.badge-float {\n";
+				if ( $overall_narrow->shadow_color ) {
+					printf("\t--shadow_color: %s;\n", $overall_narrow->shadow_color);
+				}
+
+				if ( $overall_narrow->shadow_hover ) {
+					printf("\t--shadow_hover: %s;\n", $overall_narrow->shadow_hover);
+				}
 			echo "}\n\n";
 		}
 		
