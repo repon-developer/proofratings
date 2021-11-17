@@ -61,31 +61,24 @@ class WP_ProofRatings_Settings {
 
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-		$name = @$postdata['name'];
-		if ( strlen($name) <= 3) {
-			return $this->signup_error->add('name', 'Name should be more than 3 characters.');
-		}
-
 		$email = sanitize_email( $postdata['email'] );
 		if ( empty($email)) {
 			return $this->signup_error->add('email', 'Please fill email field with correct value.');
 		}
 
-		$phone = @$postdata['phone'];
-		if ( empty($phone)) {
-			return $this->signup_error->add('phone', 'Please fill phone no field.');
-		}
+		$confirmation_code = @$postdata['confirmation_code'];
+		if ( strlen($confirmation_code) <= 3) {
+			return $this->signup_error->add('confirmation_code', 'Please fill the "Confirmation code" field.');
+		}		
 
-		$_POST['name'] = '';
-		$_POST['company'] = '';
+		$_POST['confirmation_code'] = '';
 		$_POST['email'] = '';
-		$_POST['phone'] = '';
 
 		ob_start();
 		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-signup.php';
 		$content = ob_get_clean();
 		
-		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', $name, $email), 'Reply-To: ' . $email);
+		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
 
 		$sendto = 'jonathan@proofratings.com';
 		//$sendto = 'repon.kushtia@gmail.com';
@@ -131,10 +124,7 @@ class WP_ProofRatings_Settings {
 			</h2>
 
 			<div id="proofratings-activation-tab" class="settings_panel">
-				<h3><?php _e('Please wait while we activate and connect your account.', 'proofratings') ?></h3>
-
-				<p>If you do not have a Proofratings account, please register below to begin activation.</p>
-				<p style="font-style:italic">Plans are only $249/year.</p>
+				<h3><?php _e('Please fill in the information below to activate and connect your account.', 'proofratings') ?></h3>
 
 				<form method="POST">
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
@@ -153,20 +143,6 @@ class WP_ProofRatings_Settings {
 
 					<table class="form-table">
 						<tr>
-							<th scope="row"><?php _e('Name', 'proofratings') ?>*</th>
-							<td>
-								<input name="name" type="text" placeholder="<?php _e('Name', 'proofratings') ?>" value="<?php echo @$_POST['name'] ?>">
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Company', 'proofratings') ?></th>
-							<td>
-								<input name="company" type="text" placeholder="<?php _e('Company name', 'proofratings') ?>" value="<?php echo @$_POST['company'] ?>">
-							</td>
-						</tr>
-
-						<tr>
 							<th scope="row"><?php _e('Email', 'proofratings') ?>*</th>
 							<td>
 								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo @$_POST['email'] ?>">
@@ -174,20 +150,22 @@ class WP_ProofRatings_Settings {
 						</tr>
 
 						<tr>
-							<th scope="row"><?php _e('Phone', 'proofratings') ?>*</th>
+							<th scope="row"><?php _e('Confirmation', 'proofratings') ?>*</th>
 							<td>
-								<input name="phone" type="text" placeholder="<?php _e('Phone', 'proofratings') ?>" value="<?php echo @$_POST['phone'] ?>">
+								<input name="confirmation_code" type="text" placeholder="<?php _e('Confirmation code', 'proofratings') ?>" value="<?php echo @$_POST['confirmation_code'] ?>">
 							</td>
 						</tr>
 
 						<tr>
 							<th scope="row"></th>
 							<td>
-								<button class="button-primary"><?php _e('Register', 'proofratings') ?></button>
+								<button class="button-primary"><?php _e('Activate', 'proofratings') ?></button>
 							</td>
 						</tr>
 					</table>
 				</form>
+
+				<p>If you do not have a Proofratings account, <a href="https://proofratings.com/pricing/" target="_blank">please select a plan here</a>. Plans are only $249/year.</p>
 			</div>
 		</div>
 		<?php
