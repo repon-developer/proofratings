@@ -67,9 +67,6 @@ class WP_ProofRatings_Settings {
 		}
 
 		$confirmation_code = @$postdata['confirmation_code'];
-		// if ( strlen($confirmation_code) <= 3) {
-		// 	return $this->signup_error->add('confirmation_code', 'Please fill the "Confirmation code" field.');
-		// }		
 
 		$_POST['confirmation_code'] = '';
 		$_POST['email'] = '';
