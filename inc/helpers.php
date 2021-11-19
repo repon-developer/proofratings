@@ -92,11 +92,11 @@ function get_proofratings_settings() {
 
         'bestcompany' => [
             'theme_color' => '#3c5170',
-            'name' => __('Best Comapny', 'proofratings'),
+            'name' => __('Best Company', 'proofratings'),
             'title' => __('Best Company Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-bestcompany.jpg',
-            'rating_title' => __('Best Comapny Rating', 'proofratings'),
+            'rating_title' => __('Best Company Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/bestcompany-black.svg',
             'category' => 'general'
         ],
