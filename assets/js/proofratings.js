@@ -46,13 +46,17 @@
         $('.proofratings-banner-badge').removeClass('going-down')
     })
 
-    if ( $('.proofratings-widget, .proofratings-badge, .proofratings-banner-badge').length ) {
+    const proofratings_items = $('.proofratings-widget, .proofratings-badge, .proofratings-banner-badge');
+    if ( proofratings_items.length ) {
         $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'impression'})
     }
 
-    $('.proofratings-widget, .proofratings-badge, .proofratings-banner-badge').on('click', function(){
+    proofratings_items.on('click', function(){
         $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'click'})
     })
 
+    proofratings_items.on('mouseenter', function(){
+        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
+    })
 
 })(jQuery)
