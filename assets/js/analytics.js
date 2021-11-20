@@ -113,7 +113,6 @@
         const data = {site_url: proofratings.site_url, monthly, domain, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
 
         const request = $.get(proofratings.api + '/stats', data, (payload) => {
-            console.log(payload);
             update_dashboard({...state, ...payload}, monthly);
         });
 
