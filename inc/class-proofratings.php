@@ -137,6 +137,7 @@ class Wordpress_Proofratings {
 		}
 
 		wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings.js', ['jquery', 'js-cookie'], PROOFRATINGS_VERSION, true);
+		wp_localize_script( 'proofratings', 'proofratings', array('api' => PROOFRATINGS_API_URL, 'site_url' => get_site_url()));
 	}
 
 	/**
