@@ -1,0 +1,157 @@
+(function ($) {
+    const ctx = document.getElementById("analytics-chart").getContext("2d");
+
+    const impression_gradient = ctx.createLinearGradient(0, 0, 0, 600);
+    impression_gradient.addColorStop(0, "rgba(65, 35, 255, 0.5)");
+    impression_gradient.addColorStop(1, "rgba(250,174,50,0)");
+
+    const click_gradient = ctx.createLinearGradient(0, 0, 0, 600);
+    click_gradient.addColorStop(0, "rgba(253, 190, 145, 0.5)");
+    click_gradient.addColorStop(1, "rgba(250,174,50,0)");
+
+    const analyticsChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: "Impressions",
+                    tension: 0.7,
+                    data: [],
+                    fill: "start",
+                    backgroundColor: impression_gradient,
+                    borderColor: "rgba(65, 35, 255, 0.7)",
+                    borderWidth: 2,
+                },
+                {
+                    label: "Click",
+                    tension: 0.7,
+                    data: [],
+                    fill: "start",
+                    backgroundColor: click_gradient,
+                    borderColor: "rgba(253, 190, 145, 0.7)",
+                    borderWidth: 2,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        maxTicksLimit: 12
+                    },
+                }
+            },  
+        },
+    });
+
+
+    const analytics_input = $("#analytics-date"), proofratings_analytics = (state, action) => ({...state, ...action.payload})
+    
+
+    const update_dashboard = (state, monthly = false) => {
+
+        const get_sessions = () => {
+            var now = state.start.clone(), sessions = [];
+
+            const date_format = monthly ? 'YYYY-MM' : 'YYYY-MM-DD';
+            const add_session = monthly ? 'months' : 'days';
+
+            while (now.isSameOrBefore(state.end)) {
+                sessions.push(now.format(date_format));
+                now.add(1, add_session);
+            }
+            
+            return sessions;
+        };
+
+        const sessoins = get_sessions();
+
+        const santize_data = (data, date) => {
+            get_item = data.find((stat) => stat.date == date);
+            return get_item ? parseInt(get_item.result) : 0;
+        }
+
+        const clicks = sessoins.map((date) => santize_data((state.clicks || []), date))
+        const impressions = sessoins.map((date) => santize_data((state.impressions || []), date));
+        const engagements = sessoins.map((date) => santize_data((state.engagements || []), date));
+
+        $(".analytics-information .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
+        $(".analytics-information .impressions .counter").html(impressions.reduce((a, b) => a + b, 0));
+        $(".analytics-information .engagements .counter").html(engagements.reduce((a, b) => a + b, 0));
+
+        analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
+
+        analyticsChart.data.labels = sessoins.map((date) =>moment(date).format("DD MMM"));        
+        if ( monthly ) {
+            analyticsChart.data.labels = sessoins.map((date) =>moment(date).format("MMM YY"));
+        }
+
+        analyticsChart.data.datasets[0].data = impressions;
+        analyticsChart.data.datasets[1].data = clicks;
+
+        analyticsChart.update();
+    }
+
+    const analytics_store = Redux.createStore(proofratings_analytics, {
+        domain: '',
+        clicks: [],
+        impressions: [],
+        engagements: [],
+        start: moment().subtract(6, "days"),
+        end: moment()
+    })
+
+    analytics_store.subscribe(() => {
+        const state = analytics_store.getState();
+        const {start, end, domain } = state;
+
+        const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 2;
+
+        const data = {site_url: proofratings.site_url, monthly, domain, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
+
+        const request = $.get(proofratings.api + '/stats', data, (payload) => {
+            console.log(payload);
+            update_dashboard({...state, ...payload}, monthly);
+        });
+
+        request.always(function () {
+            $(".proofratings-analytics-wrap").removeClass("loading");
+        });   
+    })
+
+    $('.analytics-filter > select').on('change', function(){
+        analytics_store.dispatch({type: 'UPDATE', payload: {domain: $(this).val()}})
+    })
+
+
+    var start = analytics_store.getState().start, end = analytics_store.getState().end;    
+
+    const update_date_string = (start, end) => {
+        analytics_store.dispatch({type: 'UPDATE', payload: {start, end}})
+    };
+
+    analytics_input.daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "This Month": [
+                moment().startOf("month"),
+                moment().endOf("month"),
+            ],
+            "Last Month": [
+                moment().subtract(1, "month").startOf("month"),
+                moment().subtract(1, "month").endOf("month"),
+            ],
+            "This Year": [
+                moment().startOf("year"),
+                moment().endOf("year"),
+            ],
+        },
+    }, update_date_string);
+
+    update_date_string(start, end);
+})(jQuery);

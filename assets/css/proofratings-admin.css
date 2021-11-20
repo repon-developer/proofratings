@@ -231,3 +231,101 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 .proofratings-badges-popup .proofrating-close {display: none;}
 
 .proofratings-popup-widgets-box > * {box-sizing: border-box;}
+
+
+
+
+body[class*="proofratings-analytics"] {
+    background-color: #fff;
+}
+
+body[class*="proofratings-analytics"] #wpcontent {
+    padding-left: 0;
+}
+
+.proofratings-analytics-wrap {
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.analytics-filter {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    margin: 0 -30px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.analytics-filter select, #analytics-date {
+    line-height: 32px;
+    height: 34px;
+    border: 1px solid #8c8f94;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+#analytics-date {
+    width: 230px;
+    padding: 0 15px;
+    font-size: 14px;
+    align-items: center;
+    display: inline-flex;
+    font-weight: 600;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#analytics-date .dashicons {
+    margin-left: -10px;
+    margin-right: 6px;
+}
+
+.analytics-information {
+    display: grid;
+    max-width: 600px;
+    gap: 30px;
+    grid-template-columns: repeat(3, 1fr)
+}
+
+.analytics-information p {
+    color: #a8a8a8;
+    font-size: 14px;
+}
+
+.analytics-information .name {
+    margin: 0;
+    font-size: 16px;
+}
+
+.analytics-information .name + p {margin-top: 5px;}
+
+.analytics-information .counter {
+    font-size: 36px;
+    font-weight: bold;
+    display: block;
+    margin: 8px 0 20px;
+    line-height: 1;
+    position: relative;
+}
+
+.analytics-information .counter:before {
+    content: "";
+    display: block;
+    height: 8px;
+    width: 72px;
+    margin-bottom: 19px;
+    border-radius: 40px;
+    background-color: #fdbe91;
+}
+
+.analytics-information .impressions .counter:before {
+    background-color: #4123FF;
+}
+
+.analytics-information .engagements .counter:before {visibility: hidden;}
+
+#analytics-chart {
+    margin-top: 30px;
+}

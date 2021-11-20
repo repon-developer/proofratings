@@ -44,6 +44,8 @@ class ProofRatings_Admin {
 	public function __construct() {
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 		$this->settings_page = WP_ProofRatings_Settings::instance();
+
+		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 		
 		add_action( 'init', [$this, 'register_your_domain']);
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
@@ -422,6 +424,7 @@ class ProofRatings_Admin {
 		}
 
 		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', [$this->settings_page, $setting_output], 'dashicons-star-filled', 25);
+		add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->analytics, 'output']);
 	}
 
 	/**
@@ -429,7 +432,7 @@ class ProofRatings_Admin {
 	 */
 	public function admin_enqueue_scripts() {	
 		$screen = get_current_screen();
-		if ( in_array( $screen->id, [ 'toplevel_page_proofratings' ] ) ) {
+		if ( in_array( $screen->id, [ 'toplevel_page_proofratings', 'proofratings_page_proofratings-analytics' ] ) ) {
 			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
