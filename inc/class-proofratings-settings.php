@@ -174,7 +174,7 @@ class WP_ProofRatings_Settings {
 	public function awaiting() {
 		?>
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
+			<h1 class="wp-heading-inline"><?php _e('Proofrating Status', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
 			<h2 class="nav-tab-wrapper">
 				<a href="#proofratings-activation-tab" class="nav-tab"><?php _e('Activation', 'proofratings'); ?></a>
@@ -185,7 +185,26 @@ class WP_ProofRatings_Settings {
 			</div>
 		</div>
 		<?php
-	}	
+	}
+
+	/**
+	 * Shows the plugin's settings page.
+	 */
+	public function pause() {
+		?>
+		<div class="wrap proofratings-settings-wrap">
+			<h1 class="wp-heading-inline"><?php _e('Proofrating Status', 'proofratings') ?></h1>
+			<hr class="wp-header-end">
+			<h2 class="nav-tab-wrapper">
+				<a href="#proofratings-pause-tab" class="nav-tab"><?php _e('Pause', 'proofratings'); ?></a>
+			</h2>
+
+			<div id="proofratings-pause-tab" class="settings_panel">
+				<h3><?php _e('Your account has been paused', 'proofratings') ?></h3>
+			</div>
+		</div>
+		<?php
+	}
 
 	/**
 	 * Shows the plugin's settings page.

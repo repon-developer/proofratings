@@ -21,6 +21,9 @@ table.form-table caption {
     font-size: inherit;
 }
 
+.proofratings-settings-wrap {padding-left: 20px;}
+body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {padding-left: 0}
+
 .proofratings-settings-wrap .shortcode-info {
     margin-bottom: 20px;
 }
@@ -232,21 +235,11 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-popup-widgets-box > * {box-sizing: border-box;}
 
+body.toplevel_page_proofratings {background-color: #fff}
 
+body.toplevel_page_proofratings #wpcontent {padding-left: 0}
 
-
-body[class*="proofratings-analytics"] {
-    background-color: #fff;
-}
-
-body[class*="proofratings-analytics"] #wpcontent {
-    padding-left: 0;
-}
-
-.proofratings-analytics-wrap {
-    margin: 0;
-    padding: 20px 30px;
-}
+.proofratings-analytics-wrap {margin: 0; padding: 20px 30px}
 
 .analytics-filter {
     display: flex;

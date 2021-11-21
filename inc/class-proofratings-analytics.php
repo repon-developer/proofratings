@@ -50,11 +50,11 @@ class Proofratings_Analytics {
 	}
 
 	public function remove_notice() {
-		$current_screen = preg_match('/proofratings-analytics/', get_current_screen()->id, $matches);
+		$current_screen = preg_match('/toplevel_page_proofratings/', get_current_screen()->id, $matches);
 		if(!$current_screen) {
 			return;
 		}
-
+		
 		remove_all_actions('admin_notices');
 		remove_all_actions('all_admin_notices');
 	}
@@ -96,7 +96,7 @@ class Proofratings_Analytics {
 	 * Enqueues CSS and JS assets.
 	 */
 	public function admin_enqueue_scripts() {
-		$current_screen = preg_match('/proofratings-analytics/', get_current_screen()->id, $matches);
+		$current_screen = preg_match('/toplevel_page_proofratings/', get_current_screen()->id, $matches);
 		if(!$current_screen) {
 			return;
 		}
