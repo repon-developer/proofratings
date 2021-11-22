@@ -94,7 +94,9 @@ class ProofRatings_Admin {
 			$main_screen = [$this->analytics, 'output'];
 		}
 
-		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen, 'dashicons-star-filled', 25);
+		$proofratings_icon = PROOFRATINGS_PLUGIN_URL . '/assets/images/proofratings-icon.png';
+
+		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen, $proofratings_icon, 25);
 
 		if (isset($proofratings_status->status) && $proofratings_status->status == 'active' ) {
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings', [$this->analytics, 'output']);
