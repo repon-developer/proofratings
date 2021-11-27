@@ -68,6 +68,9 @@ This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" ta
 
 
 == Changelog ==
+= 1.0.6 =
+* Support Locations
+
 = 1.0.5 =
 * Added icon
 * Added analytics options
