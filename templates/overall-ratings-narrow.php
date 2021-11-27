@@ -9,12 +9,21 @@
 	</tr>
 
 	<tr>
+		<th scope="row"><?php _e('Embed Visibility', 'proofratings') ?></th>
+		<td>
+			<label>
+				<input name="proofratings_overall_ratings_narrow[embed]" value="no" type="hidden">
+				<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[embed]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->embed ) ?>>
+			</label>
+		</td>
+	</tr>
+
+	<tr>
 		<th scope="row"><?php _e('Float Visibility', 'proofratings') ?></th>
 		<td>
 			<label>
 				<input name="proofratings_overall_ratings_narrow[float]" value="no" type="hidden">
-				<input class="checkbox-switch checkbox-float-embed" name="proofratings_overall_ratings_narrow[float]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->float ) ?>>
-				<?php _e('Float/Embed only', 'proofratings'); ?>
+				<input class="checkbox-switch" name="proofratings_overall_ratings_narrow[float]" value="yes" type="checkbox" <?php checked( 'yes', $narrow_ratings->float ) ?>>
 			</label>
 		</td>
 	</tr>

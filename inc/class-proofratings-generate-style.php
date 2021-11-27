@@ -47,6 +47,10 @@ class Proofratings_Generate_Style {
 		$badges_square = get_proofratings_badges_square();
 		if ( $badges_square->customize == 'yes' ) {
 			echo ".proofratings-widget.proofratings-widget-square {\n";
+				if ( $badges_square->logo_color ) {
+					printf("\t--logoColor: %s;\n", $badges_square->logo_color);
+				}
+
 				if ( $badges_square->star_color ) {
 					printf("\t--themeColor: %s;\n", $badges_square->star_color);
 				}

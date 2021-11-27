@@ -88,7 +88,10 @@
     function square_badge_tab() {
         square_badges = $('#proofratings-badge-square > :is(a, div)');
 
+        logoColor = $('[name="proofratings_badges_square[logo_color]"]').val();
+
         badge_css = {
+            logoColor,
             'themeColor': $('[name="proofratings_badges_square[star_color]"]').val(),
             'textColor': $('[name="proofratings_badges_square[text_color]"]').val(),
             'reviewCountTextColor': $('[name="proofratings_badges_square[review_count_textcolor]"]').val(),
@@ -106,6 +109,10 @@
             badge_css = {...badge_css, ...object};
 
             proofratings_widget = new Array();
+            if ( badge_css['logoColor'] ) {
+                proofratings_widget.push(`--logoColor: ${badge_css['logoColor']}`);
+            }
+
             if ( badge_css['themeColor'] ) {
                 proofratings_widget.push(`--themeColor: ${badge_css['themeColor']}`);
             }
@@ -157,7 +164,20 @@
 
             square_badges.removeClass('proofratings-widget-customized');            
             $('#square-badge-customize').hide()
-        }).trigger('change')       
+        }).trigger('change')
+
+        
+        $('[name="proofratings_badges_square[logo_color]"]').on('update', function(e, color){
+            if ( !color ) {
+                square_badges.removeClass('proofratings-widget-logo-color')
+            } else {
+                square_badges.addClass('proofratings-widget-logo-color')
+            }
+
+            generate_square_style({'logoColor': color})
+        })
+
+
     
         $('[name="proofratings_badges_square[shadow]"]').on('change', function(){
             generate_square_style();

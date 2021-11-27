@@ -20,6 +20,11 @@
 
 	<table class="form-table">
 		<tr>
+			<th scope="row">Logo Color</th>
+			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[logo_color]" type="text" value="%s">', esc_attr( $sites_square->logo_color)) ?></td>
+		</tr>
+
+		<tr>
 			<th scope="row">Star Color</th>
 			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[star_color]" type="text" value="%s">', esc_attr( $sites_square->star_color)) ?></td>
 		</tr>
