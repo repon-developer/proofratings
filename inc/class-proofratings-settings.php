@@ -162,7 +162,7 @@ class Proofratings_Settings {
 					</table>
 				</form>
 
-				<p>If you do not have a Proofratings account, <a href="https://proofratings.com/pricing/" target="_blank">please select a plan here</a>. Plans are only $249/year.</p>
+				<p>If you do not have a Proofratings account, <a href="https://proofratings.com/#pricing" target="_blank">please select a plan here</a>. Plans are only $275/year.</p>
 			</div>
 		</div>
 		<?php
