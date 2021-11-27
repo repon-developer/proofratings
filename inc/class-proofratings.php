@@ -48,8 +48,8 @@ class Wordpress_Proofratings {
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 
-		$this->admin = ProofRatings_Admin::instance();
-		$this->shortcodes = ProofRatings_Shortcodes::instance();
+		$this->admin = Proofratings_Admin::instance();
+		$this->shortcodes = Proofratings_Shortcodes::instance();
 
 		add_action( 'rest_api_init', [$this, 'register_rest_api']);
 

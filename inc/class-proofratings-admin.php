@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the class WP_ProofRatings_Admin.
+ * File containing the class Proofratings_Admin.
  *
  * @package proofratings
  * @since   1.0.1
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class ProofRatings_Admin {
+class Proofratings_Admin {
 
 	/**
 	 * The single instance of the class.
@@ -45,7 +45,7 @@ class ProofRatings_Admin {
 		include_once dirname( __FILE__ ) . '/class-proofratings-generate-style.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 
-		$this->settings_page = WP_ProofRatings_Settings::instance();
+		$this->settings_page = Proofratings_Settings::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 		
 		add_action( 'init', [$this, 'register_your_domain']);

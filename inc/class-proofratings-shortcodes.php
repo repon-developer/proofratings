@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the class ProofRatings_Shortcodes.
+ * File containing the class Proofratings_Shortcodes.
  *
  * @package proofratings
  * @since   1.0.1
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class ProofRatings_Shortcodes {
+class Proofratings_Shortcodes {
 
 	/**
 	 * The single instance of the class.
@@ -57,32 +57,33 @@ class ProofRatings_Shortcodes {
 	 */
 	private function get_active_review_sites() {
 		$review_sites = [];
-
         foreach (get_proofratings_settings() as $key => $site) {
             if ($site->active == 'yes') {
                 $review_sites[$key] = $site;
             }
         }
-	
+
         if ( empty($review_sites) ) {
 			return false;
         }
 		
 		$proofratings_reviews = get_option( 'proofratings_reviews' );
-		if ( !$proofratings_reviews ) {
+		if ( !is_array($proofratings_reviews ) ) {
 			return false;
 		}
 
-		$proofratings_reviews = (array) $proofratings_reviews;
+		$proofratings_reviews = array_filter($proofratings_reviews, function($review, $site) use($review_sites) {
+			return isset($review_sites[$site]);
+		}, ARRAY_FILTER_USE_BOTH);
 
-		array_walk($review_sites, function(&$item, $key) use($proofratings_reviews) {
-			$site_rating = isset($proofratings_reviews[$key]) ? $proofratings_reviews[$key] : [];
+		$review_locations = [];
+		foreach ($proofratings_reviews as $site => $locations) {
+			foreach ($locations as $location) {
+				$review_locations[] = new Proofratings_Site_Data(array_merge( $location , (array) $review_sites[$site]));
+			}			
+		}
 
-			$item = new Proofratings_Site_Data(wp_parse_args( $item, wp_parse_args( $site_rating , ['rating' => 0, 'count' => 0, 'percent' => 0, 'review_url' => ''])));
-		});
-
-
-		return $review_sites;
+		return $review_locations;
 	}
 
 	/**
@@ -304,17 +305,17 @@ class ProofRatings_Shortcodes {
 
         ob_start();		
         printf('<div id="%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
-	        foreach ($review_sites as $key => $site) {
+	        foreach ($review_sites as $key => $location) {
 				$tag = 'div';
 				$attribue = '';
-				
-				if( !empty($site->review_url) ) {
+			
+				if( !empty($location->review_url) ) {
 					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($location->review_url));
 				}
 				
-				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $key, $attribue);
-					$this->{'proofratings_widgets_' . $badge_style}($site);
+				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $location->site, $attribue);
+					$this->{'proofratings_widgets_' . $badge_style}($location);
 				printf('</%s>', $tag);
 	        }
 
