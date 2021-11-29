@@ -53,64 +53,6 @@ class Proofratings_Shortcodes {
 	}
 
 	/**
-	 * get active review sites
-	 */
-	private function get_active_review_sites() {
-		$review_sites = [];
-        foreach (get_proofratings_settings() as $key => $site) {
-            if ($site->active == 'yes') {
-                $review_sites[$key] = $site;
-            }
-        }
-
-        if ( empty($review_sites) ) {
-			return false;
-        }
-		
-		$proofratings_reviews = get_option( 'proofratings_reviews' );
-		if ( !is_array($proofratings_reviews ) ) {
-			return false;
-		}
-
-		$proofratings_reviews = array_filter($proofratings_reviews, function($review, $site) use($review_sites) {
-			return isset($review_sites[$site]);
-		}, ARRAY_FILTER_USE_BOTH);
-
-		$review_locations = [];
-		foreach ($proofratings_reviews as $site => $locations) {
-			foreach ($locations as $location) {
-				$review_locations[] = new Proofratings_Site_Data(array_merge( $location , (array) $review_sites[$site]));
-			}			
-		}
-
-		return $review_locations;
-	}
-
-	/**
-	 * floating badge shortcode
-	 */
-	public function get_overall_reviews() {
-		$review_sites = $this->get_active_review_sites();
-        if ( !$review_sites ) {
-            return false;
-        }
-
-		$total_reviews = array_sum(array_column($review_sites, 'count'));
-		$has_reviews = array_filter($review_sites, function($item) {
-			return $item->count > 0;
-		});
-		
-		$total_score = 0.0;
-		if (count($has_reviews) > 0) {
-			$total_score = array_sum(wp_list_pluck($review_sites, 'rating')) / count($has_reviews);
-		}
-
-		$total_score = number_format(floor($total_score*100)/100, 1);
-
-		return ['sites' => $review_sites, 'count' => $total_reviews, 'rating' => $total_score, 'percent' => $total_score * 20];
-	}
-
-	/**
 	 * floating badge shortcode
 	 */
 	public function proofratings_overall_ratings($atts, $content = null) {
@@ -118,11 +60,10 @@ class Proofratings_Shortcodes {
 			'float' => 'no',
 			'type' => 'rectangle',
         ], $atts);
-		
-		$review_data = $this->get_overall_reviews();
-        if ( !$review_data ) {
+
+		if ( $this->reviews->sites === false) {
 			return;
-        }
+		}
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['type']];
 
@@ -168,60 +109,52 @@ class Proofratings_Shortcodes {
 			}
 
 			if($atts['type'] == 'narrow') {
-				$this->overall_ratings_narrow($review_data);
+				$this->overall_ratings_narrow();
 			} else {				
-				$this->overall_ratings_rectangle($review_data);
+				$this->overall_ratings_rectangle();
 			}
 			
         printf('</%s>', $tag);
         return ob_get_clean();
 	}
 
-	private function overall_ratings_rectangle($review_data) {
+	private function overall_ratings_rectangle() {
 		echo '<div class="proofratings-inner">';
-			echo '<div class="proofratings-logos">';
-			foreach ($review_data['sites'] as $key => $site) {
-				printf('<img src="%1$s" alt="%2$s" >', esc_attr($site->icon), $key);
-			}
-			echo '</div>';
+			$this->reviews->get_review_logos();
 
 			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-				printf('<span class="proofratings-score">%s</span>', $review_data['rating']);
-				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $review_data['percent']);
+				printf('<span class="proofratings-score">%s</span>', $this->reviews->rating);
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $this->reviews->percent);
 
 				echo '<meta itemprop="worstRating" content = "1">';
-				echo '<meta itemprop="ratingValue" content="'.$review_data['rating'].'">';
+				echo '<meta itemprop="ratingValue" content="'.$this->reviews->rating.'">';
 				echo '<meta itemprop="bestRating" content="5">';
 			echo '</div>';
 		echo '</div>';
 
-		printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
+		printf('<div class="proofratings-review-count">%d %s</div>', $this->reviews->count, __('reviews', 'proofratings'));
 	}
 
-	private function overall_ratings_narrow($review_data) {
-		echo '<div class="proofratings-logos">';
-        foreach ($review_data['sites'] as $key => $site) {
-            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site->icon), $key);
-        }
-		echo '</div>';
+	private function overall_ratings_narrow() {
+		$this->reviews->get_review_logos();
 
         echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-            printf('<span class="proofratings-score">%s</span>', $review_data['rating']);
-            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $review_data['percent']);
+            printf('<span class="proofratings-score">%s</span>', $this->reviews->rating);
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $this->reviews->percent);
 
 			echo '<meta itemprop="worstRating" content = "1">';
-			echo '<meta itemprop="ratingValue" content="'.$review_data['rating'].'">';
+			echo '<meta itemprop="ratingValue" content="'.$this->reviews->rating.'">';
 			echo '<meta itemprop="bestRating" content="5">';
         echo '</div>';
 
-    	printf('<div class="proofratings-review-count">%d %s</div>', $review_data['count'], __('reviews', 'proofratings'));
+    	printf('<div class="proofratings-review-count">%d %s</div>', $this->reviews->count, __('reviews', 'proofratings'));
 	}
 
 	/**
 	 * Floating widgets shortcode
 	 */
 	public function proofratings_badges_popup($atts, $content = null) {
-		$review_sites = $this->get_active_review_sites();
+		$review_sites = $this->reviews->sites;
         if ( !$review_sites ) {
             return;
         }
@@ -287,7 +220,7 @@ class Proofratings_Shortcodes {
         ], $atts);
 
 		
-		$review_sites = $this->get_active_review_sites();
+		$review_sites = $this->reviews->sites;
         if ( !$review_sites ) {
 			return;
         }

@@ -59,31 +59,39 @@ class Proofratings_Review {
 	 */
 	private function get_active_review_sites() {
 		$review_sites = [];
-
         foreach (get_proofratings_settings() as $key => $site) {
             if ($site->active == 'yes') {
                 $review_sites[$key] = $site;
             }
         }
-		
+
         if ( empty($review_sites) ) {
 			return false;
         }
 		
 		$proofratings_reviews = get_option( 'proofratings_reviews' );
-		if ( !$proofratings_reviews ) {
+		if ( !is_array($proofratings_reviews ) ) {
 			return false;
 		}
 
-		$proofratings_reviews = (array) $proofratings_reviews;
+		$proofratings_reviews = array_filter($proofratings_reviews, function($review, $site) use($review_sites) {
+			return isset($review_sites[$site]);
+		}, ARRAY_FILTER_USE_BOTH);
 
-		array_walk($review_sites, function(&$item, $key) use($proofratings_reviews) {
-			$site_rating = isset($proofratings_reviews[$key]) ? $proofratings_reviews[$key] : [];
+		foreach ($review_sites as $site => $settings) {
+			if ( !isset($proofratings_reviews[$site] ) ) {
+				$proofratings_reviews[$site][] = wp_parse_args($settings, ['site' => $site]);
+			}
+		}
 
-			$item = new Proofratings_Site_Data(wp_parse_args( $item, wp_parse_args( $site_rating , ['rating' => 0, 'count' => 0, 'percent' => 0, 'review_url' => ''])));
-		});
+		$review_locations = [];
+		foreach ($proofratings_reviews as $site => $locations) {
+			foreach ($locations as $location) {
+				$review_locations[] = new Proofratings_Site_Data(array_merge(['rating' => 0, 'percent' => 0], $location, (array) $review_sites[$site]));
+			}			
+		}
 
-		return $review_sites;
+		return $review_locations;
 	}
 
 	/**
