@@ -63,6 +63,20 @@ class Proofratings_Generate_Style {
 					printf("\tbackground-color: %s;\n", $badges_square->background);
 				}
 
+				if ( $badges_square->border != 'no' ) {
+					if ( $badges_square->border_color ) {
+						printf("\t--borderColor: %s;\n", $badges_square->border_color);
+					}
+
+					if ( $badges_square->border_hover_color ) {
+						printf("\t--borderHoverColor: %s;\n", $badges_square->border_hover_color);
+					}
+				}
+
+				if ( $badges_square->border == 'no' ) {
+					print("\tborder: none!important;\n");
+				}
+
 				if ( $badges_square->shadow == 'yes' ) {					
 					if ( $badges_square->shadow_color ) {
 						printf("\t--shadowColor: %s;\n", $badges_square->shadow_color);

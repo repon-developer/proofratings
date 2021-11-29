@@ -44,10 +44,33 @@
 			<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[background]" type="text" value="%s">', esc_attr( $sites_square->background)) ?></td>
 		</tr>
 
-		<input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="no" type="hidden">
+		
+		<tr>
+			<th scope="row">Border</th>
+			<td>
+				<input class="checkbox-switch" name="proofratings_badges_square[border]" value="no" type="hidden">
+				<input class="checkbox-switch" name="proofratings_badges_square[border]" value="yes" type="checkbox" <?php checked( 'yes', $sites_square->border) ?>>
+			</td>
+		</tr>
+
+		<tbody id="proofratings-badges-sites-square-border-options" style="display: none">
+			<tr>
+				<th scope="row">Border Color</th>
+				<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[border_color]" type="text" value="%s">', esc_attr( $sites_square->border_color)) ?></td>
+			</tr>
+
+			<tr>
+				<th scope="row">Border Hover Color</th>
+				<td><?php printf('<input class="proofratings-color-field" name="proofratings_badges_square[border_hover_color]" type="text" value="%s">', esc_attr($sites_square->border_hover_color)) ?></td>
+			</tr>
+		</tbody>
+
 		<tr>
 			<th scope="row">Shadow</th>
-			<td><input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $sites_square->shadow) ?>></td>
+			<td>
+				<input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="no" type="hidden">
+				<input class="checkbox-switch" name="proofratings_badges_square[shadow]" value="yes" type="checkbox" <?php checked( 'yes', $sites_square->shadow) ?>>
+			</td>
 		</tr>
 
 		<tbody id="proofratings-badges-sites-square-shadow-options" style="display: none">

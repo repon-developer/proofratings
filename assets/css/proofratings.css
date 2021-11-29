@@ -243,6 +243,9 @@ html {
     letter-spacing: 1px;
 }
 
+.proofratings-widget.proofratings-widget-square {border-color: var(--borderColor, transparent)}
+.proofratings-widget.proofratings-widget-square:hover {border-color: var(--borderHoverColor, var(--themeColor))}
+
 .proofratings-widget.proofratings-widget-rectangle {
     --reviewCountTextColor: #767676;
     width: 250px;

@@ -121,6 +121,14 @@
                 proofratings_widget.push(`--textColor: ${badge_css['textColor']}`);
             }
 
+            if ( badge_css['borderColor'] ) {
+                proofratings_widget.push(`--borderColor: ${badge_css['borderColor']}`);
+            }
+
+            if ( badge_css['borderHoverColor'] ) {
+                proofratings_widget.push(`--borderHoverColor: ${badge_css['borderHoverColor']}`);
+            }
+
             if ( badge_css['shadowColor'] ) {
                 proofratings_widget.push(`--shadowColor: ${badge_css['shadowColor']}`);
             }
@@ -146,6 +154,10 @@
                 .proofratings-widget.proofratings-widget-square {${proofratings_widget.join(';')}}
                 .proofratings-widget.proofratings-widget-square:hover {${proofratings_widget_hover.join(';')}}
             `;
+
+            if ( !$('[name="proofratings_badges_square[border]"]').is(':checked') ) {
+                css_style += `.proofratings-widget.proofratings-widget-square {border:none!important}`;
+            }
 
             if ( !$('[name="proofratings_badges_square[shadow]"]').is(':checked') ) {
                 css_style += `.proofratings-widget.proofratings-widget-square, .proofratings-widget.proofratings-widget-square:hover {--borderColor: transparent; --shadowColor: transparent}`;
@@ -177,7 +189,15 @@
             generate_square_style({'logoColor': color})
         })
 
+        $('[name="proofratings_badges_square[border]"]').on('change', function(){
+            generate_square_style();
 
+            if ( $(this).is(":checked") ) {
+                return $('#proofratings-badges-sites-square-border-options').show();
+            }
+            
+            $('#proofratings-badges-sites-square-border-options').hide()
+        }).trigger('change');
     
         $('[name="proofratings_badges_square[shadow]"]').on('change', function(){
             generate_square_style();
@@ -207,6 +227,14 @@
             }
 
             generate_square_style({'background-color': color})
+        })
+
+        $('[name="proofratings_badges_square[border_color]"]').on('update', function(e, color){
+            generate_square_style({'borderColor': color})
+        })
+
+        $('[name="proofratings_badges_square[border_hover_color]"]').on('update', function(e, color){
+            generate_square_style({'borderHoverColor': color})
         })
 
         $('[name="proofratings_badges_square[shadow_color]"]').on('update', function(e, color){
