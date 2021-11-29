@@ -9,6 +9,10 @@
     click_gradient.addColorStop(0, "rgba(253, 190, 145, 0.5)");
     click_gradient.addColorStop(1, "rgba(250,174,50,0)");
 
+    const hover_gradient = ctx.createLinearGradient(0, 0, 0, 600);
+    hover_gradient.addColorStop(0, "rgba(76, 175, 80, 0.5)");
+    hover_gradient.addColorStop(1, "rgba(76,175,80,0)");
+
     const analyticsChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -30,6 +34,14 @@
                     fill: "start",
                     backgroundColor: click_gradient,
                     borderColor: "rgba(253, 190, 145, 0.7)",
+                    borderWidth: 2,
+                }, {
+                    label: "Hover",
+                    tension: 0.7,
+                    data: [],
+                    fill: "start",
+                    backgroundColor: hover_gradient,
+                    borderColor: "rgba(76, 175, 80, 0.7)",
                     borderWidth: 2,
                 },
             ],
@@ -75,6 +87,7 @@
         }
 
         const clicks = sessoins.map((date) => santize_data((state.clicks || []), date))
+        const hover = sessoins.map((date) => santize_data((state.hover || []), date));
         const impressions = sessoins.map((date) => santize_data((state.impressions || []), date));
         const engagements = sessoins.map((date) => santize_data((state.engagements || []), date));
 
@@ -91,6 +104,7 @@
 
         analyticsChart.data.datasets[0].data = impressions;
         analyticsChart.data.datasets[1].data = clicks;
+        analyticsChart.data.datasets[2].data = hover;
 
         analyticsChart.update();
     }
@@ -98,6 +112,7 @@
     const analytics_store = Redux.createStore(proofratings_analytics, {
         domain: '',
         clicks: [],
+        hover: [],
         impressions: [],
         engagements: [],
         start: moment().subtract(6, "days"),

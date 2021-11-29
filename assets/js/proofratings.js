@@ -56,7 +56,7 @@
     })
 
     proofratings_items.on('mouseenter', function(){
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
+        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'hover'})
     })
 
 })(jQuery)

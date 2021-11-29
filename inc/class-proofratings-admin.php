@@ -47,10 +47,21 @@ class Proofratings_Admin {
 
 		$this->settings_page = Proofratings_Settings::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
+
+		if ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES ) {
+			add_action( 'admin_notices', [$this, 'admin_notice_rating_us']);
+		}
 		
 		add_action( 'init', [$this, 'register_your_domain']);
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+	}
+
+	function admin_notice_rating_us() {
+		$class = 'notice notice-info is-dismissible';
+		$message = __( 'Rating us on <a target="_blank" href="https://wordpress.org/plugins/proofratings/">wordpress.org</a>.', 'proofratings' );
+	 
+		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message); 
 	}
 
 	/**
