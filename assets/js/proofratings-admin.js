@@ -255,6 +255,8 @@
             'iconColor': $('[name="proofratings_badges_rectangle[icon_color]"]').val(),
             'textColor': $('[name="proofratings_badges_rectangle[text_color]"]').val(),
             'reviewCountTextColor': $('[name="proofratings_badges_rectangle[review_count_textcolor]"]').val(),
+            'borderColor': $('[name="proofratings_badges_rectangle[border_color]"]').val(),
+            'borderHoverColor': $('[name="proofratings_badges_rectangle[border_hover_color]"]').val(),
             'shadowColor': $('[name="proofratings_badges_rectangle[shadow_color]"]').val(),
             'shadowHoverColor': $('[name="proofratings_badges_rectangle[shadow_hover_color]"]').val(),
             'background-color': $('[name="proofratings_badges_rectangle[background]"]').val(),
@@ -279,6 +281,14 @@
 
             if ( rectangle_badge_css['textColor'] ) {
                 proofratings_widget.push(`--textColor: ${rectangle_badge_css['textColor']}`);
+            }
+
+            if ( rectangle_badge_css['borderColor'] ) {
+                proofratings_widget.push(`--borderColor: ${rectangle_badge_css['borderColor']}`);
+            }
+
+            if ( rectangle_badge_css['borderHoverColor'] ) {
+                proofratings_widget.push(`--borderHoverColor: ${rectangle_badge_css['borderHoverColor']}`);
             }
 
             if ( rectangle_badge_css['shadowColor'] ) {
@@ -307,6 +317,10 @@
                 .proofratings-widget.proofratings-widget-rectangle:hover {${proofratings_widget_hover.join(';')}}
             `;
 
+            if ( !$('[name="proofratings_badges_rectangle[border]"]').is(':checked') ) {
+                css_style += `.proofratings-widget.proofratings-widget-rectangle {border:none!important}`;
+            }
+
             if ( !$('[name="proofratings_badges_rectangle[shadow]"]').is(':checked') ) {
                 css_style += `.proofratings-widget.proofratings-widget-rectangle, .proofratings-widget.proofratings-widget-rectangle:hover {--borderColor: transparent; --shadowColor: transparent}`;
             }
@@ -324,7 +338,18 @@
 
             rectangle_badges.removeClass('proofratings-widget-customized');            
             $('#rectangle-badge-customize').hide()
-        }).trigger('change')       
+        }).trigger('change')
+
+
+        $('[name="proofratings_badges_rectangle[border]"]').on('change', function(){
+            change_shadow_color();
+
+            if ( $(this).is(":checked") ) {
+                return $('#proofratings-badges-rectangle-border-options').show();
+            }
+            
+            $('#proofratings-badges-rectangle-border-options').hide()
+        }).trigger('change');
     
         $('[name="proofratings_badges_rectangle[shadow]"]').on('change', function(){
             change_shadow_color();
@@ -358,6 +383,14 @@
             }
 
             change_shadow_color({'background-color': color})
+        })
+
+        $('[name="proofratings_badges_rectangle[border_color]"]').on('update', function(e, color){
+            change_shadow_color({'borderColor': color})
+        })
+
+        $('[name="proofratings_badges_rectangle[border_hover_color]"]').on('update', function(e, color){
+            change_shadow_color({'borderHoverColor': color})
         })
 
         $('[name="proofratings_badges_rectangle[shadow_color]"]').on('update', function(e, color){

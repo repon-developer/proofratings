@@ -253,7 +253,10 @@ html {
     min-height: 121px;
     padding-top: 14px;
     padding-bottom: 14px;
+    border-color: var(--borderColor, transparent)
 }
+
+.proofratings-widget.proofratings-widget-rectangle:hover {border-color: var(--borderHoverColor, var(--themeColor))}
 
 .proofratings-widget.proofratings-widget-rectangle .review-site-logo {
     position: absolute;
