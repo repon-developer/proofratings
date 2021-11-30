@@ -44,9 +44,6 @@ class Proofratings_Analytics {
 	public function __construct() {
 		add_action('in_admin_header', [$this, 'remove_notice']);
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
-
-		add_action( 'wp_ajax_proofratings_get_stats', [$this, 'get_stats']);
-		add_action( 'wp_ajax_nopriv_proofratings_get_stats', [$this, 'get_stats']);
 	}
 
 	public function remove_notice() {
@@ -57,39 +54,6 @@ class Proofratings_Analytics {
 		
 		remove_all_actions('admin_notices');
 		remove_all_actions('all_admin_notices');
-	}
-
-	public function get_stats() {
-		global $wpdb;
-		$response = array('clicks' => [], 'impressions' => [], 'engagements' => []);
-
-		$where = $wpdb->prepare("created_date BETWEEN '%s' AND '%s'", $_POST['start'], $_POST['end']);
-		if ( !empty($_POST['domain']) ) {
-			$where .= $wpdb->prepare(" AND domain='%s'", $_POST['domain']);
-		}
-		
-		
-		$columns = "count(*) as result, Date(`created_date`) as date";
-		$group_date = "DAY(`created_date`)";
-
-		if ( $_POST['monthly'] == 'true') {
-			$columns = "count(*) as result, DATE_FORMAT(created_date, '%Y-%m') as date";
-			$group_date = "DATE_FORMAT(created_date, '%Y-%m')";
-		}
-
-		if ($clicks = $wpdb->get_results("SELECT $columns FROM $wpdb->proofratings_manager_stats WHERE $where AND type = 'click' GROUP BY type, $group_date")) {
-			$response['clicks'] = $clicks;
-		}
-
-		if ( $impressions = $wpdb->get_results("SELECT $columns FROM $wpdb->proofratings_manager_stats WHERE $where AND type = 'impression' GROUP BY type, $group_date") ) {
-			$response['impressions'] = $impressions;
-		}
-
-		if ( $engagements = $wpdb->get_results("SELECT $columns FROM $wpdb->proofratings_manager_stats WHERE $where GROUP BY $group_date") ) {
-			$response['engagements'] = $engagements;
-		}		
-
-		wp_send_json($response);
 	}
 
 	/**
@@ -133,10 +97,22 @@ class Proofratings_Analytics {
 					<p>Times notifications were shown</p>
 				</div>
 
+				<div class="hovers">
+					<span class="counter">0</span>
+					<h4 class="name">Hovers</h4>
+					<p>Number of hovers on all notifications</p>
+				</div>
+
 				<div class="clicks">
 					<span class="counter">0</span>
 					<h4 class="name">Clicks</h4>
 					<p>Number of clicks on all notifications</p>
+				</div>
+
+				<div class="conversions">
+					<span class="counter">0</span>
+					<h4 class="name">Conversions</h4>
+					<p>Number of conversions on all notifications</p>
 				</div>
 
 				<div class="engagements">

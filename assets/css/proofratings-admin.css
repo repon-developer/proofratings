@@ -276,10 +276,10 @@ body.toplevel_page_proofratings #wpcontent {padding-left: 0}
 }
 
 .analytics-information {
-    display: grid;
-    max-width: 600px;
     gap: 30px;
-    grid-template-columns: repeat(3, 1fr)
+    display: grid;
+    max-width: 1200px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
 }
 
 .analytics-information p {
@@ -313,9 +313,8 @@ body.toplevel_page_proofratings #wpcontent {padding-left: 0}
     background-color: #fdbe91;
 }
 
-.analytics-information .impressions .counter:before {
-    background-color: #4123FF;
-}
+.analytics-information .impressions .counter:before {background-color: #4123FF}
+.analytics-information .hovers .counter:before {background-color: rgba(76, 175, 80, 1)}
 
 .analytics-information .engagements .counter:before {visibility: hidden;}
 
