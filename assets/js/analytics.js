@@ -1,4 +1,8 @@
 (function ($) {
+    if ( !$('#analytics-chart').length ) {
+        return;
+    }
+    
     const ctx = document.getElementById("analytics-chart").getContext("2d");
 
     const impression_gradient = ctx.createLinearGradient(0, 0, 0, 600);
