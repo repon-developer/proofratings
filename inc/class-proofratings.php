@@ -43,6 +43,8 @@ class Wordpress_Proofratings {
 	 * Constructor.
 	 */
 	public function __construct() {
+		$this->add_proofratings_tables();
+
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-review.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
@@ -60,6 +62,15 @@ class Wordpress_Proofratings {
 		add_action( 'wp_footer', [ $this, 'overall_ratings_narrow' ] );
 		add_action( 'wp_footer', [ $this, 'overall_ratings_rectangle' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
+	}
+
+	/**
+	 * add proofratings table in $wpdb
+	 * @since 1.0.7
+	 */	
+	function add_proofratings_tables() {
+	    global $wpdb;
+		$wpdb->proofratings = $wpdb->prefix . 'proofratings';
 	}
 		
 	/**
@@ -87,10 +98,23 @@ class Wordpress_Proofratings {
 	}
 
 	/**
-	 * proof ratings activate
+	 * proofratings activate
 	 */
 	public function activate() {
+		global $wpdb;
+
 		update_option('proofratings_version', PROOFRATINGS_VERSION );
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		maybe_create_table($wpdb->proofratings, "CREATE TABLE $wpdb->proofratings (
+			`id` INT NOT NULL AUTO_INCREMENT, 
+			`location_id` VARCHAR(50) NULL,
+			`location` VARCHAR(255) NOT NULL, 
+			`reviews` LONGTEXT NULL, 
+			`status` VARCHAR(20) NOT NULL DEFAULT 'pending', 
+			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+		);");
 
 		$request_url = add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
