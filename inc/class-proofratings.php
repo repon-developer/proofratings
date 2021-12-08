@@ -88,6 +88,8 @@ class Wordpress_Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
+		error_log(print_r($request->get_params(), true));
+
 		$reviews_info = wp_parse_args($request->get_params(), ['status' => false, 'message' => '', 'reviews' => array()]);
 
 		$reviews = $reviews_info['reviews'];
