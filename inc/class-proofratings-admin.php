@@ -54,7 +54,6 @@ class Proofratings_Admin {
 			add_action( 'admin_notices', [$this, 'admin_notice_rating_us']);
 		}
 		
-		add_action( 'init', [$this, 'register_your_domain']);
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 	}
@@ -64,24 +63,6 @@ class Proofratings_Admin {
 		$message = __( 'Rating us on <a target="_blank" href="https://wordpress.org/plugins/proofratings/">wordpress.org</a>.', 'proofratings' );
 	 
 		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message); 
-	}
-
-	/**
-	 * Register domain for getting review data
-	 * @since 1.0.1
-	 */
-	public function register_your_domain() {
-		if ( !isset($_GET['_regsiter_nonce']) ) {
-			return;
-		}
-
-		if( !wp_verify_nonce( $_GET['_regsiter_nonce'], 'register_proofratings') ) {
-			return;
-		}
-
-		WP_ProofRatings()->activate();
-
-		exit(wp_safe_redirect(remove_query_arg('_regsiter_nonce')));
 	}
 
 	/**
@@ -130,6 +111,14 @@ class Proofratings_Admin {
 			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
+		}
+
+		if ( $screen->id === 'proofratings_page_proofratings-locations' && isset($_GET['location']) ) {
+			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
+			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
+				'ajaxurl' => admin_url('admin-ajax.php'),
+				'review_sites' => get_proofratings_settings()
+			));
 		}
 	}
 }

@@ -131,16 +131,22 @@ class Proofratings_Locations {
 	 * Shows locations
 	 * @since  1.0.6
 	 */
-	public function widgets_settings() {?>
+	public function widgets_settings() {
+		global $wpdb;
+
+		$location_id = $_GET['location'];
+		$location = $wpdb->get_row("SELECT * FROM $wpdb->proofratings WHERE id = '$location_id'");
+
+		$location_name = 'Overall';
+		if ( $location ) {
+			$location_name = $location->location;
+		} ?>
 
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Locations', 'proofratings'); ?></h1>
+			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings'); ?> (<?php echo $location_name ?>)</h1>
 			<hr class="wp-header-end">
-
-			<h3>We are in widget settings page</h3>
+			<div id="proofratings-widgets-root" data-location=<?php echo $location_id ?>></div>
 		</div>
 		<?php
 	}
-
-
 }

@@ -46,12 +46,17 @@ class Wordpress_Proofratings {
 		$this->add_proofratings_tables();
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-review.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
-
-		$this->admin = Proofratings_Admin::instance();
+		
 		$this->shortcodes = Proofratings_Shortcodes::instance();
+
+		if ( is_admin(  ) ) {
+			include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
+			$this->admin = Proofratings_Admin::instance();
+		}	
+		
 
 		add_action( 'rest_api_init', [$this, 'register_rest_api']);
 
