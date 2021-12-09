@@ -87,15 +87,15 @@ class Wordpress_Proofratings {
 	/**
 	 * proofratings rest api callback
 	 */
-	public function set_reviews(WP_REST_Request $request) {		
-		$locations = $request->get_param('locations');
-		if ( !is_array($locations) ) {
-			$locations = [];
+	public function set_reviews(WP_REST_Request $request) {
+		$review_locations = $request->get_param('review_locations');
+		if ( !is_array($review_locations) ) {
+			$review_locations = [];
 		}
 
 		global $wpdb;
 
-		foreach ($locations as $id => $location) {
+		foreach ($review_locations as $id => $location) {
 			$reviews = null;
 			if ( isset($location['reviews']) && is_array($location['reviews'])) {
 				$reviews = maybe_serialize($location['reviews']);
@@ -114,6 +114,16 @@ class Wordpress_Proofratings {
 			}
 
 			$wpdb->replace($wpdb->proofratings, $location_data);
+		}
+
+		if ( $request->get_param('global') ) {
+			$wpdb->query("UPDATE $wpdb->proofratings SET `status` = 'pause' WHERE location_id != 'global'");
+		}
+
+		$has_locations = $request->get_param('has_locations');
+		if ( is_array($has_locations) ) {
+			$ids = implode(',', $has_locations);
+			$wpdb->query($wpdb->prepare("DELETE FROM $wpdb->proofratings WHERE location_id NOT IN (%s)", $ids));			
 		}
 	}
 
