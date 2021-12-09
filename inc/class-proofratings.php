@@ -88,6 +88,8 @@ class Wordpress_Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
+		error_log(print_r($request->get_params(), true));
+
 		$review_locations = $request->get_param('review_locations');
 		if ( !is_array($review_locations) ) {
 			$review_locations = [];
@@ -122,9 +124,11 @@ class Wordpress_Proofratings {
 
 		$has_locations = $request->get_param('has_locations');
 		if ( is_array($has_locations) ) {
-			$ids = implode(',', $has_locations);
-			$wpdb->query($wpdb->prepare("DELETE FROM $wpdb->proofratings WHERE location_id NOT IN (%s)", $ids));			
+			$ids = implode("','", $has_locations);
+			$wpdb->query(sprintf("DELETE FROM $wpdb->proofratings WHERE location_id NOT IN ('%s')", $ids));
 		}
+
+		update_option( 'proofratings_status', $request->get_param('status'));
 	}
 
 	/**
