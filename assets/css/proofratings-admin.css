@@ -6,6 +6,10 @@ table.form-table caption {
     font-weight: bold;
 }
 
+table.locations_table tr .column-edit {width: 50px;}
+table.locations_table tr td.column-status {text-transform: capitalize}
+table.locations_table tr .column-action {width: 100px}
+
 .proofratings-status {
     font-size: 16px;
     padding: 10px;
@@ -21,7 +25,6 @@ table.form-table caption {
     font-size: inherit;
 }
 
-.proofratings-settings-wrap {padding-left: 20px;}
 body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {padding-left: 0}
 
 .proofratings-settings-wrap .shortcode-info {

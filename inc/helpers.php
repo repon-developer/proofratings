@@ -409,12 +409,9 @@ function get_proofratings_overall_ratings_cta_banner() {
 function get_proofratings_current_status() {
     $proofratings_status = get_option( 'proofratings_status');
 
-    if ( !$proofratings_status ) {
+    if ( !$proofratings_status || !in_array($proofratings_status, ['pending', 'pause', 'active'])) {
         return false;
     }
 
-    return (object) wp_parse_args((array) $proofratings_status, [
-        'status' => 'pending',
-        'message' => ''
-    ]);
+    return $proofratings_status;
 }

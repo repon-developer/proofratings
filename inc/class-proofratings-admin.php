@@ -43,9 +43,11 @@ class Proofratings_Admin {
 	 */
 	public function __construct() {
 		include_once dirname( __FILE__ ) . '/class-proofratings-generate-style.php';
+		include_once dirname( __FILE__ ) . '/class-proofratings-locations.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 
 		$this->settings_page = Proofratings_Settings::instance();
+		$this->locations_page = Proofratings_Locations::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 
 		if ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES ) {
@@ -86,32 +88,32 @@ class Proofratings_Admin {
 	 * Add menu page
 	 */
 	public function admin_menu() {
-		$proofratings_status = get_proofratings_current_status();
+		$proofratings_status = get_proofratings_current_status();		
 
 		$main_screen = [$this->settings_page, 'awaiting'];
-		if (isset($proofratings_status->status) && $proofratings_status->status == 'active' ) {
-			$main_screen = [$this->analytics, 'output'];
+		if ( !$proofratings_status) {
+			$main_screen = [$this->settings_page, 'account_inactive_output'];
 		}
 
-		if ( !$proofratings_status || 'not_registered' == $proofratings_status->status) {
-			$main_screen = [$this->settings_page, 'account_inactive_output'];			
-		}
-
-		if ( $proofratings_status && 'pause' == $proofratings_status->status) { 
+		if ('pause' == $proofratings_status) { 
 			$main_screen = [$this->settings_page, 'pause'];
 		}
 
-		if (isset($proofratings_status->status) && $proofratings_status->status == 'active' ) {
+		if ($proofratings_status == 'active' ) {
 			$main_screen = [$this->analytics, 'output'];
 		}
-
+		
 		$proofratings_icon = PROOFRATINGS_PLUGIN_URL . '/assets/images/proofratings-icon.png';
 
 		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen, $proofratings_icon, 25);
 
-		if (isset($proofratings_status->status) && $proofratings_status->status == 'active' ) {
+		if ($proofratings_status == 'active' ) {
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings', [$this->analytics, 'output']);
-			add_submenu_page('proofratings', __('Proofratings Widgets', 'proofratings'), __('Widgets', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->settings_page, 'output']);
+			
+			$location_menu = add_submenu_page('proofratings', __('Locations', 'proofratings'), __('Locations', 'proofratings'), 'manage_options', 'proofratings-locations', [$this->locations_page, 'render']);
+			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
+			
+			add_submenu_page('proofratings', __('Proofratings Widgets', 'proofratings'), __('Widgets', 'proofratings'), 'manage_options', 'proofratings-widgets', [$this->settings_page, 'output']);
 		}
 	}
 
@@ -120,7 +122,10 @@ class Proofratings_Admin {
 	 */
 	public function admin_enqueue_scripts() {		
 		$screen = get_current_screen();
-		if ( in_array( $screen->id, [ 'toplevel_page_proofratings', 'proofratings_page_proofratings-analytics' ] ) ) {
+		
+		preg_match('/(proofratings_page|proofratings-widgets)/', $screen->id, $matches);
+		
+		if ( $screen->id == 'toplevel_page_proofratings' || $matches  ) {
 			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
