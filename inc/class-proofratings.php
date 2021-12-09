@@ -87,16 +87,34 @@ class Wordpress_Proofratings {
 	/**
 	 * proofratings rest api callback
 	 */
-	public function set_reviews(WP_REST_Request $request) {
-		error_log(print_r($request->get_params(), true));
+	public function set_reviews(WP_REST_Request $request) {		
+		$locations = $request->get_param('locations');
+		if ( !is_array($locations) ) {
+			$locations = [];
+		}
 
-		$reviews_info = wp_parse_args($request->get_params(), ['status' => false, 'message' => '', 'reviews' => array()]);
+		global $wpdb;
 
-		$reviews = $reviews_info['reviews'];
-		unset($reviews_info['reviews']);
+		foreach ($locations as $id => $location) {
+			$reviews = null;
+			if ( isset($location['reviews']) && is_array($location['reviews'])) {
+				$reviews = maybe_serialize($location['reviews']);
+			}
 
-		update_option('proofratings_status', $reviews_info );
-		update_option( 'proofratings_reviews', $reviews);
+			$location_data = array(
+				'location_id' => $id,
+				'location' => @$location['name'],
+				'reviews' => $reviews,
+				'status' => @$location['status']
+			);
+			
+			$get_id = $wpdb->get_var("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'");
+			if ( $get_id ) {
+				$location_data['id'] = $get_id;
+			}
+
+			$wpdb->replace($wpdb->proofratings, $location_data);
+		}
 	}
 
 	/**
@@ -111,8 +129,9 @@ class Wordpress_Proofratings {
 		maybe_create_table($wpdb->proofratings, "CREATE TABLE $wpdb->proofratings (
 			`id` INT NOT NULL AUTO_INCREMENT, 
 			`location_id` VARCHAR(50) NULL,
-			`location` VARCHAR(255) NOT NULL, 
+			`location` VARCHAR(100) NULL, 
 			`reviews` LONGTEXT NULL, 
+			`settings` LONGTEXT NULL, 
 			`status` VARCHAR(20) NOT NULL DEFAULT 'pending', 
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
