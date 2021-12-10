@@ -11,13 +11,14 @@ import BadgeRectangle from './BadgeRectangle'
 import OverallRectangle from './OverallRectangle'
 import OverallNarrow from './OverallNarrow';
 import OverallPopup from './OverallPopup';
+import CTABanner from './CTABanner';
 
 const { useEffect, useState } = React;
 
 const ProofratingsWidgets = () => {
     const [state, setState ] = useState({
         error: null,
-        current_tab: 'badge-popup'
+        current_tab: 'overall-cta-banner'
     });
 
     const [settings, setSettings] = useState(store.getState());
@@ -100,6 +101,7 @@ const ProofratingsWidgets = () => {
             {state.current_tab === 'overall-rectangle' && <OverallRectangle />}
             {state.current_tab === 'overall-narrow' && <OverallNarrow />}
             {state.current_tab === 'badge-popup' && <OverallPopup />}
+            {state.current_tab === 'overall-cta-banner' && <CTABanner />}
 
             <h2 onClick={() => console.log(store.getState())}>Save data</h2>
         </React.Fragment>

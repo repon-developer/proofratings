@@ -8,6 +8,7 @@ const ACTIONS = {
     OVERALL_RECTANGLE: "OVERALL_RECTANGLE",
     OVERALL_NARROW: "OVERALL_NARROW",
     OVERALL_POPUP: "OVERALL_POPUP",
+    OVERALL_CTA_BANNER: "OVERALL_CTA_BANNER",
 };
 
 const settings = {
@@ -15,6 +16,7 @@ const settings = {
     badge_display: {
         sites_square: false,
         sites_rectangle: false,
+        overall_cta_banner: true,
         overall_rectangle: {embed: true, float: true},
         overall_narrow: {embed: false, float: true},
     },
@@ -23,6 +25,7 @@ const settings = {
     overall_rectangle: {},
     overall_narrow: {},
     overall_popup: {customize: true},
+    overall_cta_banner: {customize: true, shadow: true},
 };
 
 const settingsReducer = (state = settings, action) => { 
@@ -48,6 +51,9 @@ const settingsReducer = (state = settings, action) => {
 
         case "OVERALL_POPUP":
             return {...state, overall_popup: {...state.overall_popup, ...action.payload}};
+
+        case "OVERALL_CTA_BANNER":
+            return {...state, overall_cta_banner: {...state.overall_cta_banner, ...action.payload}};
 
         default:
             return state;

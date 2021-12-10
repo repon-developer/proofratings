@@ -14,7 +14,7 @@ const ReviewSites = (props) => {
         store.dispatch({ type: ACTIONS.ACTIVE_SITES, payload: activeSites });
     }
 
-    const get_category_sites = (category) => {      
+    const get_category_sites = (category, title) => {      
         const get_category_sites = Object.keys(proofratings.review_sites).map(key => {
             return {id: key, ...proofratings.review_sites[key]};
         })
@@ -26,14 +26,17 @@ const ReviewSites = (props) => {
         }
 
         return (
-            <div className="review-sites-checkboxes">
-                {get_category_sites.map(site => (
-                    <label key={site.id} className="checkbox-review-site">
-                        <input type="checkbox" checked={false} onClick={() => handleCheck(site.id)} />
-                        <img src={site.logo} alt={site.name} />
-                    </label>
-                ))}                
-            </div>
+            <React.Fragment>
+                <h2>{title}</h2>
+                <div className="review-sites-checkboxes">
+                    {get_category_sites.map(site => (
+                        <label key={site.id} className="checkbox-review-site">
+                            <input type="checkbox" onClick={() => handleCheck(site.id)} />
+                            <img src={site.logo} alt={site.name} />
+                        </label>
+                    ))}                
+                </div>
+            </React.Fragment>
         )
     }
 
@@ -42,24 +45,20 @@ const ReviewSites = (props) => {
 
             <div className="review-sites-checkboxes">
                 {activeSites.map(site_id => (
-                    <label className="checkbox-review-site">
-                        <input type="checkbox" checked={true} onClick={() => handleCheck(site_id)} />
+                    <label key={site_id} className="checkbox-review-site">
+                        <input type="checkbox" defaultChecked={true} onClick={() => handleCheck(site_id)} />
                         <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />
                     </label>
                 ))}
             </div>
 
-            <h2>General Review Sites</h2>
-            {get_category_sites('general')}
+            {get_category_sites('general', 'General Review Sites')}
 
-            <h2>Home Services Review Sites</h2>
-            {get_category_sites('home-service')}
+            {get_category_sites('home-service', 'Home Services Review Sites')}
 
-            <h2>Solar Review Sites</h2>
-            {get_category_sites('solar')}
+            {get_category_sites('solar', 'Solar Review Sites')}
 
-            <h2>SaaS/Software Review Sites</h2>
-            {get_category_sites('software')}
+            {get_category_sites('software', 'SaaS/Software Review Sites')}
         </React.Fragment>
     );
 };
