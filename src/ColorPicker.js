@@ -9,13 +9,13 @@ const ColorPicker = (props) => {
         jQuery(colorInput.current).wpColorPicker({
             change: function(event, ui) {
                 if ( typeof props.onUpdate === 'function' && props?.name ) {
-                    props.onUpdate(props?.name, ui.color.toString())
+                    props.onUpdate(ui.color.toString())
                 }
             },
     
             clear: function (event) {
                 if ( typeof props.onUpdate === 'function' && props?.name ) {
-                    props.onUpdate(props?.name, '')
+                    props.onUpdate('')
                 }
             }
         })

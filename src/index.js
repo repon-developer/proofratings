@@ -17,7 +17,7 @@ const ProofratingsWidgets = () => {
     });
 
     const [settings, setSettings] = useState(store.getState());
-    store.subscribe(() => setSettings({...store.getState()}))    
+    //store.subscribe(() => setSettings({...store.getState()}))
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
@@ -27,7 +27,6 @@ const ProofratingsWidgets = () => {
     useEffect(() => {       
         const location_id = proofratings_widgets_root.getAttribute("data-location");
         jQuery.post(proofratings.ajaxurl, {location_id, action: 'proofratings_get_location'}, function (response) {
-            console.log(response);
             if ( response?.success == false ) {
                 //return setError(true);
             }
@@ -76,8 +75,6 @@ const ProofratingsWidgets = () => {
         delete tabs['badge-popup'];
     }
 
-    console.log(settings)
-    
     return (
         <React.Fragment>
             <h2 className="nav-tab-wrapper">
@@ -91,6 +88,7 @@ const ProofratingsWidgets = () => {
             {state.current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
             {state.current_tab === 'badge-square' && <BadgeSquare />}
 
+            <h2 onClick={() => console.log(store.getState())}>Save data</h2>
         </React.Fragment>
     );
 };

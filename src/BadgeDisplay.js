@@ -11,7 +11,7 @@ const BadgeDisplay = (props) => {
 
     const update_single = (name) => {
         badge_display[name] = !badge_display[name];
-        store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });        
+        store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });
     }
 
     const update_deep = (name, level2) => {
@@ -20,8 +20,6 @@ const BadgeDisplay = (props) => {
     }
 
     const { sites_square, sites_rectangle, overall_rectangle, overall_narrow, overall_cta_banner } = badge_display;
-
-
 
     return (
         <React.Fragment>

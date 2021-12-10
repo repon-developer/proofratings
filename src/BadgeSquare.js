@@ -1,19 +1,21 @@
+import store, { ACTIONS } from './Store';
 import ColorPicker from "./ColorPicker";
-
 import Border from "./Border";
 
-const BadgeSquare = (props) => {
+const { useState } = React;
 
-    const sites_square = Object.assign({customize: true}, props.sites_square);
+const BadgeSquare = () => {
 
-    const handle_field = (name, data) => {
+    const [state, setState] = useState({customize: true, ...store.getState().sites_square})
 
-        
-
-        props.onUpdate('sites_square', {...sites_square, [name]: data});
+    
+    const handle_field = (data) => {
+        console.log(state, data)
+        store.dispatch({ type: ACTIONS.SITES_SQUARE, payload: data});
     }
+    
+    store.subscribe(() => setState(store.getState().sites_square))
 
-    //console.log(sites_square)
 
     return (
         <React.Fragment>
@@ -34,9 +36,9 @@ const BadgeSquare = (props) => {
                 <label>
                     <input
                         type="checkbox"
-                        checked={sites_square.customize}
+                        checked={state.customize}
                         className="checkbox-switch checkbox-yesno"
-                        onChange={() => handle_field('customize', !sites_square.customize)}
+                        onChange={() => handle_field({customize: !state.customize})}
                     />
                     Customize (this will customize all badges)
                 </label>
@@ -49,11 +51,11 @@ const BadgeSquare = (props) => {
                         <tbody>
                             <tr>
                                 <th scope="row">Logo Color</th>
-                                <td><ColorPicker name="logo_color" onUpdate={handle_field} color="#81d742" /></td>
+                                <td><ColorPicker onUpdate={(logo_color) => handle_field({logo_color})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Star Color</th>
-                                <td><ColorPicker name="star_color" onUpdate={handle_field} /></td>
+                                <td><ColorPicker onUpdate={(star_color) => handle_field({star_color})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Text Color</th>
@@ -68,7 +70,7 @@ const BadgeSquare = (props) => {
                                 <td><ColorPicker onUpdate={(background_color) => handle_field({background_color})} /></td>
                             </tr>
 
-                            <Border name="border" border={sites_square.border} onUpdate={handle_field} />
+                            <Border name="border" border={state.border} onUpdate={(border) => handle_field({border})} />
                             
                         </tbody>
                         <tbody>
