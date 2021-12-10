@@ -117,6 +117,7 @@ class Proofratings_Admin {
 			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
 				'ajaxurl' => admin_url('admin-ajax.php'),
+				'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 				'review_sites' => get_proofratings_settings()
 			));
 		}

@@ -1,8 +1,5 @@
-const { useState } = React;
-
-const ReviewSites = () => {
-
-    const [activeSites, setActiveSites] = useState(['facebook']);
+const ReviewSites = (props) => {
+    const activeSites = Array.isArray(props?.activeSites) ? props.activeSites : [];
 
     const handleCheck = (site_id) => {        
         const index = activeSites.indexOf(site_id);
@@ -11,8 +8,10 @@ const ReviewSites = () => {
         } else {
             activeSites.push(site_id);
         }
-        
-        setActiveSites([...activeSites])
+
+        if ( typeof props.updateSettings === 'function') {
+            props.updateSettings({activeSites})
+        }
     }
 
     const get_category_sites = (category) => {      
@@ -36,7 +35,6 @@ const ReviewSites = () => {
                 ))}                
             </div>
         )
-
     }
 
     return (
@@ -50,7 +48,6 @@ const ReviewSites = () => {
                     </label>
                 ))}
             </div>
-
 
             <h2>General Review Sites</h2>
             {get_category_sites('general')}
