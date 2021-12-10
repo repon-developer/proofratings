@@ -4,20 +4,24 @@ const proofratings_widgets_root = document.getElementById(
 
 import ReviewSites from './Sites';
 import BadgeDisplay from './BadgeDisplay';
+import BadgeSquare from './BadgeSquare'
 
 const { useEffect, useState } = React;
 
 const ProofratingsWidgets = () => {
     const [state, setState ] = useState({
         error: null,
-        current_tab: 'display-badges'
+        current_tab: 'badge-square'
     });
 
     const [settings, setSettings ] = useState({
         activeSites: ['facebook'],
         badge_display: {
             sites_square: true,
-            sites_rectangle: true,
+            sites_rectangle: false,
+        },
+        sites_square: {
+
         }
     });
 
@@ -54,7 +58,7 @@ const ProofratingsWidgets = () => {
     }
 
     
-    const { activeSites, badge_display } = settings;
+    const { activeSites, badge_display, sites_square } = settings;
     
     if ( badge_display.sites_square !== true ) {
         delete tabs['badge-square'];
@@ -91,6 +95,7 @@ const ProofratingsWidgets = () => {
 
             {state.current_tab === 'review-sites' && <ReviewSites updateSettings={update_settings} activeSites={activeSites} />}
             {state.current_tab === 'display-badges' && <BadgeDisplay updateSettings={update_settings} badge_display={badge_display} />}
+            {state.current_tab === 'badge-square' && <BadgeSquare updateSettings={update_settings} sites_square={sites_square} />}
 
         </React.Fragment>
     );
