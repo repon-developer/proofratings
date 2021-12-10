@@ -6,6 +6,8 @@ const ACTIONS = {
     SITES_SQUARE: "SITES_SQUARE",
     SITES_RECTANGLE: "SITES_RECTANGLE",
     OVERALL_RECTANGLE: "OVERALL_RECTANGLE",
+    OVERALL_NARROW: "OVERALL_NARROW",
+    OVERALL_POPUP: "OVERALL_POPUP",
 };
 
 const settings = {
@@ -14,11 +16,13 @@ const settings = {
         sites_square: false,
         sites_rectangle: false,
         overall_rectangle: {embed: true, float: true},
-        overall_narrow: {embed: false, float: false},
+        overall_narrow: {embed: false, float: true},
     },
     sites_square: {customize: true},
     sites_rectangle: {customize: true},
-    overall_rectangle: {}
+    overall_rectangle: {},
+    overall_narrow: {},
+    overall_popup: {customize: true},
 };
 
 const settingsReducer = (state = settings, action) => { 
@@ -38,6 +42,12 @@ const settingsReducer = (state = settings, action) => {
 
         case "OVERALL_RECTANGLE":
             return {...state, overall_rectangle: {...state.overall_rectangle, ...action.payload}};
+
+        case "OVERALL_NARROW":
+            return {...state, overall_narrow: {...state.overall_narrow, ...action.payload}};
+
+        case "OVERALL_POPUP":
+            return {...state, overall_popup: {...state.overall_popup, ...action.payload}};
 
         default:
             return state;
