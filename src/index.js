@@ -47,16 +47,39 @@ const ProofratingsWidgets = () => {
         'display-badges': 'Badges',
         'badge-square': 'Sites (Square)',
         'badge-rectangle': 'Sites (Rectangle)',
-        'overall-ratings-rectangle': 'Overall Rating (Rectangle)',
-        'overall-ratings-narrow': 'Overall Rating (Narrow)',
+        'overall-rectangle': 'Overall Rating (Rectangle)',
+        'overall-narrow': 'Overall Rating (Narrow)',
         'badge-popup': 'Popup Badges',
-        'overall-ratings-cta-banner': 'Overall Rating (CTA Banner)',
+        'overall-cta-banner': 'Overall Rating (CTA Banner)',
     }
 
-    console.log(settings)
-
+    
     const { activeSites, badge_display } = settings;
+    
+    if ( badge_display.sites_square !== true ) {
+        delete tabs['badge-square'];
+    }
 
+    if ( badge_display.sites_rectangle !== true ) {
+        delete tabs['badge-rectangle'];
+    }
+
+    if ( badge_display?.overall_rectangle?.embed !== true && badge_display?.overall_rectangle?.float !== true ) {
+        delete tabs['overall-rectangle']
+    }
+
+    if ( badge_display?.overall_narrow?.embed !== true && badge_display?.overall_narrow?.float !== true ) {
+        delete tabs['overall-narrow']
+    }
+
+    if ( badge_display?.overall_cta_banner !== true ) {
+        delete tabs['overall-cta-banner'];
+    }
+
+    if ( badge_display?.overall_rectangle?.float !== true && badge_display?.overall_narrow?.float !== true) {
+        delete tabs['badge-popup'];
+    }
+    
     return (
         <React.Fragment>
             <h2 className="nav-tab-wrapper">
