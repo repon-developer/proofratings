@@ -1,12 +1,11 @@
 import store, { ACTIONS } from "./Store";
 import ColorPicker from "./ColorPicker";
-import Border from "./Border";
-import Shadow from "./Shadow";
+
+import Button from "./Button";
 
 const { useState, useEffect } = React;
 
 const CTABanner = () => {
-    const settings = store.getState();
 
     const [state, setState] = useState(store.getState().overall_cta_banner);
 
@@ -17,14 +16,18 @@ const CTABanner = () => {
 
     const handle_field = (data) => store.dispatch({ type: ACTIONS.OVERALL_CTA_BANNER, payload: data });
 
-    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state.shadow)
-    const handleShadow = (name, value) => {
-        shadow[name] = value;
-        handle_field({shadow})
+    const handle_button = (name, value) => {
+        let button1 = typeof state.button1 === 'object' ? state.button1 : {};        
+        button1[name] = value;
+        handle_field({button1})
     }
 
-    console.log(state)
-
+    const handle_button2 = (name, value) => {
+        let button2 = typeof state.button2 === 'object' ? state.button2 : {};        
+        button2[name] = value;
+        handle_field({button2})
+    }
+    
     return (
         <React.Fragment>
             <table className="form-table">
@@ -131,6 +134,35 @@ const CTABanner = () => {
                         </React.Fragment>
                     )}
 
+                </tbody>
+            </table>
+
+            <h2 style={{fontSize: 25}}>Call-to-action Button</h2>
+            <table className="form-table">
+                <caption>First Button</caption>
+                <tbody>                    
+                    <Button key={'button1'} onUpdate={handle_button} {...state.button1}  />
+                </tbody>
+            </table>
+
+            <div className="gap-30" />
+            <table className="form-table">
+                <caption>Second Button</caption>
+                <tbody>                    
+                    <tr>
+                        <td colSpan={2} style={{paddingLeft: 0}}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={state.button2}
+                                    className="checkbox-switch"
+                                    onChange={() => handle_button2('show', !state.button2?.show)}
+                                /> Second Button
+                            </label>
+                        </td>
+                    </tr>
+
+                    {state.button2?.show && <Button key={'button2'} onUpdate={handle_button2} {...state.button2}  />}
                 </tbody>
             </table>
 

@@ -25,7 +25,13 @@ const settings = {
     overall_rectangle: {},
     overall_narrow: {},
     overall_popup: {customize: true},
-    overall_cta_banner: {customize: true, shadow: true},
+    overall_cta_banner: {
+        customize: false, 
+        shadow: true,
+        button1: {
+            shape: true
+        }
+    }
 };
 
 const settingsReducer = (state = settings, action) => { 
