@@ -19,7 +19,7 @@ const BadgeDisplay = (props) => {
         <React.Fragment>
             <table className="form-table">
                 <tbody>
-                    <tr>
+
                         <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Square)</th>
                         <td>
                             <div className="proofratings-image-option">
