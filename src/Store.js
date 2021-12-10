@@ -16,6 +16,7 @@ const settings = {
 };
 
 const settingsReducer = (state = settings, action) => { 
+    //console.log(state, action)
     switch (action.type) {
         case "ACTIVE_SITES":
             state.activeSites = action.payload;

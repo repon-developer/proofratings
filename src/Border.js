@@ -1,15 +1,9 @@
 import ColorPicker from "./ColorPicker";
 
 const Border = (props) => {
-    const border = Object.assign({ show: false, color: "", hover: "" }, props.border);
+    const {show, color, hover} = props.border
 
-    const update_border = (data) => {
-        if ( typeof props.onUpdate !== 'function' ) {
-            return;
-        }
-
-        props.onUpdate({...border, ...data});
-    }
+    const update_border = (name, value) => props.onUpdate(name, value)
 
     return (
         <React.Fragment>
@@ -18,23 +12,24 @@ const Border = (props) => {
                 <td>
                     <input
                         type="checkbox"
-                        checked={border.show}
-                        onChange={() => update_border({show: !border.show})}
+                        checked={show}
+                        onChange={() => update_border('show', !show)}
                         className="checkbox-switch"
                     />
                 </td>
             </tr>
 
-            {border.show && (
+            {show && (
                 <>
                     <tr>
                         <th scope="row">Border Color</th>
                         <td>
                             <ColorPicker
                                 name="color"
-                                color={border.color}
-                                onUpdate={(color) => update_border({color})}
+                                color={color}
+                                onUpdate={(color) => update_border('color', color)}
                             />
+
                         </td>
                     </tr>
                     <tr>
@@ -42,8 +37,8 @@ const Border = (props) => {
                         <td>
                             <ColorPicker
                                 name="hover"
-                                color={border.hover}
-                                onUpdate={(hover) => update_border({hover})}
+                                color={hover}
+                                onUpdate={(hover) => update_border('hover', hover)}
                             />
                         </td>
                     </tr>

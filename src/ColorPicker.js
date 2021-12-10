@@ -8,20 +8,20 @@ const ColorPicker = (props) => {
     useEffect(() => {
         jQuery(colorInput.current).wpColorPicker({
             change: function(event, ui) {
-                if ( typeof props.onUpdate === 'function' && props?.name ) {
+                if ( typeof props.onUpdate === 'function') {
                     props.onUpdate(ui.color.toString())
                 }
             },
     
             clear: function (event) {
-                if ( typeof props.onUpdate === 'function' && props?.name ) {
+                if ( typeof props.onUpdate === 'function') {
                     props.onUpdate('')
                 }
             }
         })
     }, [])
 
-    return <input class="proofratings-color-field" type="text" ref={colorInput} value={color} data-default-color={defaultColor} />
+    return <input type="text" ref={colorInput} value={color} data-default-color={defaultColor} />
 }
 
 export default ColorPicker;

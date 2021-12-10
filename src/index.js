@@ -49,7 +49,7 @@ const ProofratingsWidgets = () => {
     }
 
     
-    const { badge_display, activeSites } = settings;
+    const { badge_display, activeSites, sites_square } = settings;
     
     if ( badge_display.sites_square !== true ) {
         delete tabs['badge-square'];
@@ -88,7 +88,7 @@ const ProofratingsWidgets = () => {
             {state.current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
             {state.current_tab === 'badge-square' && <BadgeSquare />}
 
-            <h2 onClick={() => console.log(store.getState())}>Save data</h2>
+            <h2 onClick={() => console.log(store.getState().sites_square)}>Save data</h2>
         </React.Fragment>
     );
 };
