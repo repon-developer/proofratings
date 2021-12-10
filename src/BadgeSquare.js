@@ -1,16 +1,19 @@
 import ColorPicker from "./ColorPicker";
 
+import Border from "./Border";
+
 const BadgeSquare = (props) => {
 
-    const sites_square = Object.assign({}, props.sites_square);
+    const sites_square = Object.assign({customize: true}, props.sites_square);
 
-    const handleColor = () => {
-        sites_square.logo_color = color;
+    const handle_field = (name, data) => {
 
-        if ( typeof props.updateSettings === 'function' ) {
-            props.updateSettings({sites_square});
-        }
+        
+
+        props.onUpdate('sites_square', {...sites_square, [name]: data});
     }
+
+    //console.log(sites_square)
 
     return (
         <React.Fragment>
@@ -30,13 +33,14 @@ const BadgeSquare = (props) => {
                 </table>
                 <label>
                     <input
-                        name="proofratings_badges_square[customize]"
-                        className="checkbox-switch checkbox-yesno"
-                        defaultValue="yes"
                         type="checkbox"
+                        checked={sites_square.customize}
+                        className="checkbox-switch checkbox-yesno"
+                        onChange={() => handle_field('customize', !sites_square.customize)}
                     />
                     Customize (this will customize all badges)
                 </label>
+                
                 <div className="gap-30" />
                 <div id="square-badge-customize">
                     echo do_shortcode( '[proofratings_widgets
@@ -45,48 +49,27 @@ const BadgeSquare = (props) => {
                         <tbody>
                             <tr>
                                 <th scope="row">Logo Color</th>
-                                <td><ColorPicker update={handleColor} defaultValue="#000" /></td>
+                                <td><ColorPicker name="logo_color" onUpdate={handle_field} color="#81d742" /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Star Color</th>
-                                <td />
+                                <td><ColorPicker name="star_color" onUpdate={handle_field} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Text Color</th>
-                                <td />
+                                <td><ColorPicker onUpdate={(textcolor) => handle_field({textcolor})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Review count text color</th>
-                                <td />
+                                <td><ColorPicker onUpdate={(review_color_textcolor) => handle_field({review_color_textcolor})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Background Color</th>
-                                <td />
+                                <td><ColorPicker onUpdate={(background_color) => handle_field({background_color})} /></td>
                             </tr>
-                            <tr>
-                                <th scope="row">Border</th>
-                                <td>
-                                    <input
-                                        className="checkbox-switch"
-                                        name="proofratings_badges_square[border]"
-                                        defaultValue="yes"
-                                        type="checkbox"
-                                    />
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody
-                            id="proofratings-badges-sites-square-border-options"
-                            style={{ display: "none" }}
-                        >
-                            <tr>
-                                <th scope="row">Border Color</th>
-                                <td />
-                            </tr>
-                            <tr>
-                                <th scope="row">Border Hover Color</th>
-                                <td />
-                            </tr>
+
+                            <Border name="border" border={sites_square.border} onUpdate={handle_field} />
+                            
                         </tbody>
                         <tbody>
                             <tr>

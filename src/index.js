@@ -2,6 +2,8 @@ const proofratings_widgets_root = document.getElementById(
     "proofratings-widgets-root"
 );
 
+import store, { ACTIONS } from './Store';
+
 import ReviewSites from './Sites';
 import BadgeDisplay from './BadgeDisplay';
 import BadgeSquare from './BadgeSquare'
@@ -14,18 +16,8 @@ const ProofratingsWidgets = () => {
         current_tab: 'badge-square'
     });
 
-    const [settings, setSettings ] = useState({
-        activeSites: ['facebook'],
-        badge_display: {
-            sites_square: true,
-            sites_rectangle: false,
-        },
-        sites_square: {
-
-        }
-    });
-
-    const update_settings = (args) => setSettings({...settings, ...args})
+    const [settings, setSettings] = useState(store.getState());
+    store.subscribe(() => setSettings({...store.getState()}))    
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
@@ -37,7 +29,7 @@ const ProofratingsWidgets = () => {
         jQuery.post(proofratings.ajaxurl, {location_id, action: 'proofratings_get_location'}, function (response) {
             console.log(response);
             if ( response?.success == false ) {
-                return setError(true);
+                //return setError(true);
             }
         })
     }, []);
@@ -58,7 +50,7 @@ const ProofratingsWidgets = () => {
     }
 
     
-    const { activeSites, badge_display, sites_square } = settings;
+    const { badge_display, activeSites } = settings;
     
     if ( badge_display.sites_square !== true ) {
         delete tabs['badge-square'];
@@ -83,6 +75,8 @@ const ProofratingsWidgets = () => {
     if ( badge_display?.overall_rectangle?.float !== true && badge_display?.overall_narrow?.float !== true) {
         delete tabs['badge-popup'];
     }
+
+    console.log(settings)
     
     return (
         <React.Fragment>
@@ -93,9 +87,9 @@ const ProofratingsWidgets = () => {
                 })}
             </h2>
 
-            {state.current_tab === 'review-sites' && <ReviewSites updateSettings={update_settings} activeSites={activeSites} />}
-            {state.current_tab === 'display-badges' && <BadgeDisplay updateSettings={update_settings} badge_display={badge_display} />}
-            {state.current_tab === 'badge-square' && <BadgeSquare updateSettings={update_settings} sites_square={sites_square} />}
+            {state.current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} />}
+            {state.current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
+            {state.current_tab === 'badge-square' && <BadgeSquare />}
 
         </React.Fragment>
     );

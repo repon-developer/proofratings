@@ -1,7 +1,9 @@
+import store, { ACTIONS } from './Store';
+
 const ReviewSites = (props) => {
     const activeSites = Array.isArray(props?.activeSites) ? props.activeSites : [];
 
-    const handleCheck = (site_id) => {        
+    const handleCheck = (site_id) => {
         const index = activeSites.indexOf(site_id);
         if (index !== -1) {
             activeSites.splice(index, 1);
@@ -9,9 +11,7 @@ const ReviewSites = (props) => {
             activeSites.push(site_id);
         }
 
-        if ( typeof props.updateSettings === 'function') {
-            props.updateSettings({activeSites})
-        }
+        store.dispatch({ type: ACTIONS.ACTIVE_SITES, payload: activeSites });
     }
 
     const get_category_sites = (category) => {      
