@@ -35,7 +35,7 @@ const Button = (props) => {
             </tr>
             <tr>
                 <th scope="row">Button Text Color</th>
-                <td><ColorPicker onUpdate={(textcolor) => props.onUpdate('textcolor', textcolor)} /></td>
+                <td><ColorPicker color={props.textcolor} onUpdate={(textcolor) => props.onUpdate('textcolor', textcolor)} /></td>
             </tr>
             <tr>
                 <th scope="row">Button Background Color</th>

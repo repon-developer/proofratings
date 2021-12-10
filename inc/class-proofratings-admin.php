@@ -123,7 +123,8 @@ class Proofratings_Admin {
 			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
 				'ajaxurl' => admin_url('admin-ajax.php'),
 				'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
-				'review_sites' => get_proofratings_settings()
+				'review_sites' => get_proofratings_settings(),
+				'pages' => get_pages()
 			));
 		}
 	}

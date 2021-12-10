@@ -28,7 +28,10 @@ const settings = {
     overall_cta_banner: {
         customize: false, 
         shadow: true,
+        hide_on: [3],
         button1: {
+            text: 'Sign Up',
+            textcolor: '#8224e3',
             shape: true
         }
     }

@@ -2,6 +2,7 @@ import store, { ACTIONS } from "./Store";
 import ColorPicker from "./ColorPicker";
 
 import Button from "./Button";
+import Pages from "./Pages";
 
 const { useState, useEffect } = React;
 
@@ -166,24 +167,7 @@ const CTABanner = () => {
                 </tbody>
             </table>
 
-            <table id="floating-badge-pages" className="form-table" style={{}}>
-                <caption>Page to show on</caption>
-                <tbody>
-                    <tr>
-                        <th scope="row">Privacy Policy</th>
-                        <td>
-                            <input name="proofratings_overall_ratings_rectangle[pages][3]" defaultValue="no" type="hidden" /><label><input className="checkbox-switch" name="proofratings_overall_ratings_rectangle[pages][3]" defaultValue="yes" defaultChecked type="checkbox" /></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Sample Page</th>
-                        <td>
-                            <input name="proofratings_overall_ratings_rectangle[pages][2]" defaultValue="no" type="hidden" /><label><input className="checkbox-switch" name="proofratings_overall_ratings_rectangle[pages][2]" defaultValue="yes" defaultChecked type="checkbox" /></label>		
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <Pages onUpdate={handle_field} hide_on={state?.hide_on} />           
 
         </React.Fragment>
     );
