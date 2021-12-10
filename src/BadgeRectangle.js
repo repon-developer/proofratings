@@ -5,13 +5,14 @@ import Shadow from "./Shadow";
 
 const { useState, useEffect } = React;
 
-const BadgeSquare = () => {
+const BadgeRectangle = () => {
     const [state, setState] = useState(Object.assign({customize: false}, store.getState().sites_square))
-    
+
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setState(store.getState().sites_square))
         return () => unsubscribe();
     }, [])
+    
 
     const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_SQUARE, payload: data})
 
@@ -76,13 +77,15 @@ const BadgeSquare = () => {
                     <table className="form-table">
                         <tbody>
                             <tr>
-                                <th scope="row">Logo Color</th>
-                                <td><ColorPicker onUpdate={(logo_color) => handle_field({logo_color})} /></td>
-                            </tr>
-                            <tr>
                                 <th scope="row">Star Color</th>
                                 <td><ColorPicker onUpdate={(star_color) => handle_field({star_color})} /></td>
                             </tr>
+
+                            <tr>
+                                <th scope="row">Site Icon Color</th>
+                                <td><ColorPicker onUpdate={(icon_color) => handle_field({icon_color})} /></td>
+                            </tr>
+
                             <tr>
                                 <th scope="row">Text Color</th>
                                 <td><ColorPicker onUpdate={(textcolor) => handle_field({textcolor})} /></td>
@@ -106,4 +109,4 @@ const BadgeSquare = () => {
     );
 };
 
-export default BadgeSquare;
+export default BadgeRectangle;

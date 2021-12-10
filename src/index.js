@@ -7,17 +7,24 @@ import store, { ACTIONS } from './Store';
 import ReviewSites from './Sites';
 import BadgeDisplay from './BadgeDisplay';
 import BadgeSquare from './BadgeSquare'
+import BadgeRectangle from './BadgeRectangle'
+import OverallRectangle from './OverallRectangle'
 
 const { useEffect, useState } = React;
 
 const ProofratingsWidgets = () => {
     const [state, setState ] = useState({
         error: null,
-        current_tab: 'badge-square'
+        current_tab: 'overall-rectangle'
     });
 
     const [settings, setSettings] = useState(store.getState());
-    //store.subscribe(() => setSettings({...store.getState()}))
+
+    useEffect(() => {
+        const unsubscribe = store.subscribe(() => setSettings({...store.getState()}))
+        return () => unsubscribe();
+    }, [])
+
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
@@ -80,15 +87,17 @@ const ProofratingsWidgets = () => {
             <h2 className="nav-tab-wrapper">
                 {Object.keys(tabs).map((key) => {
                     const tab_class = (state.current_tab === key) ? 'nav-tab-active' : '';
-                    return <a href="#" onClick={(e) => setTab(key, e)} className={`nav-tab ${tab_class}`}>{tabs[key]}</a>
+                    return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={`nav-tab ${tab_class}`}>{tabs[key]}</a>
                 })}
             </h2>
 
             {state.current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} />}
             {state.current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
             {state.current_tab === 'badge-square' && <BadgeSquare />}
+            {state.current_tab === 'badge-rectangle' && <BadgeRectangle />}
+            {state.current_tab === 'overall-rectangle' && <OverallRectangle />}
 
-            <h2 onClick={() => console.log(store.getState().sites_square)}>Save data</h2>
+            <h2 onClick={() => console.log(store.getState())}>Save data</h2>
         </React.Fragment>
     );
 };

@@ -21,7 +21,7 @@ const ColorPicker = (props) => {
         })
     }, [])
 
-    return <input type="text" ref={colorInput} value={color} data-default-color={defaultColor} />
+    return <input type="text" ref={colorInput} defaultValue={color} data-default-color={defaultColor} />
 }
 
 export default ColorPicker;

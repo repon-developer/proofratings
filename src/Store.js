@@ -4,31 +4,40 @@ const ACTIONS = {
     ACTIVE_SITES: "ACTIVE_SITES",
     BADGE_DISPLAY: "BADGE_DISPLAY",
     SITES_SQUARE: "SITES_SQUARE",
+    SITES_RECTANGLE: "SITES_RECTANGLE",
+    OVERALL_RECTANGLE: "OVERALL_RECTANGLE",
 };
 
 const settings = {
     activeSites: ["facebook"],
     badge_display: {
-        sites_square: true,
+        sites_square: false,
         sites_rectangle: false,
+        overall_rectangle: {embed: true, float: true},
+        overall_narrow: {embed: false, float: false},
     },
-    sites_square: {},
+    sites_square: {customize: true},
+    sites_rectangle: {customize: true},
+    overall_rectangle: {}
 };
 
 const settingsReducer = (state = settings, action) => { 
     //console.log(state, action)
     switch (action.type) {
         case "ACTIVE_SITES":
-            state.activeSites = action.payload;
-            return state;
+            return {...state, activeSites: action.payload};
 
         case "BADGE_DISPLAY":
-            state.badge_display = action.payload;
-            return state;
+            return {...state, badge_display: action.payload};
 
         case "SITES_SQUARE":
-            state.sites_square = {...state.sites_square, ...action.payload};
-            return state;
+            return {...state, sites_square: {...state.sites_square, ...action.payload}};
+
+        case "SITES_RECTANGLE":
+            return {...state, sites_rectangle: {...state.sites_rectangle, ...action.payload}};
+
+        case "OVERALL_RECTANGLE":
+            return {...state, overall_rectangle: {...state.overall_rectangle, ...action.payload}};
 
         default:
             return state;

@@ -103,6 +103,11 @@ class Proofratings_Admin {
 	 */
 	public function admin_enqueue_scripts() {		
 		$screen = get_current_screen();
+
+		wp_deregister_script('react');
+		wp_deregister_script('react-dom');
+		wp_register_script( 'react', 'https://unpkg.com/react@17/umd/react.development.js', [], 17, true);
+		wp_register_script( 'react-dom', 'https://unpkg.com/react-dom@17/umd/react-dom.development.js', [], 17, true);	
 		
 		preg_match('/(proofratings_page|proofratings-widgets)/', $screen->id, $matches);
 		

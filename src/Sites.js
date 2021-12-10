@@ -28,7 +28,7 @@ const ReviewSites = (props) => {
         return (
             <div className="review-sites-checkboxes">
                 {get_category_sites.map(site => (
-                    <label className="checkbox-review-site">
+                    <label key={site.id} className="checkbox-review-site">
                         <input type="checkbox" checked={false} onClick={() => handleCheck(site.id)} />
                         <img src={site.logo} alt={site.name} />
                     </label>
