@@ -28,20 +28,56 @@ const BadgeRectangle = () => {
         handle_field({shadow})
     }
 
-    console.log(state)
+    const get_styles = () => {
+        const styles = []
+        if ( state?.star_color ) {
+            styles.push('--themeColor:' + state.star_color);
+        }
+    
+        if ( state?.textcolor ) {
+            styles.push('--textColor:' + state.textcolor);
+        }
 
-    const styles = {}
+        if ( state?.review_color_textcolor ) {
+            styles.push('--reviewCountTextColor:' + state.review_color_textcolor);
+        }
 
-    if ( state?.star_color ) {
-        styles['--themeColor'] = state.star_color
+        if ( state?.background_color ) {
+            styles.push('background-color:' + state.background_color);
+        }
+    
+        if ( state?.border?.show === false ) {
+            styles.push('border: none');
+        }
+    
+        if ( border?.color ) {
+            styles.push('--borderColor:' + border.color);
+        }
+    
+        if ( border?.hover ) {
+            styles.push('--borderHoverColor:' + border.hover);
+        }
+
+        if ( shadow?.shadow === false ) {
+            styles.push('--shadowColor: transparent');
+        }
+
+        if ( shadow?.shadow !== false && shadow?.color ) {
+            styles.push('--shadowColor:' + shadow.color);
+        }
+    
+        return styles;
     }
 
-    if ( state?.textcolor ) {
-        styles['--textColor'] = state.textcolor
+    
+    css_style = `.proofratings-widget.proofratings-widget-rectangle {${get_styles().join(';')}}`;
+    if ( shadow?.shadow !== false && shadow?.hover ) {
+        css_style += `.proofratings-widget.proofratings-widget-rectangle:hover {--shadowColor: ${shadow.hover}}`;
     }
-
+    
     return (
         <React.Fragment>
+            <style>{css_style}</style>
             <table className="form-table">
                 <tbody>
                     <tr>
@@ -69,19 +105,17 @@ const BadgeRectangle = () => {
 
             {state.customize && (
                 <React.Fragment>
-                    <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                        <div style={styles} className="proofratings-widget proofratings-widget-square proofratings-widget-customized">
-                            <div className="review-site-logo" style={{WebkitMaskImage: 'url(http://proofratings.me/wp-content/plugins/proofratings/assets/images/yelp.svg)'}}>
-                                <img src="http://proofratings.me/wp-content/plugins/proofratings/assets/images/yelp.svg" alt="Yelp" />
-                            </div>
-                            
+                    <div id="proofratings-badge-rectangle" className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
+                        <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
+                            <div className="review-site-logo"></div>
+                            <h4 className="rating-title">Yelp Rating</h4>
                             <div className="proofratings-reviews" itemProp="reviewRating">
                                 <span className="proofratings-score">0.0</span>
-                                <span className="proofratings-stars"><i style={{width: '0%'}} /></span>
+                                <span className="proofratings-stars">
+                                    <i style={{ width: "0%" }} />
+                                </span>
                             </div>
-                            
                             <div className="review-count"> 0 reviews </div>
-                            <p className="view-reviews">View Reviews</p>
                         </div>
                     </div>
 

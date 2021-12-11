@@ -27,8 +27,55 @@ const BadgeSquare = () => {
         handle_field({shadow})
     }
 
+    const get_styles = () => {
+        const styles = []
+        if ( state?.star_color ) {
+            styles.push('--themeColor:' + state.star_color);
+        }
+    
+        if ( state?.textcolor ) {
+            styles.push('--textColor:' + state.textcolor);
+        }
+
+        if ( state?.review_color_textcolor ) {
+            styles.push('--reviewCountTextColor:' + state.review_color_textcolor);
+        }
+
+        if ( state?.background_color ) {
+            styles.push('background-color:' + state.background_color);
+        }
+    
+        if ( state?.border?.show === false ) {
+            styles.push('border: none');
+        }
+    
+        if ( border?.color ) {
+            styles.push('--borderColor:' + border.color);
+        }
+    
+        if ( border?.hover ) {
+            styles.push('--borderHoverColor:' + border.hover);
+        }
+
+        if ( shadow?.shadow === false ) {
+            styles.push('--shadowColor: transparent');
+        }
+
+        if ( shadow?.shadow !== false && shadow?.color ) {
+            styles.push('--shadowColor:' + shadow.color);
+        }
+    
+        return styles;
+    }
+    
+    css_style = `.proofratings-widget.proofratings-widget-square {${get_styles().join(';')}}`;
+    if ( shadow?.shadow !== false && shadow?.hover ) {
+        css_style += `.proofratings-widget.proofratings-widget-square:hover {--shadowColor: ${shadow.hover}}`;
+    }
+
     return (
         <React.Fragment>
+            <style>{css_style}</style>
             <table className="form-table">
                 <tbody>
                     <tr>

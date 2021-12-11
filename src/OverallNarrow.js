@@ -25,8 +25,45 @@ const OverallNarrow = () => {
         handle_field({shadow})
     }
 
+    const get_styles = () => {
+        const styles = []
+        if ( state?.star_color ) {
+            styles.push('--star_color:' + state.star_color);
+        }
+    
+        if ( state?.rating_color ) {
+            styles.push('--rating_color:' + state.rating_color);
+        }
+
+        if ( state?.background_color ) {
+            styles.push('--background_color:' + state.background_color);
+        }
+
+        if ( state?.review_text_color ) {
+            styles.push('--review_text_color:' + state.review_text_color);
+        }
+
+        if ( shadow?.shadow === false ) {
+            styles.push('--shadow_color: transparent');
+            styles.push('--shadow_hover: transparent');
+        }
+
+        if ( shadow?.shadow !== false && shadow?.color ) {
+            styles.push('--shadow_color:' + shadow.color);
+        }
+
+        if ( shadow?.shadow !== false && shadow?.hover ) {
+            styles.push('--shadow_hover:' + shadow.hover);
+        }
+    
+        return styles;
+    }
+
+    css_style = `.proofratings-badge.proofratings-badge-narrow {${get_styles().join(';')}}`;
+
     return (
         <React.Fragment>
+            <style>{css_style}</style>
             <table className="form-table">
                 <tbody>
                     <tr>
@@ -36,7 +73,7 @@ const OverallNarrow = () => {
                         <td><code className="shortocde-area">[proofratings_overall_ratings type="narrow"]</code></td>
                     </tr>
 
-                    {settings?.badge_display?.overall_rectangle?.float && (
+                    {settings?.badge_display?.overall_rectangle_float && (
                         <React.Fragment>
                             <tr>
                                 <th scope="row">Tablet Visibility</th>
@@ -110,6 +147,25 @@ const OverallNarrow = () => {
 
                     {state?.customize && (
                         <React.Fragment>
+                            <tr>
+                                <td style={{paddingLeft: 0}} colSpan={2}>
+                                    <div className="proofratings-badge proofratings-badge-narrow">
+                                        <div className="proofratings-logos">
+                                            <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google"/>
+                                            <img src={`${proofratings.assets_url}/images/icon-trustpilot.png`} alt="trustpilot"/>
+                                            <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
+                                        </div>
+                                        <div className="proofratings-reviews">
+                                            <span className="proofratings-score">4.8</span>
+                                            <span className="proofratings-stars">
+                                                <i style={{ width: "96%" }} />
+                                            </span>
+                                        </div>
+                                        <div className="proofratings-review-count">44 reviews</div>
+                                    </div>
+                                </td>
+                            </tr>
+
                             <tr>
                                 <th scope="row">Star Color</th>
                                 <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({star_color})} /></td>
