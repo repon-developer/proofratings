@@ -51,6 +51,27 @@ body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {paddi
     margin-bottom: 30px;
 }
 
+.connect-sites-container {
+    padding: 25px;
+    display: table;
+    padding-bottom: 0;
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
+}
+
+.connect-sites-container > h2 {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+}
+
+.connect-sites-container .review-sites-checkboxes {margin-bottom: 0;}
+.connect-sites-container .review-sites-checkboxes > label:last-child {margin-right: 0;}
+
+
 .review-sites-checkboxes .checkbox-review-site {
     margin-right: 20px;
     margin-bottom: 20px;
