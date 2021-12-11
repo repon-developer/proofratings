@@ -8,10 +8,8 @@ const ACTIONS = {
     BADGE_DISPLAY: "BADGE_DISPLAY",
     SITES_SQUARE: "SITES_SQUARE",
     SITES_RECTANGLE: "SITES_RECTANGLE",
-    OVERALL_RECTANGLE: "OVERALL_RECTANGLE",
-
-    OVERALL_NARROW_EMBED: "OVERALL_NARROW_EMBED",
-    OVERALL_NARROW_FLOAT: "OVERALL_NARROW_FLOAT",
+    
+    
 
     OVERALL_POPUP: "OVERALL_POPUP",
     OVERALL_CTA_BANNER: "OVERALL_CTA_BANNER",
@@ -31,11 +29,9 @@ const settings = {
     },
     sites_square: {},
     sites_rectangle: {},
-    overall_rectangle: {
-        tablet: true,
-        mobile: true,
-        close_button: true,
-    },
+
+    overall_rectangle_embed: {},
+    overall_rectangle_float: {tablet: true, mobile: true, close_button: true},
 
     overall_narrow_embed: {},
     overall_narrow_float: {tablet: true, mobile: true, close_button: true},
@@ -77,10 +73,6 @@ const settingsReducer = (state = settings, action) => {
 
         case "OVERALL_SAVE":
             return {...state, [action.payload.name]: {...state[action.payload.name], ...action.payload.data}};
-
-
-        case "OVERALL_NARROW_FLOAT":
-            return {...state, overall_narrow_float: {...state.overall_narrow_float, ...action.payload}};
 
         case "OVERALL_POPUP":
             return {...state, overall_popup: {...state.overall_popup, ...action.payload}};

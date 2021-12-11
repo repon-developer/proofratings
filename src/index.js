@@ -9,8 +9,8 @@ import BadgeDisplay from './BadgeDisplay';
 import BadgeSquare from './BadgeSquare'
 import BadgeRectangle from './BadgeRectangle'
 
-import OverallRectangleEmbed from './OverallRectangle_Embed'
-import OverallRectangleFloat from './OverallRectangle_Float'
+import OverallRectangleEmbed from './OverallRectangle/Embed'
+import OverallRectangleFloat from './OverallRectangle/Float'
 
 import OverallNarrowEmbed from './OverallNarrow/Embed';
 import OverallNarrowFloat from './OverallNarrow/Float';
