@@ -77,20 +77,12 @@ class Proofratings_Ajax {
 		}
 
 		$location = $wpdb->get_row("SELECT * FROM $wpdb->proofratings WHERE id = $location");
-
 		if ( !$location ) {
 			wp_send_json_error();
 		}
-
-		$settings = maybe_unserialize( $location->settings );
-
-		if ( !is_array($settings) ) {
-			$settings = [];
-		}
-
-		$settings = $this->sanitize_data($settings);
-
-		wp_send_json( $settings );
+		
+		$location = sanitize_proofratings_location($location);
+		wp_send_json( $location->settings );
 	}
 
 	

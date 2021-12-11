@@ -102,11 +102,11 @@ const ProofratingsWidgets = () => {
         delete tabs['badge-rectangle'];
     }
 
-    if ( badge_display?.overall_rectangle?.embed !== true && badge_display?.overall_rectangle?.float !== true ) {
+    if ( badge_display?.overall_rectangle_embed !== true && badge_display?.overall_rectangle_float !== true ) {
         delete tabs['overall-rectangle']
     }
 
-    if ( badge_display?.overall_narrow?.embed !== true && badge_display?.overall_narrow?.float !== true ) {
+    if ( badge_display?.overall_narrow_embed !== true && badge_display?.overall_narrow_float !== true ) {
         delete tabs['overall-narrow']
     }
 
@@ -114,7 +114,7 @@ const ProofratingsWidgets = () => {
         delete tabs['overall-cta-banner'];
     }
 
-    if ( badge_display?.overall_rectangle?.float !== true && badge_display?.overall_narrow?.float !== true) {
+    if ( badge_display?.overall_rectangle_float !== true && badge_display?.overall_narrow_float !== true) {
         delete tabs['badge-popup'];
     }
 

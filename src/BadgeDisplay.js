@@ -5,21 +5,17 @@ const BadgeDisplay = (props) => {
     const badge_display = Object.assign({
         sites_square: false,
         sites_rectangle: false,
-        overall_rectangle: {embed: false, float: false},
-        overall_narrow: {embed: false, float: false},
-    }, props.badge_display);
+        overall_cta_banner: false,
+        overall_rectangle_embed: false,
+        overall_rectangle_float: false,
+        overall_narrow_embed: false,
+        overall_narrow_float: true
+    }, props?.badge_display);
 
     const update_single = (name) => {
         badge_display[name] = !badge_display[name];
         store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });
     }
-
-    const update_deep = (name, level2) => {
-        badge_display[name][level2] = !badge_display[name][level2];
-        store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });
-    }
-
-    const { sites_square, sites_rectangle, overall_rectangle, overall_narrow, overall_cta_banner } = badge_display;
 
     return (
         <React.Fragment>
@@ -31,7 +27,7 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
                                 <label>
-                                    <input onChange={() => update_single('sites_square')} className="checkbox-switch checkbox-onoff" checked={sites_square} type="checkbox" />
+                                    <input onChange={() => update_single('sites_square')} className="checkbox-switch checkbox-onoff" checked={badge_display?.sites_square} type="checkbox" />
                                     Embed only
                                 </label>
                             </div>
@@ -43,7 +39,7 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/widget-style2.png`} alt="Proofratings style" />
                                 <label>
-                                    <input className="checkbox-switch checkbox-onoff" onChange={() => update_single('sites_rectangle')} type="checkbox" checked={sites_rectangle} /> Embed only
+                                    <input className="checkbox-switch checkbox-onoff" onChange={() => update_single('sites_rectangle')} type="checkbox" defaultChecked={badge_display?.sites_rectangle} /> Embed only
                                 </label>
                             </div>
                         </td>
@@ -54,11 +50,11 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/floating-badge-style1.png`} alt="Proofratings style" />
                                 <label style={{ marginRight: 30 }}>
-                                    <input className="checkbox-switch checkbox-onoff" type="checkbox" checked={overall_rectangle?.embed} onChange={() => update_deep('overall_rectangle', 'embed')} /> Embed
+                                    <input className="checkbox-switch checkbox-onoff" type="checkbox" defaultChecked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} /> Embed
                                 </label>
 
                                 <label>
-                                    <input className="checkbox-switch checkbox-onoff" type="checkbox" checked={overall_rectangle?.float} onChange={() => update_deep('overall_rectangle', 'float')} /> Float
+                                    <input className="checkbox-switch checkbox-onoff" type="checkbox" defaultChecked={badge_display?.overall_rectangle_float} onChange={() => update_single('overall_rectangle_float')} /> Float
                                 </label>
                             </div>
                         </td>
@@ -72,8 +68,8 @@ const BadgeDisplay = (props) => {
                                     <input
                                         type="checkbox"
                                         className="checkbox-switch checkbox-onoff"
-                                        onChange={() => update_deep('overall_narrow', 'embed')}
-                                        checked={overall_narrow?.embed}
+                                        onChange={() => update_single('overall_narrow_embed')}
+                                        defaultChecked={badge_display?.overall_narrow_embed}
                                     />
                                     Embed
                                 </label>
@@ -82,8 +78,8 @@ const BadgeDisplay = (props) => {
                                     <input
                                         type="checkbox"
                                         className="checkbox-switch checkbox-onoff"
-                                        onChange={() => update_deep('overall_narrow', 'float')}
-                                        checked={overall_narrow?.float}
+                                        onChange={() => update_single('overall_narrow_float')}
+                                        defaultChecked={badge_display?.overall_narrow_float}
                                     />
                                     Float
                                 </label>
@@ -98,7 +94,7 @@ const BadgeDisplay = (props) => {
                                 <label>
                                     <input
                                         type="checkbox"
-                                        checked={overall_cta_banner}
+                                        defaultChecked={badge_display?.overall_cta_banner}
                                         className="checkbox-switch checkbox-onoff"
                                         onChange={() => update_single('overall_cta_banner')}
                                     /> Float only

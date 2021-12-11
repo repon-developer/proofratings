@@ -415,3 +415,60 @@ function get_proofratings_current_status() {
 
     return $proofratings_status;
 }
+
+/**
+ * Sanitize boolean data
+ * @since  1.0.6
+ */
+function sanitize_proofrating_boolean_data($string) {
+    if (is_array($string)) {
+        foreach ($string as $k => $v) {
+            $string[$k] = sanitize_proofrating_boolean_data($v); 
+        }
+
+        return $string;
+    }
+
+    if ( $string === 'true' ) {
+        return true;
+    }
+
+    if ( $string === 'false' ) {
+        return false;
+    }
+    
+    return $string;
+}
+
+
+/**
+ * get current status
+ * @since  1.0.6
+ */
+function sanitize_proofratings_location($location) {    
+    $reviews = maybe_unserialize( $location->reviews );
+    if ( !is_array($reviews) ) {
+        $reviews = [];
+    }
+
+    $location->reviews = $reviews;
+
+    $settings = maybe_unserialize( $location->settings );
+    if ( !is_array($settings) ) {
+        $settings = [];
+    }
+
+    $settings = $location->settings = sanitize_proofrating_boolean_data($settings);
+
+    $location->connected = 0;
+    if ( isset($settings['activeSites']) && is_array($settings['activeSites']) ) {
+        $location->connected = sizeof($settings['activeSites']);
+    }
+
+    $location->widgets = 0;
+    if ( isset($settings['badge_display']) && is_array($settings['badge_display']) ) {
+        $location->widgets = sizeof(array_filter($settings['badge_display']));
+    }
+
+    return $location;
+}

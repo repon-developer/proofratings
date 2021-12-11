@@ -48,17 +48,8 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 		$locations = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->proofratings ORDER BY location ASC LIMIT %d, %d", $offset, $this->per_page));
 
 		array_walk($locations, function(&$location){
-			$reviews = maybe_unserialize( $location->reviews );
-			if ( !is_array($reviews) ) {
-				$reviews = [];
-			}
-
-			$location->reviews = $reviews;
-
-			$location->connected = 2;
-			$location->widgets = 2;
+			$location = sanitize_proofratings_location($location);
 		});
-
 		
 		$status_text = __('~', 'proofratings');
 		if ( sizeof(array_unique(wp_list_pluck( $locations, 'status'))) == 1 ) {

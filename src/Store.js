@@ -17,9 +17,11 @@ const settings = {
     badge_display: {
         sites_square: false,
         sites_rectangle: false,
-        overall_cta_banner: true,
-        overall_rectangle: {embed: true, float: true},
-        overall_narrow: {embed: false, float: true},
+        overall_cta_banner: false,
+        overall_rectangle_embed: false,
+        overall_rectangle_float: false,
+        overall_narrow_embed: false,
+        overall_narrow_float: true
     },
     sites_square: {customize: true},
     sites_rectangle: {customize: true},
