@@ -7,7 +7,7 @@ import Pages from "./Pages";
 
 const { useState, useEffect } = React;
 
-const OverallRectangle = (props) => {
+const OverallRectangle_Embed = (props) => {
     const settings = store.getState();
 
     const [state, setState] = useState(store.getState().overall_rectangle);
@@ -82,65 +82,6 @@ const OverallRectangle = (props) => {
                         </td>
                     </tr>
 
-                    {settings?.badge_display?.overall_rectangle_float && (
-                        <React.Fragment>
-                            <tr>
-                                <th scope="row">Tablet Visibility</th>
-                                <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.tablet}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({tablet: !state?.tablet})}
-                                        />
-
-                                        Show/Hide on tablet
-                                    </label>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Mobile Visibility</th>
-                                <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.mobile}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({mobile: !state?.mobile})}
-                                        />
-                                        Show/Hide on mobile
-                                    </label>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Close option</th>
-                                <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.close_button}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({close_button: !state?.close_button})}
-                                        />
-                                    </label>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Position</th>
-                                <td>
-                                    <select defaultValue={state?.position} onChange={(e) => handle_field({position: e.target.value})}>
-                                        <option value="left">Left</option>
-                                        <option value="right">Right</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </React.Fragment>
-                    )}
-
                     <tr>
                         <td style={{ paddingLeft: 0 }} colSpan={2}>
                             <label>
@@ -206,10 +147,8 @@ const OverallRectangle = (props) => {
                 </tbody>
             </table>
 
-            {settings?.badge_display?.overall_rectangle?.float && <Pages onUpdate={handle_field} hide_on={state?.hide_on} />}
-
         </React.Fragment>
     );
 };
 
-export default OverallRectangle;
+export default OverallRectangle_Embed;

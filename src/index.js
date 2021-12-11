@@ -8,8 +8,13 @@ import ReviewSites from './Sites';
 import BadgeDisplay from './BadgeDisplay';
 import BadgeSquare from './BadgeSquare'
 import BadgeRectangle from './BadgeRectangle'
-import OverallRectangle from './OverallRectangle'
-import OverallNarrow from './OverallNarrow';
+
+import OverallRectangleEmbed from './OverallRectangle_Embed'
+import OverallRectangleFloat from './OverallRectangle_Float'
+
+import OverallNarrowEmbed from './OverallNarrow/Embed';
+import OverallNarrowFloat from './OverallNarrow/Float';
+
 import OverallPopup from './OverallPopup';
 import CTABanner from './CTABanner';
 
@@ -87,8 +92,10 @@ const ProofratingsWidgets = () => {
         'display-badges': 'Badges',
         'badge-square': 'Sites (Square)',
         'badge-rectangle': 'Sites (Rectangle)',
-        'overall-rectangle': 'Overall Rating (Rectangle)',
-        'overall-narrow': 'Overall Rating (Narrow)',
+        'overall-rectangle-embed': 'Overall Rating Rectangle - EMBED',
+        'overall-rectangle-float': 'Overall Rating Rectangle - FLOAT',
+        'overall-narrow-embed': 'Overall Rating Narrow - EMBED',
+        'overall-narrow-float': 'Overall Rating Narrow - FLOAT',
         'badge-popup': 'Popup Badges',
         'overall-cta-banner': 'Overall Rating (CTA Banner)',
     }
@@ -104,12 +111,20 @@ const ProofratingsWidgets = () => {
         delete tabs['badge-rectangle'];
     }
 
-    if ( badge_display?.overall_rectangle_embed !== true && badge_display?.overall_rectangle_float !== true ) {
-        delete tabs['overall-rectangle']
+    if ( badge_display?.overall_rectangle_embed !== true ) {
+        delete tabs['overall-rectangle-embed']
     }
 
-    if ( badge_display?.overall_narrow_embed !== true && badge_display?.overall_narrow_float !== true ) {
-        delete tabs['overall-narrow']
+    if ( badge_display?.overall_rectangle_float !== true ) {
+        delete tabs['overall-rectangle-float']
+    }
+
+    if ( badge_display?.overall_narrow_embed !== true ) {
+        delete tabs['overall-narrow-embed']
+    }
+
+    if ( badge_display?.overall_narrow_float !== true ) {
+        delete tabs['overall-narrow-float']
     }
 
     if ( badge_display?.overall_cta_banner !== true ) {
@@ -137,8 +152,13 @@ const ProofratingsWidgets = () => {
             {current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'badge-square' && <BadgeSquare id={location_id} />}
             {current_tab === 'badge-rectangle' && <BadgeRectangle id={location_id} />}
-            {current_tab === 'overall-rectangle' && <OverallRectangle id={location_id} />}
-            {current_tab === 'overall-narrow' && <OverallNarrow id={location_id} />}
+            
+            {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
+            {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}
+
+            {current_tab === 'overall-narrow-embed' && <OverallNarrowEmbed id={location_id} />}
+            {current_tab === 'overall-narrow-float' && <OverallNarrowFloat id={location_id} />}
+
             {current_tab === 'badge-popup' && <OverallPopup />}
             {current_tab === 'overall-cta-banner' && <CTABanner />}
 
