@@ -1,7 +1,7 @@
 import ColorPicker from "./ColorPicker";
 
 const Shadow = (props) => {
-    const {shadow, color, hover} = props.shadow
+    const {shadow, color, hover} = Object.assign({shadow: '', color: '', hover: ''}, props?.shadow)
 
     const update_border = (name, value) => props.onUpdate(name, value)
 
@@ -20,7 +20,7 @@ const Shadow = (props) => {
             </tr>
 
             {shadow && (
-                <>
+                <React.Fragment>
                     <tr>
                         <th scope="row">Shadow Color</th>
                         <td>
@@ -42,7 +42,7 @@ const Shadow = (props) => {
                             />
                         </td>
                     </tr>
-                </>
+                </React.Fragment>
             )}
         </React.Fragment>
     );

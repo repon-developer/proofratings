@@ -15,10 +15,14 @@ import CTABanner from './CTABanner';
 
 const { useEffect, useState } = React;
 
+const location_id = proofratings_widgets_root.getAttribute("data-location");
+
 const ProofratingsWidgets = () => {
     const [state, setState ] = useState({
         error: null,
-        current_tab: 'overall-cta-banner'
+        loading: true,
+        saving: false,
+        current_tab: 'review-sites'
     });
 
     const [settings, setSettings] = useState(store.getState());
@@ -34,17 +38,46 @@ const ProofratingsWidgets = () => {
         setState({...state, current_tab})
     }
 
-    useEffect(() => {       
-        const location_id = proofratings_widgets_root.getAttribute("data-location");
+    useEffect(() => {               
         jQuery.post(proofratings.ajaxurl, {location_id, action: 'proofratings_get_location'}, function (response) {
+            console.log(response);
             if ( response?.success == false ) {
-                //return setError(true);
+                return setState({...state, error: true, loading: false});
             }
+
+            setState({...state, error: false, loading: false});
+            store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response });
         })
     }, []);
 
+    const save_data = () => {
+        if ( state.saving ) {
+            return;
+        }
+        
+        setState({...state, saving: true});
+
+        settings.action = 'proofratings_save_location';
+        settings.location_id = location_id;
+
+        jQuery.post(proofratings.ajaxurl, settings, function (response) {
+            console.log(response);
+
+            if ( response?.success == false ) {
+                alert('Something wrong with saving data')
+            }
+
+            setState({...state, saving: false})
+        })
+    }
+
+    
+    if ( state.loading === true) {
+        return <div className="proofraing-progress-msg">Loading...</div>
+    }
+    
     if ( state.error === true) {
-        return <div>No Location found</div>
+        return <div className="proofraing-progress-msg">No Location found</div>
     }
 
     const tabs = {
@@ -59,13 +92,13 @@ const ProofratingsWidgets = () => {
     }
 
     
-    const { badge_display, activeSites, sites_square } = settings;
+    const { badge_display, activeSites } = settings;
     
-    if ( badge_display.sites_square !== true ) {
+    if ( badge_display?.sites_square !== true ) {
         delete tabs['badge-square'];
     }
 
-    if ( badge_display.sites_rectangle !== true ) {
+    if ( badge_display?.sites_rectangle !== true ) {
         delete tabs['badge-rectangle'];
     }
 
@@ -103,7 +136,10 @@ const ProofratingsWidgets = () => {
             {state.current_tab === 'badge-popup' && <OverallPopup />}
             {state.current_tab === 'overall-cta-banner' && <CTABanner />}
 
-            <h2 onClick={() => console.log(store.getState())}>Save data</h2>
+            <p className="submit">
+                <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'Save Changes'}</button>
+            </p>
+
         </React.Fragment>
     );
 };

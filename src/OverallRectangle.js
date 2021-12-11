@@ -3,6 +3,8 @@ import ColorPicker from "./ColorPicker";
 import Border from "./Border";
 import Shadow from "./Shadow";
 
+import Pages from "./Pages";
+
 const { useState, useEffect } = React;
 
 const OverallRectangle = () => {
@@ -17,13 +19,12 @@ const OverallRectangle = () => {
 
     const handle_field = (data) => store.dispatch({ type: ACTIONS.OVERALL_RECTANGLE, payload: data });
 
-    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state.shadow)
+    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
         shadow[name] = value;
         handle_field({shadow})
     }
 
-    console.log(state)
 
     return (
         <React.Fragment>
@@ -49,9 +50,9 @@ const OverallRectangle = () => {
                                     <label>
                                         <input
                                             type="checkbox"
-                                            defaultChecked={state.tablet}
+                                            defaultChecked={state?.tablet}
                                             className="checkbox-switch"
-                                            onChange={() => handle_field({tablet: !state.tablet})}
+                                            onChange={() => handle_field({tablet: !state?.tablet})}
                                         />
 
                                         Show/Hide on tablet
@@ -65,9 +66,9 @@ const OverallRectangle = () => {
                                     <label>
                                         <input
                                             type="checkbox"
-                                            defaultChecked={state.mobile}
+                                            defaultChecked={state?.mobile}
                                             className="checkbox-switch"
-                                            onChange={() => handle_field({mobile: !state.mobile})}
+                                            onChange={() => handle_field({mobile: !state?.mobile})}
                                         />
                                         Show/Hide on mobile
                                     </label>
@@ -80,9 +81,9 @@ const OverallRectangle = () => {
                                     <label>
                                         <input
                                             type="checkbox"
-                                            defaultChecked={state.close_button}
+                                            defaultChecked={state?.close_button}
                                             className="checkbox-switch"
-                                            onChange={() => handle_field({close_button: !state.close_button})}
+                                            onChange={() => handle_field({close_button: !state?.close_button})}
                                         />
                                     </label>
                                 </td>
@@ -91,7 +92,7 @@ const OverallRectangle = () => {
                             <tr>
                                 <th scope="row">Position</th>
                                 <td>
-                                    <select defaultValue={state.position} onChange={(e) => handle_field({position: e.target.value})}>
+                                    <select defaultValue={state?.position} onChange={(e) => handle_field({position: e.target.value})}>
                                         <option value="left">Left</option>
                                         <option value="right">Right</option>
                                     </select>
@@ -106,14 +107,14 @@ const OverallRectangle = () => {
                                 <input
                                     type="checkbox"
                                     className="checkbox-switch"
-                                    defaultChecked={state.customize}
-                                    onChange={() => handle_field({customize: !state.customize})}
+                                    defaultChecked={state?.customize}
+                                    onChange={() => handle_field({customize: !state?.customize})}
                                 /> Customize
                             </label>
                         </td>
                     </tr>
 
-                    {state.customize && (
+                    {state?.customize && (
                         <React.Fragment>
                             <tr>
                                 <th scope="row">Star Color</th>
@@ -145,24 +146,7 @@ const OverallRectangle = () => {
                 </tbody>
             </table>
 
-            <table id="floating-badge-pages" className="form-table" style={{}}>
-                <caption>Page to show on</caption>
-                <tbody>
-                    <tr>
-                        <th scope="row">Privacy Policy</th>
-                        <td>
-                            <input name="proofratings_overall_ratings_rectangle[pages][3]" defaultValue="no" type="hidden" /><label><input className="checkbox-switch" name="proofratings_overall_ratings_rectangle[pages][3]" defaultValue="yes" defaultChecked type="checkbox" /></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Sample Page</th>
-                        <td>
-                            <input name="proofratings_overall_ratings_rectangle[pages][2]" defaultValue="no" type="hidden" /><label><input className="checkbox-switch" name="proofratings_overall_ratings_rectangle[pages][2]" defaultValue="yes" defaultChecked type="checkbox" /></label>		
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            {settings?.badge_display?.overall_rectangle?.float && <Pages onUpdate={handle_field} hide_on={state?.hide_on} />}
 
         </React.Fragment>
     );

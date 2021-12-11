@@ -52,9 +52,9 @@ const BadgeSquare = () => {
                 Customize (this will customize all badges)
             </label>
 
-            {state.customize && <div className="gap-30" />}
+            {state?.customize && <div className="gap-30" />}
 
-            {state.customize && (
+            {state?.customize && (
                 <React.Fragment>
                     <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
                         <div className="proofratings-widget proofratings-widget-square proofratings-widget-yelp proofratings-widget-customized">
@@ -77,23 +77,23 @@ const BadgeSquare = () => {
                         <tbody>
                             <tr>
                                 <th scope="row">Logo Color</th>
-                                <td><ColorPicker onUpdate={(logo_color) => handle_field({logo_color})} /></td>
+                                <td><ColorPicker color={state?.logo_color} onUpdate={(logo_color) => handle_field({logo_color})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Star Color</th>
-                                <td><ColorPicker onUpdate={(star_color) => handle_field({star_color})} /></td>
+                                <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({star_color})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Text Color</th>
-                                <td><ColorPicker onUpdate={(textcolor) => handle_field({textcolor})} /></td>
+                                <td><ColorPicker color={state?.textcolor} onUpdate={(textcolor) => handle_field({textcolor})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Review count text color</th>
-                                <td><ColorPicker onUpdate={(review_color_textcolor) => handle_field({review_color_textcolor})} /></td>
+                                <td><ColorPicker color={state?.review_color_textcolor} onUpdate={(review_color_textcolor) => handle_field({review_color_textcolor})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Background Color</th>
-                                <td><ColorPicker onUpdate={(background_color) => handle_field({background_color})} /></td>
+                                <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({background_color})} /></td>
                             </tr>
 
                             <Border name="border" border={border} onUpdate={handleBorder} />

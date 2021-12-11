@@ -1,6 +1,7 @@
 import { createStore, combineReducers } from "redux";
 
 const ACTIONS = {
+    SAVE_SETTINGS: "SAVE_SETTINGS",
     ACTIVE_SITES: "ACTIVE_SITES",
     BADGE_DISPLAY: "BADGE_DISPLAY",
     SITES_SQUARE: "SITES_SQUARE",
@@ -40,6 +41,9 @@ const settings = {
 const settingsReducer = (state = settings, action) => { 
     //console.log(state, action)
     switch (action.type) {
+        case "SAVE_SETTINGS":
+            return action.payload;
+
         case "ACTIVE_SITES":
             return {...state, activeSites: action.payload};
 
