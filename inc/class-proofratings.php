@@ -46,10 +46,12 @@ class Wordpress_Proofratings {
 		$this->add_proofratings_tables();
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-locations-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-review.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 		
+		$this->locations = Proofratings_Locations::instance();
 		$this->shortcodes = Proofratings_Shortcodes::instance();
 
 		if ( is_admin(  ) ) {
@@ -232,6 +234,8 @@ class Wordpress_Proofratings {
 	 * @since 1.0.4
 	 */
 	public function overall_ratings_narrow() {
+		var_dump(get_proofratings()->locations->get('overall'));
+		exit;
 		if ( get_proofratings_display_settings()['overall_ratings_narrow'] !== 'yes' ) {
 			return;
 		}

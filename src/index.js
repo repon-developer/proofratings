@@ -38,7 +38,7 @@ const ProofratingsWidgets = () => {
     }
 
     useEffect(() => {               
-        jQuery.post(proofratings.ajaxurl, {location_id, action: 'proofratings_get_location'}, function (response) {
+        const request = jQuery.post(proofratings.ajaxurl, {location_id, action: 'proofratings_get_location'}, function (response) {
             console.log(response);
             if ( response?.success == false ) {
                 return setState({...state, error: true, loading: false});
@@ -46,6 +46,10 @@ const ProofratingsWidgets = () => {
 
             setState({...state, error: false, loading: false});
             store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response });
+        });
+
+        request.fail(function() {
+            return setState({...state, error: true, loading: false});
         })
     }, []);
 
@@ -75,7 +79,7 @@ const ProofratingsWidgets = () => {
     }
     
     if ( state.error === true) {
-        return <div className="proofraing-progress-msg">No Location found</div>
+        return <div className="proofraing-progress-msg">Failed to retrive this location.</div>
     }
 
     const tabs = {

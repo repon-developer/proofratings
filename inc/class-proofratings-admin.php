@@ -47,7 +47,7 @@ class Proofratings_Admin {
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 
 		$this->settings_page = Proofratings_Settings::instance();
-		$this->locations_page = Proofratings_Locations::instance();
+		$this->locations_page = Proofratings_Locations_Admin::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 
 		if ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES ) {

@@ -22,12 +22,6 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 	var $per_page = 15;
 
 	/**
-	 * Total Items
-	 * @since  1.0.1
-	 */
-	var $total_items = 0;
-
-	/**
 	 * Constructor.
 	 * @since  1.0.1
 	 */
@@ -36,38 +30,6 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 		parent::__construct(array('singular' => 'singular_form', 'plural' => 'locations_table', 'ajax' => false));
 	}
 	
-
-	/**
-     * Get locations
-     * @since 1.0.1
-     */
-	public function get_locations() {
-		global $wpdb;
-		$offset = ($this->per_page * ($this->get_pagenum() - 1));
-
-		$locations = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->proofratings ORDER BY location ASC LIMIT %d, %d", $offset, $this->per_page));
-
-		array_walk($locations, function(&$location){
-			$location = sanitize_proofratings_location($location);
-		});
-		
-		$status_text = __('~', 'proofratings');
-		if ( sizeof(array_unique(wp_list_pluck( $locations, 'status'))) == 1 ) {
-			$status_text = $locations[0]->status;
-		}
-
-		array_unshift($locations, (object) array(
-			'id' => 'overall',
-			'location' => __('ALL LOCATIONS (OVERALL)', 'proofratings'),
-			'connected' => 3,
-			'widgets' => 4,
-			'status' => $status_text
-		));
-
-		$this->total_items = $wpdb->get_var("SELECT count(*) FROM $wpdb->proofratings");
-		return $locations;
-	}
-
 	/**
      * Prepare the items for the table to process
      * @since 1.0.1
@@ -78,10 +40,10 @@ class Proofratings_Locations_Table extends WP_List_Table  {
         $sortable = $this->get_sortable_columns(); 
         $this->_column_headers = array($this->get_columns());
 
-		$this->items = $this->get_locations();
+		$this->items = get_proofratings()->locations->items;
         
         $this->set_pagination_args( array(
-            'total_items' => $this->total_items,
+            'total_items' => get_proofratings()->locations->total,
             'per_page'    => $this->per_page
         ) );
     }

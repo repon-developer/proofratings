@@ -36,10 +36,8 @@ require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
  * @since  1.0.1
  * @return Wordpress_Proofratings
  */
-function WP_Proofratings() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+function get_proofratings() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 	return Wordpress_Proofratings::instance();
 }
 
-$GLOBALS['proofratings'] = WP_Proofratings();
-
-register_activation_hook( PROOFRATINGS_PLUGIN_BASENAME, array( WP_Proofratings(), 'activate' ) );
+register_activation_hook( PROOFRATINGS_PLUGIN_BASENAME, array( get_proofratings(), 'activate' ) );

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.6
  */
-class Proofratings_Locations {
+class Proofratings_Locations_Admin {
 	/**
 	 * The single instance of the class.
 	 * @var self
