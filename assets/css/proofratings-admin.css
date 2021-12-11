@@ -77,6 +77,9 @@ body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {paddi
     margin-bottom: 20px;
 }
 
+.review-sites-checkboxes.review-sites-checkboxes-widget {margin-top: 30px; margin-bottom: 0;}
+.review-sites-checkboxes.review-sites-checkboxes-widget > label {margin-bottom: 0;}
+
 .checkbox-review-site {
     padding: 20px;
     height: 40px;

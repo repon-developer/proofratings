@@ -3,6 +3,8 @@ import ColorPicker from "./ColorPicker";
 import Border from "./Border";
 import Shadow from "./Shadow";
 
+import ActiveSites from './Component/ActiveSites';
+
 const { useState, useEffect } = React;
 
 const BadgeSquare = (props) => {
@@ -73,9 +75,13 @@ const BadgeSquare = (props) => {
         css_style += `.proofratings-widget.proofratings-widget-square:hover {--shadowColor: ${shadow.hover}}`;
     }
 
+
     return (
         <React.Fragment>
             <style>{css_style}</style>
+
+            <ActiveSites onUpdate={(active_sites) => handle_field({active_sites})} active_sites={state?.active_sites} />
+
             <table className="form-table">
                 <tbody>
                     <tr>
