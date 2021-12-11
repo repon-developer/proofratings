@@ -58,11 +58,23 @@ class Proofratings_Admin {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 	}
 
-	function admin_notice_rating_us() {
-		$class = 'notice notice-info is-dismissible';
-		$message = __( 'Rating us on <a target="_blank" href="https://wordpress.org/plugins/proofratings/">wordpress.org</a>.', 'proofratings' );
-	 
-		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message); 
+	function admin_notice_rating_us() { ?>
+		<div id="proofrating-notice" class="notice notice-info is-dismissible">
+			<p>We are excited that you chose Proofratings to display your reputation. We are working hard around the clock to continually help you convert more website visitors and increase sales. Would you please take 2 minutes to leave us a review?</p>
+
+			<div class="btn-actions">
+				<a href="https://wordpress.org/support/plugin/proofratings/reviews/" target="_blank">Yes, of course!</a> |
+				<a href="#" data-days="28">Maybe later</a> |
+				<a href="#" data-days="90">Not quite yet!</a> |
+				<a href="#">No thank you</a>
+			</div>
+
+			<!-- Yes, of course! - (links to review tab on plugin > popup doesn't show up again) 
+			Maybe later (hides popup and reappears in 4 weeks) 
+			Not quite yet! (hides popup and reappears in 3 months) 
+			No thank you (hides popup and doesn't display again) -->
+		</div>
+		<?php
 	}
 
 	/**
