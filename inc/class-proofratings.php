@@ -117,12 +117,12 @@ class Wordpress_Proofratings {
 				'status' => @$location['status']
 			);
 			
-			$get_id = $wpdb->get_var("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'");
-			if ( $get_id ) {
-				$location_data['id'] = $get_id;
+			if ( $get_id = $wpdb->get_var("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
+				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_id]);
+				continue;
 			}
 
-			$wpdb->replace($wpdb->proofratings, $location_data);
+			$wpdb->insert($wpdb->proofratings, $location_data);
 		}
 
 		if ( $request->get_param('global') ) {

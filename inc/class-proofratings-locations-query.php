@@ -45,6 +45,23 @@ class Proofratings_Locations  {
 	}
 
 	/**
+	 * save location
+	 * @since  1.0.6
+	 */
+	function save($id, $data) {
+		if ( $id === 'overall' ) {
+			if ( !isset($data['settings']) ) {
+				return false;
+			}
+
+			return update_option('proofratings_overall_rating_settings', $data['settings']);
+		}
+		
+		global $wpdb;
+		return $wpdb->update($wpdb->proofratings, $data, ['id' => $id]);
+	}
+
+	/**
 	 * get location
 	 * @since  1.0.6
 	 */
@@ -83,7 +100,7 @@ class Proofratings_Locations  {
 	function sanitize_boolean_data($string) {
 		if (is_array($string)) {
 			foreach ($string as $k => $v) {
-				$string[$k] = sanitize_proofrating_boolean_data($v); 
+				$string[$k] = $this->sanitize_boolean_data($v); 
 			}
 
 			return $string;

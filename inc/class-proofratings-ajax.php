@@ -49,11 +49,7 @@ class Proofratings_Ajax {
 		}
 
 		unset($_POST['location_id'], $_POST['action']);
-
-		global $wpdb;
-
-		$wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $_POST )], ['id' => $location]);
-
+		get_proofratings()->locations->save($location, ['settings' => maybe_serialize( $_POST )]);
 		wp_send_json( $_POST );
 	}
 
@@ -83,14 +79,6 @@ class Proofratings_Ajax {
 			wp_send_json_error();
 		}
 		
-		global $wpdb;
-
-		$settings = [];
-		if ( $location === 'overall') {
-			$settings = get_option('proofratings_overall_settings');
-			wp_send_json( $settings );
-		}
-
 		$location = get_proofratings()->locations->get($location);
 		if ( !$location ) {
 			wp_send_json_error();
