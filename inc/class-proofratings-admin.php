@@ -58,21 +58,19 @@ class Proofratings_Admin {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 	}
 
-	function admin_notice_rating_us() { ?>
+	function admin_notice_rating_us() {
+		$feedback_hide = get_option( 'proofratings_feedback_hide');
+		if ( $feedback_hide || isset($_COOKIE['proofratings_feedback_hide'])) {
+			return;
+		} ?>
 		<div id="proofrating-notice" class="notice notice-info is-dismissible">
 			<p>We are excited that you chose Proofratings to display your reputation. We are working hard around the clock to continually help you convert more website visitors and increase sales. Would you please take 2 minutes to leave us a review?</p>
-
 			<div class="btn-actions">
 				<a href="https://wordpress.org/support/plugin/proofratings/reviews/" target="_blank">Yes, of course!</a> |
 				<a href="#" data-days="28">Maybe later</a> |
 				<a href="#" data-days="90">Not quite yet!</a> |
 				<a href="#">No thank you</a>
 			</div>
-
-			<!-- Yes, of course! - (links to review tab on plugin > popup doesn't show up again) 
-			Maybe later (hides popup and reappears in 4 weeks) 
-			Not quite yet! (hides popup and reappears in 3 months) 
-			No thank you (hides popup and doesn't display again) -->
 		</div>
 		<?php
 	}
@@ -113,7 +111,13 @@ class Proofratings_Admin {
 	/**
 	 * Enqueues CSS and JS assets.
 	 */
-	public function admin_enqueue_scripts() {		
+	public function admin_enqueue_scripts() {
+		wp_enqueue_style( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-dashboard.css', [], PROOFRATINGS_VERSION);
+		wp_enqueue_script( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-dashboard.js', ['jquery'], PROOFRATINGS_VERSION, true);
+		wp_localize_script( 'proofratings-dashboard', 'proofratingsDashboard', array(
+			'ajaxurl' => admin_url('admin-ajax.php')
+		));
+
 		$screen = get_current_screen();
 
 		wp_deregister_script('react');

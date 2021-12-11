@@ -1,0 +1,15 @@
+#proofrating-notice {
+    font-size: 16px;
+}
+
+#proofrating-notice p {font-size: inherit}
+
+#proofrating-notice .btn-actions {
+    margin-bottom: 10px;
+}
+
+#proofrating-notice .btn-actions a {
+    text-decoration: none;
+    display: inline-block;
+}
+

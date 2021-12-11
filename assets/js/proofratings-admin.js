@@ -1,20 +1,4 @@
 (function ($) {
-
-    $('#proofrating-notice').on('click', 'a', function(e){
-        if ( $(this).attr('target') != '_blank' ) {
-            e.preventDefault();
-        }
-
-        days = $(this).data('days');
-
-        console.log(days);
-
-
-
-
-    })
-    
-
     $('.proofratings-settings-wrap [type="color"], .proofratings-color-field').wpColorPicker({
         change: function(event, ui) {
             $(event.target).trigger('update', ui.color.toString());
