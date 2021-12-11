@@ -1,7 +1,12 @@
 import store, { ACTIONS } from './Store';
 
 const ReviewSites = (props) => {
+    const settings = store.getState();
     const activeSites = Array.isArray(props?.activeSites) ? props.activeSites : [];
+
+    const update_font = (e) => {
+        store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: {...settings, font: e.target.value} })
+    }
 
     const handleCheck = (site_id) => {
         const index = activeSites.indexOf(site_id);
@@ -42,6 +47,21 @@ const ReviewSites = (props) => {
 
     return (
         <React.Fragment>
+
+            <table className="form-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Font Family</th>
+                        <td>
+                            <select value={settings?.font} onChange={update_font}>
+                                <option value="Didact Gothic">Didact Gothic</option>
+                                <option value="Metropolis">Metropolis</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+			</table>
+            <div className="gap-30" />
 
             <div className="review-sites-checkboxes">
                 {activeSites.map(site_id => (

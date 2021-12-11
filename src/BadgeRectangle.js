@@ -28,6 +28,18 @@ const BadgeRectangle = () => {
         handle_field({shadow})
     }
 
+    console.log(state)
+
+    const styles = {}
+
+    if ( state?.star_color ) {
+        styles['--themeColor'] = state.star_color
+    }
+
+    if ( state?.textcolor ) {
+        styles['--textColor'] = state.textcolor
+    }
+
     return (
         <React.Fragment>
             <table className="form-table">
@@ -58,7 +70,7 @@ const BadgeRectangle = () => {
             {state.customize && (
                 <React.Fragment>
                     <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                        <div className="proofratings-widget proofratings-widget-square proofratings-widget-yelp proofratings-widget-customized">
+                        <div style={styles} className="proofratings-widget proofratings-widget-square proofratings-widget-customized">
                             <div className="review-site-logo" style={{WebkitMaskImage: 'url(http://proofratings.me/wp-content/plugins/proofratings/assets/images/yelp.svg)'}}>
                                 <img src="http://proofratings.me/wp-content/plugins/proofratings/assets/images/yelp.svg" alt="Yelp" />
                             </div>
@@ -78,25 +90,25 @@ const BadgeRectangle = () => {
                         <tbody>
                             <tr>
                                 <th scope="row">Star Color</th>
-                                <td><ColorPicker onUpdate={(star_color) => handle_field({star_color})} /></td>
+                                <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({star_color})} /></td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Site Icon Color</th>
-                                <td><ColorPicker onUpdate={(icon_color) => handle_field({icon_color})} /></td>
+                                <td><ColorPicker color={state?.icon_color} onUpdate={(icon_color) => handle_field({icon_color})} /></td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Text Color</th>
-                                <td><ColorPicker onUpdate={(textcolor) => handle_field({textcolor})} /></td>
+                                <td><ColorPicker color={state?.textcolor} onUpdate={(textcolor) => handle_field({textcolor})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Review count text color</th>
-                                <td><ColorPicker onUpdate={(review_color_textcolor) => handle_field({review_color_textcolor})} /></td>
+                                <td><ColorPicker color={state?.review_color_textcolor} onUpdate={(review_color_textcolor) => handle_field({review_color_textcolor})} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Background Color</th>
-                                <td><ColorPicker onUpdate={(background_color) => handle_field({background_color})} /></td>
+                                <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({background_color})} /></td>
                             </tr>
 
                             <Border name="border" border={border} onUpdate={handleBorder} />

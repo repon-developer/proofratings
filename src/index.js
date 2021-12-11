@@ -22,7 +22,6 @@ const ProofratingsWidgets = () => {
         error: null,
         loading: true,
         saving: false,
-        current_tab: 'review-sites'
     });
 
     const [settings, setSettings] = useState(store.getState());
@@ -35,7 +34,7 @@ const ProofratingsWidgets = () => {
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
-        setState({...state, current_tab})
+        store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: {...settings, current_tab} });
     }
 
     useEffect(() => {               
@@ -62,7 +61,6 @@ const ProofratingsWidgets = () => {
 
         jQuery.post(proofratings.ajaxurl, settings, function (response) {
             console.log(response);
-
             if ( response?.success == false ) {
                 alert('Something wrong with saving data')
             }
@@ -118,23 +116,27 @@ const ProofratingsWidgets = () => {
         delete tabs['badge-popup'];
     }
 
+    const current_tab = settings?.current_tab || 'review-sites';
+
+
+
     return (
         <React.Fragment>
             <h2 className="nav-tab-wrapper">
                 {Object.keys(tabs).map((key) => {
-                    const tab_class = (state.current_tab === key) ? 'nav-tab-active' : '';
+                    const tab_class = (current_tab === key) ? 'nav-tab-active' : '';
                     return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={`nav-tab ${tab_class}`}>{tabs[key]}</a>
                 })}
             </h2>
 
-            {state.current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} />}
-            {state.current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
-            {state.current_tab === 'badge-square' && <BadgeSquare />}
-            {state.current_tab === 'badge-rectangle' && <BadgeRectangle />}
-            {state.current_tab === 'overall-rectangle' && <OverallRectangle />}
-            {state.current_tab === 'overall-narrow' && <OverallNarrow />}
-            {state.current_tab === 'badge-popup' && <OverallPopup />}
-            {state.current_tab === 'overall-cta-banner' && <CTABanner />}
+            {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} />}
+            {current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
+            {current_tab === 'badge-square' && <BadgeSquare />}
+            {current_tab === 'badge-rectangle' && <BadgeRectangle />}
+            {current_tab === 'overall-rectangle' && <OverallRectangle />}
+            {current_tab === 'overall-narrow' && <OverallNarrow />}
+            {current_tab === 'badge-popup' && <OverallPopup />}
+            {current_tab === 'overall-cta-banner' && <CTABanner />}
 
             <p className="submit">
                 <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'Save Changes'}</button>

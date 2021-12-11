@@ -13,6 +13,7 @@ const ACTIONS = {
 };
 
 const settings = {
+    current_tab: 'review-sites',
     activeSites: ["facebook"],
     badge_display: {
         sites_square: false,

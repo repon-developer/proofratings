@@ -9,7 +9,7 @@ const BadgeDisplay = (props) => {
         overall_rectangle_embed: false,
         overall_rectangle_float: false,
         overall_narrow_embed: false,
-        overall_narrow_float: true
+        overall_narrow_float: false
     }, props?.badge_display);
 
     const update_single = (name) => {
