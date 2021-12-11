@@ -7,7 +7,7 @@ import Pages from "./Pages";
 
 const { useState, useEffect } = React;
 
-const OverallNarrow = () => {
+const OverallNarrow = (props) => {
     const settings = store.getState();
 
     const [state, setState] = useState(store.getState().overall_narrow);
@@ -67,13 +67,11 @@ const OverallNarrow = () => {
             <table className="form-table">
                 <tbody>
                     <tr>
-                        <th scope="row">
-                            Shortcode <p className="description" style={{ fontWeight: "normal" }}>Embed shortcode</p>
-                        </th>
-                        <td><code className="shortocde-area">[proofratings_overall_ratings type="narrow"]</code></td>
+                        <th scope="row">Shortcode <p className="description" style={{ fontWeight: "normal" }}>Embed shortcode</p></th>
+                        <td><code className="shortocde-area">[proofratings_overall_ratings id="{props?.id}" type="narrow"]</code></td>
                     </tr>
 
-                    {settings?.badge_display?.overall_rectangle_float && (
+                    {settings?.badge_display?.overall_narrow_float && (
                         <React.Fragment>
                             <tr>
                                 <th scope="row">Tablet Visibility</th>
@@ -176,7 +174,7 @@ const OverallNarrow = () => {
                                 <td><ColorPicker color={state?.rating_color} onUpdate={(rating_color) => handle_field({rating_color})} /></td>
                             </tr>
 
-                            <Shadow shadow={state?.shadow} onUpdate={handleShadow} />
+                            <Shadow shadow={shadow} onUpdate={handleShadow} />
                         
                             <tr>
                                 <th scope="row">Background Color</th>

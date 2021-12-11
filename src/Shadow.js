@@ -29,7 +29,6 @@ const Shadow = (props) => {
                                 color={color}
                                 onUpdate={(color) => update_border('color', color)}
                             />
-
                         </td>
                     </tr>
                     <tr>

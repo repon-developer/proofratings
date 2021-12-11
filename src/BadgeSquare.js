@@ -5,7 +5,7 @@ import Shadow from "./Shadow";
 
 const { useState, useEffect } = React;
 
-const BadgeSquare = () => {
+const BadgeSquare = (props) => {
     const [state, setState] = useState(Object.assign({customize: false}, store.getState().sites_square))
     
     useEffect(() => {
@@ -84,7 +84,7 @@ const BadgeSquare = () => {
                             <p className="description" style={{ fontWeight: "normal" }}>Use shortcode where you want to display review widgets</p>
                         </th>
                         <td>
-                            <code className="shortocde-area">[proofratings_widgets style="square"]</code>
+                            <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="square"]</code>
                         </td>
                     </tr>
                 </tbody>
@@ -110,11 +110,11 @@ const BadgeSquare = () => {
                             </div>
                             
                             <div className="proofratings-reviews" itemProp="reviewRating">
-                                <span className="proofratings-score">0.0</span>
-                                <span className="proofratings-stars"><i style={{width: '0%'}} /></span>
+                                <span className="proofratings-score">4.0</span>
+                                <span className="proofratings-stars"><i style={{width: '80%'}} /></span>
                             </div>
                             
-                            <div className="review-count"> 0 reviews </div>
+                            <div className="review-count"> 76 reviews </div>
                             <p className="view-reviews">View Reviews</p>
                         </div>
                     </div>

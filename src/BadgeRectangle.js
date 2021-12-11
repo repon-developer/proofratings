@@ -5,16 +5,16 @@ import Shadow from "./Shadow";
 
 const { useState, useEffect } = React;
 
-const BadgeRectangle = () => {
-    const [state, setState] = useState(Object.assign({customize: false}, store.getState().sites_square))
+const BadgeRectangle = (props) => {
+    const [state, setState] = useState(Object.assign({customize: false}, store.getState().sites_rectangle))
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().sites_square))
+        const unsubscribe = store.subscribe(() => setState(store.getState().sites_rectangle))
         return () => unsubscribe();
     }, [])
     
 
-    const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_SQUARE, payload: data})
+    const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_RECTANGLE, payload: data})
 
     const border = Object.assign({ show: false, color: "", hover: "" }, state.border)
     const handleBorder = (name, value) => {
@@ -74,6 +74,10 @@ const BadgeRectangle = () => {
     if ( shadow?.shadow !== false && shadow?.hover ) {
         css_style += `.proofratings-widget.proofratings-widget-rectangle:hover {--shadowColor: ${shadow.hover}}`;
     }
+
+    if ( state?.icon_color ) {
+        css_style += `.proofratings-widget.proofratings-widget-rectangle .review-site-logo svg {fill: ${state.icon_color}}`;
+    }
     
     return (
         <React.Fragment>
@@ -86,7 +90,7 @@ const BadgeRectangle = () => {
                             <p className="description" style={{ fontWeight: "normal" }}>Use shortcode where you want to display review widgets</p>
                         </th>
                         <td>
-                            <code className="shortocde-area">[proofratings_widgets style="square"]</code>
+                            <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="rectangle"]</code>
                         </td>
                     </tr>
                 </tbody>
@@ -107,15 +111,15 @@ const BadgeRectangle = () => {
                 <React.Fragment>
                     <div id="proofratings-badge-rectangle" className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
                         <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
-                            <div className="review-site-logo"></div>
-                            <h4 className="rating-title">Yelp Rating</h4>
+                            <div className="review-site-logo" dangerouslySetInnerHTML={{__html: '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><circle cx="500" cy="500" r="493"></circle><path class="st0" d="M283.7,500.98c0-123.13,100.17-223.3,223.3-223.3c49.73,0,96.79,16,136.11,46.27l-51.89,67.41 c-24.31-18.71-53.44-28.61-84.22-28.61c-76.22,0-138.23,62.01-138.23,138.23S430.78,639.21,507,639.21 c61.39,0,113.56-40.22,131.54-95.7H507v-85.06h223.3v42.53c0,123.13-100.17,223.3-223.3,223.3S283.7,624.1,283.7,500.98z"></path></svg>'}}></div>
+                            <h4 className="rating-title">Google Rating</h4>
                             <div className="proofratings-reviews" itemProp="reviewRating">
-                                <span className="proofratings-score">0.0</span>
+                                <span className="proofratings-score">5.0</span>
                                 <span className="proofratings-stars">
-                                    <i style={{ width: "0%" }} />
+                                    <i style={{ width: "100%" }} />
                                 </span>
                             </div>
-                            <div className="review-count"> 0 reviews </div>
+                            <div className="review-count"> 9 reviews </div>
                         </div>
                     </div>
 

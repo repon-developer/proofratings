@@ -129,12 +129,12 @@ const ProofratingsWidgets = () => {
                 })}
             </h2>
 
-            {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} />}
-            {current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} />}
-            {current_tab === 'badge-square' && <BadgeSquare />}
-            {current_tab === 'badge-rectangle' && <BadgeRectangle />}
-            {current_tab === 'overall-rectangle' && <OverallRectangle />}
-            {current_tab === 'overall-narrow' && <OverallNarrow />}
+            {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} id={location_id} />}
+            {current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
+            {current_tab === 'badge-square' && <BadgeSquare id={location_id} />}
+            {current_tab === 'badge-rectangle' && <BadgeRectangle id={location_id} />}
+            {current_tab === 'overall-rectangle' && <OverallRectangle id={location_id} />}
+            {current_tab === 'overall-narrow' && <OverallNarrow id={location_id} />}
             {current_tab === 'badge-popup' && <OverallPopup />}
             {current_tab === 'overall-cta-banner' && <CTABanner />}
 

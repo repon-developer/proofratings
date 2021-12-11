@@ -28,9 +28,37 @@ const CTABanner = () => {
         button2[name] = value;
         handle_field({button2})
     }
+
+    const get_styles = () => {
+        const styles = []
+        if ( state?.star_color ) {
+            styles.push('--star_color:' + state.star_color);
+        }
+
+        if ( state?.background_color ) {
+            styles.push('--backgroundColor:' + state.background_color);
+        }
+
+        if ( state?.rating_text_color ) {
+            styles.push('--rating_text_color:' + state.rating_text_color);
+        }
+    
+        if ( state?.review_rating_background_color ) {
+            styles.push('--review_rating_background_color:' + state.review_rating_background_color);
+        }
+
+        if ( state?.number_review_text_color ) {
+            styles.push('--reviewCountTextcolor:' + state.number_review_text_color);
+        }
+    
+        return styles;
+    }
+
+    css_style = `.proofratings-banner-badge {${get_styles().join(';')}}`;
     
     return (
         <React.Fragment>
+            <style>{css_style}</style>
             <table className="form-table">
                 <tbody>
                     
@@ -40,11 +68,10 @@ const CTABanner = () => {
                             <label>
                                 <input
                                     type="checkbox"
-                                    defaultChecked={state.tablet}
+                                    defaultChecked={state?.tablet}
                                     className="checkbox-switch"
-                                    onChange={() => handle_field({tablet: !state.tablet})}
+                                    onChange={() => handle_field({tablet: !state?.tablet})}
                                 />
-
                                 Show/Hide on tablet
                             </label>
                         </td>
@@ -56,9 +83,9 @@ const CTABanner = () => {
                             <label>
                                 <input
                                     type="checkbox"
-                                    defaultChecked={state.mobile}
+                                    defaultChecked={state?.mobile}
                                     className="checkbox-switch"
-                                    onChange={() => handle_field({mobile: !state.mobile})}
+                                    onChange={() => handle_field({mobile: !state?.mobile})}
                                 />
                                 Show/Hide on mobile
                             </label>
@@ -71,9 +98,9 @@ const CTABanner = () => {
                             <label>
                                 <input
                                     type="checkbox"
-                                    defaultChecked={state.close_button}
+                                    defaultChecked={state?.close_button}
                                     className="checkbox-switch"
-                                    onChange={() => handle_field({close_button: !state.close_button})}
+                                    onChange={() => handle_field({close_button: !state?.close_button})}
                                 />
                             </label>
                         </td>
@@ -85,18 +112,39 @@ const CTABanner = () => {
                                 <input
                                     type="checkbox"
                                     className="checkbox-switch"
-                                    defaultChecked={state.customize}
-                                    onChange={() => handle_field({customize: !state.customize})}
+                                    defaultChecked={state?.customize}
+                                    onChange={() => handle_field({customize: !state?.customize})}
                                 /> Customize
                             </label>
                         </td>
                     </tr>
 
-                    {state.customize && (
+                    {state?.customize && (
                         <React.Fragment>
                             <tr>
+                                <td colSpan={2} style={{paddingLeft: 0}}>
+                                    <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
+                                        <div className="proofratings-logos">
+                                            <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google"/>
+                                            <img src={`${proofratings.assets_url}/images/icon-trustpilot.png`} alt="trustpilot"/>
+                                            <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
+                                        </div>
+                                        <div className="rating-box">
+                                            <span className="proofratings-stars medium">
+                                                <i style={{ width: "96%" }} />
+                                            </span>
+                                            <span className="rating">4.8 / 5</span>
+                                        </div>
+                                        <div className="proofratings-review-count">44 customer reviews</div>
+                                        <div className="button-container">
+                                            <div className="proofratings-button button1 has-border">Buy Now</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row">Star Color</th>
-                                <td><ColorPicker onUpdate={(star_color) => handle_field({star_color})} /></td>
+                                <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({star_color})} /></td>
                             </tr>
 
                             <tr>
@@ -105,7 +153,7 @@ const CTABanner = () => {
                                     <label>
                                         <input
                                             type="checkbox"
-                                            defaultChecked={state.shadow}
+                                            defaultChecked={state?.shadow}
                                             className="checkbox-switch"
                                             onChange={() => handle_field({shadow: !state.shadow})}
                                         />
@@ -115,22 +163,22 @@ const CTABanner = () => {
                         
                             <tr>
                                 <th scope="row">Background Color</th>
-                                <td><ColorPicker onUpdate={(background_color) => handle_field({background_color})} /></td>
+                                <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({background_color})} /></td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Rating Text Color</th>
-                                <td><ColorPicker onUpdate={(rating_text_color) => handle_field({rating_text_color})} /></td>
+                                <td><ColorPicker color={state?.rating_text_color} onUpdate={(rating_text_color) => handle_field({rating_text_color})} /></td>
                             </tr>
                             
                             <tr>
                                 <th scope="row">Review Rating Background Color</th>
-                                <td><ColorPicker onUpdate={(review_rating_background_color) => handle_field({review_rating_background_color})} /></td>
+                                <td><ColorPicker color={state?.review_rating_background_color} onUpdate={(review_rating_background_color) => handle_field({review_rating_background_color})} /></td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Number of Review Text Color</th>
-                                <td><ColorPicker onUpdate={(number_review_text_color) => handle_field({number_review_text_color})} /></td>
+                                <td><ColorPicker color={state?.number_review_text_color} onUpdate={(number_review_text_color) => handle_field({number_review_text_color})} /></td>
                             </tr>
                         </React.Fragment>
                     )}
@@ -142,7 +190,7 @@ const CTABanner = () => {
             <table className="form-table">
                 <caption>First Button</caption>
                 <tbody>                    
-                    <Button key={'button1'} onUpdate={handle_button} {...state.button1}  />
+                    <Button key={'button1'} onUpdate={handle_button} {...state?.button1}  />
                 </tbody>
             </table>
 
@@ -155,7 +203,7 @@ const CTABanner = () => {
                             <label>
                                 <input
                                     type="checkbox"
-                                    defaultChecked={state.button2}
+                                    defaultChecked={state?.button2}
                                     className="checkbox-switch"
                                     onChange={() => handle_button2('show', !state.button2?.show)}
                                 /> Second Button
@@ -163,7 +211,7 @@ const CTABanner = () => {
                         </td>
                     </tr>
 
-                    {state.button2?.show && <Button key={'button2'} onUpdate={handle_button2} {...state.button2}  />}
+                    {state?.button2?.show && <Button key={'button2'} onUpdate={handle_button2} {...state?.button2}  />}
                 </tbody>
             </table>
 

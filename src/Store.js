@@ -22,17 +22,28 @@ const settings = {
         overall_rectangle_embed: false,
         overall_rectangle_float: false,
         overall_narrow_embed: false,
-        overall_narrow_float: true
+        overall_narrow_float: false
     },
-    sites_square: {customize: true},
-    sites_rectangle: {customize: true},
-    overall_rectangle: {},
-    overall_narrow: {},
+    sites_square: {},
+    sites_rectangle: {},
+    overall_rectangle: {
+        tablet: true,
+        mobile: true,
+        close_button: true,
+    },
+    overall_narrow: {
+        tablet: true,
+        mobile: true,
+        close_button: true,
+    },
     overall_popup: {customize: true},
     overall_cta_banner: {
         customize: false, 
         shadow: true,
-        hide_on: [3],
+        tablet: true,
+        mobile: true,
+        close_button: true,
+        hide_on: [],
         button1: {
             text: 'Sign Up',
             textcolor: '#8224e3',
@@ -45,7 +56,7 @@ const settingsReducer = (state = settings, action) => {
     //console.log(state, action)
     switch (action.type) {
         case "SAVE_SETTINGS":
-            return action.payload;
+            return {...settings, ...action.payload};
 
         case "ACTIVE_SITES":
             return {...state, activeSites: action.payload};

@@ -1,45 +1,17 @@
-<div className="proofratings-badges-popup">
-    <div className="proofratings-popup-widgets-box" data-column={3}>
-        <div className="proofratings-widget proofratings-widget-google proofratings-widget-customized">
-            <div className="review-site-logo">
-                <img src="https://proofratings.com/wp-content/plugins/proofratings/assets/images/google.svg" alt="Google"/>
-            </div>
-            <div className="proofratings-reviews" itemProp="reviewRating">
-                <span className="proofratings-score">5.0</span>
-                <span className="proofratings-stars">
-                    <i style={{ width: "100%" }} />
-                </span>
-            </div>
-            <div className="review-count"> 9 reviews </div>
-            <p className="view-reviews">View Reviews</p>
-        </div>
-
-        <div className="proofratings-widget proofratings-widget-trustpilot proofratings-widget-customized">
-            <div className="review-site-logo">
-                <img src="https://proofratings.com/wp-content/plugins/proofratings/assets/images/trustpilot.svg" alt="Trustpilot"/>
-            </div>
-            <div className="proofratings-reviews" itemProp="reviewRating">
-                <span className="proofratings-score">4.4</span>
-                <span className="proofratings-stars">
-                    <i style={{ width: "88%" }} />
-                </span>
-            </div>
-            <div className="review-count"> 10 reviews </div>
-            <p className="view-reviews">View Reviews</p>
-        </div>
-
-        <div className="proofratings-widget proofratings-widget-wordpress proofratings-widget-customized">
-            <div className="review-site-logo">
-                <img src="https://proofratings.com/wp-content/plugins/proofratings/assets/images/wordpress.svg" alt="Wordpress"/>
-            </div>
-            <div className="proofratings-reviews" itemProp="reviewRating">
-                <span className="proofratings-score">5.0</span>
-                <span className="proofratings-stars">
-                    <i style={{ width: "100%" }} />
-                </span>
-            </div>
-            <div className="review-count"> 25 reviews </div>
-            <p className="view-reviews">View Reviews</p>
-        </div>
+<div className="proofratings-banner-badge badge-hidden-mobile has-shadow">
+    <div className="proofratings-logos">
+        <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google"/>
+        <img src={`${proofratings.assets_url}/images/icon-trustpilot.png`} alt="trustpilot"/>
+        <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
+    </div>
+    <div className="rating-box">
+        <span className="proofratings-stars medium">
+            <i style={{ width: "96%" }} />
+        </span>
+        <span className="rating">4.8 / 5</span>
+    </div>
+    <div className="proofratings-review-count">44 customer reviews</div>
+    <div className="button-container">
+        <div className="proofratings-button button1 has-border">Buy Now</div>
     </div>
 </div>

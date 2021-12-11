@@ -7,7 +7,7 @@ import Pages from "./Pages";
 
 const { useState, useEffect } = React;
 
-const OverallRectangle = () => {
+const OverallRectangle = (props) => {
     const settings = store.getState();
 
     const [state, setState] = useState(store.getState().overall_rectangle);
@@ -77,7 +77,7 @@ const OverallRectangle = () => {
                         </th>
                         <td>
                             <code className="shortocde-area">
-                                [proofratings_overall_ratings type="rectangle"]
+                                [proofratings_overall_ratings id="{props?.id}" type="rectangle"]
                             </code>
                         </td>
                     </tr>
