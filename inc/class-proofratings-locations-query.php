@@ -49,18 +49,12 @@ class Proofratings_Locations  {
 	 * @since  1.0.6
 	 */
 	function save_settings($id, $data) {
-		$data = maybe_serialize( $data );
-
 		if ( $id === 'overall' ) {
-			if ( !isset($data['settings']) ) {
-				return false;
-			}
-
 			return update_option('proofratings_overall_rating_settings', $data);
 		}
 
 		global $wpdb;
-		$result = $wpdb->update($wpdb->proofratings, ['settings' => $data], ['id' => $id]);
+		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $data )], ['id' => $id]);
 		do_action( 'proofrating_location_save_settings' );
 		return $result;
 	}

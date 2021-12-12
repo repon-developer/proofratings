@@ -48,8 +48,20 @@ class Proofratings_Shortcodes {
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
 		add_shortcode('proofratings_badges_popup', [$this, 'proofratings_badges_popup']);
 
-        add_shortcode('proofratings_overall_ratings', [$this, 'proofratings_overall_ratings']);
+        add_shortcode('proofratings_overall_rectangle', [$this, 'overall_rectangle']);
+        add_shortcode('proofratings_overall_narrow', [$this, 'overall_narrow']);
+
         add_shortcode('proofratings_overall_ratings_cta_banner', [$this, 'overall_ratings_cta_banner']);
+	}
+
+	public function overall_rectangle($atts, $content = null) {
+		$atts = shortcode_atts(['id' => 'overall', 'float' => 'no', 'type' => 'rectangle'], $atts);
+		return $this->proofratings_overall_ratings($atts, $content = null);
+	}
+
+	public function overall_narrow($atts, $content = null) {
+		$atts = shortcode_atts(['id' => 'overall', 'float' => 'no', 'type' => 'narrow'], $atts);
+		return $this->proofratings_overall_ratings($atts, $content = null);
 	}
 
 	/**
@@ -61,10 +73,6 @@ class Proofratings_Shortcodes {
 			'float' => 'no',
 			'type' => 'rectangle',
         ], $atts);
-
-		if ( $this->reviews->sites === false) {
-			return;
-		}
 
 		$type = sanitize_title( $atts['type']);
 		if ( !in_array($type, array('rectangle', 'narrow')) ) {
@@ -84,14 +92,15 @@ class Proofratings_Shortcodes {
 		if ( !$location->has_ratings ) {
 			return;
 		}
-
-		if (!is_array($location->settings->activeSites) || empty($location->settings->activeSites)) {
-			return;
-		}
+		
 		
 		$badget_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
-				
+		
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
+
+		if ( $atts['float'] !== 'yes' ) {
+			$classes[] = 'badge-embed';
+		}
 
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
@@ -119,8 +128,8 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();
-        printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
-			if ( $badget_settings->close_button != 'no' && $atts['float'] == 'yes' ) {
+        printf('<%s id="proofratings-badge-%s" %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $location->id, $url_attribute, implode(' ', $classes));
+			if ( $badget_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 

@@ -133,7 +133,7 @@ const OverallNarrow = () => {
                 </tbody>
             </table>
 
-            {settings?.badge_display?.overall_narrow?.float && <Pages onUpdate={handle_field} hide_on={state?.hide_on} />}
+            {settings?.badge_display?.overall_narrow_float && <Pages onUpdate={handle_field} hide_on={state?.hide_on} />}
 
         </React.Fragment>
     );

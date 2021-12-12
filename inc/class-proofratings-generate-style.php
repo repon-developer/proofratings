@@ -23,15 +23,13 @@ class Proofratings_Generate_Style {
 	}
 
 	/**
-	 * Generate styles 
+	 * Generate styles for sites badge
 	 */
 	public function sites_badge($location, $slug = 'sites_square', $type = 'square') {
 		$sites_badge = new Proofratings_Site_Data($location->settings->$slug);
 		if ( !$sites_badge->customize) {
 			return;
 		}
-
-		error_log(print_r($sites_badge, true));
 
 		printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
 			if ( $sites_badge->star_color ) {
@@ -91,21 +89,129 @@ class Proofratings_Generate_Style {
 	}
 
 	/**
+	 * Generate styles overall ratings
+	 */
+	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
+		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
+		if ( !$overall_badge->customize) {
+			return;
+		}
+
+		$type_class = 'badge-embed';
+		if ( $type === 'overall_rectangle_float') {
+			$type_class = 'badge-float';
+		}
+
+		printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
+			if ( $overall_badge->star_color ) {
+				printf("\t--star_color: %s;\n", $overall_badge->star_color);
+			}
+			
+			if ( $overall_badge->rating_color ) {
+				printf("\t--rating_color: %s;\n", $overall_badge->rating_color);
+			}
+
+			if ( $overall_badge->review_text_color ) {
+				printf("\t--review_text_color: %s;\n", $overall_badge->review_text_color);
+			}
+
+			if ( $overall_badge->review_background ) {
+				printf("\t--review_background: %s;\n", $overall_badge->review_background);
+			}
+
+			if ( $overall_badge->background_color ) {
+				printf("\t--background_color: %s;\n", $overall_badge->background_color);
+			}
+
+			if ( !isset($overall_badge->shadow) || !$overall_badge->shadow['shadow']) {
+				printf("\t--shadow_color: transparent!important;\n");
+				printf("\t--shadow_hover: transparent!important;\n");
+			}
+
+			if ( isset($overall_badge->shadow['shadow']) && $overall_badge->shadow['shadow'] ) {		
+				if ( $overall_badge->shadow['color'] ) {
+					printf("\t--shadow_color: %s;\n", $overall_badge->shadow['color']);
+				}
+				
+				if ( $overall_badge->shadow['hover'] ) {
+					printf("\t--shadow_hover: %s;\n", $overall_badge->shadow['hover']);
+				}
+			}
+		echo "}\n\n";
+	}
+
+	/**
+	 * Generate styles overall ratings narrow
+	 */
+	public function overall_narrow($location, $type = 'overall_narrow_embed') {		
+		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
+		if ( !$overall_badge->customize) {
+			return;
+		}
+
+		$type_class = 'badge-embed';
+		if ( $type === 'overall_narrow_float') {
+			$type_class = 'badge-float';
+		}
+
+		printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-narrow.%s {\n", $location->id, $type_class);
+			if ( $overall_badge->star_color ) {
+				printf("\t--star_color: %s;\n", $overall_badge->star_color);
+			}
+			
+			if ( $overall_badge->rating_color ) {
+				printf("\t--rating_color: %s;\n", $overall_badge->rating_color);
+			}
+
+			if ( $overall_badge->review_text_color ) {
+				printf("\t--review_text_color: %s;\n", $overall_badge->review_text_color);
+			}
+
+			if ( $overall_badge->review_background ) {
+				printf("\t--review_background: %s;\n", $overall_badge->review_background);
+			}
+
+			if ( $overall_badge->background_color ) {
+				printf("\t--background_color: %s;\n", $overall_badge->background_color);
+			}
+
+			if ( !isset($overall_badge->shadow) || !$overall_badge->shadow['shadow']) {
+				printf("\t--shadow_color: transparent!important;\n");
+				printf("\t--shadow_hover: transparent!important;\n");
+			}
+
+			if ( isset($overall_badge->shadow['shadow']) && $overall_badge->shadow['shadow'] ) {		
+				if ( $overall_badge->shadow['color'] ) {
+					printf("\t--shadow_color: %s;\n", $overall_badge->shadow['color']);
+				}
+				
+				if ( $overall_badge->shadow['hover'] ) {
+					printf("\t--shadow_hover: %s;\n", $overall_badge->shadow['hover']);
+				}
+			}
+		echo "}\n\n";
+	}
+
+	/**
 	 * Generate styles 
 	 */
 	public function generate_css() {
 		//Get location again - Must use
 		get_proofratings()->locations->get_locations();
 
-		$location = get_proofratings()->locations->items[1];
+		$location = get_proofratings()->locations->items[1];		
 
-
-		
-
-		ob_start();		
-
+		ob_start();
 		$this->sites_badge($location);
 		$this->sites_badge($location, 'sites_rectangle', 'rectangle');
+
+		$this->overall_rectangle($location);
+		$this->overall_rectangle($location, 'overall_rectangle_float');
+
+		$this->overall_narrow($location);
+		$this->overall_narrow($location, 'overall_narrow_float');
+
+		
 		
 
 
@@ -117,180 +223,6 @@ class Proofratings_Generate_Style {
 		if ( $widget_settings['proofratings_font'] ) {
 			echo ":root {\n";
 				printf("\t--proofratingsFont: %s;\n", $widget_settings['proofratings_font']);
-			echo "}\n\n";
-		}
-
-		$badges_square = get_proofratings_badges_square();
-		if ( $badges_square->customize == 'yes' ) {
-			echo ".proofratings-widget.proofratings-widget-square {\n";
-				if ( $badges_square->logo_color ) {
-					printf("\t--logoColor: %s;\n", $badges_square->logo_color);
-				}
-
-				if ( $badges_square->star_color ) {
-					printf("\t--themeColor: %s;\n", $badges_square->star_color);
-				}
-
-				if ( $badges_square->text_color ) {
-					printf("\t--textColor: %s;\n", $badges_square->text_color);
-				}
-
-				if ( $badges_square->background ) {
-					printf("\tbackground-color: %s;\n", $badges_square->background);
-				}
-
-				if ( $badges_square->border != 'no' ) {
-					if ( $badges_square->border_color ) {
-						printf("\t--borderColor: %s;\n", $badges_square->border_color);
-					}
-
-					if ( $badges_square->border_hover_color ) {
-						printf("\t--borderHoverColor: %s;\n", $badges_square->border_hover_color);
-					}
-				}
-
-				if ( $badges_square->border == 'no' ) {
-					print("\tborder: none!important;\n");
-				}
-
-				if ( $badges_square->shadow == 'yes' ) {					
-					if ( $badges_square->shadow_color ) {
-						printf("\t--shadowColor: %s;\n", $badges_square->shadow_color);
-					}
-				}
-
-			echo "}\n\n";
-
-			if ( $badges_square->shadow == 'yes' ) {
-				echo ".proofratings-widget.proofratings-widget-square:hover {\n";
-					if ( $badges_square->star_color ) {
-						printf("\t--borderColor: %s;\n", $badges_square->star_color);
-					}
-
-					if ( $badges_square->shadow_hover_color ) {
-						printf("\t--shadowColor: %s;\n", $badges_square->shadow_hover_color);
-					}
-				echo "}\n\n";
-			}
-
-			if ( $badges_square->shadow == 'no' ) {
-				echo ".proofratings-widget.proofratings-widget-square, .proofratings-widget.proofratings-widget-square:hover {\n";
-					echo "\t--borderColor: transparent;\n";
-					echo "\t--shadowColor: transparent;\n";
-				echo "}\n\n";
-			}
-		}
-
-		$badges_rectangle = get_proofratings_badges_rectangle();
-		if ( $badges_rectangle->customize == 'yes' ) {
-			echo ".proofratings-widget.proofratings-widget-rectangle {\n";
-				if ( $badges_rectangle->star_color ) {
-					printf("\t--themeColor: %s;\n", $badges_rectangle->star_color);
-				}
-
-				if ( $badges_rectangle->icon_color ) {
-					printf("\t--iconColor: %s;\n", $badges_rectangle->icon_color);
-				}
-
-				if ( $badges_rectangle->text_color ) {
-					printf("\t--textColor: %s;\n", $badges_rectangle->text_color);
-				}
-
-				if ( $badges_rectangle->review_count_textcolor ) {
-					printf("\t--reviewCountTextColor: %s;\n", $badges_rectangle->review_count_textcolor);
-				}
-
-				if ( $badges_rectangle->background ) {
-					printf("\tbackground-color: %s;\n", $badges_rectangle->background);
-				}
-
-				if ( $badges_rectangle->border != 'no' ) {
-					if ( $badges_rectangle->border_color ) {
-						printf("\t--borderColor: %s;\n", $badges_rectangle->border_color);
-					}
-
-					if ( $badges_rectangle->border_hover_color ) {
-						printf("\t--borderHoverColor: %s;\n", $badges_rectangle->border_hover_color);
-					}
-				}
-
-				if ( $badges_rectangle->border == 'no' ) {
-					print("\tborder: none!important;\n");
-				}
-
-				if ( $badges_rectangle->shadow == 'yes' ) {					
-					if ( $badges_rectangle->shadow_color ) {
-						printf("\t--shadowColor: %s;\n", $badges_rectangle->shadow_color);
-					}
-				}
-
-			echo "}\n\n";
-
-			if ( $badges_rectangle->shadow == 'yes' ) {
-				echo ".proofratings-widget.proofratings-widget-rectangle:hover {\n";
-					if ( $badges_rectangle->star_color ) {
-						printf("\t--borderColor: %s;\n", $badges_rectangle->star_color);
-					}
-
-					if ( $badges_rectangle->shadow_hover_color ) {
-						printf("\t--shadowColor: %s;\n", $badges_rectangle->shadow_hover_color);
-					}
-				echo "}\n\n";
-			}
-
-			if ( $badges_rectangle->shadow == 'no' ) {
-				echo ".proofratings-widget.proofratings-widget-rectangle, .proofratings-widget.proofratings-widget-rectangle:hover {\n";
-					echo "\t--borderColor: transparent;\n";
-					echo "\t--shadowColor: transparent;\n";
-				echo "}\n\n";
-			}
-		}
-
-		$overall_rectangle = get_proofratings_overall_ratings_rectangle();
-		if ( $overall_rectangle->customize == 'yes' ) {
-			echo ".proofratings-badge.proofratings-badge-rectangle {\n";
-				if ( $overall_rectangle->star_color ) {
-					printf("\t--star_color: %s;\n", $overall_rectangle->star_color);
-				}
-				
-				if ( $overall_rectangle->rating_color ) {
-					printf("\t--rating_color: %s;\n", $overall_rectangle->rating_color);
-				}
-
-				if ( $overall_rectangle->review_text_color ) {
-					printf("\t--review_text_color: %s;\n", $overall_rectangle->review_text_color);
-				}
-
-				if ( $overall_rectangle->review_background ) {
-					printf("\t--review_background: %s;\n", $overall_rectangle->review_background);
-				}
-
-				if ( $overall_rectangle->background_color ) {
-					printf("\t--background_color: %s;\n", $overall_rectangle->background_color);
-				}
-
-				if ( $overall_rectangle->shadow == 'no') {
-					printf("\t--shadow_color: transparent!important;\n");
-					printf("\t--shadow_hover: transparent!important;\n");
-				} else {
-					if ( $overall_rectangle->shadow_color ) {
-						printf("\t--shadow_color: %s;\n", $overall_rectangle->shadow_color);
-					}
-					
-					if ( $overall_rectangle->shadow_hover ) {
-						printf("\t--shadow_hover: %s;\n", $overall_rectangle->shadow_hover);
-					}
-				}
-			echo "}\n\n";
-
-			echo ".proofratings-badge.proofratings-badge-rectangle.badge-float {\n";
-				if ( $overall_rectangle->shadow_color ) {
-					printf("\t--shadow_color: %s;\n", $overall_rectangle->shadow_color);
-				}
-				
-				if ( $overall_rectangle->shadow_hover ) {
-					printf("\t--shadow_hover: %s;\n", $overall_rectangle->shadow_hover);
-				}
 			echo "}\n\n";
 		}
 

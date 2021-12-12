@@ -67,8 +67,7 @@ class Proofratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
-		add_action( 'wp_footer', [ $this, 'overall_ratings_narrow' ] );
-		add_action( 'wp_footer', [ $this, 'overall_ratings_rectangle' ] );
+		add_action( 'wp_footer', [ $this, 'overall_ratings_float' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
 	}
 
@@ -211,47 +210,37 @@ class Proofratings {
 	 * Overrall Ratings Rectangle  badge on frontend
 	 * @since 1.0.4
 	 */
-	public function overall_ratings_rectangle() {
-		if ( get_proofratings_display_settings()['overall_ratings_rectangle'] !== 'yes' ) {
-			return;
+	public function overall_ratings_float() {
+		$locations = get_proofratings()->locations->items;
+
+		foreach ($locations as $location) {
+			if( !isset($location->settings->badge_display['overall_rectangle_float']) || !$location->settings->badge_display['overall_rectangle_float'] ) {
+				continue;
+			}
+
+			$hide_on = [];
+			if (isset($location->settings->overall_rectangle_float['hide_on'])) {
+				$hide_on = $location->settings->overall_rectangle_float['hide_on'];
+			}
+
+			if ( !in_array(get_the_ID(), $hide_on) ) {
+				echo do_shortcode(sprintf('[proofratings_overall_rectangle id="%s" float="yes"]', $location->id ));
+			}
 		}
 
-		$badge_settings = get_proofratings_overall_ratings_rectangle();
-		if ($badge_settings->float !== 'yes') {
-			return;
-		}
+		foreach ($locations as $location) {
+			if( !isset($location->settings->badge_display['overall_narrow_float']) || !$location->settings->badge_display['overall_narrow_float'] ) {
+				continue;
+			}
 
-		$on_pages = (array) @$badge_settings->pages;
-		$has_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
+			$hide_on = [];
+			if (isset($location->settings->overall_narrow_float['hide_on'])) {
+				$hide_on = $location->settings->overall_narrow_float['hide_on'];
+			}
 
-		if ($has_page ) {
-			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
-			echo do_shortcode('[proofratings_badges_popup]' );
-		}
-	}
-
-	/**
-	 * Overrall Ratings Narrow on frontend
-	 * @since 1.0.4
-	 */
-	public function overall_ratings_narrow() {
-		// var_dump(get_proofratings()->locations->get('overall'));
-		// exit;
-		if ( get_proofratings_display_settings()['overall_ratings_narrow'] !== 'yes' ) {
-			return;
-		}
-
-		$badge_settings = get_proofratings_overall_ratings_narrow();
-		if ($badge_settings->float !== 'yes') {
-			return;
-		}
-
-		$on_pages = (array) @$badge_settings->pages;
-		$has_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
-
-		if ($has_page ) {
-			echo do_shortcode('[proofratings_overall_ratings type="narrow" float="yes"]' );
-			echo do_shortcode('[proofratings_badges_popup]' );
+			if ( !in_array(get_the_ID(), $hide_on) ) {
+				echo do_shortcode(sprintf('[proofratings_overall_narrow id="%s" float="yes"]', $location->id ));
+			}
 		}
 	}
 
