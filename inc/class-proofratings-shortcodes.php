@@ -94,7 +94,7 @@ class Proofratings_Shortcodes {
 		}
 		
 		
-		$badget_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
+		$badge_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
 		
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
 
@@ -105,19 +105,19 @@ class Proofratings_Shortcodes {
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
 
-			if ( !empty($badget_settings->position) ) {
-				$classes[] = $badget_settings->position;
+			if ( !empty($badge_settings->position) ) {
+				$classes[] = $badge_settings->position;
 			}
 
-			if ( $badget_settings->mobile == 'no') {
+			if ( $badge_settings->mobile == 'no') {
 				$classes[] = 'badge-hidden-mobile';
 			}
 
-			if ( $badget_settings->tablet == 'no') {
+			if ( $badge_settings->tablet == 'no') {
 				$classes[] = 'badge-hidden-tablet';
 			}
 
-			$badget_settings->shadow = 'yes';
+			$badge_settings->shadow = 'yes';
 		}
 
 		$url_attribute = '';
@@ -129,7 +129,7 @@ class Proofratings_Shortcodes {
 
         ob_start();
         printf('<%s id="proofratings-badge-%s" %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $location->id, $url_attribute, implode(' ', $classes));
-			if ( $badget_settings->close_button && $atts['float'] == 'yes' ) {
+			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
@@ -181,13 +181,16 @@ class Proofratings_Shortcodes {
 	 * Floating widgets shortcode
 	 */
 	public function proofratings_badges_popup($atts, $content = null) {
-		$review_sites = $this->reviews->sites;
-        if ( !$review_sites ) {
-            return;
-        }
+		$atts = shortcode_atts(['id' => 'overall'], $atts);
+
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location || !$location->has_ratings ) {
+			return;
+		}
+
+		$review_sites = $location->reviews;
 
 		$column = 4;
-
 		if ( count($review_sites) == 5 ) {
 			$column = 5;
 		}
@@ -196,16 +199,16 @@ class Proofratings_Shortcodes {
 			$column = count($review_sites);
 		}
 
-		$badges_popup = get_proofratings_badges_popup();
+		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
 
 		$classes = '';
-		if ( $badges_popup->customize == 'yes' ) {
+		if ( $badges_popup->customize ) {
 			$classes = 'proofratings-widget-customized';
 		}
 
         ob_start(); 
 		
-        printf('<div class="proofratings-badges-popup">');
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%s">', $location->id);
 			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
@@ -360,12 +363,17 @@ class Proofratings_Shortcodes {
 	 * CTA banner 
 	 */
 	public function overall_ratings_cta_banner($atts, $content = null) {
-		if ( $this->reviews->sites === false) {
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location || !$location->has_ratings ) {
 			return;
 		}
 
-		$badge_settings = get_proofratings_overall_ratings_cta_banner();
+		$badge_settings = new Proofratings_Site_Data($location->settings->overall_cta_banner);
+		
 		$classes = ['proofratings-banner-badge'];
+		$classes[] = 'proofratings-banner-badge-'.$location->id;
+
+
 		if ( $badge_settings->tablet == 'no') {
 			$classes[] = 'badge-hidden-tablet';
 		}
@@ -382,36 +390,48 @@ class Proofratings_Shortcodes {
 
 
 		$button1 = '';
-		if ( !empty($badge_settings->button1_text) ) {
+		if ( isset($badge_settings->button1) ) {
+			$button1_settings = new Proofratings_Site_Data($badge_settings->button1);
+
 			$button1_class = 'proofratings-button button1';
-			if ( $badge_settings->button1_border == 'yes' ) {
+			if ( $button1_settings->border == 'yes' ) {
 				$button1_class .= ' has-border';
 			}
 
+			if ( $button1_settings->shape) {
+				$button1_class .= ' button-round';
+			}
+
 			$target = '';
-			if ( $badge_settings->button1_blank == 'yes') {
+			if ( $button1_settings->blank == 'yes') {
 				$target = 'target="_blank"';
 			}
 
-			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button1_url), trim($button1_class), $target);
-			$button1 .= $badge_settings->button1_text;
+			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $button1_settings->url), trim($button1_class), $target);
+			$button1 .= $button1_settings->text;
 			$button1 .= '</a>';			
 		}
 
 		$button2 = '';
-		if ( $badge_settings->button2 == 'yes' && !empty($badge_settings->button2_text) ) {
+		if ( isset($badge_settings->button2) ) {
+			$button2_settings = new Proofratings_Site_Data($badge_settings->button2);
+
 			$button2_class = 'proofratings-button button2';
-			if ( $badge_settings->button2_border == 'yes' ) {
+			if ( $button2_settings->border ) {
 				$button2_class .= ' has-border';
 			}
 
+			if ( $button2_settings->shape) {
+				$button2_class .= ' button-round';
+			}
+
 			$target = '';
-			if ( $badge_settings->button2_blank == 'yes') {
+			if ( $button2_settings->blank == 'yes') {
 				$target = 'target="_blank"';
 			}
 
-			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button2_url), trim($button2_class), $target);			
-			$button2 .= $badge_settings->button2_text;
+			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $button2_settings->url), trim($button2_class), $target);			
+			$button2 .= $button2_settings->text;
 			$button2 .= '</a>';			
 		}
 
@@ -423,19 +443,24 @@ class Proofratings_Shortcodes {
 		ob_start(); ?>
 		<div class="<?php echo $class; ?>">
 			<?php echo $close_button; ?>
-			<?php $this->reviews->get_review_logos() ?>
+			<?php $location->ratings->get_logos(); ?>
+			
+        	<meta itemprop="worstRating" content = "1">
+        	<meta itemprop="ratingValue" content="<?php echo $location->ratings->rating ?>">
+        	<meta itemprop="bestRating" content="5">
 
 			<div class="rating-box">
-				<?php $this->reviews->get_rating_star('medium') ?> <span class="rating"><?php echo $this->reviews->rating; ?> / 5</span>
+				<span class="proofratings-stars medium"><i style="width: <?php echo $location->ratings->percent ?>%"></i></span> 
+				<span class="rating"><?php echo $location->ratings->rating; ?> / 5</span>
 			</div>
 
-			<div class="proofratings-review-count"><?php echo $this->reviews->count; ?> customer reviews</div>
+			<div class="proofratings-review-count"><?php echo $location->ratings->count; ?> customer reviews</div>
 
 			<div class="button-container">
 				<?php echo $button1 . $button2; ?>
 			</div>
 		</div>
-		<?php		
+		<?php
 
 		return ob_get_clean();
 	}

@@ -193,118 +193,48 @@ class Proofratings_Generate_Style {
 	}
 
 	/**
-	 * Generate styles 
+	 * Generate styles overall popup badges
 	 */
-	public function generate_css() {
-		//Get location again - Must use
-		get_proofratings()->locations->get_locations();
-
-		$location = get_proofratings()->locations->items[1];		
-
-		ob_start();
-		$this->sites_badge($location);
-		$this->sites_badge($location, 'sites_rectangle', 'rectangle');
-
-		$this->overall_rectangle($location);
-		$this->overall_rectangle($location, 'overall_rectangle_float');
-
-		$this->overall_narrow($location);
-		$this->overall_narrow($location, 'overall_narrow_float');
-
-		
-		
-
-
-		$styles = ob_get_clean();
-		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	
-
-		return;
-
-		if ( $widget_settings['proofratings_font'] ) {
-			echo ":root {\n";
-				printf("\t--proofratingsFont: %s;\n", $widget_settings['proofratings_font']);
-			echo "}\n\n";
+	public function overall_popup_badges($location) {
+		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
+		if ( !$badges_popup->customize) {
+			return;
 		}
 
-		$overall_narrow = get_proofratings_overall_ratings_narrow();
-		if ( $overall_narrow->customize == 'yes' ) {
-			echo ".proofratings-badge.proofratings-badge-narrow {\n";
-				if ( $overall_narrow->star_color ) {
-					printf("\t--star_color: %s;\n", $overall_narrow->star_color);
-				}
-				
-				if ( $overall_narrow->rating_color ) {
-					printf("\t--rating_color: %s;\n", $overall_narrow->rating_color);
-				}
+		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);			
+			if ( $badges_popup->star_color ) {
+				printf("\t--themeColor: %s;\n", $badges_popup->star_color);
+			}
 
-				if ( $overall_narrow->review_text_color ) {
-					printf("\t--review_text_color: %s;\n", $overall_narrow->review_text_color);
-				}
+			if ( $badges_popup->review_text_color ) {
+				printf("\t--reviewCountTextColor: %s;\n", $badges_popup->review_text_color);
+			}
 
-				if ( $overall_narrow->review_background ) {
-					printf("\t--review_background: %s;\n", $overall_narrow->review_background);
-				}
+			if ( $badges_popup->review_text_background ) {
+				printf("\t--review_text_background: %s;\n", $badges_popup->review_text_background);
+			}
 
-				if ( $overall_narrow->background_color ) {
-					printf("\t--background_color: %s;\n", $overall_narrow->background_color);
-				}
+			if ( $badges_popup->view_review_color ) {
+				printf("\t--view_review_color: %s;\n", $badges_popup->view_review_color);
+			}
 
-				if ( $overall_narrow->shadow == 'no') {
-					printf("\t--shadow_color: transparent!important;\n");
-					printf("\t--shadow_hover: transparent!important;\n");
-				} else {
-					if ( $overall_narrow->shadow_color ) {
-						printf("\t--shadow_color: %s;\n", $overall_narrow->shadow_color);
-					}
-	
-					if ( $overall_narrow->shadow_hover ) {
-						printf("\t--shadow_hover: %s;\n", $overall_narrow->shadow_hover);
-					}
-				}
+			if ( $badges_popup->rating_color ) {
+				printf("\t--rating_color: %s;\n", $badges_popup->rating_color);
+			}
 
-			echo "}\n\n";
 
-			echo ".proofratings-badge.proofratings-badge-narrow.badge-float {\n";
-				if ( $overall_narrow->shadow_color ) {
-					printf("\t--shadow_color: %s;\n", $overall_narrow->shadow_color);
-				}
+		echo "}\n\n";			
+	}
 
-				if ( $overall_narrow->shadow_hover ) {
-					printf("\t--shadow_hover: %s;\n", $overall_narrow->shadow_hover);
-				}
-			echo "}\n\n";
-		}
-		
+	/**
+	 * Generate styles overall banner badges
+	 */
+	public function overall_banner_badges($location) {
+		$banner_badge = new Proofratings_Site_Data($location->settings->overall_cta_banner);
 
-		$badges_popup = get_proofratings_badges_popup();
-		if ( $badges_popup->customize == 'yes' ) {
-			echo ".proofratings-badges-popup .proofratings-widget {\n";
-				if ( $badges_popup->star_color ) {
-					printf("\t--themeColor: %s;\n", $badges_popup->star_color);
-				}
 
-				if ( $badges_popup->text_color ) {
-					printf("\t--reviewCountTextColor: %s;\n", $badges_popup->reviewCountTextColor);
-				}
-
-				if ( $badges_popup->review_text_background ) {
-					printf("\t--review_text_background: %s;\n", $badges_popup->review_text_background);
-				}
-
-				if ( $badges_popup->view_review_color ) {
-					printf("\t--view_review_color: %s;\n", $badges_popup->view_review_color);
-				}
-
-				if ( $badges_popup->rating_color ) {
-					printf("\t--rating_color: %s;\n", $badges_popup->rating_color);
-				}
-			echo "}\n\n";
-		}
-
-		$banner_badge = get_proofratings_overall_ratings_cta_banner();
-
-		if ($banner_badge->customize == 'yes' ) {
-			echo ".proofratings-banner-badge {\n";
+		if ( $banner_badge->customize) {			
+			printf(".proofratings-banner-badge.proofratings-banner-badge-%s {\n", $location->id);
 				if ( $banner_badge->star_color ) {
 					printf("\t--star_color: %s;\n", $banner_badge->star_color);
 				}
@@ -327,69 +257,107 @@ class Proofratings_Generate_Style {
 			echo "}\n\n";
 		}
 
-		echo ".proofratings-banner-badge .proofratings-button.button1 {\n";
-			if ( $banner_badge->button1_shape == 'round' ) {
-				printf("\t--radius: 100px;\n");
-			}
+		if ( isset($banner_badge->button1) ) {
+			$button1 = new Proofratings_Site_Data($banner_badge->button1);
 
-			if ( $banner_badge->button1_textcolor ) {
-				printf("\t--textColor: %s;\n", $banner_badge->button1_textcolor);
-			}
-
-			if ( $banner_badge->button1_hover_textcolor ) {
-				printf("\t--textHoverColor: %s;\n", $banner_badge->button1_hover_textcolor);
-			}
-
-			if ( $banner_badge->button1_background_color ) {
-				printf("\t--backgroundColor: %s;\n", $banner_badge->button1_background_color);
-			}
-
-			if ( $banner_badge->button1_hover_background_color ) {
-				printf("\t--backgroundHoverColor: %s;\n", $banner_badge->button1_hover_background_color);
-			}
-
-			if ( $banner_badge->button1_border == 'yes' ) {
-				if ( $banner_badge->button1_border_color ) {
-					printf("\t--borderColor: %s;\n", $banner_badge->button1_border_color);
+			printf(".proofratings-banner-badge.proofratings-banner-badge-%s .proofratings-button.button1 {\n", $location->id);
+				if ( $button1->textcolor ) {
+					printf("\t--textColor: %s;\n", $button1->textcolor);
 				}
-				
-				if ( $banner_badge->button1_hover_border_color ) {
-					printf("\t--borderHoverColor: %s;\n", $banner_badge->button1_hover_border_color);
+
+				if ( $button1->hover_textcolor ) {
+					printf("\t--textHoverColor: %s;\n", $button1->hover_textcolor);
 				}
-			}
-		echo "}\n\n";
+
+				if ( $button1->background_color ) {
+					printf("\t--backgroundColor: %s;\n", $button1->background_color);
+				}
+
+				if ( $button1->hover_background_color ) {
+					printf("\t--backgroundHoverColor: %s;\n", $button1->hover_background_color);
+				}
+
+				if ( $button1->border ) {
+					if ( $button1->border_color ) {
+						printf("\t--borderColor: %s;\n", $button1->border_color);
+					}
+					
+					if ( $button1->hover_border_color ) {
+						printf("\t--borderHoverColor: %s;\n", $button1->hover_border_color);
+					}
+				}
+			echo "}\n\n";
+		}
+
+		if ( isset($banner_badge->button2) ) {
+			$button2 = new Proofratings_Site_Data($banner_badge->button2);
+
+			printf(".proofratings-banner-badge.proofratings-banner-badge-%s .proofratings-button.button2 {\n", $location->id);
+				if ( $button2->textcolor ) {
+					printf("\t--textColor: %s;\n", $button2->textcolor);
+				}
+
+				if ( $button2->hover_textcolor ) {
+					printf("\t--textHoverColor: %s;\n", $button2->hover_textcolor);
+				}
+
+				if ( $button2->background_color ) {
+					printf("\t--backgroundColor: %s;\n", $button2->background_color);
+				}
+
+				if ( $button2->hover_background_color ) {
+					printf("\t--backgroundHoverColor: %s;\n", $button2->hover_background_color);
+				}
+
+				if ( $button2->border ) {
+					if ( $button2->border_color ) {
+						printf("\t--borderColor: %s;\n", $button2->border_color);
+					}
+					
+					if ( $button2->hover_border_color ) {
+						printf("\t--borderHoverColor: %s;\n", $button2->hover_border_color);
+					}
+				}
+			echo "}\n\n";
+		}
+	}
+
+	/**
+	 * Generate styles 
+	 */
+	public function generate_css() {
+		//Get location again - Must use
+		get_proofratings()->locations->get_locations();
+
+		$location = get_proofratings()->locations->items[1];		
+
+		ob_start();
+		$this->sites_badge($location);
+		$this->sites_badge($location, 'sites_rectangle', 'rectangle');
+
+		$this->overall_rectangle($location);
+		$this->overall_rectangle($location, 'overall_rectangle_float');
+
+		$this->overall_narrow($location);
+		$this->overall_narrow($location, 'overall_narrow_float');
 		
-		echo ".proofratings-banner-badge .proofratings-button.button2 {\n";
-			if ( $banner_badge->button2_shape == 'round' ) {
-				printf("\t--radius: 100px;\n");
-			}
+		$this->overall_popup_badges($location);
+		$this->overall_banner_badges($location);
+		
 
-			if ( $banner_badge->button2_textcolor ) {
-				printf("\t--textColor: %s;\n", $banner_badge->button2_textcolor);
-			}
 
-			if ( $banner_badge->button2_hover_textcolor ) {
-				printf("\t--textHoverColor: %s;\n", $banner_badge->button2_hover_textcolor);
-			}
+		$styles = ob_get_clean();
+		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	
 
-			if ( $banner_badge->button2_background_color ) {
-				printf("\t--backgroundColor: %s;\n", $banner_badge->button2_background_color);
-			}
+		return;
 
-			if ( $banner_badge->button2_hover_background_color ) {
-				printf("\t--backgroundHoverColor: %s;\n", $banner_badge->button2_hover_background_color);
-			}
+		if ( $widget_settings['proofratings_font'] ) {
+			echo ":root {\n";
+				printf("\t--proofratingsFont: %s;\n", $widget_settings['proofratings_font']);
+			echo "}\n\n";
+		}
 
-			if ( $banner_badge->button2_border == 'yes' ) {
-				if ( $banner_badge->button2_border_color ) {
-					printf("\t--borderColor: %s;\n", $banner_badge->button2_border_color);
-				}
-				
-				if ( $banner_badge->button2_hover_border_color ) {
-					printf("\t--borderHoverColor: %s;\n", $banner_badge->button2_hover_border_color);
-				}
-			}
-		echo "}\n\n";
+		
 		
 			
 		$styles = ob_get_clean();

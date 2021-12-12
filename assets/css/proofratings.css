@@ -433,7 +433,7 @@ html {
     font-family: var(--proofratingsFont)!important;
     min-height: 90px;
     padding: 15px 20px;
-    position: fixed;
+    position: fixed;    
     bottom: 0;
     left: 0;
     right: 0;
@@ -551,6 +551,8 @@ html {
     border-radius: var(--radius, 5px);
     transition: all 150ms;
 }
+
+.proofratings-banner-badge .proofratings-button.button-round {border-radius: 100px!important}
 
 
 .proofratings-banner-badge .proofratings-button.button1:hover {
