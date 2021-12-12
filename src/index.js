@@ -69,7 +69,6 @@ const ProofratingsWidgets = () => {
         settings.location_id = location_id;
 
         jQuery.post(proofratings.ajaxurl, settings, function (response) {
-            console.log(response);
             if ( response?.success == false ) {
                 alert('Something wrong with saving data')
             }

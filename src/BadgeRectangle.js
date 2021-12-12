@@ -3,10 +3,12 @@ import ColorPicker from "./ColorPicker";
 import Border from "./Border";
 import Shadow from "./Shadow";
 
+import ActiveSites from './Component/ActiveSites';
+
 const { useState, useEffect } = React;
 
 const BadgeRectangle = (props) => {
-    const [state, setState] = useState(Object.assign({customize: false}, store.getState().sites_rectangle))
+    const [state, setState] = useState(store.getState().sites_rectangle)
 
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setState(store.getState().sites_rectangle))
@@ -82,6 +84,7 @@ const BadgeRectangle = (props) => {
     return (
         <React.Fragment>
             <style>{css_style}</style>
+            <ActiveSites onUpdate={(active_sites) => handle_field({active_sites})} active_sites={state?.active_sites} />
             <table className="form-table">
                 <tbody>
                     <tr>

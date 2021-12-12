@@ -17,7 +17,6 @@ const ActiveSites = (props) => {
     }
 
 
-
     return (
         <div className="review-sites-checkboxes review-sites-checkboxes-widget">
             {activeSites.map(site_id => (

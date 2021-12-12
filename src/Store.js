@@ -17,7 +17,7 @@ const ACTIONS = {
 
 const settings = {
     current_tab: 'review-sites',
-    activeSites: ["facebook"],
+    activeSites: [],
     badge_display: {
         sites_square: false,
         sites_rectangle: false,
@@ -53,10 +53,9 @@ const settings = {
 };
 
 const settingsReducer = (state = settings, action) => { 
-    //console.log(state, action)
     switch (action.type) {
         case "SAVE_SETTINGS":
-            return {...settings, ...action.payload};
+            return action.payload;
 
         case "ACTIVE_SITES":
             if (state?.sites_square?.active_sites === null) {

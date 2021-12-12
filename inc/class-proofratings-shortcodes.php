@@ -57,6 +57,7 @@ class Proofratings_Shortcodes {
 	 */
 	public function proofratings_overall_ratings($atts, $content = null) {
         $atts = shortcode_atts([
+			'id' => 'overall',
 			'float' => 'no',
 			'type' => 'rectangle',
         ], $atts);
@@ -64,17 +65,42 @@ class Proofratings_Shortcodes {
 		if ( $this->reviews->sites === false) {
 			return;
 		}
-				
-		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['type']];
 
-		$badget_settings = get_proofratings_overall_ratings_rectangle();
-		if ( $atts['type'] == 'narrow') {
-			$badget_settings = get_proofratings_overall_ratings_narrow();			
+		$type = sanitize_title( $atts['type']);
+		if ( !in_array($type, array('rectangle', 'narrow')) ) {
+			$type = 'rectangle';
 		}
 
-		if ( $atts['float'] == 'no' && $badget_settings->embed == 'no') {
+		$overall_slug = "overall_{$type}_embed";
+		if ( $atts['float'] === 'yes' ) {
+			$overall_slug = "overall_{$type}_float";
+		}
+
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location ) {
 			return;
 		}
+
+		if ( sizeof($location->reviews) === 0) {
+			return;
+		}
+
+		$ratings = $location->reviews;
+
+		$settings = isset($location->settings[$overall_slug]) && is_array($location->settings[$overall_slug]) ? $location->settings[$overall_slug] : [];
+		$settings = new Proofratings_Site_Data($settings);
+
+				
+		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
+
+		// $badget_settings = get_proofratings_overall_ratings_rectangle();
+		// if ( $atts['type'] == 'narrow') {
+		// 	$badget_settings = get_proofratings_overall_ratings_narrow();			
+		// }
+
+		// if ( $atts['float'] == 'no' && $badget_settings->embed == 'no') {
+		// 	return;
+		// }
 
 
 		if ( $atts['float'] == 'yes' ) {
@@ -104,50 +130,52 @@ class Proofratings_Shortcodes {
 
         ob_start();
         printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
-			if ( @$badget_settings->close_button != 'no' && $atts['float'] == 'yes' ) {
+			if ( $settings->close_button != 'no' && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
-			if($atts['type'] == 'narrow') {
-				$this->overall_ratings_narrow();
+			if($type == 'narrow') {
+				$this->overall_ratings_narrow($location);
 			} else {				
-				$this->overall_ratings_rectangle();
+				$this->overall_ratings_rectangle($location);
 			}
 			
         printf('</%s>', $tag);
         return ob_get_clean();
 	}
 
-	private function overall_ratings_rectangle() {
+	private function get_meta($overall) {
+		echo '<meta itemprop="worstRating" content = "1">';
+		echo '<meta itemprop="ratingValue" content="'.$overall['rating'].'">';
+		echo '<meta itemprop="bestRating" content="5">';
+	}
+
+	private function overall_ratings_rectangle($location) {		
 		echo '<div class="proofratings-inner">';
-			$this->reviews->get_review_logos();
+			
+			get_proofratings()->locations->get_logos($location->reviews);
 
 			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-				printf('<span class="proofratings-score">%s</span>', $this->reviews->rating);
-				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $this->reviews->percent);
+				printf('<span class="proofratings-score">%s</span>', $location->overall['rating']);
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->overall['percent']);
 
-				echo '<meta itemprop="worstRating" content = "1">';
-				echo '<meta itemprop="ratingValue" content="'.$this->reviews->rating.'">';
-				echo '<meta itemprop="bestRating" content="5">';
+				$this->get_meta($location->overall);				
 			echo '</div>';
 		echo '</div>';
 
-		printf('<div class="proofratings-review-count">%d %s</div>', $this->reviews->count, __('reviews', 'proofratings'));
+		printf('<div class="proofratings-review-count">%d %s</div>', $location->overall['count'], __('reviews', 'proofratings'));
 	}
 
-	private function overall_ratings_narrow() {
-		$this->reviews->get_review_logos();
+	private function overall_ratings_narrow($location) {
+		get_proofratings()->locations->get_logos($location->reviews);
 
         echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-            printf('<span class="proofratings-score">%s</span>', $this->reviews->rating);
-            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $this->reviews->percent);
-
-			echo '<meta itemprop="worstRating" content = "1">';
-			echo '<meta itemprop="ratingValue" content="'.$this->reviews->rating.'">';
-			echo '<meta itemprop="bestRating" content="5">';
+            printf('<span class="proofratings-score">%s</span>', $location->overall['rating']);
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->overall['percent']);
+			$this->get_meta($location->overall);
         echo '</div>';
 
-    	printf('<div class="proofratings-review-count">%d %s</div>', $this->reviews->count, __('reviews', 'proofratings'));
+    	printf('<div class="proofratings-review-count">%d %s</div>', $location->overall['count'], __('reviews', 'proofratings'));
 	}
 
 	/**
@@ -272,14 +300,6 @@ class Proofratings_Shortcodes {
 		if ( sizeof($ratings) === 0) {
 			return;
 		}
-
-		$rating_sites = get_proofratings_rating_sites();
-
-		array_walk($ratings, function(&$rating, $key) use($rating_sites) {
-			$data = isset($rating_sites[$key]) && is_array($rating_sites[$key]) ? $rating_sites[$key] : [];
-			$rating = new Proofratings_Site_Data(array_merge($data, $rating));
-		});
-
 
 		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $atts['style']];
 		

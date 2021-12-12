@@ -47,7 +47,6 @@ const ReviewSites = (props) => {
 
     return (
         <React.Fragment>
-
             <table className="form-table">
                 <tbody>
                     <tr>
@@ -61,19 +60,22 @@ const ReviewSites = (props) => {
                     </tr>
                 </tbody>
 			</table>
+
             <div className="gap-30" />
 
-            <div className="connect-sites-container">
-                <h2>Connected Sites</h2>
-                <div className="review-sites-checkboxes">
-                    {activeSites.map(site_id => (
-                        <label key={site_id} className="checkbox-review-site">
-                            <input type="checkbox" defaultChecked={true} onClick={() => handleCheck(site_id)} />
-                            <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />
-                        </label>
-                    ))}
+            {activeSites.length > 0 && 
+                <div className="connect-sites-container">
+                    <h2>Connected Sites</h2>
+                    <div className="review-sites-checkboxes">
+                        {activeSites.map(site_id => (
+                            <label key={site_id} className="checkbox-review-site">
+                                <input type="checkbox" defaultChecked={true} onClick={() => handleCheck(site_id)} />
+                                <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />
+                            </label>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            }
 
             {get_category_sites('general', 'General Review Sites')}
 

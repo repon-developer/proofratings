@@ -158,8 +158,6 @@ class Proofratings_Locations  {
 			'location' => __('ALL LOCATIONS (OVERALL)', 'proofratings'),
 			'settings' => get_option('proofratings_overall_rating_settings'),
 			'reviews' => $site_overall_review,
-			'connected' => 3,
-			'widgets' => 4,
 			'status' => $status_text
 		));
 	}
@@ -177,12 +175,21 @@ class Proofratings_Locations  {
 			$location = $this->sanitize_location($location);
 		});
 
-		array_unshift($locations, $this->overall_location($locations));		
+		array_unshift($locations, $this->overall_location($locations));
+
+
+		$rating_sites = get_proofratings_rating_sites();
 
 		foreach ($locations as $key => $location) {			
+			array_walk($location->reviews, function(&$rating, $key) use($rating_sites) {
+				$data = isset($rating_sites[$key]) && is_array($rating_sites[$key]) ? $rating_sites[$key] : [];
+				$rating = new Proofratings_Site_Data(array_merge($data, $rating));
+			});
+
 			$total_reviews = array_sum(array_column($location->reviews, 'count'));
+
 			$has_reviews = array_filter($location->reviews, function($item) {
-				return $item['count'] > 0;
+				return $item->count > 0;
 			});
 			
 			$total_score = 0.0;
@@ -199,6 +206,7 @@ class Proofratings_Locations  {
 			);
 		}
 
+
 		$this->items = $locations;
 	}
 
@@ -211,5 +219,15 @@ class Proofratings_Locations  {
 		return $key === false ? false : $this->items[$key];
 	}
 
-	
+	/**
+	 * get single location
+	 * @since  1.0.6
+	 */
+	function get_logos($ratings) {
+		echo '<div class="proofratings-logos">';
+        foreach ($ratings as $key => $site) {
+            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site->icon), $key);
+        }
+        echo '</div>';
+	}
 }
