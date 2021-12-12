@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Proofratings_Site_Data {
-    var $active = 'no';
+    //var $active = 'no';
 
     function __construct($data = []) {
         if ( is_object($data)) {
@@ -28,13 +28,12 @@ class Proofratings_Site_Data {
     }
 }
 
-
 /**
- * get settings of proof ratings settings
- * @since  1.0.1
+ * get default settings of rating sites
+ * @since  1.0.6
  */
-function get_proofratings_settings() {
-    $default = [
+ function get_proofratings_rating_sites() {
+    return [
         'google' => [
             'theme_color' => '#03AB4E',
             'name' => __('Google', 'proofratings'),
@@ -269,11 +268,19 @@ function get_proofratings_settings() {
             'category' => 'software'
         ]
     ];
+ }
+
+/**
+ * get settings of proof ratings settings
+ * @since  1.0.1
+ */
+function get_proofratings_settings() {
+    $rating_sites = get_proofratings_rating_sites();
+
 
     $settings = get_option('proofratings_review_sites', []);
-
     
-    array_walk($default, function(&$item, $key) use($settings) {
+    array_walk($rating_sites, function(&$item, $key) use($settings) {
         if ( !isset($settings[$key]) ) {
             return $item = new Proofratings_Site_Data($item);
         }
@@ -281,7 +288,7 @@ function get_proofratings_settings() {
         $item = new Proofratings_Site_Data(array_merge($item, $settings[$key]));
     });    
 
-    return $default;
+    return $rating_sites;
 }
 
 

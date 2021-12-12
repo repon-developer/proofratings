@@ -216,38 +216,83 @@ class Proofratings_Shortcodes {
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
 			'style' => 'square',
-            'id' => 'proofratings_widgets'
+            'id' => 'overall'
         ], $atts);
 
-		
-		$review_sites = $this->reviews->sites;
-        if ( !$review_sites ) {
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location ) {
 			return;
-        }
+		}
+
+		if ( sizeof($location->reviews) === 0) {
+			return;
+		}
+
+		$ratings = $location->reviews;
+		
+		if ( empty($location->settings['activeSites'])) {
+			return;
+		}
+
+		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle');
+
+		$badge_type = 'sites_square';
+		
+		$badge_style = sanitize_key($atts['style']);
+		if ( array_key_exists($badge_style, $badge_styles) ) {
+			$badge_type = $badge_styles[$badge_style];
+		}
+
+		if ( !method_exists($this, 'proofratings_widgets_' . $badge_type)) {
+			$badge_type = 'sites_square';
+		}
+
+		$badge_widget = isset($location->settings[$badge_type]) ? $location->settings[$badge_type] : [];
+		$badge_widget = new Proofratings_Site_Data($badge_widget);
+		
+		$active_sites = $location->settings['activeSites'];
+		if ( is_array($badge_widget->active_sites) ) {
+			$active_sites = array_intersect($active_sites, $badge_widget->active_sites);
+		}
+
+		foreach ($ratings as $id => $rating) {
+			if ( !in_array($id, $active_sites) ) {
+				unset($ratings[$id]);
+			}			
+		}
+
+		while ($site_id = current($active_sites)) {
+			next($active_sites);
+			if ( !isset($ratings[$site_id])) {
+				$ratings[$site_id] = array('rating' => 0, 'count' => 0, 'percent' => 0);
+			}			
+		}
+
+		if ( sizeof($ratings) === 0) {
+			return;
+		}
+
+		$rating_sites = get_proofratings_rating_sites();
+
+		array_walk($ratings, function(&$rating, $key) use($rating_sites) {
+			$data = isset($rating_sites[$key]) && is_array($rating_sites[$key]) ? $rating_sites[$key] : [];
+			$rating = new Proofratings_Site_Data(array_merge($data, $rating));
+		});
+
 
 		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $atts['style']];
 		
-		$badges_settings = get_proofratings_badges_square();
-		if ( $atts['style'] == 'rectangle') {
-			$badges_settings = get_proofratings_badges_rectangle();			
-		}
-		
-		if ( $badges_settings->customize == 'yes' ) {
+		if ( $badge_widget->customize ) {
 			$badge_class[] = 'proofratings-widget-customized';
 		}
-		
-		$badge_style = sanitize_key($atts['style']);
-		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
-			$badge_style = 'square';
-		}
 
-		if ( !empty($badges_settings->logo_color) ) {
+		if ( !empty($badge_widget->logo_color) ) {
 			$badge_class[] = 'proofratings-widget-logo-color';
 		}
 
         ob_start();		
         printf('<div id="%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
-	        foreach ($review_sites as $key => $location) {
+	        foreach ($ratings as $site_id => $location) {
 				$tag = 'div';
 				$attribue = '';
 			
@@ -256,8 +301,8 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($location->review_url));
 				}
 				
-				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $location->site, $attribue);
-					$this->{'proofratings_widgets_' . $badge_style}($location);
+				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue);
+					$this->{'proofratings_widgets_' . $badge_type}($location);
 				printf('</%s>', $tag);
 	        }
 
@@ -268,7 +313,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function proofratings_widgets_square($site) {			
+	public function proofratings_widgets_sites_square($site) {			
     	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
@@ -284,7 +329,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge style2
 	 */
-	public function proofratings_widgets_rectangle($site) {		
+	public function proofratings_widgets_sites_rectangle($site) {		
     	//printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon2), esc_attr($site->rating_title));
     	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
 

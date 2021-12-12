@@ -27,8 +27,8 @@ const settings = {
         overall_narrow_embed: false,
         overall_narrow_float: false
     },
-    sites_square: {},
-    sites_rectangle: {},
+    sites_square: {active_sites: null},
+    sites_rectangle: {active_sites: null},
 
     overall_rectangle_embed: {},
     overall_rectangle_float: {tablet: true, mobile: true, close_button: true},
@@ -59,6 +59,10 @@ const settingsReducer = (state = settings, action) => {
             return {...settings, ...action.payload};
 
         case "ACTIVE_SITES":
+            if (state?.sites_square?.active_sites === null) {
+                state.sites_square.active_sites = action.payload;
+            }
+
             return {...state, activeSites: action.payload};
 
         case "BADGE_DISPLAY":

@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the class Wordpress_ProofRatings.
+ * File containing the class Proofratings.
  *
  * @package proofratings
  * @since   1.0.1
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Wordpress_Proofratings {
+class Proofratings {
 	/**
 	 * The single instance of the class.
 	 *
@@ -234,8 +234,8 @@ class Wordpress_Proofratings {
 	 * @since 1.0.4
 	 */
 	public function overall_ratings_narrow() {
-		var_dump(get_proofratings()->locations->get('overall'));
-		exit;
+		// var_dump(get_proofratings()->locations->get('overall'));
+		// exit;
 		if ( get_proofratings_display_settings()['overall_ratings_narrow'] !== 'yes' ) {
 			return;
 		}
