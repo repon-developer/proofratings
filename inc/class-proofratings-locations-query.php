@@ -181,6 +181,24 @@ class Proofratings_Locations  {
 		$rating_sites = get_proofratings_rating_sites();
 
 		foreach ($locations as $key => $location) {
+			$active_sites = [];
+			if ( isset($location->settings['activeSites']) && is_array($location->settings['activeSites'])) {
+				$active_sites = $location->settings['activeSites'];
+			}
+
+			foreach ($location->reviews as $id => $rating) {
+				if ( !in_array($id, $active_sites) ) {
+					unset($location->reviews[$id]);
+				}
+			}
+	
+			while ($site_id = current($active_sites)) {
+				next($active_sites);
+				if ( !isset($location->reviews[$site_id])) {
+					$location->reviews[$site_id] = array('rating' => 0, 'count' => 0, 'percent' => 0);
+				}			
+			}
+
 			array_walk($location->reviews, function(&$rating, $key) use($rating_sites) {
 				$data = isset($rating_sites[$key]) && is_array($rating_sites[$key]) ? $rating_sites[$key] : [];
 				$rating = new Proofratings_Site_Data(array_merge($data, $rating));

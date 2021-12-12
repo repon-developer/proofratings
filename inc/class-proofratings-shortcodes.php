@@ -80,29 +80,24 @@ class Proofratings_Shortcodes {
 		if ( !$location ) {
 			return;
 		}
-
 		
-		if ( !$location->ratings->has_ratings ) {
+		if ( !$location->has_ratings ) {
 			return;
 		}
 
-	
+		if ( !isset($location->settings['activeSites']) || !is_array($location->settings['activeSites'])) {
+			return;
+		}
+		
+		if ( empty($location->settings['activeSites'])) {
+			return;
+		}
 
 		$settings = isset($location->settings[$overall_slug]) && is_array($location->settings[$overall_slug]) ? $location->settings[$overall_slug] : [];
 		$settings = new Proofratings_Site_Data($settings);
 
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
-
-		// $badget_settings = get_proofratings_overall_ratings_rectangle();
-		// if ( $atts['type'] == 'narrow') {
-		// 	$badget_settings = get_proofratings_overall_ratings_narrow();			
-		// }
-
-		// if ( $atts['float'] == 'no' && $badget_settings->embed == 'no') {
-		// 	return;
-		// }
-
 
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
@@ -283,12 +278,6 @@ class Proofratings_Shortcodes {
 		$active_sites = $location->settings['activeSites'];
 		if ( is_array($badge_widget->active_sites) ) {
 			$active_sites = array_intersect($active_sites, $badge_widget->active_sites);
-		}
-
-		foreach ($ratings as $id => $rating) {
-			if ( !in_array($id, $active_sites) ) {
-				unset($ratings[$id]);
-			}
 		}
 
 		while ($site_id = current($active_sites)) {
