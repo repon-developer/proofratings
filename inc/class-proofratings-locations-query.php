@@ -61,7 +61,7 @@ class Proofratings_Locations  {
 
 		global $wpdb;
 		$result = $wpdb->update($wpdb->proofratings, ['settings' => $data], ['id' => $id]);
-		do_action( 'proofrating_location_save_settings');
+		do_action( 'proofrating_location_save_settings' );
 		return $result;
 	}
 
@@ -170,7 +170,7 @@ class Proofratings_Locations  {
      * Get locations
      * @since 1.0.6
      */
-	private function get_locations() {
+	function get_locations() {
 		global $wpdb;
 
 		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings ORDER BY location ASC");

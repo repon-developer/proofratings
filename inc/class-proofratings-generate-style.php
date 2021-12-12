@@ -25,27 +25,94 @@ class Proofratings_Generate_Style {
 	/**
 	 * Generate styles 
 	 */
-	public function generate_css() {
-		$locations = get_proofratings()->locations->items;
-
-		error_log(print_r($locations[0]->settings, true));
-
-		
-
-
-
-		return;
-		if ( !isset($_POST['option_page']) || 'proofratings' != $_POST['option_page'] ) {
+	public function sites_badge($location, $slug = 'sites_square', $type = 'square') {
+		$sites_badge = new Proofratings_Site_Data($location->settings->$slug);
+		if ( !$sites_badge->customize) {
 			return;
 		}
 
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		error_log(print_r($sites_badge, true));
+
+		printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
+			if ( $sites_badge->star_color ) {
+				printf("\t--themeColor: %s;\n", $sites_badge->star_color);
+			}
+
+			if ( $sites_badge->icon_color ) {
+				printf("\t--iconColor: %s;\n", $sites_badge->icon_color);
+			}
+
+			if ( $sites_badge->textcolor ) {
+				printf("\t--textColor: %s;\n", $sites_badge->textcolor);
+			}
+
+			if ( $sites_badge->review_color_textcolor ) {
+				printf("\t--reviewCountTextColor: %s;\n", $sites_badge->review_color_textcolor);
+			}
+
+			if ( $sites_badge->background_color ) {
+				printf("\tbackground-color: %s;\n", $sites_badge->background_color);
+			}
+
+			if ( isset($sites_badge->border['show']) && $sites_badge->border['show']) {
+				if ( $sites_badge->border['color'] ) {
+					printf("\t--borderColor: %s;\n", $sites_badge->border['color']);
+				}
+
+				if ( $sites_badge->border['hover'] ) {
+					printf("\t--borderHoverColor: %s;\n", $sites_badge->border['hover']);
+				}
+			}
+
+			if ( isset($sites_badge->border['show']) && !$sites_badge->border['show'] ) {
+				print("\tborder: none!important;\n");
+			}
+
+			if ( isset($sites_badge->shadow['shadow']) && $sites_badge->shadow['shadow'] ) {
+				if ( $sites_badge->shadow['color'] ) {
+					printf("\t--shadowColor: %s;\n", $sites_badge->shadow['color']);
+				}
+			}
+		echo "}\n\n";
+
+		if ( isset($sites_badge->shadow['shadow']) && $sites_badge->shadow['shadow'] ) {
+			printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s:hover {\n", $location->id, $type);
+				if ( $sites_badge->shadow['hover'] ) {
+					printf("\t--shadowColor: %s;\n", $sites_badge->shadow['hover']);
+				}
+			echo "}\n\n";
+		}
+
+		if ( isset($sites_badge->shadow['shadow']) && !$sites_badge->shadow['shadow'] ) {
+			printf("#proofratings-widgets-%1\$d .proofratings-widget.proofratings-widget-%2\$s, #proofratings-widgets-%1\$d .proofratings-widget.proofratings-widget-%2\$s:hover {\n", $location->id, $type);
+				echo "\t--shadowColor: transparent;\n";
+			echo "}\n\n";
+		}
+	}
+
+	/**
+	 * Generate styles 
+	 */
+	public function generate_css() {
+		//Get location again - Must use
+		get_proofratings()->locations->get_locations();
+
+		$location = get_proofratings()->locations->items[1];
+
+
 		
-		$widget_settings = wp_parse_args($postdata['proofratings_widget_settings'], [
-			'proofratings_font' => 'inherit',
-		]);
+
+		ob_start();		
+
+		$this->sites_badge($location);
+		$this->sites_badge($location, 'sites_rectangle', 'rectangle');
 		
-		ob_start();
+
+
+		$styles = ob_get_clean();
+		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	
+
+		return;
 
 		if ( $widget_settings['proofratings_font'] ) {
 			echo ":root {\n";

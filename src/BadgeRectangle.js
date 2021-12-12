@@ -70,7 +70,6 @@ const BadgeRectangle = (props) => {
     
         return styles;
     }
-
     
     css_style = `.proofratings-widget.proofratings-widget-rectangle {${get_styles().join(';')}}`;
     if ( shadow?.shadow !== false && shadow?.hover ) {
@@ -112,7 +111,7 @@ const BadgeRectangle = (props) => {
 
             {state?.customize && (
                 <React.Fragment>
-                    <div id="proofratings-badge-rectangle" className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
+                    <div id={`proofratings-widgets-${props?.id}`} className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
                         <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
                             <div className="review-site-logo" dangerouslySetInnerHTML={{__html: '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><circle cx="500" cy="500" r="493"></circle><path class="st0" d="M283.7,500.98c0-123.13,100.17-223.3,223.3-223.3c49.73,0,96.79,16,136.11,46.27l-51.89,67.41 c-24.31-18.71-53.44-28.61-84.22-28.61c-76.22,0-138.23,62.01-138.23,138.23S430.78,639.21,507,639.21 c61.39,0,113.56-40.22,131.54-95.7H507v-85.06h223.3v42.53c0,123.13-100.17,223.3-223.3,223.3S283.7,624.1,283.7,500.98z"></path></svg>'}}></div>
                             <h4 className="rating-title">Google Rating</h4>
