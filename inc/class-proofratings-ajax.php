@@ -49,7 +49,7 @@ class Proofratings_Ajax {
 		}
 
 		unset($_POST['location_id'], $_POST['action']);
-		get_proofratings()->locations->save($location, ['settings' => maybe_serialize( $_POST )]);
+		get_proofratings()->locations->save_settings($location, $_POST);
 		wp_send_json( $_POST );
 	}
 
@@ -80,6 +80,7 @@ class Proofratings_Ajax {
 		}
 		
 		$location = get_proofratings()->locations->get($location);
+
 		if ( !$location ) {
 			wp_send_json_error();
 		}

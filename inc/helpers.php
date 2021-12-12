@@ -14,6 +14,10 @@ class Proofratings_Site_Data {
     //var $active = 'no';
 
     function __construct($data = []) {
+        if ( is_a($data, 'Proofratings_Site_Data') || empty($data)) {
+            return $data;
+        }
+
         if ( is_object($data)) {
             $data = (array) $data;
         }

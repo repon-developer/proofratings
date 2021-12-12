@@ -85,17 +85,11 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		if ( !isset($location->settings['activeSites']) || !is_array($location->settings['activeSites'])) {
+		if (!is_array($location->settings->activeSites) || empty($location->settings->activeSites)) {
 			return;
 		}
 		
-		if ( empty($location->settings['activeSites'])) {
-			return;
-		}
-
-		$settings = isset($location->settings[$overall_slug]) && is_array($location->settings[$overall_slug]) ? $location->settings[$overall_slug] : [];
-		$settings = new Proofratings_Site_Data($settings);
-
+		$badget_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
 				
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
 
@@ -126,7 +120,7 @@ class Proofratings_Shortcodes {
 
         ob_start();
         printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
-			if ( $settings->close_button != 'no' && $atts['float'] == 'yes' ) {
+			if ( $badget_settings->close_button != 'no' && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
@@ -254,7 +248,7 @@ class Proofratings_Shortcodes {
 
 		$ratings = $location->reviews;
 		
-		if ( empty($location->settings['activeSites'])) {
+		if ( empty($location->settings->activeSites)) {
 			return;
 		}
 
@@ -272,10 +266,10 @@ class Proofratings_Shortcodes {
 			$badge_type = 'sites_square';
 		}
 
-		$badge_widget = isset($location->settings[$badge_type]) ? $location->settings[$badge_type] : [];
+		$badge_widget = isset($location->settings->$badge_type) ? $location->settings->$badge_type : [];
 		$badge_widget = new Proofratings_Site_Data($badge_widget);
 		
-		$active_sites = $location->settings['activeSites'];
+		$active_sites = $location->settings->activeSites;
 		if ( is_array($badge_widget->active_sites) ) {
 			$active_sites = array_intersect($active_sites, $badge_widget->active_sites);
 		}

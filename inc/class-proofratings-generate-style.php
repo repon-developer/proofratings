@@ -19,13 +19,22 @@ class Proofratings_Generate_Style {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action( "updated_option", [ $this, 'generate_css' ], 10, 3 );
+		add_action( "proofrating_location_save_settings", [ $this, 'generate_css' ]);
 	}
 
 	/**
 	 * Generate styles 
 	 */
-	public function generate_css($old_value, $value, $option) {
+	public function generate_css() {
+		$locations = get_proofratings()->locations->items;
+
+		error_log(print_r($locations[0]->settings, true));
+
+		
+
+
+
+		return;
 		if ( !isset($_POST['option_page']) || 'proofratings' != $_POST['option_page'] ) {
 			return;
 		}

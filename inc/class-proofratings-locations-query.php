@@ -48,17 +48,25 @@ class Proofratings_Locations  {
 	 * save location
 	 * @since  1.0.6
 	 */
-	function save($id, $data) {
+	function save_settings($id, $data) {
+		$data = maybe_serialize( $data );
+
 		if ( $id === 'overall' ) {
 			if ( !isset($data['settings']) ) {
 				return false;
 			}
 
-			return update_option('proofratings_overall_rating_settings', $data['settings']);
+			return update_option('proofratings_overall_rating_settings', $data);
 		}
 		
+		
+
 		global $wpdb;
-		return $wpdb->update($wpdb->proofratings, $data, ['id' => $id]);
+		$result = $wpdb->update($wpdb->proofratings, ['settings' => $data], ['id' => $id]);
+
+		do_action( 'proofrating_location_save_settings');
+
+		return $result;
 	}
 
 	/**
@@ -78,16 +86,16 @@ class Proofratings_Locations  {
 			$settings = [];
 		}
 
-		$settings = $location->settings = $this->sanitize_boolean_data($settings);
+		$settings = $location->settings = new Proofratings_Site_Data($this->sanitize_boolean_data($settings));
 
 		$location->connected = 0;
-		if ( isset($settings['activeSites']) && is_array($settings['activeSites']) ) {
-			$location->connected = sizeof($settings['activeSites']);
+		if ( is_array($settings->activeSites) ) {
+			$location->connected = sizeof($settings->activeSites);
 		}
 
 		$location->widgets = 0;
-		if ( isset($settings['badge_display']) && is_array($settings['badge_display']) ) {
-			$location->widgets = sizeof(array_filter($settings['badge_display']));
+		if ( is_array($settings->badge_display) ) {
+			$location->widgets = sizeof(array_filter($settings->badge_display));
 		}
 
 		return $location;
@@ -182,8 +190,8 @@ class Proofratings_Locations  {
 
 		foreach ($locations as $key => $location) {
 			$active_sites = [];
-			if ( isset($location->settings['activeSites']) && is_array($location->settings['activeSites'])) {
-				$active_sites = $location->settings['activeSites'];
+			if ( isset($location->settings->activeSites) && is_array($location->settings->activeSites)) {
+				$active_sites = $location->settings->activeSites;
 			}
 
 			foreach ($location->reviews as $id => $rating) {
