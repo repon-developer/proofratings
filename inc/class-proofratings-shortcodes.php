@@ -244,6 +244,7 @@ class Proofratings_Shortcodes {
 		}
 
 		if ( !method_exists($this, 'proofratings_widgets_' . $badge_type)) {
+			$badge_style = 'square';
 			$badge_type = 'sites_square';
 		}
 
@@ -291,7 +292,7 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();		
-        printf('<div id="%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
+        printf('<div id="proofratings-widgets-%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
 	        foreach ($ratings as $site_id => $location) {
 				$tag = 'div';
 				$attribue = '';
