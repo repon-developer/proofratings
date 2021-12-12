@@ -36,7 +36,7 @@ const settings = {
     overall_narrow_embed: {},
     overall_narrow_float: {tablet: true, mobile: true, close_button: true},
 
-    overall_popup: {customize: true},
+    overall_popup: {},
     overall_cta_banner: {
         customize: false, 
         shadow: true,

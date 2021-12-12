@@ -16,7 +16,6 @@ const ActiveSites = (props) => {
         props.onUpdate(active_sites);
     }
 
-
     return (
         <div className="review-sites-checkboxes review-sites-checkboxes-widget">
             {activeSites.map(site_id => (

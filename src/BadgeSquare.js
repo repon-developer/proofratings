@@ -8,7 +8,7 @@ import ActiveSites from './Component/ActiveSites';
 const { useState, useEffect } = React;
 
 const BadgeSquare = (props) => {
-    const [state, setState] = useState(Object.assign({customize: false}, store.getState().sites_square))
+    const [state, setState] = useState(store.getState().sites_square)
     
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setState(store.getState().sites_square))
@@ -17,13 +17,13 @@ const BadgeSquare = (props) => {
 
     const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_SQUARE, payload: data})
 
-    const border = Object.assign({ show: false, color: "", hover: "" }, state.border)
+    const border = Object.assign({ show: false, color: "", hover: "" }, state?.border)
     const handleBorder = (name, value) => {
         border[name] = value;
         handle_field({border})
     }
 
-    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state.shadow)
+    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
         shadow[name] = value;
         handle_field({shadow})
@@ -75,7 +75,6 @@ const BadgeSquare = (props) => {
         css_style += `.proofratings-widget.proofratings-widget-square:hover {--shadowColor: ${shadow.hover}}`;
     }
 
-
     return (
         <React.Fragment>
             <style>{css_style}</style>
@@ -98,9 +97,9 @@ const BadgeSquare = (props) => {
             <label>
                 <input
                     type="checkbox"
-                    checked={state.customize}
+                    checked={state?.customize}
                     className="checkbox-switch checkbox-yesno"
-                    onChange={() => handle_field({customize: !state.customize})}
+                    onChange={() => handle_field({customize: !state?.customize})}
                 />
                 Customize (this will customize all badges)
             </label>
