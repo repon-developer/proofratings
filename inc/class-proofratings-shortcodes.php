@@ -92,7 +92,10 @@ class Proofratings_Shortcodes {
 		if ( !$location->has_ratings ) {
 			return;
 		}
-		
+
+		if ( $atts['float'] !== 'yes' && isset($location->settings->badge_display[$overall_slug]) && !$location->settings->badge_display[$overall_slug]) {
+			return;
+		}		
 		
 		$badge_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
 		
@@ -277,6 +280,11 @@ class Proofratings_Shortcodes {
 
 		$badge_widget = isset($location->settings->$badge_type) ? $location->settings->$badge_type : [];
 		$badge_widget = new Proofratings_Site_Data($badge_widget);
+
+
+		if ( isset($location->settings->badge_display[$badge_type]) && !$location->settings->badge_display[$badge_type]) {
+			return;
+		}
 		
 		$active_sites = $location->settings->activeSites;
 		if ( is_array($badge_widget->active_sites) ) {
