@@ -180,32 +180,19 @@ class Proofratings_Locations  {
 
 		$rating_sites = get_proofratings_rating_sites();
 
-		foreach ($locations as $key => $location) {			
+		foreach ($locations as $key => $location) {
 			array_walk($location->reviews, function(&$rating, $key) use($rating_sites) {
 				$data = isset($rating_sites[$key]) && is_array($rating_sites[$key]) ? $rating_sites[$key] : [];
 				$rating = new Proofratings_Site_Data(array_merge($data, $rating));
 			});
 
-			$total_reviews = array_sum(array_column($location->reviews, 'count'));
-
-			$has_reviews = array_filter($location->reviews, function($item) {
-				return $item->count > 0;
-			});
-			
-			$total_score = 0.0;
-			if (count($has_reviews) > 0) {
-				$total_score = array_sum(wp_list_pluck($location->reviews, 'rating')) / count($has_reviews);
+			$location->has_ratings = false;
+			if ( sizeof($location->reviews) > 0 ) {
+				$location->has_ratings = true;
 			}
 
-			$total_score = number_format(floor($total_score*100)/100, 1);
-
-			$location->overall = array(
-				'count' => $total_reviews,
-				'rating' => $total_score,
-				'percent' => $total_score * 20
-			);
+			$location->ratings = new Proofratings_Ratings($location->reviews);
 		}
-
 
 		$this->items = $locations;
 	}
@@ -217,17 +204,5 @@ class Proofratings_Locations  {
 	function get($id) {
 		$key = array_search($id, array_column($this->items, 'id'));
 		return $key === false ? false : $this->items[$key];
-	}
-
-	/**
-	 * get single location
-	 * @since  1.0.6
-	 */
-	function get_logos($ratings) {
-		echo '<div class="proofratings-logos">';
-        foreach ($ratings as $key => $site) {
-            printf('<img src="%1$s" alt="%2$s" >', esc_attr($site->icon), $key);
-        }
-        echo '</div>';
 	}
 }

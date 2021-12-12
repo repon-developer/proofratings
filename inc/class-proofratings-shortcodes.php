@@ -81,11 +81,12 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		if ( sizeof($location->reviews) === 0) {
+		
+		if ( !$location->ratings->has_ratings ) {
 			return;
 		}
 
-		$ratings = $location->reviews;
+	
 
 		$settings = isset($location->settings[$overall_slug]) && is_array($location->settings[$overall_slug]) ? $location->settings[$overall_slug] : [];
 		$settings = new Proofratings_Site_Data($settings);
@@ -146,36 +147,36 @@ class Proofratings_Shortcodes {
 
 	private function get_meta($overall) {
 		echo '<meta itemprop="worstRating" content = "1">';
-		echo '<meta itemprop="ratingValue" content="'.$overall['rating'].'">';
+		echo '<meta itemprop="ratingValue" content="'.$overall->rating.'">';
 		echo '<meta itemprop="bestRating" content="5">';
 	}
 
 	private function overall_ratings_rectangle($location) {		
 		echo '<div class="proofratings-inner">';
 			
-			get_proofratings()->locations->get_logos($location->reviews);
+			$location->ratings->get_logos();
 
 			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-				printf('<span class="proofratings-score">%s</span>', $location->overall['rating']);
-				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->overall['percent']);
+				printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
 
-				$this->get_meta($location->overall);				
+				$this->get_meta($location->ratings);
 			echo '</div>';
 		echo '</div>';
 
-		printf('<div class="proofratings-review-count">%d %s</div>', $location->overall['count'], __('reviews', 'proofratings'));
+		printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
 	}
 
 	private function overall_ratings_narrow($location) {
-		get_proofratings()->locations->get_logos($location->reviews);
+		$location->ratings->get_logos();
 
         echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-            printf('<span class="proofratings-score">%s</span>', $location->overall['rating']);
-            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->overall['percent']);
-			$this->get_meta($location->overall);
+            printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
+			$this->get_meta($location->ratings);
         echo '</div>';
 
-    	printf('<div class="proofratings-review-count">%d %s</div>', $location->overall['count'], __('reviews', 'proofratings'));
+    	printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
 	}
 
 	/**
@@ -252,7 +253,7 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		if ( sizeof($location->reviews) === 0) {
+		if ( !$location->ratings->has_ratings ) {
 			return;
 		}
 
@@ -287,7 +288,7 @@ class Proofratings_Shortcodes {
 		foreach ($ratings as $id => $rating) {
 			if ( !in_array($id, $active_sites) ) {
 				unset($ratings[$id]);
-			}			
+			}
 		}
 
 		while ($site_id = current($active_sites)) {
