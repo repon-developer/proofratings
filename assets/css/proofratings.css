@@ -430,7 +430,6 @@ html {
     --rating_text_color: #000;
     --review_rating_background_color: #f5f8ff;
 
-    font-family: var(--proofratingsFont)!important;
     min-height: 90px;
     padding: 15px 20px;
     position: fixed;    

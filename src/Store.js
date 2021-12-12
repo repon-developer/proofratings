@@ -45,9 +45,7 @@ const settings = {
         close_button: true,
         hide_on: [],
         button1: {
-            text: 'Sign Up',
-            textcolor: '#8224e3',
-            shape: true
+            text: 'Sign Up'
         }
     }
 };

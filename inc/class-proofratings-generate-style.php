@@ -26,6 +26,12 @@ class Proofratings_Generate_Style {
 	 * Generate styles for sites badge
 	 */
 	public function sites_badge($location, $slug = 'sites_square', $type = 'square') {
+		if ( $location->settings->font ) {
+			printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
 		$sites_badge = new Proofratings_Site_Data($location->settings->$slug);
 		if ( !$sites_badge->customize) {
 			return;
@@ -92,6 +98,12 @@ class Proofratings_Generate_Style {
 	 * Generate styles overall ratings
 	 */
 	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
+		if ( $location->settings->font ) {
+			printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
 		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
 		if ( !$overall_badge->customize) {
 			return;
@@ -144,6 +156,12 @@ class Proofratings_Generate_Style {
 	 * Generate styles overall ratings narrow
 	 */
 	public function overall_narrow($location, $type = 'overall_narrow_embed') {		
+		if ( $location->settings->font ) {
+			printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-narrow.%s {\n", $location->id, $type_class);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
 		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
 		if ( !$overall_badge->customize) {
 			return;
@@ -196,12 +214,18 @@ class Proofratings_Generate_Style {
 	 * Generate styles overall popup badges
 	 */
 	public function overall_popup_badges($location) {
+		if ( $location->settings->font ) {
+			printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+		
 		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
 		if ( !$badges_popup->customize) {
 			return;
 		}
 
-		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);			
+		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);
 			if ( $badges_popup->star_color ) {
 				printf("\t--themeColor: %s;\n", $badges_popup->star_color);
 			}
@@ -232,9 +256,15 @@ class Proofratings_Generate_Style {
 	public function overall_banner_badges($location) {
 		$banner_badge = new Proofratings_Site_Data($location->settings->overall_cta_banner);
 
+		if ( $location->settings->font ) {
+			printf(".proofratings-banner-badge.proofratings-banner-badge-%s {\n", $location->id);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
 
 		if ( $banner_badge->customize) {			
 			printf(".proofratings-banner-badge.proofratings-banner-badge-%s {\n", $location->id);
+
 				if ( $banner_badge->star_color ) {
 					printf("\t--star_color: %s;\n", $banner_badge->star_color);
 				}
@@ -343,26 +373,8 @@ class Proofratings_Generate_Style {
 		
 		$this->overall_popup_badges($location);
 		$this->overall_banner_badges($location);
-		
-
 
 		$styles = ob_get_clean();
-		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	
-
-		return;
-
-		if ( $widget_settings['proofratings_font'] ) {
-			echo ":root {\n";
-				printf("\t--proofratingsFont: %s;\n", $widget_settings['proofratings_font']);
-			echo "}\n\n";
-		}
-
-		
-		
-			
-		$styles = ob_get_clean();
-
-
 		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	
 	}
 }

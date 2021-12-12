@@ -49,8 +49,7 @@ const ProofratingsWidgets = () => {
             }
             
             setState({...state, error: false, loading: false});
-
-            if ( !response ) {
+            if ( Object.keys(response).length !== 0 ) {
                 store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response });
             }
         });
