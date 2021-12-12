@@ -1,5 +1,5 @@
 const Pages = (props) => {
-    const hide_on = Array.isArray(props.hide_on) ? props.hide_on : [];
+    const hide_on = (Array.isArray(props.hide_on) ? props.hide_on : []).map(item => parseInt(item));
 
     const check_pages = (id) => {
         const index = hide_on.indexOf(id);
