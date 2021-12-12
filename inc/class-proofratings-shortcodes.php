@@ -242,15 +242,12 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		if ( !$location->ratings->has_ratings ) {
+		if ( !$location->has_ratings ) {
 			return;
 		}
 
 		$ratings = $location->reviews;
 		
-		if ( empty($location->settings->activeSites)) {
-			return;
-		}
 
 		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle');
 
@@ -273,14 +270,13 @@ class Proofratings_Shortcodes {
 		if ( is_array($badge_widget->active_sites) ) {
 			$active_sites = array_intersect($active_sites, $badge_widget->active_sites);
 		}
-
-		while ($site_id = current($active_sites)) {
-			next($active_sites);
-			if ( !isset($ratings[$site_id])) {
-				$ratings[$site_id] = array('rating' => 0, 'count' => 0, 'percent' => 0);
-			}			
+		
+		foreach ($ratings as $id => $rating) {
+			if ( !in_array($id, $active_sites) ) {
+				unset($ratings[$id]);
+			}
 		}
-
+		
 		if ( sizeof($ratings) === 0) {
 			return;
 		}

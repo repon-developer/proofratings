@@ -18,13 +18,13 @@ const BadgeRectangle = (props) => {
 
     const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_RECTANGLE, payload: data})
 
-    const border = Object.assign({ show: false, color: "", hover: "" }, state.border)
+    const border = Object.assign({ show: false, color: "", hover: "" }, state?.border)
     const handleBorder = (name, value) => {
         border[name] = value;
         handle_field({border})
     }
 
-    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state.shadow)
+    const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
         shadow[name] = value;
         handle_field({shadow})
@@ -101,16 +101,16 @@ const BadgeRectangle = (props) => {
             <label>
                 <input
                     type="checkbox"
-                    checked={state.customize}
+                    defaultChecked={state?.customize}
                     className="checkbox-switch checkbox-yesno"
-                    onChange={() => handle_field({customize: !state.customize})}
+                    onChange={() => handle_field({customize: !state?.customize})}
                 />
                 Customize (this will customize all badges)
             </label>
 
-            {state.customize && <div className="gap-30" />}
+            {state?.customize && <div className="gap-30" />}
 
-            {state.customize && (
+            {state?.customize && (
                 <React.Fragment>
                     <div id="proofratings-badge-rectangle" className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
                         <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">

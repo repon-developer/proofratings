@@ -58,14 +58,10 @@ class Proofratings_Locations  {
 
 			return update_option('proofratings_overall_rating_settings', $data);
 		}
-		
-		
 
 		global $wpdb;
 		$result = $wpdb->update($wpdb->proofratings, ['settings' => $data], ['id' => $id]);
-
 		do_action( 'proofrating_location_save_settings');
-
 		return $result;
 	}
 
