@@ -129,7 +129,7 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();
-        printf('<%s %s class="%s" data-location="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), $location->id);
+        printf('<%s %s class="%s" data-location="%s" data-type="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), $location->id, $overall_slug);
 			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
@@ -441,12 +441,12 @@ class Proofratings_Shortcodes {
 		}
 
 		$close_button = '';
-		if ( $badge_settings->close_button != 'no' ) {
+		if ( $badge_settings->close_button !== false ) {
 			$close_button = sprintf('<a class="proofratings-banner-close" href="#">%s</a>', __('Close', 'proofratings'));
 		}
 		
 		ob_start(); ?>
-		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>">
+		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>" data-type="overall_cta_banner">
 			<?php echo $close_button; ?>
 			<?php $location->ratings->get_logos(); ?>
 			

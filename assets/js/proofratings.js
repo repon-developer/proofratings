@@ -9,16 +9,20 @@
 
     $('.proofratings-badge .proofratings-close').on('click', function (e) {
         e.stopPropagation();
+        
+        container = $(this).closest('.proofratings-badge');
+
+        const location_id = container.data('location');
+        const badge_type = container.data('type');
         if (Cookies) {
-            Cookies.set('hide_proofratings_float_badge', true)
+            Cookies.set(`proofratings_badge_${badge_type}_${location_id}`, true)
         }
 
-        container = $(this).closest('.proofratings-badge');
         container.fadeOut(120, function () {
             $(this).remove();
         });
 
-        handle_proofrating_user_interaction({type: 'engagement', id: container.data('location')})
+        handle_proofrating_user_interaction({type: 'engagement', id: location_id})
     })
 
     $('.proofratings-badges-popup .proofrating-close').on('click', function () {

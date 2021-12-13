@@ -216,6 +216,10 @@ class Proofratings {
 				continue;
 			}
 
+			if ( isset($_COOKIE['proofratings_badge_overall_rectangle_float_' . $location->id] ) ) {
+				continue;
+			}
+
 			$hide_on = [];
 			if (isset($location->settings->overall_rectangle_float['hide_on'])) {
 				$hide_on = $location->settings->overall_rectangle_float['hide_on'];
@@ -229,6 +233,10 @@ class Proofratings {
 
 		foreach ($locations as $location) {
 			if( !isset($location->settings->badge_display['overall_narrow_float']) || !$location->settings->badge_display['overall_narrow_float'] ) {
+				continue;
+			}
+
+			if ( isset($_COOKIE['proofratings_badge_overall_narrow_float_' . $location->id] ) ) {
 				continue;
 			}
 
@@ -252,6 +260,10 @@ class Proofratings {
 
 		foreach ($locations as $location) {
 			if( !isset($location->settings->badge_display['overall_cta_banner']) || !$location->settings->badge_display['overall_cta_banner'] ) {
+				continue;
+			}
+
+			if ( isset($_COOKIE['proofratings_badge_overall_cta_banner_' . $location->id] ) ) {
 				continue;
 			}
 
