@@ -350,9 +350,8 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
     background-color: #fdbe91;
 }
 
-.analytics-information .impressions .counter:before {
-    background-color: #4123FF;
-}
+.analytics-information .impressions .counter:before {background-color: #4123FF}
+.analytics-information .hovers .counter:before {background-color: rgba(76, 175, 80, 1)}
 
 .analytics-information .engagements .counter:before {visibility: hidden;}
 
