@@ -27,7 +27,7 @@ class Proofratings_Generate_Style {
 	 */
 	public function sites_badge($location, $slug = 'sites_square', $type = 'square') {
 		if ( $location->settings->font ) {
-			printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
+			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
 				printf("\tfont-family: %s!important;\n", $location->settings->font);
 			echo "}\n\n";
 		}
@@ -37,7 +37,7 @@ class Proofratings_Generate_Style {
 			return;
 		}
 
-		printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
+		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
 			if ( $sites_badge->star_color ) {
 				printf("\t--themeColor: %s;\n", $sites_badge->star_color);
 			}
@@ -84,7 +84,7 @@ class Proofratings_Generate_Style {
 		echo "}\n\n";
 
 		if ( isset($sites_badge->shadow['shadow']) && $sites_badge->shadow['shadow'] ) {
-			printf("#proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s:hover {\n", $location->id, $type);
+			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s:hover {\n", $location->id, $type);
 				if ( $sites_badge->shadow['hover'] ) {
 					printf("\t--shadowColor: %s;\n", $sites_badge->shadow['hover']);
 				}
@@ -92,7 +92,7 @@ class Proofratings_Generate_Style {
 		}
 
 		if ( isset($sites_badge->shadow['shadow']) && !$sites_badge->shadow['shadow'] ) {
-			printf("#proofratings-widgets-%1\$d .proofratings-widget.proofratings-widget-%2\$s, #proofratings-widgets-%1\$d .proofratings-widget.proofratings-widget-%2\$s:hover {\n", $location->id, $type);
+			printf(".proofratings-widgets-%1\$d .proofratings-widget.proofratings-widget-%2\$s, .proofratings-widgets-%1\$d .proofratings-widget.proofratings-widget-%2\$s:hover {\n", $location->id, $type);
 				echo "\t--shadowColor: transparent;\n";
 			echo "}\n\n";
 		}
@@ -103,7 +103,7 @@ class Proofratings_Generate_Style {
 	 */
 	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
 		if ( $location->settings->font ) {
-			printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
+			printf(".proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
 				printf("\tfont-family: %s!important;\n", $location->settings->font);
 			echo "}\n\n";
 		}
@@ -118,7 +118,7 @@ class Proofratings_Generate_Style {
 			$type_class = 'badge-float';
 		}
 
-		printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
+		printf(".proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
 			if ( $overall_badge->star_color ) {
 				printf("\t--star_color: %s;\n", $overall_badge->star_color);
 			}
@@ -161,7 +161,7 @@ class Proofratings_Generate_Style {
 	 */
 	public function overall_narrow($location, $type = 'overall_narrow_embed') {		
 		if ( $location->settings->font ) {
-			printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-narrow.%s {\n", $location->id, $type_class);
+			printf(".proofratings-badge-%d.proofratings-badge.proofratings-badge-narrow.%s {\n", $location->id, $type_class);
 				printf("\tfont-family: %s!important;\n", $location->settings->font);
 			echo "}\n\n";
 		}
@@ -176,7 +176,7 @@ class Proofratings_Generate_Style {
 			$type_class = 'badge-float';
 		}
 
-		printf("#proofratings-badge-%d.proofratings-badge.proofratings-badge-narrow.%s {\n", $location->id, $type_class);
+		printf(".proofratings-badge-%d.proofratings-badge.proofratings-badge-narrow.%s {\n", $location->id, $type_class);
 			if ( $overall_badge->star_color ) {
 				printf("\t--star_color: %s;\n", $overall_badge->star_color);
 			}

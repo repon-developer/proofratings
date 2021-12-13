@@ -129,7 +129,7 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();
-        printf('<%s id="proofratings-badge-%s" %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $location->id, $url_attribute, implode(' ', $classes));
+        printf('<%s %s class="%s" data-location="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), $location->id);
 			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
@@ -209,7 +209,7 @@ class Proofratings_Shortcodes {
 
         ob_start(); 
 		
-        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%s">', $location->id);
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $location->id);
 			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
@@ -220,7 +220,7 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s>', $tag, $key, $classes, $attribue);
+				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s data-location="%s">', $tag, $key, $classes, $attribue, $location->id);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
 					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
@@ -299,7 +299,7 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $atts['style']];
+		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $atts['style']];
 		
 		if ( $badge_widget->customize ) {
 			$badge_class[] = 'proofratings-widget-customized';
@@ -310,18 +310,18 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();		
-        printf('<div id="proofratings-widgets-%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
-	        foreach ($ratings as $site_id => $location) {
+        printf('<div class="proofratings-widgets-%s proofratings-review-widgets-grid proofratings-widgets-grid-%s">', $location->id, $badge_style);
+	        foreach ($ratings as $site_id => $rating) {
 				$tag = 'div';
 				$attribue = '';
 			
-				if( !empty($location->review_url) ) {
+				if( !empty($rating->review_url) ) {
 					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', esc_url($location->review_url));
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($rating->review_url));
 				}
 				
 				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
-					$this->{'proofratings_widgets_' . $badge_type}($location);
+					$this->{'proofratings_widgets_' . $badge_type}($rating);
 				printf('</%s>', $tag);
 	        }
 
@@ -349,7 +349,6 @@ class Proofratings_Shortcodes {
 	 * Embed badge style2
 	 */
 	public function proofratings_widgets_sites_rectangle($site) {		
-    	//printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon2), esc_attr($site->rating_title));
     	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
 
 		if ( $site->rating_title ) {
@@ -447,7 +446,7 @@ class Proofratings_Shortcodes {
 		}
 		
 		ob_start(); ?>
-		<div class="<?php echo $class; ?>">
+		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>">
 			<?php echo $close_button; ?>
 			<?php $location->ratings->get_logos(); ?>
 			

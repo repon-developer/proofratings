@@ -1,11 +1,12 @@
 (function ($) {
+
+    function handle_proofrating_user_interaction(data) {
+        console.log(data)
+        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, ...data})
+    }
+
     $('.proofratings-badge.badge-float').on('click', function () {
         $(this).addClass('opened');
-    })
-
-    $('.proofratings-badges-popup .proofrating-close').on('click', function () {
-        $('.proofratings-badge').removeClass('opened');
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
     })
 
     $('.proofratings-badge .proofratings-close').on('click', function (e) {
@@ -19,17 +20,25 @@
             $(this).remove();
         });
 
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
+        handle_proofrating_user_interaction({type: 'engagement', location_id: container.data('location')})
+    })
+
+    $('.proofratings-badges-popup .proofrating-close').on('click', function () {
+        container = $('.proofratings-badge').removeClass('opened');
+        handle_proofrating_user_interaction({type: 'engagement', location_id: container.data('location')})
     })
 
     $('.proofratings-banner-badge .proofratings-banner-close').on('click', function(e){
         e.stopPropagation();
         e.preventDefault();
-        $(this).closest('.proofratings-banner-badge').fadeOut(100, function(){
+
+        container = $(this).closest('.proofratings-banner-badge');
+
+        container.fadeOut(100, function(){
             $(this).remove();
         })
 
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
+        handle_proofrating_user_interaction({type: 'engagement', location_id: container.data('location')})
     })
 
     last_scroll = 0;
@@ -47,16 +56,18 @@
     })
 
     const proofratings_items = $('.proofratings-widget, .proofratings-badge, .proofratings-banner-badge');
+
     if ( proofratings_items.length ) {
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'impression'})
+        const first_item = proofratings_items.eq(0);
+        handle_proofrating_user_interaction({type: 'impression', location_id: first_item.data('location')})
     }
 
     proofratings_items.on('click', function(){
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'click'})
+        handle_proofrating_user_interaction({type: 'click', location_id: $(this).data('location')})
     })
 
     proofratings_items.on('mouseenter', function(){
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'hover'})
+        handle_proofrating_user_interaction({type: 'hover', location_id: $(this).data('location')})
     })
 
 })(jQuery)
