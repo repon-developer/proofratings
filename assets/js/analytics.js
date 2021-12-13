@@ -4,7 +4,7 @@
     }
 
     $('body').addClass('proofratings-analytics');
-    
+
     const ctx = document.getElementById("analytics-chart").getContext("2d");
 
     const impression_gradient = ctx.createLinearGradient(0, 0, 0, 600);
@@ -32,15 +32,6 @@
                     backgroundColor: impression_gradient,
                     borderColor: "rgba(65, 35, 255, 0.7)",
                     borderWidth: 2,
-                },
-                {
-                    label: "Click",
-                    tension: 0.7,
-                    data: [],
-                    fill: "start",
-                    backgroundColor: click_gradient,
-                    borderColor: "rgba(253, 190, 145, 0.7)",
-                    borderWidth: 2,
                 }, {
                     label: "Hover",
                     tension: 0.7,
@@ -50,6 +41,15 @@
                     borderColor: "rgba(76, 175, 80, 0.7)",
                     borderWidth: 2,
                 },
+                {
+                    label: "Click",
+                    tension: 0.7,
+                    data: [],
+                    fill: "start",
+                    backgroundColor: click_gradient,
+                    borderColor: "rgba(253, 190, 145, 0.7)",
+                    borderWidth: 2,
+                }
             ],
         },
         options: {
@@ -93,12 +93,15 @@
         }
 
         const clicks = sessoins.map((date) => santize_data((state.clicks || []), date))
-        const hover = sessoins.map((date) => santize_data((state.hover || []), date));
+        const hovers = sessoins.map((date) => santize_data((state.hovers || []), date));
         const impressions = sessoins.map((date) => santize_data((state.impressions || []), date));
+        const conversions = sessoins.map((date) => santize_data((state.conversions || []), date));
         const engagements = sessoins.map((date) => santize_data((state.engagements || []), date));
 
-        $(".analytics-information .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
         $(".analytics-information .impressions .counter").html(impressions.reduce((a, b) => a + b, 0));
+        $(".analytics-information .hovers .counter").html(hovers.reduce((a, b) => a + b, 0));
+        $(".analytics-information .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
+        $(".analytics-information .conversions .counter").html(conversions.reduce((a, b) => a + b, 0));
         $(".analytics-information .engagements .counter").html(engagements.reduce((a, b) => a + b, 0));
 
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
@@ -109,17 +112,18 @@
         }
 
         analyticsChart.data.datasets[0].data = impressions;
-        analyticsChart.data.datasets[1].data = clicks;
-        analyticsChart.data.datasets[2].data = hover;
+        analyticsChart.data.datasets[1].data = hovers;
+        analyticsChart.data.datasets[2].data = clicks;
 
         analyticsChart.update();
     }
 
     const analytics_store = Redux.createStore(proofratings_analytics, {
         domain: '',
-        clicks: [],
-        hover: [],
         impressions: [],
+        hovers: [],
+        clicks: [],
+        conversion: [],
         engagements: [],
         start: moment().subtract(6, "days"),
         end: moment()
@@ -127,11 +131,11 @@
 
     analytics_store.subscribe(() => {
         const state = analytics_store.getState();
-        const {start, end, domain } = state;
+        const {start, end, domain, location } = state;
 
         const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 2;
 
-        const data = {site_url: proofratings.site_url, monthly, domain, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
+        const data = {site_url: proofratings.site_url, monthly, domain, location, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
 
         const request = $.get(proofratings.api + '/stats', data, (payload) => {
             update_dashboard({...state, ...payload}, monthly);
@@ -142,8 +146,8 @@
         });   
     })
 
-    $('.analytics-filter > select').on('change', function(){
-        analytics_store.dispatch({type: 'UPDATE', payload: {domain: $(this).val()}})
+    $('.analytics-filter > .location-filter').on('change', function(){
+        analytics_store.dispatch({type: 'UPDATE', payload: {location: $(this).val()}})
     })
 
 

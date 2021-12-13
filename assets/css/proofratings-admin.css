@@ -313,10 +313,10 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 }
 
 .analytics-information {
-    display: grid;
-    max-width: 600px;
     gap: 30px;
-    grid-template-columns: repeat(3, 1fr)
+    display: grid;
+    max-width: 1200px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
 }
 
 .analytics-information p {

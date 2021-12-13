@@ -1,7 +1,5 @@
 (function ($) {
-
     function handle_proofrating_user_interaction(data) {
-        console.log(data)
         $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, ...data})
     }
 
@@ -20,12 +18,12 @@
             $(this).remove();
         });
 
-        handle_proofrating_user_interaction({type: 'engagement', location_id: container.data('location')})
+        handle_proofrating_user_interaction({type: 'engagement', id: container.data('location')})
     })
 
     $('.proofratings-badges-popup .proofrating-close').on('click', function () {
         container = $('.proofratings-badge').removeClass('opened');
-        handle_proofrating_user_interaction({type: 'engagement', location_id: container.data('location')})
+        handle_proofrating_user_interaction({type: 'engagement', id: container.data('location')})
     })
 
     $('.proofratings-banner-badge .proofratings-banner-close').on('click', function(e){
@@ -38,7 +36,7 @@
             $(this).remove();
         })
 
-        handle_proofrating_user_interaction({type: 'engagement', location_id: container.data('location')})
+        handle_proofrating_user_interaction({type: 'engagement', id: container.data('location')})
     })
 
     last_scroll = 0;
@@ -57,17 +55,23 @@
 
     const proofratings_items = $('.proofratings-widget, .proofratings-badge, .proofratings-banner-badge');
 
-    if ( proofratings_items.length ) {
-        const first_item = proofratings_items.eq(0);
-        handle_proofrating_user_interaction({type: 'impression', location_id: first_item.data('location')})
-    }
 
+    const location_ids = [];
+
+    proofratings_items.each(function(){
+        get_location = $(this).data('location');
+        if ( !location_ids.includes(get_location) ) {
+            location_ids.push(get_location);
+            handle_proofrating_user_interaction({type: 'impression', id: $(this).data('location')})
+        }
+    })
+    
     proofratings_items.on('click', function(){
-        handle_proofrating_user_interaction({type: 'click', location_id: $(this).data('location')})
+        handle_proofrating_user_interaction({type: 'click', id: $(this).data('location')})
     })
 
     proofratings_items.on('mouseenter', function(){
-        handle_proofrating_user_interaction({type: 'hover', location_id: $(this).data('location')})
+        handle_proofrating_user_interaction({type: 'hover', id: $(this).data('location')})
     })
 
 })(jQuery)
