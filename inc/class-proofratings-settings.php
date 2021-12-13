@@ -45,9 +45,8 @@ class Proofratings_Settings {
 	public function __construct() {
 		$this->signup_error = new WP_Error;
 
-		$this->settings_group = 'proofratings';
-		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'init', [$this, 'handle_signup_form'] );
+		add_action( 'init', [$this, 'handle_add_location'] );
 	}
 
 	public function handle_signup_form() {
@@ -89,25 +88,81 @@ class Proofratings_Settings {
 	}
 
 	/**
-	 * Registers the plugin's settings with WordPress's Settings API.
+	 * handle add location form submit
+	 * @since 1.0.6
 	 */
-	public function register_settings() {
-		register_setting( $this->settings_group, 'proofratings_widget_settings' );
-		register_setting( $this->settings_group, 'proofratings_review_sites' );
+	public function handle_add_location() {
+		if ( !wp_verify_nonce( @$_POST['_nonce'], '_nonce_add_location')) {
+			return;
+		}
+
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		$validate_data = true;
+
+		if ( empty($postdata['country'])) {
+			$validate_data = false;
+			$_POST['error_msg'] = __('Please fill location country field', 'proofratings');
+		}
+
+		if ( empty($postdata['zip'])) {
+			$validate_data = false;
+			$_POST['error_msg'] = __('Please fill location zip/postal field', 'proofratings');
+		}
+
+		if ( empty($postdata['state'])) {
+			$validate_data = false;
+			$_POST['error_msg'] = __('Please fill location state/province field', 'proofratings');
+		}
+
+		if ( empty($postdata['city'])) {
+			$validate_data = false;
+			$_POST['error_msg'] = __('Please fill location city field', 'proofratings');
+		}
+
+		if ( empty($postdata['street'])) {
+			$validate_data = false;
+			$_POST['error_msg'] = __('Please fill location street field', 'proofratings');
+		}
+
+		if ( empty($postdata['name'])) {
+			$validate_data = false;
+			$_POST['error_msg'] = __('Please fill location name field', 'proofratings');
+		}
+
+		if (!$validate_data ) {
+			return;
+		}
+
+		
+		
+		$email = get_option( 'admin_email' );
 
 
-		register_setting( $this->settings_group, 'proofratings_display_badge' );
+		ob_start();
+		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-add-location.php';
+		$message = ob_get_clean();
 
-		//Widget settings
-		register_setting( $this->settings_group, 'proofratings_badges_square' );
-		register_setting( $this->settings_group, 'proofratings_badges_rectangle' );
-		register_setting( $this->settings_group, 'proofratings_badges_popup' );
+		$message = preg_replace('/{name}/', $postdata['name'], $message);
+		$message = preg_replace('/{street}/', $postdata['street'], $message);
+		$message = preg_replace('/{street2}/', $postdata['street2'], $message);
+		$message = preg_replace('/{city}/', $postdata['city'], $message);
+		$message = preg_replace('/{state}/', $postdata['state'], $message);
+		$message = preg_replace('/{zip}/', $postdata['zip'], $message);
+		$message = preg_replace('/{country}/', $postdata['country'], $message);
+		
+		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
 
-		//settings for overall ratings		
-		register_setting( $this->settings_group, 'proofratings_overall_ratings_rectangle' );
-		register_setting( $this->settings_group, 'proofratings_overall_ratings_narrow' );
-		register_setting( $this->settings_group, 'proofratings_overall_ratings_cta_banner' );
+		$sendto = 'jonathan@proofratings.com';
+		$sendto = 'repon.kushtia@gmail.com';
+		
+		if (!wp_mail( $sendto, 'New location add request', $content, $headers) ) {
+			return $_POST['error_msg'] = __('Send mail have not successful.', 'proofratings');
+		}
+
+		exit(wp_safe_redirect(admin_url( 'admin.php?page=' . 'proofratings-locations')));
 	}
+
 
 	/**
 	 * Shows the plugin's settings page.
@@ -209,163 +264,73 @@ class Proofratings_Settings {
 	/**
 	 * Shows the plugin's settings page.
 	 */
-	public function output() {
+	public function add_location() {
 		?>
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
+			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
 
-			<form class="proofratings-options" method="post" action="options.php">
+			<?php if (!empty($_POST['error_msg'])) : ?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php echo $_POST['error_msg'] ?></p>
+			</div>
+			<?php endif; ?>
+			
+			<form method="post">
+				<?php wp_nonce_field( '_nonce_add_location', '_nonce' ) ?>
+				<table class="form-table">
+					<tr>
+						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
+						<td>
+							<input name="name" type="text" value="<?php echo @$_POST['name'] ?>" />
+						</td>
+					</tr>
 
-				<?php settings_fields( $this->settings_group ); ?>
+					<tr>
+						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
+						<td>
+							<input name="street" type="text" value="<?php echo @$_POST['street'] ?>" />
+						</td>
+					</tr>
 
-				<?php
-				if ( ! empty( $_GET['settings-updated'] ) ) {
-					echo '<div class="updated fade"><p>' . esc_html__( 'Settings successfully saved', 'proofratings' ) . '</p></div>';
-				}
+					<tr>
+						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
+						<td>
+							<input name="street2" type="text" value="<?php echo @$_POST['street2'] ?>" />
+						</td>
+					</tr>
 
-				$widget_settings = wp_parse_args(get_option( 'proofratings_widget_settings'), [
-					'proofratings_font' => 'inherit',
-				]); ?>
+					<tr>
+						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
+						<td>
+							<input name="city" type="text" value="<?php echo @$_POST['city'] ?>" />
+						</td>
+					</tr>
 
-				<h2 class="nav-tab-wrapper">
-					<a href="#settings-review-sites" class="nav-tab"><?php _e('Review Sites', 'proofratings'); ?></a>
-					<a href="#settings-display-badges" class="nav-tab"><?php _e('Badges', 'proofratings'); ?></a>
+					<tr>
+						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
+						<td>
+							<input name="state" type="text" value="<?php echo @$_POST['state'] ?>" />
+						</td>
+					</tr>
 
-					<a href="#settings-badge-square" class="nav-tab" style="display:none"><?php _e('Sites (Square)', 'proofratings'); ?></a>
-					<a href="#settings-badge-rectangle" class="nav-tab" style="display:none"><?php _e('Sites (Rectangle)', 'proofratings'); ?></a>
-					<a href="#settings-overall-ratings-rectangle" class="nav-tab" style="display:none"><?php _e('Overall Rating (Rectangle)', 'proofratings'); ?></a>
-					<a href="#settings-overall-ratings-narrow" class="nav-tab" style="display:none"><?php _e('Overall Rating (Narrow)', 'proofratings'); ?></a>
-					<a href="#settings-badge-popup" class="nav-tab" style="display:none"><?php _e('Popup Badges', 'proofratings'); ?></a>
-					<a href="#settings-overall-ratings-cta-banner" class="nav-tab" style="display:none"><?php _e('Overall Rating (CTA Banner)', 'proofratings'); ?></a>
-				</h2>
+					<tr>
+						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
+						<td>
+							<input name="zip" type="text" value="<?php echo @$_POST['zip'] ?>" />
+						</td>
+					</tr>
 
-				<div id="settings-review-sites" class="settings_panel">
-					<table class="form-table">
-						<tr>
-							<th scope="row"><?php _e('Font Family', 'proofratings') ?></th>
-							<td>
-								<select name="proofratings_widget_settings[proofratings_font]">
-									<option value="Didact Gothic" <?php selected('Didact Gothic', $widget_settings['proofratings_font']) ?>><?php _e( 'Didact Gothic', 'proofratings') ?></option>
-									<option value="Metropolis" <?php selected('Metropolis', $widget_settings['proofratings_font']) ?>><?php _e( 'Metropolis', 'proofratings') ?></option>
-								</select>
-							</td>
-						</tr>
-					</table>
+					<tr>
+						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
+						<td>
+							<input name="country" type="text" value="<?php echo @$_POST['country'] ?>" />
+						</td>
+					</tr>
+				</table>
 
-					<h2><?php _e('General Review Sites', 'proofratings') ?></h2>
-					<?php get_proofratings_review_sites('general'); ?>
-
-					<h2><?php _e('Home Services Review Sites', 'proofratings') ?></h2>
-					<?php get_proofratings_review_sites('home-service'); ?>
-
-					<h2><?php _e('Solar Review Sites', 'proofratings') ?></h2>
-					<?php get_proofratings_review_sites('solar'); ?>
-
-					<h2><?php _e('SaaS/Software Review Sites', 'proofratings') ?></h2>
-					<?php get_proofratings_review_sites('software'); ?>
-				</div>
-
-				<div id="settings-display-badges" class="settings_panel">
-					<?php $display_badges = get_proofratings_display_settings(); ?>
-					<table class="form-table">
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Sites (Square)', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-image-option">
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style1.png" alt="Proofratings style">
-									<label data-tab-button="#settings-badge-square">
-										<input name="proofratings_display_badge[square]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['square'] ) ?>>
-										<?php _e('Embed only', 'proofratings') ?>
-									</label>
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Sites (Rectangle)', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-image-option">
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/widget-style2.png" alt="Proofratings style">
-									<label data-tab-button="#settings-badge-rectangle">
-										<input name="proofratings_display_badge[rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['rectangle'] ) ?>>
-										<?php _e('Embed only', 'proofratings') ?>
-									</label>
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating (Rectangle)', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-image-option">
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style1.png" alt="Proofratings style">
-									<label data-tab-button="#settings-overall-ratings-rectangle">
-										<input name="proofratings_display_badge[overall_ratings_rectangle]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_rectangle'] ) ?>>
-										<?php _e('Embed and/or float', 'proofratings') ?>
-									</label>
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating (Narrow)', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-image-option">
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/floating-badge-style2.png" alt="Proofratings style">
-									<label data-tab-button="#settings-overall-ratings-narrow">
-										<input name="proofratings_display_badge[overall_ratings_narrow]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_narrow'] ) ?>>
-										<?php _e('Embed and/or float', 'proofratings') ?>
-									</label>
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row" style="vertical-align:middle"><?php _e('Overall Rating CTA Banner', 'proofratings') ?></th>
-							<td>
-								<div class="proofratings-image-option">
-									<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/cta-badge.png" alt="Proofratings style">
-									<label data-tab-button="#settings-overall-ratings-cta-banner">
-										<input name="proofratings_display_badge[overall_ratings_cta_banner]" class="checkbox-switch checkbox-onoff" value="yes" type="checkbox" <?php checked( 'yes', $display_badges['overall_ratings_cta_banner'] ) ?>>
-										<?php _e('Float only', 'proofratings') ?>
-									</label>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-
-				<div id="settings-badge-square" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-square.php' ?>
-				</div>
-
-				<div id="settings-badge-rectangle" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-rectangle.php' ?>
-				</div>
-
-				<div id="settings-badge-popup" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/settings-badge-popup.php' ?>
-				</div>
-
-				<div id="settings-overall-ratings-rectangle" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-ratings-rectangle.php' ?>
-				</div>
-
-				<div id="settings-overall-ratings-narrow" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-ratings-narrow.php' ?>
-				</div>
-
-				<div id="settings-overall-ratings-cta-banner" class="settings_panel" style="display:none">
-					<?php include PROOFRATINGS_PLUGIN_DIR . '/templates/overall-ratings-cta-banner.php' ?>
-				</div>
-
-				<p class="submit">
-					<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 'proofratings' ); ?>" />
-				</p>
+				<?php submit_button('Request location'); ?>
 			</form>
-
-			<p class="review-us">Enjoying Proofratings? ❤️ Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
 		</div>
 		<?php
 	}

@@ -104,7 +104,7 @@ class Proofratings_Admin {
 			$location_menu = add_submenu_page('proofratings', __('Locations', 'proofratings'), __('Locations', 'proofratings'), 'manage_options', 'proofratings-locations', [$this->locations_page, 'render']);
 			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
 			
-			add_submenu_page('proofratings', __('Proofratings Widgets', 'proofratings'), __('Widgets', 'proofratings'), 'manage_options', 'proofratings-widgets', [$this->settings_page, 'output']);
+			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
 		}
 	}
 

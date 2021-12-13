@@ -6,6 +6,11 @@ table.form-table caption {
     font-weight: bold;
 }
 
+table.locations_table tr.overall-location {
+    font-weight: bold;
+    background-color: #d4d4d4;
+}
+
 table.locations_table tr .column-edit {width: 50px;}
 table.locations_table tr td.column-status {text-transform: capitalize}
 table.locations_table tr .column-action {width: 100px}

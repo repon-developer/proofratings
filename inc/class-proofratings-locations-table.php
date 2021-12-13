@@ -29,6 +29,15 @@ class Proofratings_Locations_Table extends WP_List_Table  {
         $this->per_page = $this->get_items_per_page( 'locations_per_page', 15 );
 		parent::__construct(array('singular' => 'singular_form', 'plural' => 'locations_table', 'ajax' => false));
 	}
+
+    /**
+	 * extra table nav
+     * @since  1.0.6
+	 */
+    function extra_tablenav( $which ) {        
+        $button_url = admin_url( 'admin.php?page=proofratings-add-location');
+        printf('<a style="margin-right: 10px" class="btn-add-new button-primary" href="%s">%s</a>', $button_url, __('Add Location', 'proofratings'));
+    }
 	
 	/**
      * Prepare the items for the table to process
@@ -133,5 +142,16 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 		
 		$actions[] = sprintf('<a class="dashicons dashicons-trash" href="%s"></a>', $permalink);
         return implode(' ', $actions);
+    }
+
+    public function single_row( $item ) {
+        $class = '';
+        if ( $item->id === 'overall' ) {
+            $class = 'overall-location';
+        }
+
+        printf('<tr class="%s">', $class);
+        $this->single_row_columns( $item );
+        echo '</tr>';
     }
 }
