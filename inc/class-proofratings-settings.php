@@ -137,6 +137,7 @@ class Proofratings_Settings {
 		
 		
 		$email = get_option( 'admin_email' );
+		$name = get_bloginfo('name');
 
 
 		ob_start();
@@ -151,12 +152,12 @@ class Proofratings_Settings {
 		$message = preg_replace('/{zip}/', $postdata['zip'], $message);
 		$message = preg_replace('/{country}/', $postdata['country'], $message);
 		
-		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
+		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', $name, $email), 'Reply-To: ' . $email);
 
 		$sendto = 'jonathan@proofratings.com';
 		$sendto = 'repon.kushtia@gmail.com';
 		
-		if (!wp_mail( $sendto, 'New location add request', $content, $headers) ) {
+		if (!wp_mail( $sendto, $name . ' - New location add request', $message, $headers) ) {
 			return $_POST['error_msg'] = __('Send mail have not successful.', 'proofratings');
 		}
 
