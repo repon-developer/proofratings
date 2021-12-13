@@ -54,7 +54,7 @@ const CTABanner = () => {
         return styles;
     }
 
-    css_style = `.proofratings-banner-badge {${get_styles().join(';')}}`;
+    const css_style = `.proofratings-banner-badge {${get_styles().join(';')}}`;
     
     return (
         <React.Fragment>

@@ -42,9 +42,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
-		$this->reviews = Proofratings_Review::instance();
-		
+	public function __construct() {	
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
 		add_shortcode('proofratings_badges_popup', [$this, 'proofratings_badges_popup']);
 
@@ -322,7 +320,7 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($location->review_url));
 				}
 				
-				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue);
+				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
 					$this->{'proofratings_widgets_' . $badge_type}($location);
 				printf('</%s>', $tag);
 	        }

@@ -49,7 +49,6 @@ class Proofratings {
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ratings.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-locations-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-review.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 		
 		$this->locations = Proofratings_Locations::instance();

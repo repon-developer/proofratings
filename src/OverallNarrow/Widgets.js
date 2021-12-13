@@ -34,7 +34,7 @@ const Widgets = (props) => {
         return styles;
     }
 
-    css_style = `.proofratings-badge.proofratings-badge-narrow {${get_styles().join(';')}}`;
+    const css_style = `.proofratings-badge.proofratings-badge-narrow {${get_styles().join(';')}}`;
 
     return(
         <React.Fragment>

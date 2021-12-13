@@ -6,8 +6,6 @@ import Widgets from "./Widgets"
 const { useState, useEffect } = React;
 
 const OverallNarrow = (props) => {
-    const settings = store.getState();
-
     const [state, setState] = useState(store.getState().overall_narrow_embed);
 
     useEffect(() => {

@@ -74,7 +74,7 @@ const BadgeSquare = (props) => {
         return styles;
     }
     
-    css_style = `.proofratings-widget.proofratings-widget-square {${get_styles().join(';')}}`;
+    let css_style = `.proofratings-widget.proofratings-widget-square {${get_styles().join(';')}}`;
     if ( shadow?.shadow !== false && shadow?.hover ) {
         css_style += `.proofratings-widget.proofratings-widget-square:hover {--shadowColor: ${shadow.hover}}`;
     }
