@@ -2,6 +2,8 @@
     if ( !$('#analytics-chart').length ) {
         return;
     }
+
+    $('body').addClass('proofratings-analytics');
     
     const ctx = document.getElementById("analytics-chart").getContext("2d");
 

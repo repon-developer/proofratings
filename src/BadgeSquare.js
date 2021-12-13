@@ -34,6 +34,10 @@ const BadgeSquare = (props) => {
         if ( state?.star_color ) {
             styles.push('--themeColor:' + state.star_color);
         }
+
+        if ( state?.logo_color ) {
+            styles.push('--logoColor:' + state.logo_color);
+        }
     
         if ( state?.textcolor ) {
             styles.push('--textColor:' + state.textcolor);
@@ -109,9 +113,9 @@ const BadgeSquare = (props) => {
             {state?.customize && (
                 <React.Fragment>
                     <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                        <div className="proofratings-widget proofratings-widget-square proofratings-widget-yelp proofratings-widget-customized">
-                            <div className="review-site-logo" style={{WebkitMaskImage: 'url(http://proofratings.me/wp-content/plugins/proofratings/assets/images/yelp.svg)'}}>
-                                <img src="http://proofratings.me/wp-content/plugins/proofratings/assets/images/yelp.svg" alt="Yelp" />
+                        <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized ${state?.logo_color ? 'proofratings-widget-logo-color' : ''}`}>
+                            <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}images/google.svg)`}}>
+                                <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
                             </div>
                             
                             <div className="proofratings-reviews" itemProp="reviewRating">

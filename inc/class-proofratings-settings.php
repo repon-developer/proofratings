@@ -92,9 +92,10 @@ class Proofratings_Settings {
 	 * @since 1.0.6
 	 */
 	public function handle_add_location() {
-		if ( !wp_verify_nonce( @$_POST['_nonce'], '_nonce_add_location')) {
+		if ( !isset($_POST['_nonce']) || !wp_verify_nonce( $_POST['_nonce'], '_nonce_add_location')) {
 			return;
 		}
+
 
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -163,7 +164,6 @@ class Proofratings_Settings {
 
 		exit(wp_safe_redirect(admin_url( 'admin.php?page=' . 'proofratings-locations')));
 	}
-
 
 	/**
 	 * Shows the plugin's settings page.

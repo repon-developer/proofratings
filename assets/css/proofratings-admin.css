@@ -273,9 +273,8 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-popup-widgets-box > * {box-sizing: border-box;}
 
-body.toplevel_page_proofratings {background-color: #fff}
-
-body.toplevel_page_proofratings #wpcontent {padding-left: 0}
+body.proofratings-analytics {background-color: #fff}
+body.proofratings-analytics #wpcontent {padding-left: 0}
 
 .proofratings-analytics-wrap {margin: 0; padding: 20px 30px}
 

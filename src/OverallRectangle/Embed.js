@@ -37,7 +37,7 @@ const OverallRectangle_Embed = (props) => {
                     </th>
                     <td>
                         <code className="shortocde-area">
-                            [proofratings_overall_ratings id="{props?.id}" type="rectangle"]
+                            [proofratings_overall_rectangle id="{props?.id}"]
                         </code>
                     </td>
                 </tr>

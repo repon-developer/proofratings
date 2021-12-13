@@ -46,10 +46,11 @@ class Proofratings_Admin {
 		include_once dirname( __FILE__ ) . '/class-proofratings-locations.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 
+		
 		$this->settings_page = Proofratings_Settings::instance();
 		$this->locations_page = Proofratings_Locations_Admin::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
-
+		
 		if ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES ) {
 			add_action( 'admin_notices', [$this, 'admin_notice_rating_us']);
 		}
@@ -81,9 +82,9 @@ class Proofratings_Admin {
 	public function admin_menu() {
 		$proofratings_status = get_proofratings_current_status();		
 
-		$main_screen = [$this->settings_page, 'awaiting'];
-		if ( !$proofratings_status) {
-			$main_screen = [$this->settings_page, 'account_inactive_output'];
+		$main_screen = [$this->settings_page, 'account_inactive_output'];
+		if ( 'pending' == $proofratings_status ) {
+			$main_screen = [$this->settings_page, 'awaiting'];
 		}
 
 		if ('pause' == $proofratings_status) { 
@@ -120,10 +121,12 @@ class Proofratings_Admin {
 
 		$screen = get_current_screen();
 
-		wp_deregister_script('react');
-		wp_deregister_script('react-dom');
-		wp_register_script( 'react', 'https://unpkg.com/react@17/umd/react.development.js', [], 17, true);
-		wp_register_script( 'react-dom', 'https://unpkg.com/react-dom@17/umd/react-dom.development.js', [], 17, true);	
+		if ( WP_DEBUG ) {
+			wp_deregister_script('react');
+			wp_deregister_script('react-dom');
+			wp_register_script( 'react', 'https://unpkg.com/react@17/umd/react.development.js', [], 17, true);
+			wp_register_script( 'react-dom', 'https://unpkg.com/react-dom@17/umd/react-dom.development.js', [], 17, true);
+		}
 		
 		preg_match('/(proofratings_page|proofratings-widgets)/', $screen->id, $matches);
 		

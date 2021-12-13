@@ -34,7 +34,7 @@ const OverallNarrow = (props) => {
                 <tbody>
                     <tr>
                         <th scope="row">Shortcode <p className="description" style={{ fontWeight: "normal" }}>Embed shortcode</p></th>
-                        <td><code className="shortocde-area">[proofratings_overall_ratings id="{props?.id}" type="narrow"]</code></td>
+                        <td><code className="shortocde-area">[proofratings_overall_narrow id="{props?.id}"]</code></td>
                     </tr>
 
                     <tr>

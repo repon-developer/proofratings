@@ -42,6 +42,10 @@ class Proofratings_Generate_Style {
 				printf("\t--themeColor: %s;\n", $sites_badge->star_color);
 			}
 
+			if ( $sites_badge->logo_color ) {
+				printf("\t--logoColor: %s;\n", $sites_badge->logo_color);
+			}
+
 			if ( $sites_badge->icon_color ) {
 				printf("\t--iconColor: %s;\n", $sites_badge->icon_color);
 			}
