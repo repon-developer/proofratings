@@ -58,8 +58,7 @@ class Proofratings {
 		if ( is_admin(  ) ) {
 			include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
 			$this->admin = Proofratings_Admin::instance();
-		}	
-		
+		}
 
 		add_action( 'rest_api_init', [$this, 'register_rest_api']);
 

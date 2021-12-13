@@ -167,7 +167,7 @@ class Proofratings_Locations  {
 	function get_locations() {
 		global $wpdb;
 
-		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings ORDER BY location ASC");
+		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status != 'deleted' ORDER BY location ASC");
 
 		array_walk($locations, function(&$location){
 			$location = $this->sanitize_location($location);

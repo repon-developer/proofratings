@@ -130,6 +130,10 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_action( $location ) {
+        if ( $location->id === 'overall' ) {
+            return;
+        }
+
 		$permalink = add_query_arg( ['id' => $location->id, '_nonce' => wp_create_nonce( 'delete-location' )], menu_page_url('proofratings-locations', false));
 
 		if ( !empty($_GET['s']) ) {

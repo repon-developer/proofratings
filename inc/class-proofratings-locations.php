@@ -40,7 +40,7 @@ class Proofratings_Locations_Admin {
 	 */
 	public function __construct() {	
 		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen' ], 20, 3 );
-		add_action( 'init', [$this, 'process_single_action']);
+		add_action( 'init', [$this, 'handle_delete_action']);
 	}
 
     /**
@@ -65,34 +65,21 @@ class Proofratings_Locations_Admin {
 
 	/**
 	 * handle bulk action
-     * @since  1.0.1
+     * @since  1.0.6
 	 */
-	public function process_single_action() {
-		if ( !isset($_GET['_nonce'])) {
+	public function handle_delete_action() {
+		if ( !isset($_GET['_nonce']) || empty($_GET['id'])) {
 			return;
 		}
 
-		if( !wp_verify_nonce($_GET['_nonce'], 'site_action' ) ) {
+		if( !wp_verify_nonce($_GET['_nonce'], 'delete-location' ) ) {
 			return;
 		}
-
-		$site_id = $_GET['id'];
 
 		global $wpdb;
+		$wpdb->update($wpdb->proofratings, ['status' => 'deleted'], ['id' => $_GET['id']]);
 
-		$site = $wpdb->get_row(sprintf("SELECT * FROM $wpdb->proofratings_manager WHERE id = %d", $_GET['id']));
-		if ( !$site ) {
-			return;
-		}
-
-		$status = $_GET['action'];
-		if ( $status == 'approve' ) {
-			$status = 'active';
-		}
-
-		if ( $site->status == $status) {
-			return;
-		}
+		exit(wp_safe_redirect(admin_url( 'admin.php?page=' . 'proofratings-locations')));
 	}
 
 	/**
