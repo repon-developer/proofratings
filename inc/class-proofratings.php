@@ -93,8 +93,6 @@ class Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
-		error_log(print_r($request->get_params(), true));
-
 		$review_locations = $request->get_param('review_locations');
 		if ( !is_array($review_locations) ) {
 			$review_locations = [];
@@ -155,7 +153,13 @@ class Proofratings {
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		);");
+	}
 
+	/**
+	 * Sign up 
+	 * @since 1.0.6
+	 */
+	function registration() {
 		$request_url = add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
 			'email' => get_bloginfo( 'admin_email' ),
@@ -173,9 +177,9 @@ class Proofratings {
 
 		$data = json_decode(wp_remote_retrieve_body($response));
 		if ( is_object($data) && $data->success ) {
-			update_option('proofratings_status', $data );
+			update_option('proofratings_status', $data->status );
 		}
-	}
+	 }
 
 	/**
 	 * Loads textdomain for plugin.

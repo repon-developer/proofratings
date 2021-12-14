@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the class WP_ProofRatings_Settings.
+ * File containing the class Proofratings_Settings.
  *
  * @package proofratings
  * @since   1.0.1
@@ -77,13 +77,13 @@ class Proofratings_Settings {
 		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
 
 		$sendto = 'jonathan@proofratings.com';
-		//$sendto = 'repon.kushtia@gmail.com';
-		
+		$sendto = 'repon.kushtia@gmail.com';
+
+		get_proofratings()->registration();		
 		if (!wp_mail( $sendto, 'New Account Signup Request', $content, $headers) ) {
-			return $this->signup_error->add('failed', 'Send mail have not successful.');
+			return $this->signup_error->add('failed', sprintf('Send mail have not successful. Please send email here <a href="mailto:%1$s">%1$s</a>', $sendto));
 		}
 		
-		WP_ProofRatings()->activate();
 		$_POST['success'] = true;
 	}
 
@@ -133,13 +133,10 @@ class Proofratings_Settings {
 
 		if (!$validate_data ) {
 			return;
-		}
-
-		
+		}		
 		
 		$email = get_option( 'admin_email' );
 		$name = get_bloginfo('name');
-
 
 		ob_start();
 		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-add-location.php';
@@ -183,7 +180,7 @@ class Proofratings_Settings {
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
 					if( $this->signup_error->has_errors() ) {
 						echo '<div class="notice notice-error settings-error is-dismissible">';
-							echo '<p><strong>'.$this->signup_error->get_error_message().'</strong></p>';
+							echo '<p>'.$this->signup_error->get_error_message().'</p>';
 						echo '</div>';
 					}
 
