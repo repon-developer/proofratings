@@ -361,22 +361,23 @@ class Proofratings_Generate_Style {
 	 */
 	public function generate_css() {
 		//Get location again - Must use
-		get_proofratings()->locations->get_locations();
-
-		$location = get_proofratings()->locations->items[1];		
+		$locations = get_proofratings()->locations->get_locations();
 
 		ob_start();
-		$this->sites_badge($location);
-		$this->sites_badge($location, 'sites_rectangle', 'rectangle');
 
-		$this->overall_rectangle($location);
-		$this->overall_rectangle($location, 'overall_rectangle_float');
+		foreach ($locations as $location) {
+			$this->sites_badge($location);
+			$this->sites_badge($location, 'sites_rectangle', 'rectangle');
 
-		$this->overall_narrow($location);
-		$this->overall_narrow($location, 'overall_narrow_float');
-		
-		$this->overall_popup_badges($location);
-		$this->overall_banner_badges($location);
+			$this->overall_rectangle($location);
+			$this->overall_rectangle($location, 'overall_rectangle_float');
+
+			$this->overall_narrow($location);
+			$this->overall_narrow($location, 'overall_narrow_float');
+			
+			$this->overall_popup_badges($location);
+			$this->overall_banner_badges($location);
+		}
 
 		$styles = ob_get_clean();
 		file_put_contents(wp_upload_dir()['basedir'] . '/proofratings-generated.css', $styles);	

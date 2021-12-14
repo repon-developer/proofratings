@@ -220,7 +220,7 @@ class Proofratings_Locations  {
 			$location->ratings = new Proofratings_Ratings($location->reviews);
 		}
 
-		$this->items = $locations;
+		return $this->items = $locations;
 	}
 
 	/**
