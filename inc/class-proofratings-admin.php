@@ -136,8 +136,8 @@ class Proofratings_Admin {
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
-
-		if ( $screen->id === 'proofratings_page_proofratings-locations' && isset($_GET['location']) ) {
+		
+		if ( $screen->id === 'proofratings_page_proofratings-locations' && (isset($_GET['location']) || get_proofratings()->locations->global) ) {
 			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
 				'ajaxurl' => admin_url('admin-ajax.php'),

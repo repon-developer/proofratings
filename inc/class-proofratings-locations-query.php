@@ -16,6 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Proofratings_Locations  {
 	/**
+	 * Is global
+	 * @since  1.0.6
+	 */
+	var $global = true;
+
+	/**
 	 * The single instance of the class.
 	 * @var self
 	 * @since  1.0.6
@@ -173,8 +179,12 @@ class Proofratings_Locations  {
 			$location = $this->sanitize_location($location);
 		});
 
-		array_unshift($locations, $this->overall_location($locations));
+		$location_ids = wp_list_pluck( $locations, 'location_id');
 
+		if ( !in_array('global', $location_ids) ) {
+			$this->global = false;
+			array_unshift($locations, $this->overall_location($locations));
+		}
 
 		$rating_sites = get_proofratings_rating_sites();
 
@@ -211,6 +221,15 @@ class Proofratings_Locations  {
 		}
 
 		$this->items = $locations;
+	}
+
+	/**
+	 * get global location id
+	 * @since  1.0.6
+	 */
+	function get_global_id() {
+		$key = array_search('global', array_column($this->items, 'location_id'));
+		return $key === false ? false : $this->items[$key]->id;
 	}
 
 	/**

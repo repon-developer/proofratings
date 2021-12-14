@@ -87,11 +87,12 @@ class Proofratings_Locations_Admin {
 	 * @since  1.0.6
 	 */
 	public function render() {
-		if ( isset($_GET['location']) ) {
-			return $this->widgets_settings();
+		$location_id = isset($_GET['location']) ? $_GET['location'] : false;
+		if ( get_proofratings()->locations->global ) {
+			$location_id = get_proofratings()->locations->get_global_id();
 		}
 
-		$this->output();
+		$this->widgets_settings($location_id);
 	}	
 
 	/**
@@ -118,11 +119,17 @@ class Proofratings_Locations_Admin {
 	 * Shows locations
 	 * @since  1.0.6
 	 */
-	public function widgets_settings() {
+	public function widgets_settings($location_id) {
 		global $wpdb;
 
-		$location_id = $_GET['location'];
-		$location = $wpdb->get_row("SELECT * FROM $wpdb->proofratings WHERE id = '$location_id'");
+		$location = get_proofratings()->locations->get($location_id);
+
+		var_dump($location_id, $location);
+
+
+		if ( !$location ) {
+			return $this->output();
+		}
 
 		$location_name = 'Overall';
 		if ( $location ) {
