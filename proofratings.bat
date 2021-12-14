@@ -1,0 +1,1 @@
+7z a proofratings.zip * -xr!node_modules\ -xr!.git\ -xr!src\ -xr!.gitignore -xr!*.json -xr!webpack.config.js -xr!.babelrc -xr!*.bat
