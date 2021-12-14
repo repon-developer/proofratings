@@ -123,10 +123,6 @@ class Proofratings_Locations_Admin {
 		global $wpdb;
 
 		$location = get_proofratings()->locations->get($location_id);
-
-		var_dump($location_id, $location);
-
-
 		if ( !$location ) {
 			return $this->output();
 		}
