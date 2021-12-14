@@ -67,10 +67,10 @@ class Proofratings_Admin {
 		<div id="proofrating-notice" class="notice notice-info is-dismissible">
 			<p>We are excited that you chose Proofratings to display your reputation. We are working hard around the clock to continually help you convert more website visitors and increase sales. Would you please take 2 minutes to leave us a review?</p>
 			<div class="btn-actions">
-				<a href="https://wordpress.org/support/plugin/proofratings/reviews/" target="_blank">Yes, of course!</a> |
-				<a href="#" data-days="28">Maybe later</a> |
+				<a href="https://wordpress.org/support/plugin/proofratings/reviews/" target="_blank"><span class="dashicons dashicons-external"></span> Yes, of course!</a> |
+				<a href="#" data-days="28"><span class="dashicons dashicons-calendar-alt"></span> Maybe later</a> |
 				<a href="#" data-days="90">Not quite yet!</a> |
-				<a href="#">No thank you</a>
+				<a href="#"><span class="dashicons dashicons-dismiss"></span> No thank you</a>
 			</div>
 		</div>
 		<?php
