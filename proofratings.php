@@ -27,8 +27,29 @@ define( 'PROOFRATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 //define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
 define( 'PROOFRATINGS_API_URL', 'http://proofratings.me/wp-json/proofratings/v1');
 
-
+require __DIR__ . '/vendor/autoload.php';
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
+
+/**
+ * Initialize the plugin tracker
+ *
+ * @return void
+ */
+function appsero_init_tracker_proofratings() {
+
+    if ( ! class_exists( 'Appsero\Client' ) ) {
+      require_once __DIR__ . '/appsero/src/Client.php';
+    }
+
+    $client = new Appsero\Client( '932d86b7-ff6f-4437-b713-244c7458cfda', 'Proofratings (Pro Plan)', __FILE__ );
+
+    // Active insights
+    $client->insights()->init();
+
+}
+
+appsero_init_tracker_proofratings();
+
 
 /**
  * Main instance of Wordpress Proofratings.
