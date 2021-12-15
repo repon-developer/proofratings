@@ -183,7 +183,10 @@ class Proofratings_Locations  {
 
 		if ( !in_array('global', $location_ids) ) {
 			$this->global = false;
-			array_unshift($locations, $this->overall_location($locations));
+
+			if ( sizeof($locations) >= 1) {
+				array_unshift($locations, $this->overall_location($locations));
+			}
 		}
 
 		$rating_sites = get_proofratings_rating_sites();
