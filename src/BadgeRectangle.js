@@ -1,7 +1,7 @@
 import store, { ACTIONS } from './Store';
-import ColorPicker from "./ColorPicker";
-import Border from "./Border";
-import Shadow from "./Shadow";
+import ColorPicker from "./Component/ColorPicker";
+import Border from "./Component/Border";
+import Shadow from "./Component/Shadow";
 
 import ActiveSites from './Component/ActiveSites';
 

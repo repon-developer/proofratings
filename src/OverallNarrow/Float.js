@@ -1,7 +1,7 @@
 import store, { ACTIONS } from "./../Store";
-import ColorPicker from "./../ColorPicker";
+import ColorPicker from "./../Component/ColorPicker";
 import Widgets from "./Widgets"
-import Shadow from "./../Shadow";
+import Shadow from "./../Component/Shadow";
 import Pages from "./../Pages";
 
 const { useState, useEffect } = React;

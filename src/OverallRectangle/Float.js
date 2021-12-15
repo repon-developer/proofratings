@@ -1,6 +1,6 @@
 import store, { ACTIONS } from "./../Store";
-import ColorPicker from "./../ColorPicker";
-import Shadow from "./../Shadow";
+import ColorPicker from "./../Component/ColorPicker";
+import Shadow from "./../Component/Shadow";
 import Pages from "./../Pages";
 
 import Widgets from "./Widgets";

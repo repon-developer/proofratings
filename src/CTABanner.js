@@ -1,5 +1,5 @@
 import store, { ACTIONS } from "./Store";
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "./Component/ColorPicker";
 
 import Button from "./Button";
 import Pages from "./Pages";

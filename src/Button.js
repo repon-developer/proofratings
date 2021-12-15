@@ -1,4 +1,4 @@
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "./Component/ColorPicker";
 
 const Button = (props) => {
 
