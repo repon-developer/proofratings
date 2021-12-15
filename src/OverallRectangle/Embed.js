@@ -2,6 +2,7 @@ import store, { ACTIONS } from "./../Store";
 import ColorPicker from "./../ColorPicker";
 import Shadow from "./../Shadow";
 import Widgets from "./Widgets";
+import Link from '../Component/Link'
 
 const { useState, useEffect } = React;
 
@@ -20,6 +21,12 @@ const OverallRectangle_Embed = (props) => {
             data
         }
     });
+
+    const link = Object.assign({ enable: false, url: "", _blank: false }, state?.link)
+    const handle_link = (name, value) => {
+        link[name] = value;
+        handle_field({link})
+    }
 
     const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
@@ -41,6 +48,8 @@ const OverallRectangle_Embed = (props) => {
                         </code>
                     </td>
                 </tr>
+
+                <Link {...link} onUpdate={handle_link} />
 
                 <tr>
                     <td style={{ paddingLeft: 0 }} colSpan={2}>

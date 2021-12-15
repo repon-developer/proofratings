@@ -22,6 +22,10 @@ html {
     box-shadow: 0 0 4px 4px var(--shadow_color, rgba(246,211,0,0.4))!important
 }
 
+.proofratings-badge.badge-embed:not(a) {
+    cursor: auto;
+}
+
 .proofratings-badge.right {left: auto; right: 30px}
 
 .proofratings-badge:hover {

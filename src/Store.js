@@ -67,7 +67,6 @@ const settingsReducer = (state = settings, action) => {
         case "SITES_RECTANGLE":
             return {...state, sites_rectangle: {...state.sites_rectangle, ...action.payload}};
 
-
         case "OVERALL_SAVE":
             return {...state, [action.payload.name]: {...state[action.payload.name], ...action.payload.data}};
 

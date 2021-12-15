@@ -93,7 +93,10 @@ class Proofratings_Shortcodes {
 
 		if ( $atts['float'] !== 'yes' && isset($location->settings->badge_display[$overall_slug]) && !$location->settings->badge_display[$overall_slug]) {
 			return;
-		}		
+		}
+
+		$attributes = array();
+		$tag = 'div';
 		
 		$badge_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
 		
@@ -101,6 +104,18 @@ class Proofratings_Shortcodes {
 
 		if ( $atts['float'] !== 'yes' ) {
 			$classes[] = 'badge-embed';
+
+			$link = $badge_settings->link;
+
+			if ( isset($link['enable']) && $link['enable'] === true ) {
+				if ( !empty($link['url']) ) {
+					$tag = 'a';
+					$attributes['href'] = esc_attr( $link['url'] );
+					if ( $link['_blank'] === true  ) {
+						$attributes['target'] = '_blank';
+					}
+				}
+			}
 		}
 
 		if ( $atts['float'] == 'yes' ) {
@@ -121,15 +136,18 @@ class Proofratings_Shortcodes {
 			$badge_settings->shadow = 'yes';
 		}
 
-		$url_attribute = '';
-		$tag = 'div';
-		if (!empty($atts['url'])) {
-			$tag = 'a';
-			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
-		}
+		$attributes['class'] = implode(' ', $classes);
+		$attributes['data-location'] = $location->id;
+		$attributes['data-type'] = $overall_slug;
+
+		$attribute_html = '';
+
+		foreach ($attributes as $ak => $attribute_value) {
+			$attribute_html .= sprintf(' %s="%s"', $ak, $attribute_value);
+		}		
 
         ob_start();
-        printf('<%s %s class="%s" data-location="%s" data-type="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes), $location->id, $overall_slug);
+        printf('<%s %s itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $attribute_html);
 			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}

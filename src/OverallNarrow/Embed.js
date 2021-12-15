@@ -2,6 +2,7 @@ import store, { ACTIONS } from "../Store";
 import ColorPicker from "../ColorPicker";
 import Shadow from "../Shadow";
 import Widgets from "./Widgets"
+import Link from "../Component/Link";
 
 const { useState, useEffect } = React;
 
@@ -20,6 +21,12 @@ const OverallNarrow = (props) => {
         }
     });
 
+    const link = Object.assign({ enable: false, url: "", _blank: false }, state?.link)
+    const handle_link = (name, value) => {
+        link[name] = value;
+        handle_field({link})
+    }
+    
     const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
         shadow[name] = value;
@@ -34,6 +41,8 @@ const OverallNarrow = (props) => {
                         <th scope="row">Shortcode <p className="description" style={{ fontWeight: "normal" }}>Embed shortcode</p></th>
                         <td><code className="shortocde-area">[proofratings_overall_narrow id="{props?.id}"]</code></td>
                     </tr>
+
+                    <Link {...link} onUpdate={handle_link} />
 
                     <tr>
                         <td style={{ paddingLeft: 0 }} colSpan={2}>
