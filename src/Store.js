@@ -56,10 +56,6 @@ const settingsReducer = (state = settings, action) => {
             return action.payload;
 
         case "ACTIVE_SITES":
-            if (state?.sites_square?.active_sites === null) {
-                state.sites_square.active_sites = action.payload;
-            }
-
             return {...state, activeSites: action.payload};
 
         case "BADGE_DISPLAY":
