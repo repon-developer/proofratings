@@ -210,17 +210,17 @@ html {
     max-height: 100%;
 }
 
-.proofratings-widget.proofratings-widget-square:not(.proofratings-widget-logo-color) .review-site-logo {
+.proofratings-widget:not(.proofratings-widget-logo-color) .review-site-logo {
     -webkit-mask-image: none!important;
 }
 
-.proofratings-widget.proofratings-widget-square.proofratings-widget-logo-color .review-site-logo {
+.proofratings-widget.proofratings-widget-logo-color .review-site-logo {
     -webkit-mask-position: center;
     -webkit-mask-repeat: no-repeat;
     background-color: var(--logoColor)
 }
 
-.proofratings-widget.proofratings-widget-square.proofratings-widget-logo-color .review-site-logo img {visibility: hidden;}
+.proofratings-widget.proofratings-widget-logo-color .review-site-logo img {visibility: hidden;}
 
 .proofratings-widget .proofratings-stars i {
     background-color: var(--themeColor, #0f7ff3);
