@@ -26,7 +26,6 @@ define( 'PROOFRATINGS_PLUGIN_URL', untrailingslashit(plugin_dir_url(__FILE__)));
 define( 'PROOFRATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
 
-require PROOFRATINGS_PLUGIN_DIR . '/vendor/autoload.php';
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
 
 /**
@@ -37,14 +36,13 @@ require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
 function appsero_init_tracker_proofratings() {
 
     if ( ! class_exists( 'Appsero\Client' ) ) {
-      require_once PROOFRATINGS_PLUGIN_DIR . '/vendor/appsero/src/Client.php';
+      require_once PROOFRATINGS_PLUGIN_DIR . '/appsero/Client.php';
     }
 
     $client = new Appsero\Client( '932d86b7-ff6f-4437-b713-244c7458cfda', 'Proofratings (Pro Plan)', __FILE__ );
 
     // Active insights
     $client->insights()->init();
-
 }
 
 appsero_init_tracker_proofratings();

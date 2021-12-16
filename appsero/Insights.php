@@ -22,7 +22,7 @@ class Insights {
      *
      * @var boolean
      */
-    protected $show_notice = true;
+    protected $show_notice = false;
 
     /**
      * If extra data needs to be sent
