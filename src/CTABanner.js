@@ -215,7 +215,7 @@ const CTABanner = () => {
                 </tbody>
             </table>
 
-            <Pages onUpdate={handle_field} hide_on={state?.hide_on} />
+            <Pages onUpdate={handle_field} on_pages={state?.on_pages} />
 
         </React.Fragment>
     );

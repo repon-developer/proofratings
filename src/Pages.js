@@ -1,15 +1,29 @@
-const Pages = (props) => {
-    const hide_on = (Array.isArray(props.hide_on) ? props.hide_on : []).map(item => parseInt(item));
+const { useEffect } = React;
 
-    const check_pages = (id) => {
-        const index = hide_on.indexOf(id);
-        if (index !== -1) {
-            hide_on.splice(index, 1);
-        } else {
-            hide_on.push(id);
+const Pages = (props) => {
+    const on_pages = (Array.isArray(props?.on_pages) ? props.on_pages : []).map(item => parseInt(item));
+
+    useEffect(() => {
+        if ( Array.isArray(props?.on_pages) ) {
+            return;
         }
 
-        props.onUpdate({hide_on})
+        const on_pages = proofratings.pages.map(page => page.ID);
+        props.onUpdate({on_pages })
+    }, [])
+
+
+    console.log('Here ', on_pages)
+
+    const check_pages = (id) => {
+        const index = on_pages.indexOf(id);
+        if (index !== -1) {
+            on_pages.splice(index, 1);
+        } else {
+            on_pages.push(id);
+        }
+
+        props.onUpdate({on_pages})
     }
 
     return (
@@ -20,7 +34,7 @@ const Pages = (props) => {
                     <tr key={page.ID}>
                         <th scope="row">{page.post_title}</th>
                         <td>
-                            <input defaultChecked={!hide_on.includes(page.ID)} onChange={() => check_pages(page.ID)} className="checkbox-switch" type="checkbox" />
+                            <input defaultChecked={on_pages.includes(page.ID)} onChange={() => check_pages(page.ID)} className="checkbox-switch" type="checkbox" />
                         </td>
                     </tr>
                 ))}

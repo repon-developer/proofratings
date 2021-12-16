@@ -224,12 +224,12 @@ class Proofratings {
 				continue;
 			}
 
-			$hide_on = [];
-			if (isset($location->settings->overall_rectangle_float['hide_on'])) {
-				$hide_on = $location->settings->overall_rectangle_float['hide_on'];
+			$on_pages = [];
+			if (isset($location->settings->overall_rectangle_float['on_pages'])) {
+				$on_pages = $location->settings->overall_rectangle_float['on_pages'];
 			}
 
-			if ( !in_array(get_the_ID(), $hide_on) ) {
+			if ( in_array(get_the_ID(), $on_pages) ) {
 				echo do_shortcode(sprintf('[proofratings_overall_rectangle id="%s" float="yes"]', $location->id ));
 				echo do_shortcode(sprintf('[proofratings_badges_popup id="%s"]', $location->id));
 			}
@@ -244,12 +244,12 @@ class Proofratings {
 				continue;
 			}
 
-			$hide_on = [];
-			if (isset($location->settings->overall_narrow_float['hide_on'])) {
-				$hide_on = $location->settings->overall_narrow_float['hide_on'];
+			$on_pages = [];
+			if (isset($location->settings->overall_narrow_float['on_pages'])) {
+				$on_pages = $location->settings->overall_narrow_float['on_pages'];
 			}
 
-			if ( !in_array(get_the_ID(), $hide_on) ) {
+			if ( in_array(get_the_ID(), $on_pages) ) {
 				echo do_shortcode(sprintf('[proofratings_overall_narrow id="%s" float="yes"]', $location->id ));
 				echo do_shortcode(sprintf('[proofratings_badges_popup id="%s"]', $location->id));
 			}
@@ -271,12 +271,14 @@ class Proofratings {
 				continue;
 			}
 
-			$hide_on = [];
-			if (isset($location->settings->overall_cta_banner['hide_on'])) {
-				$hide_on = $location->settings->overall_cta_banner['hide_on'];
+			$on_pages = [];
+			if (isset($location->settings->overall_cta_banner['on_pages'])) {
+				$on_pages = $location->settings->overall_cta_banner['on_pages'];
 			}
 
-			if ( !in_array(get_the_ID(), $hide_on) ) {
+			var_dump($on_pages);
+
+			if ( in_array(get_the_ID(), $on_pages) ) {
 				echo do_shortcode(sprintf('[proofratings_overall_ratings_cta_banner id="%s"]', $location->id ));
 			}
 		}

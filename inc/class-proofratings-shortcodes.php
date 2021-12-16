@@ -101,6 +101,7 @@ class Proofratings_Shortcodes {
 		$badge_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
 		
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
+		$classes[] = 'proofratings-badge-' . $location->id;
 
 		if ( $atts['float'] !== 'yes' ) {
 			$classes[] = 'badge-embed';
@@ -125,15 +126,13 @@ class Proofratings_Shortcodes {
 				$classes[] = $badge_settings->position;
 			}
 
-			if ( $badge_settings->mobile == 'no') {
+			if ( $badge_settings->mobile === false) {
 				$classes[] = 'badge-hidden-mobile';
 			}
 
-			if ( $badge_settings->tablet == 'no') {
+			if ( $badge_settings->tablet === false) {
 				$classes[] = 'badge-hidden-tablet';
 			}
-
-			$badge_settings->shadow = 'yes';
 		}
 
 		$attributes['class'] = implode(' ', $classes);
@@ -397,20 +396,19 @@ class Proofratings_Shortcodes {
 		$classes[] = 'proofratings-banner-badge-'.$location->id;
 
 
-		if ( $badge_settings->tablet == 'no') {
+		if ( $badge_settings->tablet === false) {
 			$classes[] = 'badge-hidden-tablet';
 		}
 
-		if ( $badge_settings->mobile == 'no') {
+		if ( $badge_settings->mobile === false) {
 			$classes[] = 'badge-hidden-mobile';
 		}
 
-		if ( $badge_settings->shadow != 'no' ) {
+		if ( $badge_settings->shadow !== false ) {
 			$classes[] = 'has-shadow';
 		}
 
 		$class = implode(' ', $classes);
-
 
 		$button1 = '';
 		if ( isset($badge_settings->button1) ) {

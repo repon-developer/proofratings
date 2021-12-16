@@ -1,7 +1,6 @@
 import ColorPicker from "./Component/ColorPicker";
 
 const Button = (props) => {
-
     return (
         <React.Fragment>
 
@@ -63,10 +62,13 @@ const Button = (props) => {
                     />
                 </td>
             </tr>
-            <tr>
-                <th scope="row">Button Border Color</th>
-                <td><ColorPicker color={props?.border_color} onUpdate={(color) => props.onUpdate('border_color', color)} /></td>
-            </tr>
+
+            {props?.border &&
+                <tr>
+                    <th scope="row">Button Border Color</th>
+                    <td><ColorPicker color={props?.border_color} onUpdate={(color) => props.onUpdate('border_color', color)} /></td>
+                </tr>
+            }
 
             <tr>
                 <th scope="row">Button Hover Text Color</th>
@@ -78,10 +80,12 @@ const Button = (props) => {
                 <td><ColorPicker color={props?.hover_background_color} onUpdate={(color) => props.onUpdate('hover_background_color', color)} /></td>
             </tr>
 
-            <tr>
-                <th scope="row">Button Hover Border Color</th>
-                <td><ColorPicker color={props?.hover_border_color} onUpdate={(color) => props.onUpdate('hover_border_color', color)} /></td>
-            </tr>
+            {props?.border &&
+                <tr>
+                    <th scope="row">Button Hover Border Color</th>
+                    <td><ColorPicker color={props?.hover_border_color} onUpdate={(color) => props.onUpdate('hover_border_color', color)} /></td>
+                </tr>
+            }
         </React.Fragment>
     );
 };

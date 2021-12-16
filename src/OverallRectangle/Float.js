@@ -137,7 +137,7 @@ const OverallRectangle_Embed = (props) => {
                 </tbody>
             </table>
 
-            {settings?.badge_display?.overall_rectangle_float && <Pages onUpdate={handle_field} hide_on={state?.hide_on} />}
+            <Pages onUpdate={handle_field} on_pages={state?.on_pages} />
 
         </React.Fragment>
     );
