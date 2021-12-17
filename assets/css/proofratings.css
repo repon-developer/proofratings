@@ -277,6 +277,7 @@ html {
 
 
 .proofratings-widget.proofratings-widget-rectangle .rating-title {
+    color: var(--textColor);
     font-size: 16px;
     margin-bottom: 8px;
     font-family: inherit;

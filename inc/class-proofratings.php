@@ -276,8 +276,6 @@ class Proofratings {
 				$on_pages = $location->settings->overall_cta_banner['on_pages'];
 			}
 
-			var_dump($on_pages);
-
 			if ( in_array(get_the_ID(), $on_pages) ) {
 				echo do_shortcode(sprintf('[proofratings_overall_ratings_cta_banner id="%s"]', $location->id ));
 			}

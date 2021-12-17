@@ -1,1 +1,1 @@
-7z a proofratings.zip * -xr!node_modules\ -xr!.git\ -x!src\ -xr!.gitignore -xr!*.json -xr!webpack.config.js -xr!.babelrc -xr!*.bat -xr!*.lock
+7z a proofratings.zip * -xr!.vscode\ -xr!node_modules\ -xr!.git\ -x!src\ -xr!.gitignore -xr!*.json -xr!webpack.config.js -xr!.babelrc -xr!*.bat -xr!*.lock
