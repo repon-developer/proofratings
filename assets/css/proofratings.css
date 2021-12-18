@@ -581,7 +581,7 @@ html {
     .badge-hidden-tablet {display: none!important}
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1024px) {
     .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
     .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
     .proofratings-banner-badge .button-container {display: flex; flex: 0 0 100%; align-items: center; justify-content: center; margin-top: 20px}
@@ -589,6 +589,7 @@ html {
 
 @media screen and (max-width: 767px) {
     .badge-hidden-mobile {display: none!important}
+    .proofratings-banner-badge .proofratings-review-count {margin-top: 15px;}
 }
 
 @media screen and (max-width: 575px) {
