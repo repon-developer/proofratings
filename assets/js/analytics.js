@@ -101,8 +101,16 @@
         $(".analytics-information .impressions .counter").html(impressions.reduce((a, b) => a + b, 0));
         $(".analytics-information .hovers .counter").html(hovers.reduce((a, b) => a + b, 0));
         $(".analytics-information .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
-        $(".analytics-information .conversions .counter").html(conversions.reduce((a, b) => a + b, 0));
         $(".analytics-information .engagements .counter").html(engagements.reduce((a, b) => a + b, 0));
+
+        const total_conversions = conversions.reduce((a, b) => a + b, 0);
+        $(".analytics-information .conversions .counter").html(total_conversions);
+        if (total_conversions > 0 ) {
+            $(".analytics-information .conversions").show();
+        } else {
+            $(".analytics-information .conversions").hide()
+        }
+
 
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
 

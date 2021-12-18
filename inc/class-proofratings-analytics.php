@@ -117,7 +117,7 @@ class Proofratings_Analytics {
 					<p>Number of clicks on all notifications</p>
 				</div>
 
-				<div class="conversions">
+				<div class="conversions" style="display:none">
 					<span class="counter">0</span>
 					<h4 class="name">Conversions</h4>
 					<p>Number of conversions on all notifications</p>

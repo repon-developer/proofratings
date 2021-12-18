@@ -97,12 +97,16 @@ class Proofratings_Admin {
 		
 		$proofratings_icon = PROOFRATINGS_PLUGIN_URL . '/assets/images/proofratings-icon.png';
 
+		$menu_name = get_proofratings()->locations->global ? __('Widgets', 'proofratings') :  __('Locations', 'proofratings');
+
+
+
 		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen, $proofratings_icon, 25);
 
 		if ($proofratings_status == 'active' ) {
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings', [$this->analytics, 'output']);
 			
-			$location_menu = add_submenu_page('proofratings', __('Locations', 'proofratings'), __('Locations', 'proofratings'), 'manage_options', 'proofratings-locations', [$this->locations_page, 'render']);
+			$location_menu = add_submenu_page('proofratings', $menu_name, $menu_name, 'manage_options', 'proofratings-locations', [$this->locations_page, 'render']);
 			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
 			
 			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
