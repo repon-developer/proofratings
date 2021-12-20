@@ -12,9 +12,6 @@ const Pages = (props) => {
         props.onUpdate({on_pages })
     }, [])
 
-
-    console.log('Here ', on_pages)
-
     const check_pages = (id) => {
         const index = on_pages.indexOf(id);
         if (index !== -1) {
