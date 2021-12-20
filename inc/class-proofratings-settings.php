@@ -77,8 +77,6 @@ class Proofratings_Settings {
 		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
 
 		$sendto = 'jonathan@proofratings.com';
-		$sendto = 'repon.kushtia@gmail.com';
-
 		get_proofratings()->registration();		
 		if (!wp_mail( $sendto, 'New Account Signup Request', $content, $headers) ) {
 			return $this->signup_error->add('failed', sprintf('Send mail have not successful. Please send email here <a href="mailto:%1$s">%1$s</a>', $sendto));
@@ -153,7 +151,6 @@ class Proofratings_Settings {
 		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', $name, $email), 'Reply-To: ' . $email);
 
 		$sendto = 'jonathan@proofratings.com';
-		$sendto = 'repon.kushtia@gmail.com';
 		
 		if (!wp_mail( $sendto, $name . ' - New location add request', $message, $headers) ) {
 			return $_POST['error_msg'] = __('Send mail have not successful.', 'proofratings');
