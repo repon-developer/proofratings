@@ -434,15 +434,15 @@ class Proofratings_Shortcodes {
 		}
 
 		$button2 = '';
-		if ( isset($badge_settings->button2) ) {
+		if ( isset($badge_settings->button2['show']) && $badge_settings->button2['show'] === true ) {
 			$button2_settings = new Proofratings_Site_Data($badge_settings->button2);
-
+			
 			$button2_class = 'proofratings-button button2';
 			if ( $button2_settings->border ) {
 				$button2_class .= ' has-border';
 			}
-
-			if ( $button2_settings->shape) {
+			
+			if ( $button2_settings->rectangle === false) {
 				$button2_class .= ' button-round';
 			}
 

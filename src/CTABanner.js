@@ -203,7 +203,7 @@ const CTABanner = () => {
                             <label>
                                 <input
                                     type="checkbox"
-                                    defaultChecked={state?.button2}
+                                    defaultChecked={state?.button2?.show}
                                     className="checkbox-switch"
                                     onChange={() => handle_button2('show', !state.button2?.show)}
                                 /> Second Button
