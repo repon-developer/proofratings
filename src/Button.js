@@ -45,9 +45,9 @@ const Button = (props) => {
                 <td>
                     <input
                         type="checkbox"
-                        defaultChecked={props?.shape}
+                        defaultChecked={props?.rectangle}
                         className="checkbox-switch checkbox-shape"
-                        onChange={() => props.onUpdate('shape', !props?.shape)}
+                        onChange={() => props.onUpdate('rectangle', !props?.rectangle)}
                     />
                 </td>
             </tr>

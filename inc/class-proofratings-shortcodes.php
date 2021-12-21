@@ -419,7 +419,7 @@ class Proofratings_Shortcodes {
 				$button1_class .= ' has-border';
 			}
 
-			if ( $button1_settings->shape) {
+			if ( $button1_settings->rectangle !== true) {
 				$button1_class .= ' button-round';
 			}
 
