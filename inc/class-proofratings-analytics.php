@@ -86,12 +86,14 @@ class Proofratings_Analytics {
 			<hr class="wp-header-end">
 
 			<div class="analytics-filter">
+				<?php if(get_proofratings()->locations->global !== true): ?>
 				<select class="location-filter">
 					<option value="">View all</option>
 					<?php foreach ($locations as $location) {
 						printf('<option value="%s">%s</option>', $location->id, $location->location);
 					} ?>
 				</select>
+				<?php endif; ?>
 
 				<div class="right">
 					<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
