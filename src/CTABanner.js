@@ -6,8 +6,7 @@ import Pages from "./Pages";
 
 const { useState, useEffect } = React;
 
-const CTABanner = () => {
-
+const CTABanner = (props) => {
     const [state, setState] = useState(store.getState().overall_cta_banner);
 
     useEffect(() => {
@@ -59,6 +58,20 @@ const CTABanner = () => {
     return (
         <React.Fragment>
             <style>{css_style}</style>
+
+            <table className="form-table">
+                <tbody>
+                    <tr>
+                        <th scope="row" style={{ verticalAlign: "middle" }}>
+                            Webhook URL
+                        </th>
+                        <td>
+                            <code className="shortocde-area">{proofratings.api}/webhooks?id={props?.id}&amp;site_url={proofratings.site_url}</code>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <table className="form-table">
                 <tbody>
                     

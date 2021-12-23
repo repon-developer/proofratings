@@ -160,7 +160,7 @@ const ProofratingsWidgets = () => {
             {current_tab === 'overall-narrow-float' && <OverallNarrowFloat id={location_id} />}
 
             {current_tab === 'badge-popup' && <OverallPopup />}
-            {current_tab === 'overall-cta-banner' && <CTABanner />}
+            {current_tab === 'overall-cta-banner' && <CTABanner id={location_id} />}
 
             <p className="submit">
                 <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'Save Changes'}</button>
