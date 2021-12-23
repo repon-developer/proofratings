@@ -349,9 +349,11 @@ html {
 .proofratings-badges-popup {
     position: fixed;
     left: 20px;
+    top: 55px;
     bottom: 20px;
     z-index: 150002;
     opacity: 0;
+    overflow-y: auto;
     visibility: hidden;
     padding: 8px;
     max-width: 90vw;
@@ -601,14 +603,9 @@ html {
 
     .proofratings-popup-widgets-box {--column: 1!important; justify-content: center;}
 
-    .proofratings-badges-popup .proofratings-widget:not(:last-child):after {
-        top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        width: auto;
-    }
+    .proofratings-badges-popup .proofratings-widget:not(:last-child):after {top: auto; bottom: 0; left: 0; right: 0; height: 1px; width: auto}
+
+    .proofratings-badges-popup .proofratings-widget:nth-child(n+5), .proofratings-badge.proofratings-badge-narrow.badge-float .proofratings-logos img:nth-child(n+6) {display: none!important }
 }
 
 @media screen and (max-width: 400px) {
