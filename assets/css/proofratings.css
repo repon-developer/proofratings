@@ -349,7 +349,7 @@ html {
 .proofratings-badges-popup {
     position: fixed;
     left: 20px;
-    top: 55px;
+    max-height: calc(100% - 80px);
     bottom: 20px;
     z-index: 150002;
     opacity: 0;
@@ -612,5 +612,4 @@ html {
     .proofratings-badge.proofratings-badge-narrow {max-width: 80%; flex-wrap: wrap; justify-content: center;}
     .proofratings-badge.proofratings-badge-narrow .proofratings-logos {flex: 0 0 100%; margin-right: 0; margin-bottom: 5px;}
     .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 20px }
-
 }
