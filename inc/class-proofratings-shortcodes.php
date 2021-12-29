@@ -135,6 +135,10 @@ class Proofratings_Shortcodes {
 			}
 		}
 
+		if ( sizeof($location->reviews) > 5 ) {
+			$classes[] = 'connected-more';
+		}
+
 		$attributes['class'] = implode(' ', $classes);
 		$attributes['data-location'] = $location->id;
 		$attributes['data-type'] = $overall_slug;
@@ -143,7 +147,7 @@ class Proofratings_Shortcodes {
 
 		foreach ($attributes as $ak => $attribute_value) {
 			$attribute_html .= sprintf(' %s="%s"', $ak, $attribute_value);
-		}		
+		}
 
         ob_start();
         printf('<%s %s itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $attribute_html);
