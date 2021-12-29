@@ -230,8 +230,10 @@ class Proofratings {
 			}
 
 			if ( in_array(get_the_ID(), $on_pages) ) {
+				echo '<div>';
 				echo do_shortcode(sprintf('[proofratings_overall_rectangle id="%s" float="yes"]', $location->id ));
 				echo do_shortcode(sprintf('[proofratings_badges_popup id="%s"]', $location->id));
+				echo '</div>';
 			}
 		}
 
@@ -250,8 +252,10 @@ class Proofratings {
 			}
 
 			if ( in_array(get_the_ID(), $on_pages) ) {
+				echo '<div>';
 				echo do_shortcode(sprintf('[proofratings_overall_narrow id="%s" float="yes"]', $location->id ));
 				echo do_shortcode(sprintf('[proofratings_badges_popup id="%s"]', $location->id));
+				echo '</div>';
 			}
 		}
 	}
