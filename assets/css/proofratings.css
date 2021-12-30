@@ -606,7 +606,7 @@ html {
     
     .proofratings-badges-popup .proofratings-widget:not(:last-child):after {top: auto; bottom: 0; left: 0; right: 0; height: 1px; width: auto}
     
-    .proofratings-badge.proofratings-badge-narrow:hover {--shadow_hover: transparent!important}
+    .proofratings-badge.badge-float:hover {--shadow_hover: transparent!important}
     .proofratings-badge.proofratings-badge-narrow.connected-more {max-width: 80%; flex-wrap: wrap; justify-content: center;}
     .proofratings-badge.proofratings-badge-narrow.connected-more .proofratings-logos {flex: 0 0 100%; margin-right: 0; margin-bottom: 5px;}
     .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 20px }
