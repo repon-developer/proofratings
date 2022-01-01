@@ -610,4 +610,6 @@ html {
     .proofratings-badge.proofratings-badge-narrow.connected-more {max-width: 80%; flex-wrap: wrap; justify-content: center;}
     .proofratings-badge.proofratings-badge-narrow.connected-more .proofratings-logos {flex: 0 0 100%; margin-right: 0; margin-bottom: 5px;}
     .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 20px }
+
+    .proofratings-badge.badge-float .proofratings-close {display: none;}
 }
