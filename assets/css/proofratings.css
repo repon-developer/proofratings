@@ -416,7 +416,9 @@ html {
     background-color: rgb(224,224,224);
 }
 
-.proofratings-badges-popup .proofratings-popup-widgets-box:not([data-column="5"]) .proofratings-widget:nth-child(4n):after {content: none!important}
+@media screen and (min-width: 575px) {
+    .proofratings-badges-popup .proofratings-popup-widgets-box:not([data-column="5"]) .proofratings-widget:nth-child(4n):after {content: none!important}
+}
 
 .proofratings-badges-popup .proofrating-close {
     color: #212a3d;
