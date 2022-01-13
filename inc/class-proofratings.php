@@ -153,17 +153,20 @@ class Proofratings {
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		);");
+
+		$this->registration('activate');
 	}
 
 	/**
 	 * Sign up 
 	 * @since 1.0.6
 	 */
-	function registration() {
+	function registration($source = 'registration') {
 		$request_url = add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
 			'email' => get_bloginfo( 'admin_email' ),
-			'url' => get_site_url()
+			'url' => get_site_url(),
+			'source' => $source
 		), PROOFRATINGS_API_URL . '/register');
 
 		$response = wp_remote_get($request_url);
