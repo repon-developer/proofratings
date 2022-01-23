@@ -42,14 +42,24 @@ class Proofratings_Shortcodes {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
-		$this->reviews = Proofratings_Review::instance();
-		
+	public function __construct() {	
         add_shortcode('proofratings_widgets', [$this, 'proofratings_widgets']);
 		add_shortcode('proofratings_badges_popup', [$this, 'proofratings_badges_popup']);
 
-        add_shortcode('proofratings_overall_ratings', [$this, 'proofratings_overall_ratings']);
+        add_shortcode('proofratings_overall_rectangle', [$this, 'overall_rectangle']);
+        add_shortcode('proofratings_overall_narrow', [$this, 'overall_narrow']);
+
         add_shortcode('proofratings_overall_ratings_cta_banner', [$this, 'overall_ratings_cta_banner']);
+	}
+
+	public function overall_rectangle($atts, $content = null) {
+		$atts = shortcode_atts(['id' => 'overall', 'float' => 'no', 'type' => 'rectangle'], $atts);
+		return $this->proofratings_overall_ratings($atts, $content = null);
+	}
+
+	public function overall_narrow($atts, $content = null) {
+		$atts = shortcode_atts(['id' => 'overall', 'float' => 'no', 'type' => 'narrow'], $atts);
+		return $this->proofratings_overall_ratings($atts, $content = null);
 	}
 
 	/**
@@ -57,110 +67,152 @@ class Proofratings_Shortcodes {
 	 */
 	public function proofratings_overall_ratings($atts, $content = null) {
         $atts = shortcode_atts([
+			'id' => 'overall',
 			'float' => 'no',
 			'type' => 'rectangle',
         ], $atts);
 
-		if ( $this->reviews->sites === false) {
+		$type = sanitize_title( $atts['type']);
+		if ( !in_array($type, array('rectangle', 'narrow')) ) {
+			$type = 'rectangle';
+		}
+
+		$overall_slug = "overall_{$type}_embed";
+		if ( $atts['float'] === 'yes' ) {
+			$overall_slug = "overall_{$type}_float";
+		}
+
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location ) {
 			return;
 		}
-				
-		$classes = ['proofratings-badge', 'proofratings-badge-'.$atts['type']];
-
-		$badget_settings = get_proofratings_overall_ratings_rectangle();
-		if ( $atts['type'] == 'narrow') {
-			$badget_settings = get_proofratings_overall_ratings_narrow();			
-		}
-
-		if ( $atts['float'] == 'no' && $badget_settings->embed == 'no') {
+		
+		if ( !$location->has_ratings ) {
 			return;
 		}
 
+		if ( $atts['float'] !== 'yes' && isset($location->settings->badge_display[$overall_slug]) && !$location->settings->badge_display[$overall_slug]) {
+			return;
+		}
+
+		$attributes = array();
+		$tag = 'div';
+		
+		$badge_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
+		
+		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
+		$classes[] = 'proofratings-badge-' . $location->id;
+
+		if ( $atts['float'] !== 'yes' ) {
+			$classes[] = 'badge-embed';
+
+			$link = $badge_settings->link;
+
+			if ( isset($link['enable']) && $link['enable'] === true ) {
+				if ( !empty($link['url']) ) {
+					$tag = 'a';
+					$attributes['href'] = esc_attr( $link['url'] );
+					if ( $link['_blank'] === true  ) {
+						$attributes['target'] = '_blank';
+					}
+				}
+			}
+		}
 
 		if ( $atts['float'] == 'yes' ) {
 			array_push($classes, 'badge-float');
 
-			if ( !empty($badget_settings->position) ) {
-				$classes[] = $badget_settings->position;
+			if ( !empty($badge_settings->position) ) {
+				$classes[] = $badge_settings->position;
 			}
 
-			if ( $badget_settings->mobile == 'no') {
+			if ( $badge_settings->mobile === false) {
 				$classes[] = 'badge-hidden-mobile';
 			}
 
-			if ( $badget_settings->tablet == 'no') {
+			if ( $badge_settings->tablet === false) {
 				$classes[] = 'badge-hidden-tablet';
 			}
-
-			$badget_settings->shadow = 'yes';
 		}
 
-		$url_attribute = '';
-		$tag = 'div';
-		if (!empty($atts['url'])) {
-			$tag = 'a';
-			$url_attribute = sprintf('href="%s"', esc_url($atts['url']));
+		if ( sizeof($location->reviews) > 5 ) {
+			$classes[] = 'connected-more';
+		}
+
+		$attributes['class'] = implode(' ', $classes);
+		$attributes['data-location'] = $location->id;
+		$attributes['data-type'] = $overall_slug;
+
+		$attribute_html = '';
+
+		foreach ($attributes as $ak => $attribute_value) {
+			$attribute_html .= sprintf(' %s="%s"', $ak, $attribute_value);
 		}
 
         ob_start();
-        printf('<%s %s class="%s" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $url_attribute, implode(' ', $classes));
-			if ( @$badget_settings->close_button != 'no' && $atts['float'] == 'yes' ) {
+        printf('<%s %s itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $attribute_html);
+			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
 
-			if($atts['type'] == 'narrow') {
-				$this->overall_ratings_narrow();
+			if($type == 'narrow') {
+				$this->overall_ratings_narrow($location);
 			} else {				
-				$this->overall_ratings_rectangle();
+				$this->overall_ratings_rectangle($location);
 			}
 			
         printf('</%s>', $tag);
         return ob_get_clean();
 	}
 
-	private function overall_ratings_rectangle() {
+	private function get_meta($overall) {
+		echo '<meta itemprop="worstRating" content = "1">';
+		echo '<meta itemprop="ratingValue" content="'.$overall->rating.'">';
+		echo '<meta itemprop="bestRating" content="5">';
+	}
+
+	private function overall_ratings_rectangle($location) {		
 		echo '<div class="proofratings-inner">';
-			$this->reviews->get_review_logos();
+			
+			$location->ratings->get_logos();
 
 			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-				printf('<span class="proofratings-score">%s</span>', $this->reviews->rating);
-				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $this->reviews->percent);
+				printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
 
-				echo '<meta itemprop="worstRating" content = "1">';
-				echo '<meta itemprop="ratingValue" content="'.$this->reviews->rating.'">';
-				echo '<meta itemprop="bestRating" content="5">';
+				$this->get_meta($location->ratings);
 			echo '</div>';
 		echo '</div>';
 
-		printf('<div class="proofratings-review-count">%d %s</div>', $this->reviews->count, __('reviews', 'proofratings'));
+		printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
 	}
 
-	private function overall_ratings_narrow() {
-		$this->reviews->get_review_logos();
+	private function overall_ratings_narrow($location) {
+		$location->ratings->get_logos();
 
         echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
-            printf('<span class="proofratings-score">%s</span>', $this->reviews->rating);
-            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $this->reviews->percent);
-
-			echo '<meta itemprop="worstRating" content = "1">';
-			echo '<meta itemprop="ratingValue" content="'.$this->reviews->rating.'">';
-			echo '<meta itemprop="bestRating" content="5">';
+            printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
+			$this->get_meta($location->ratings);
         echo '</div>';
 
-    	printf('<div class="proofratings-review-count">%d %s</div>', $this->reviews->count, __('reviews', 'proofratings'));
+    	printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
 	}
 
 	/**
 	 * Floating widgets shortcode
 	 */
 	public function proofratings_badges_popup($atts, $content = null) {
-		$review_sites = $this->reviews->sites;
-        if ( !$review_sites ) {
-            return;
-        }
+		$atts = shortcode_atts(['id' => 'overall'], $atts);
+
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location || !$location->has_ratings ) {
+			return;
+		}
+
+		$review_sites = $location->reviews;
 
 		$column = 4;
-
 		if ( count($review_sites) == 5 ) {
 			$column = 5;
 		}
@@ -169,16 +221,16 @@ class Proofratings_Shortcodes {
 			$column = count($review_sites);
 		}
 
-		$badges_popup = get_proofratings_badges_popup();
+		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
 
 		$classes = '';
-		if ( $badges_popup->customize == 'yes' ) {
+		if ( $badges_popup->customize ) {
 			$classes = 'proofratings-widget-customized';
 		}
 
         ob_start(); 
 		
-        printf('<div class="proofratings-badges-popup">');
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $location->id);
 			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
@@ -189,7 +241,7 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s>', $tag, $key, $classes, $attribue);
+				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s data-location="%s">', $tag, $key, $classes, $attribue, $location->id);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
 					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
@@ -216,48 +268,81 @@ class Proofratings_Shortcodes {
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
 			'style' => 'square',
-            'id' => 'proofratings_widgets'
+            'id' => 'overall'
         ], $atts);
 
-		
-		$review_sites = $this->reviews->sites;
-        if ( !$review_sites ) {
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location ) {
 			return;
-        }
+		}
 
-		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $atts['style']];
-		
-		$badges_settings = get_proofratings_badges_square();
-		if ( $atts['style'] == 'rectangle') {
-			$badges_settings = get_proofratings_badges_rectangle();			
+		if ( !$location->has_ratings ) {
+			return;
 		}
+
+		$ratings = $location->reviews;
 		
-		if ( $badges_settings->customize == 'yes' ) {
-			$badge_class[] = 'proofratings-widget-customized';
-		}
+
+		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle');
+
+		$badge_type = 'sites_square';
 		
 		$badge_style = sanitize_key($atts['style']);
-		if ( empty($badge_style) || !method_exists($this, 'proofratings_widgets_' . $badge_style)) {
-			$badge_style = 'square';
+		if ( array_key_exists($badge_style, $badge_styles) ) {
+			$badge_type = $badge_styles[$badge_style];
 		}
 
-		if ( !empty($badges_settings->logo_color) ) {
+		if ( !method_exists($this, 'proofratings_widgets_' . $badge_type)) {
+			$badge_style = 'square';
+			$badge_type = 'sites_square';
+		}
+
+		$badge_widget = isset($location->settings->$badge_type) ? $location->settings->$badge_type : [];
+		$badge_widget = new Proofratings_Site_Data($badge_widget);
+
+
+		if ( isset($location->settings->badge_display[$badge_type]) && !$location->settings->badge_display[$badge_type]) {
+			return;
+		}
+		
+		$active_sites = $location->settings->activeSites;
+		if ( is_array($badge_widget->active_sites) ) {
+			$active_sites = array_intersect($active_sites, $badge_widget->active_sites);
+		}
+		
+		foreach ($ratings as $id => $rating) {
+			if ( !in_array($id, $active_sites) ) {
+				unset($ratings[$id]);
+			}
+		}
+		
+		if ( sizeof($ratings) === 0) {
+			return;
+		}
+
+		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $atts['style']];
+		
+		if ( $badge_widget->customize ) {
+			$badge_class[] = 'proofratings-widget-customized';
+		}
+
+		if ( !empty($badge_widget->logo_color) ) {
 			$badge_class[] = 'proofratings-widget-logo-color';
 		}
 
         ob_start();		
-        printf('<div id="%s" class="proofratings-review-widgets-grid proofratings-widgets-grid-%s">', esc_attr($atts['id']), $badge_style);
-	        foreach ($review_sites as $key => $location) {
+        printf('<div class="proofratings-widgets-%s proofratings-review-widgets-grid proofratings-widgets-grid-%s">', $location->id, $badge_style);
+	        foreach ($ratings as $site_id => $rating) {
 				$tag = 'div';
 				$attribue = '';
 			
-				if( !empty($location->review_url) ) {
+				if( !empty($rating->review_url) ) {
 					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', esc_url($location->review_url));
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($rating->review_url));
 				}
 				
-				printf('<%s class="%s %s" %s>', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $location->site, $attribue);
-					$this->{'proofratings_widgets_' . $badge_style}($location);
+				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
+					$this->{'proofratings_widgets_' . $badge_type}($rating);
 				printf('</%s>', $tag);
 	        }
 
@@ -268,7 +353,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function proofratings_widgets_square($site) {			
+	public function proofratings_widgets_sites_square($site) {			
     	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
@@ -284,8 +369,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge style2
 	 */
-	public function proofratings_widgets_rectangle($site) {		
-    	//printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon2), esc_attr($site->rating_title));
+	public function proofratings_widgets_sites_rectangle($site) {		
     	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
 
 		if ( $site->rating_title ) {
@@ -305,82 +389,103 @@ class Proofratings_Shortcodes {
 	 * CTA banner 
 	 */
 	public function overall_ratings_cta_banner($atts, $content = null) {
-		if ( $this->reviews->sites === false) {
+		$location = get_proofratings()->locations->get($atts['id']);
+		if ( !$location || !$location->has_ratings ) {
 			return;
 		}
 
-		$badge_settings = get_proofratings_overall_ratings_cta_banner();
+		$badge_settings = new Proofratings_Site_Data($location->settings->overall_cta_banner);
+		
 		$classes = ['proofratings-banner-badge'];
-		if ( $badge_settings->tablet == 'no') {
+		$classes[] = 'proofratings-banner-badge-'.$location->id;
+
+
+		if ( $badge_settings->tablet === false) {
 			$classes[] = 'badge-hidden-tablet';
 		}
 
-		if ( $badge_settings->mobile == 'no') {
+		if ( $badge_settings->mobile === false) {
 			$classes[] = 'badge-hidden-mobile';
 		}
 
-		if ( $badge_settings->shadow != 'no' ) {
+		if ( $badge_settings->shadow !== false ) {
 			$classes[] = 'has-shadow';
 		}
 
 		$class = implode(' ', $classes);
 
-
 		$button1 = '';
-		if ( !empty($badge_settings->button1_text) ) {
+		if ( isset($badge_settings->button1) ) {
+			$button1_settings = new Proofratings_Site_Data($badge_settings->button1);
+
 			$button1_class = 'proofratings-button button1';
-			if ( $badge_settings->button1_border == 'yes' ) {
+			if ( $button1_settings->border == 'yes' ) {
 				$button1_class .= ' has-border';
 			}
 
+			if ( $button1_settings->rectangle !== true) {
+				$button1_class .= ' button-round';
+			}
+
 			$target = '';
-			if ( $badge_settings->button1_blank == 'yes') {
+			if ( $button1_settings->blank == 'yes') {
 				$target = 'target="_blank"';
 			}
 
-			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button1_url), trim($button1_class), $target);
-			$button1 .= $badge_settings->button1_text;
+			$button1 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $button1_settings->url), trim($button1_class), $target);
+			$button1 .= $button1_settings->text;
 			$button1 .= '</a>';			
 		}
 
 		$button2 = '';
-		if ( $badge_settings->button2 == 'yes' && !empty($badge_settings->button2_text) ) {
+		if ( isset($badge_settings->button2['show']) && $badge_settings->button2['show'] === true ) {
+			$button2_settings = new Proofratings_Site_Data($badge_settings->button2);
+			
 			$button2_class = 'proofratings-button button2';
-			if ( $badge_settings->button2_border == 'yes' ) {
+			if ( $button2_settings->border ) {
 				$button2_class .= ' has-border';
+			}
+			
+			if ( $button2_settings->rectangle === false) {
+				$button2_class .= ' button-round';
 			}
 
 			$target = '';
-			if ( $badge_settings->button2_blank == 'yes') {
+			if ( $button2_settings->blank == 'yes') {
 				$target = 'target="_blank"';
 			}
 
-			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $badge_settings->button2_url), trim($button2_class), $target);			
-			$button2 .= $badge_settings->button2_text;
+			$button2 .= sprintf('<a href="%s" class="%s" %s>', esc_url( $button2_settings->url), trim($button2_class), $target);			
+			$button2 .= $button2_settings->text;
 			$button2 .= '</a>';			
 		}
 
 		$close_button = '';
-		if ( $badge_settings->close_button != 'no' ) {
+		if ( $badge_settings->close_button !== false ) {
 			$close_button = sprintf('<a class="proofratings-banner-close" href="#">%s</a>', __('Close', 'proofratings'));
 		}
 		
 		ob_start(); ?>
-		<div class="<?php echo $class; ?>">
+		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>" data-type="overall_cta_banner">
 			<?php echo $close_button; ?>
-			<?php $this->reviews->get_review_logos() ?>
+			<?php $location->ratings->get_logos(); ?>
+			
+        	<meta itemprop="worstRating" content = "1">
+        	<meta itemprop="ratingValue" content="<?php echo $location->ratings->rating ?>">
+        	<meta itemprop="bestRating" content="5">
 
 			<div class="rating-box">
-				<?php $this->reviews->get_rating_star('medium') ?> <span class="rating"><?php echo $this->reviews->rating; ?> / 5</span>
+				<span class="proofratings-stars medium"><i style="width: <?php echo $location->ratings->percent ?>%"></i></span> 
+				<span class="rating"><?php echo $location->ratings->rating; ?> / 5</span>
 			</div>
 
-			<div class="proofratings-review-count"><?php echo $this->reviews->count; ?> customer reviews</div>
+			<div class="proofratings-review-count"><?php echo $location->ratings->count; ?> customer reviews</div>
 
 			<div class="button-container">
 				<?php echo $button1 . $button2; ?>
 			</div>
 		</div>
-		<?php		
+		<?php
 
 		return ob_get_clean();
 	}

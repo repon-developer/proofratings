@@ -80,11 +80,21 @@ class Proofratings_Analytics {
 	 * Output the form
 	 * @since  1.0.1
 	 */
-	public function output() {?>
+	public function output() {
+		$locations = get_proofratings()->locations->items; ?>
 		<div class="wrap proofratings-analytics-wrap loading">
 			<hr class="wp-header-end">
 
 			<div class="analytics-filter">
+				<?php if(get_proofratings()->locations->global !== true): ?>
+				<select class="location-filter">
+					<option value="">View all</option>
+					<?php foreach ($locations as $location) {
+						printf('<option value="%s">%s</option>', $location->id, $location->location);
+					} ?>
+				</select>
+				<?php endif; ?>
+
 				<div class="right">
 					<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
 				</div>
@@ -109,7 +119,7 @@ class Proofratings_Analytics {
 					<p>Number of clicks on all notifications</p>
 				</div>
 
-				<div class="conversions">
+				<div class="conversions" style="display:none">
 					<span class="counter">0</span>
 					<h4 class="name">Conversions</h4>
 					<p>Number of conversions on all notifications</p>

@@ -1,4 +1,10 @@
 (function ($) {
+    if ( !$('#analytics-chart').length ) {
+        return;
+    }
+
+    $('body').addClass('proofratings-analytics');
+
     const ctx = document.getElementById("analytics-chart").getContext("2d");
 
     const impression_gradient = ctx.createLinearGradient(0, 0, 0, 600);
@@ -95,8 +101,16 @@
         $(".analytics-information .impressions .counter").html(impressions.reduce((a, b) => a + b, 0));
         $(".analytics-information .hovers .counter").html(hovers.reduce((a, b) => a + b, 0));
         $(".analytics-information .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
-        $(".analytics-information .conversions .counter").html(conversions.reduce((a, b) => a + b, 0));
         $(".analytics-information .engagements .counter").html(engagements.reduce((a, b) => a + b, 0));
+
+        const total_conversions = conversions.reduce((a, b) => a + b, 0);
+        $(".analytics-information .conversions .counter").html(total_conversions);
+        if (total_conversions > 0 ) {
+            $(".analytics-information .conversions").show();
+        } else {
+            $(".analytics-information .conversions").hide()
+        }
+
 
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
 
@@ -125,11 +139,11 @@
 
     analytics_store.subscribe(() => {
         const state = analytics_store.getState();
-        const {start, end, domain } = state;
+        const {start, end, domain, location } = state;
 
         const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 2;
 
-        const data = {site_url: proofratings.site_url, monthly, domain, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
+        const data = {site_url: proofratings.site_url, monthly, domain, location, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
 
         const request = $.get(proofratings.api + '/stats', data, (payload) => {
             update_dashboard({...state, ...payload}, monthly);
@@ -140,8 +154,8 @@
         });   
     })
 
-    $('.analytics-filter > select').on('change', function(){
-        analytics_store.dispatch({type: 'UPDATE', payload: {domain: $(this).val()}})
+    $('.analytics-filter > .location-filter').on('change', function(){
+        analytics_store.dispatch({type: 'UPDATE', payload: {location: $(this).val()}})
     })
 
 

@@ -6,6 +6,15 @@ table.form-table caption {
     font-weight: bold;
 }
 
+table.locations_table tr.overall-location {
+    font-weight: bold;
+    background-color: #d4d4d4;
+}
+
+table.locations_table tr .column-edit {width: 50px;}
+table.locations_table tr td.column-status {text-transform: capitalize}
+table.locations_table tr .column-action {width: 100px}
+
 .proofratings-status {
     font-size: 16px;
     padding: 10px;
@@ -16,12 +25,17 @@ table.form-table caption {
     box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
 }
 
+.proofraing-progress-msg {
+    font-size: 40px;
+    margin: 30px 0;
+    font-weight: bold;
+}
+
 .proofratings-status p {
     margin: 0;
     font-size: inherit;
 }
 
-.proofratings-settings-wrap {padding-left: 20px;}
 body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {padding-left: 0}
 
 .proofratings-settings-wrap .shortcode-info {
@@ -42,10 +56,33 @@ body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {paddi
     margin-bottom: 30px;
 }
 
+.connect-sites-container {
+    padding: 25px;
+    display: table;
+    padding-bottom: 0;
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
+}
+
+.connect-sites-container > h2 {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+}
+
+.connect-sites-container .review-sites-checkboxes {margin-bottom: 0;}
+.connect-sites-container .review-sites-checkboxes > label:last-child {margin-right: 0;}
+
+
 .review-sites-checkboxes .checkbox-review-site {
     margin-right: 20px;
     margin-bottom: 20px;
 }
+
+.review-sites-checkboxes.review-sites-checkboxes-widget {margin-top: 30px; margin-bottom: 0;}
 
 .checkbox-review-site {
     padding: 20px;
@@ -235,9 +272,8 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-popup-widgets-box > * {box-sizing: border-box;}
 
-body.toplevel_page_proofratings {background-color: #fff}
-
-body.toplevel_page_proofratings #wpcontent {padding-left: 0}
+body.proofratings-analytics {background-color: #fff}
+body.proofratings-analytics #wpcontent {padding-left: 0}
 
 .proofratings-analytics-wrap {margin: 0; padding: 20px 30px}
 

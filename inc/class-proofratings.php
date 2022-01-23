@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the class Wordpress_ProofRatings.
+ * File containing the class Proofratings.
  *
  * @package proofratings
  * @since   1.0.1
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Wordpress_Proofratings {
+class Proofratings {
 	/**
 	 * The single instance of the class.
 	 *
@@ -43,13 +43,21 @@ class Wordpress_Proofratings {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-review.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
+		$this->add_proofratings_tables();
 
-		$this->admin = Proofratings_Admin::instance();
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ratings.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-locations-query.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
+		
+		$this->locations = Proofratings_Locations::instance();
 		$this->shortcodes = Proofratings_Shortcodes::instance();
+
+		if ( is_admin(  ) ) {
+			include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-admin.php';
+			$this->admin = Proofratings_Admin::instance();
+		}
 
 		add_action( 'rest_api_init', [$this, 'register_rest_api']);
 
@@ -57,9 +65,17 @@ class Wordpress_Proofratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
-		add_action( 'wp_footer', [ $this, 'overall_ratings_narrow' ] );
-		add_action( 'wp_footer', [ $this, 'overall_ratings_rectangle' ] );
+		add_action( 'wp_footer', [ $this, 'overall_ratings_float' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
+	}
+
+	/**
+	 * add proofratings table in $wpdb
+	 * @since 1.0.7
+	 */	
+	function add_proofratings_tables() {
+	    global $wpdb;
+		$wpdb->proofratings = $wpdb->prefix . 'proofratings';
 	}
 		
 	/**
@@ -77,25 +93,80 @@ class Wordpress_Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
-		$reviews_info = wp_parse_args($request->get_params(), ['status' => false, 'message' => '', 'reviews' => array()]);
+		$review_locations = $request->get_param('review_locations');
+		if ( !is_array($review_locations) ) {
+			$review_locations = [];
+		}
 
-		$reviews = $reviews_info['reviews'];
-		unset($reviews_info['reviews']);
+		global $wpdb;
 
-		update_option('proofratings_status', $reviews_info );
-		update_option( 'proofratings_reviews', $reviews);
+		foreach ($review_locations as $id => $location) {
+			$reviews = null;
+			if ( isset($location['reviews']) && is_array($location['reviews'])) {
+				$reviews = maybe_serialize($location['reviews']);
+			}
+
+			$location_data = array(
+				'location_id' => $id,
+				'location' => @$location['name'],
+				'reviews' => $reviews,
+				'status' => @$location['status']
+			);
+			
+			if ( $get_id = $wpdb->get_var("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
+				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_id]);
+				continue;
+			}
+
+			$wpdb->insert($wpdb->proofratings, $location_data);
+		}
+
+		if ( $request->get_param('global') ) {
+			$wpdb->query("UPDATE $wpdb->proofratings SET `status` = 'pause' WHERE location_id != 'global'");
+		}
+
+		$has_locations = $request->get_param('has_locations');
+		if ( is_array($has_locations) ) {
+			$ids = implode("','", $has_locations);
+			$wpdb->query(sprintf("DELETE FROM $wpdb->proofratings WHERE location_id NOT IN ('%s')", $ids));
+		}
+
+		update_option( 'proofratings_status', $request->get_param('status'));
 	}
 
 	/**
-	 * proof ratings activate
+	 * proofratings activate
 	 */
 	public function activate() {
+		global $wpdb;
+
 		update_option('proofratings_version', PROOFRATINGS_VERSION );
 
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		maybe_create_table($wpdb->proofratings, "CREATE TABLE $wpdb->proofratings (
+			`id` INT NOT NULL AUTO_INCREMENT, 
+			`location_id` VARCHAR(50) NULL,
+			`location` VARCHAR(100) NULL, 
+			`reviews` LONGTEXT NULL, 
+			`settings` LONGTEXT NULL, 
+			`status` VARCHAR(20) NOT NULL DEFAULT 'pending', 
+			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+		);");
+
+		$this->registration('activate');
+	}
+
+	/**
+	 * Sign up 
+	 * @since 1.0.6
+	 */
+	function registration($source = 'registration') {
 		$request_url = add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
 			'email' => get_bloginfo( 'admin_email' ),
-			'url' => get_site_url()
+			'url' => get_site_url(),
+			'source' => $source
 		), PROOFRATINGS_API_URL . '/register');
 
 		$response = wp_remote_get($request_url);
@@ -109,9 +180,9 @@ class Wordpress_Proofratings {
 
 		$data = json_decode(wp_remote_retrieve_body($response));
 		if ( is_object($data) && $data->success ) {
-			update_option('proofratings_status', $data );
+			update_option('proofratings_status', $data->status );
 		}
-	}
+	 }
 
 	/**
 	 * Loads textdomain for plugin.
@@ -144,45 +215,51 @@ class Wordpress_Proofratings {
 	 * Overrall Ratings Rectangle  badge on frontend
 	 * @since 1.0.4
 	 */
-	public function overall_ratings_rectangle() {
-		if ( get_proofratings_display_settings()['overall_ratings_rectangle'] !== 'yes' ) {
-			return;
+	public function overall_ratings_float() {
+		$locations = get_proofratings()->locations->items;
+
+		foreach ($locations as $location) {
+			if( !isset($location->settings->badge_display['overall_rectangle_float']) || !$location->settings->badge_display['overall_rectangle_float'] ) {
+				continue;
+			}
+
+			if ( isset($_COOKIE['proofratings_badge_overall_rectangle_float_' . $location->id] ) ) {
+				continue;
+			}
+
+			$on_pages = [];
+			if (isset($location->settings->overall_rectangle_float['on_pages'])) {
+				$on_pages = $location->settings->overall_rectangle_float['on_pages'];
+			}
+
+			if ( in_array(get_the_ID(), $on_pages) ) {
+				echo '<div>';
+				echo do_shortcode(sprintf('[proofratings_overall_rectangle id="%s" float="yes"]', $location->id ));
+				echo do_shortcode(sprintf('[proofratings_badges_popup id="%s"]', $location->id));
+				echo '</div>';
+			}
 		}
 
-		$badge_settings = get_proofratings_overall_ratings_rectangle();
-		if ($badge_settings->float !== 'yes') {
-			return;
-		}
+		foreach ($locations as $location) {
+			if( !isset($location->settings->badge_display['overall_narrow_float']) || !$location->settings->badge_display['overall_narrow_float'] ) {
+				continue;
+			}
 
-		$on_pages = (array) @$badge_settings->pages;
-		$has_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
+			if ( isset($_COOKIE['proofratings_badge_overall_narrow_float_' . $location->id] ) ) {
+				continue;
+			}
 
-		if ($has_page ) {
-			echo do_shortcode('[proofratings_overall_ratings type="rectangle" float="yes"]' );
-			echo do_shortcode('[proofratings_badges_popup]' );
-		}
-	}
+			$on_pages = [];
+			if (isset($location->settings->overall_narrow_float['on_pages'])) {
+				$on_pages = $location->settings->overall_narrow_float['on_pages'];
+			}
 
-	/**
-	 * Overrall Ratings Narrow on frontend
-	 * @since 1.0.4
-	 */
-	public function overall_ratings_narrow() {
-		if ( get_proofratings_display_settings()['overall_ratings_narrow'] !== 'yes' ) {
-			return;
-		}
-
-		$badge_settings = get_proofratings_overall_ratings_narrow();
-		if ($badge_settings->float !== 'yes') {
-			return;
-		}
-
-		$on_pages = (array) @$badge_settings->pages;
-		$has_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
-
-		if ($has_page ) {
-			echo do_shortcode('[proofratings_overall_ratings type="narrow" float="yes"]' );
-			echo do_shortcode('[proofratings_badges_popup]' );
+			if ( in_array(get_the_ID(), $on_pages) ) {
+				echo '<div>';
+				echo do_shortcode(sprintf('[proofratings_overall_narrow id="%s" float="yes"]', $location->id ));
+				echo do_shortcode(sprintf('[proofratings_badges_popup id="%s"]', $location->id));
+				echo '</div>';
+			}
 		}
 	}
 
@@ -190,19 +267,25 @@ class Wordpress_Proofratings {
 	 * Banner badge on frontend
 	 */
 	public function banner_badge() {
-		if ( get_proofratings_display_settings()['overall_ratings_cta_banner'] !== 'yes' ) {
-			return;
-		}
+		$locations = get_proofratings()->locations->items;
 
-		$badge_settings = get_proofratings_overall_ratings_cta_banner();
-		$on_pages = (array) @$badge_settings->pages;
-		$is_targeted_page = !isset($badge_settings->pages[get_the_ID()]) || $badge_settings->pages[get_the_ID()] == 'yes'? true : false;
+		foreach ($locations as $location) {
+			if( !isset($location->settings->badge_display['overall_cta_banner']) || !$location->settings->badge_display['overall_cta_banner'] ) {
+				continue;
+			}
 
-		
-		if (!$is_targeted_page ) {
-			return;
+			if ( isset($_COOKIE['proofratings_badge_overall_cta_banner_' . $location->id] ) ) {
+				continue;
+			}
+
+			$on_pages = [];
+			if (isset($location->settings->overall_cta_banner['on_pages'])) {
+				$on_pages = $location->settings->overall_cta_banner['on_pages'];
+			}
+
+			if ( in_array(get_the_ID(), $on_pages) ) {
+				echo do_shortcode(sprintf('[proofratings_overall_ratings_cta_banner id="%s"]', $location->id ));
+			}
 		}
-		
-		echo do_shortcode('[proofratings_overall_ratings_cta_banner]' );
 	}
 }

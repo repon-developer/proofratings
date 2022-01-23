@@ -1,35 +1,46 @@
 (function ($) {
+    function handle_proofrating_user_interaction(data) {
+        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, ...data})
+    }
+
     $('.proofratings-badge.badge-float').on('click', function () {
         $(this).addClass('opened');
     })
 
-    $('.proofratings-badges-popup .proofrating-close').on('click', function () {
-        $('.proofratings-badge').removeClass('opened');
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
-    })
-
     $('.proofratings-badge .proofratings-close').on('click', function (e) {
         e.stopPropagation();
+        
+        container = $(this).closest('.proofratings-badge');
+
+        const location_id = container.data('location');
+        const badge_type = container.data('type');
         if (Cookies) {
-            Cookies.set('hide_proofratings_float_badge', true)
+            Cookies.set(`proofratings_badge_${badge_type}_${location_id}`, true)
         }
 
-        container = $(this).closest('.proofratings-badge');
         container.fadeOut(120, function () {
             $(this).remove();
         });
 
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
+        handle_proofrating_user_interaction({type: 'engagement', id: location_id})
+    })
+
+    $('.proofratings-badges-popup .proofrating-close').on('click', function () {
+        container = $('.proofratings-badge').removeClass('opened');
+        handle_proofrating_user_interaction({type: 'engagement', id: container.data('location')})
     })
 
     $('.proofratings-banner-badge .proofratings-banner-close').on('click', function(e){
         e.stopPropagation();
         e.preventDefault();
-        $(this).closest('.proofratings-banner-badge').fadeOut(100, function(){
+
+        container = $(this).closest('.proofratings-banner-badge');
+
+        container.fadeOut(100, function(){
             $(this).remove();
         })
 
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'engagement'})
+        handle_proofrating_user_interaction({type: 'engagement', id: container.data('location')})
     })
 
     last_scroll = 0;
@@ -47,16 +58,24 @@
     })
 
     const proofratings_items = $('.proofratings-widget, .proofratings-badge, .proofratings-banner-badge');
-    if ( proofratings_items.length ) {
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'impression'})
-    }
 
+
+    const location_ids = [];
+
+    proofratings_items.each(function(){
+        get_location = $(this).data('location');
+        if ( !location_ids.includes(get_location) ) {
+            location_ids.push(get_location);
+            handle_proofrating_user_interaction({type: 'impression', id: $(this).data('location')})
+        }
+    })
+    
     proofratings_items.on('click', function(){
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'click'})
+        handle_proofrating_user_interaction({type: 'click', id: $(this).data('location')})
     })
 
     proofratings_items.on('mouseenter', function(){
-        $.post(proofratings.api + '/stats', {site_url: proofratings.site_url, type: 'hover'})
+        handle_proofrating_user_interaction({type: 'hover', id: $(this).data('location')})
     })
 
 })(jQuery)

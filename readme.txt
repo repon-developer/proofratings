@@ -4,7 +4,7 @@ Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
 Requires at least: 5.2
 Tested up to: 5.8
-Stable tag: 1.0.5
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Author: Proofratings <info@proofratings.com>
@@ -53,6 +53,17 @@ Privacy Policy: https://proofratings.com/privacy-policy/
 Terms of Service: https://proofratings.com/terms-of-service/
 
 Third Party Trademarks Policy: Proofratings is not affiliated with or endorsed by any of these third parties, nor is it in a joint venture relationship or partnership with any of these third parties. Such third-parties are not associated in any way with Proofratings, the Website or Services. To the extent Proofratings uses any tradenames or trademarks associated with such third-parties, it does so solely to identify those companies and their services. Proofratings makes no claim as to ownership of such third-party trademarks. Please refer to our Privacy Policy for more third party disclosures.
+
+
+## Privacy Policy
+Proofratings (Pro Plan) uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
+
+Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
+
 
 == Installation ==
 
