@@ -255,13 +255,14 @@ html {
     padding: unset;
     display: unset;
     min-height: unset;
+    border: unset!important;
     background-color: transparent;
     box-shadow: unset!important;
 }
 
 .proofratings-widget.proofratings-widget-basic .proofratings-stars {margin-left: 0;}
 .proofratings-widget.proofratings-widget-basic .review-count {
-    color: var(--reviewCountTextcolor, #8181ac);
+    color: var(--review_count_textcolor, #8181ac);
     padding: unset;
     background-color: unset;
 }

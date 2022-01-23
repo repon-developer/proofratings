@@ -99,6 +99,40 @@ class Proofratings_Generate_Style {
 	}
 
 	/**
+	 * Generate styles for sites badge
+	 */
+	public function badge_basic($location) {
+		if ( $location->settings->font ) {
+			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
+		$badge_settings = new Proofratings_Site_Data($location->settings->badge_basic);
+		if ( !$badge_settings->customize) {
+			return;
+		}
+
+		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
+			if ( $badge_settings->star_color ) {
+				printf("\t--themeColor: %s;\n", $badge_settings->star_color);
+			}
+
+			if ( $badge_settings->logo_color ) {
+				printf("\t--logoColor: %s;\n", $badge_settings->logo_color);
+			}
+
+			if ( $badge_settings->review_count_textcolor ) {
+				printf("\t--review_count_textcolor: %s;\n", $badge_settings->review_count_textcolor);
+			}
+
+			if ( $badge_settings->view_reviews_text_color ) {
+				printf("\t--view_review_textcolor: %s;\n", $badge_settings->view_reviews_text_color);
+			}
+		echo "}\n\n";
+	}
+
+	/**
 	 * Generate styles overall ratings
 	 */
 	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
@@ -367,6 +401,7 @@ class Proofratings_Generate_Style {
 
 		foreach ($locations as $location) {
 			$this->sites_badge($location);
+			$this->badge_basic($location);
 			$this->sites_badge($location, 'sites_rectangle', 'rectangle');
 
 			$this->overall_rectangle($location);

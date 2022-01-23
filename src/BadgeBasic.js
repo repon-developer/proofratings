@@ -27,16 +27,12 @@ const BadgeBasic = (props) => {
             styles.push('--logoColor:' + state.logo_color);
         }
     
-        if ( state?.textcolor ) {
-            styles.push('--textColor:' + state.textcolor);
+        if ( state?.review_count_textcolor ) {
+            styles.push('--review_count_textcolor:' + state.review_count_textcolor);
         }
 
-        if ( state?.review_color_textcolor ) {
-            styles.push('--reviewCountTextColor:' + state.review_color_textcolor);
-        }
-
-        if ( state?.background_color ) {
-            styles.push('background-color:' + state.background_color);
+        if ( state?.view_reviews_text_color ) {
+            styles.push('--view_review_textcolor:' + state.view_reviews_text_color);
         }
     
         return styles;
@@ -77,7 +73,7 @@ const BadgeBasic = (props) => {
 
             {state?.customize && (
                 <React.Fragment>
-                    <div className="proofratings-review-widgets-grid">
+                    <div className="proofratings-review-widgets-grid proofratings-widget-grid-basic">
                         <div className={`proofratings-widget proofratings-widget-basic proofratings-widget-customized ${state?.logo_color ? 'proofratings-widget-logo-color' : ''}`}>
                             <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}images/google.svg)`}}>
                                 <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
@@ -105,7 +101,7 @@ const BadgeBasic = (props) => {
 
                             <tr>
                                 <th scope="row">Review Count Color</th>
-                                <td><ColorPicker color={state?.review_count_color} onUpdate={(review_count_color) => handle_field({review_count_color})} /></td>
+                                <td><ColorPicker color={state?.review_count_textcolor} onUpdate={(review_count_textcolor) => handle_field({review_count_textcolor})} /></td>
                             </tr>
 
                             <tr>

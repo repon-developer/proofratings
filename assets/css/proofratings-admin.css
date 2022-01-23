@@ -239,6 +239,11 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 #sites-square-badge-customize {display: none}
 
+.proofratings-widget-grid-basic {
+    padding: 5px 20px 20px;
+    background-color: #fff;
+}
+
 .proofratings-settings-wrap .proofratings-widget.proofratings-widget-rectangle .rating-title {margin: 0 0 8px 0}
 
 .proofratings-banner-badge {
