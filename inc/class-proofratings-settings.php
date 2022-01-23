@@ -172,6 +172,7 @@ class Proofratings_Settings {
 
 			<div id="proofratings-activation-tab" class="settings_panel">
 				<h3><?php _e('Please fill in the information below to activate and connect your account.', 'proofratings') ?></h3>
+				<p>Proofratings is the leader in rating widgets for your website. This plugin requires a paid yearly plan. You can learn more <a href="https://proofratings.com/" target="_blank">here</a>. We offer a money back guarantee. See our ratings below.</p>
 
 				<form method="POST">
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
@@ -211,8 +212,6 @@ class Proofratings_Settings {
 						</tr>
 					</table>
 				</form>
-
-				<p>If you do not have a Proofratings account, <a href="https://proofratings.com/#pricing" target="_blank">please select a plan here</a>. Plans are only $275/year.</p>
 			</div>
 		</div>
 		<?php

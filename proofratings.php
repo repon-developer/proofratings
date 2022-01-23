@@ -3,7 +3,7 @@
  * Plugin Name: Proofratings
  * Plugin URI: https://proofratings.com
  * Description: Proofratings monitors all your third party sites for reviews by your customers. Sharing review ratings badges on your website increases conversions.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: Proofratings
  * Requires at least: 5.2
  * Tested up to: 5.5
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define constants.
-define( 'PROOFRATINGS_VERSION', '1.0.7' );
+define( 'PROOFRATINGS_VERSION', '1.0.8' );
 define( 'PROOFRATINGS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'PROOFRATINGS_PLUGIN_URL', untrailingslashit(plugin_dir_url(__FILE__)));
 define( 'PROOFRATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -40,7 +40,7 @@ function appsero_init_tracker_proofratings() {
       require_once PROOFRATINGS_PLUGIN_DIR . '/appsero/Client.php';
     }
 
-    $client = new Appsero\Client( '932d86b7-ff6f-4437-b713-244c7458cfda', 'Proofratings (Pro Plan)', __FILE__ );
+    $client = new Appsero\Client( '932d86b7-ff6f-4437-b713-244c7458cfda', 'Proofratings', __FILE__ );
 
     // Active insights
     $client->insights()->init();

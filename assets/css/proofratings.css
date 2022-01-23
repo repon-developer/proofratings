@@ -250,6 +250,43 @@ html {
 .proofratings-widget.proofratings-widget-square {border-color: var(--borderColor, transparent)}
 .proofratings-widget.proofratings-widget-square:hover {border-color: var(--borderHoverColor, var(--themeColor))}
 
+.proofratings-widget.proofratings-widget-basic {
+    width: auto;
+    padding: unset;
+    display: unset;
+    min-height: unset;
+    background-color: transparent;
+    box-shadow: unset!important;
+}
+
+.proofratings-widget.proofratings-widget-basic .proofratings-stars {margin-left: 0;}
+.proofratings-widget.proofratings-widget-basic .review-count {
+    color: var(--reviewCountTextcolor, #8181ac);
+    padding: unset;
+    background-color: unset;
+}
+
+.proofratings-widget.proofratings-widget-basic .view-reviews {
+    color: var(--view_review_textcolor, #216fed);
+    display: inline-block;
+    text-decoration: none!important;
+}
+
+.proofratings-widget.proofratings-widget-basic .view-reviews:after {
+    content: "";
+    height: 1px;
+    width: 100%;
+    display: block;
+    margin-top: 3px;
+    background-color: var(--view_review_textcolor, #216fed);
+    margin-left: auto;
+    transition: all 200ms;
+}
+
+.proofratings-widget.proofratings-widget-basic .view-reviews:hover:after {
+    width: 0;
+}
+
 .proofratings-widget.proofratings-widget-rectangle {
     --reviewCountTextColor: #767676;
     width: 250px;

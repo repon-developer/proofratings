@@ -4,6 +4,7 @@ const BadgeDisplay = (props) => {
 
     const badge_display = Object.assign({
         sites_square: false,
+        badge_basic: false,
         sites_rectangle: false,
         overall_cta_banner: false,
         overall_rectangle_embed: false,
@@ -33,6 +34,20 @@ const BadgeDisplay = (props) => {
                             </div>
                         </td>
                     </tr>
+
+                    <tr>
+                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Basic)</th>
+                        <td>
+                            <div className="proofratings-image-option">
+                                <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
+                                <label>
+                                    <input onChange={() => update_single('badge_basic')} className="checkbox-switch checkbox-onoff" checked={badge_display?.badge_basic} type="checkbox" />
+                                    Embed only
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+
                     <tr>
                         <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Rectangle)</th>
                         <td>
