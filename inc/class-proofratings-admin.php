@@ -110,6 +110,8 @@ class Proofratings_Admin {
 			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
 			
 			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
+
+			add_submenu_page('proofratings', __('Emails Settings', 'proofratings'), __('Emails', 'proofratings'), 'manage_options', 'proofratings-emails', [$this->settings_page, 'email_settings']);
 		}
 	}
 
