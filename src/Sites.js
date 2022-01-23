@@ -77,6 +77,8 @@ const ReviewSites = (props) => {
                 </div>
             }
 
+            <p className="proofratings-instruction">If you would like to connect any sites below please contact <a href="mailto:support@proofratings.com">support@proofratings.com</a> before selecting.</p>
+
             {get_category_sites('general', 'General Review Sites')}
 
             {get_category_sites('home-service', 'Home Services Review Sites')}
