@@ -5,6 +5,8 @@
         }
     })
 
+    $('.proofratings-color-input').wpColorPicker();
+
     
     var email_address_template = wp.template( 'reporting-email-address' );
     $('#email-report-add-email').on('keypress', function(e){
