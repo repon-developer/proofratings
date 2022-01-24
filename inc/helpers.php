@@ -104,6 +104,17 @@ class Proofratings_Site_Data {
             'category' => 'general'
         ],
 
+        'birdeye' => [
+            'theme_color' => '#3c5170',
+            'name' => __('Birdeye', 'proofratings'),
+            'title' => __('Birdeye Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/birdeye.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-birdeye.jpg',
+            'rating_title' => __('Birdeye Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/birdeye-black.svg',
+            'category' => 'general'
+        ],
+
         //Home service review sites
         'angi' => [
             'theme_color' => '#FF5E4F',
@@ -124,6 +135,39 @@ class Proofratings_Site_Data {
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.png',
             'rating_title' => __('Guild Quality Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality-black.svg',
+            'category' => 'home-service'
+        ],
+
+        'buildzoom' => [
+            'theme_color' => '#3D9EA0',
+            'name' => __('Buildzoom', 'proofratings'),
+            'title' => __('Buildzoom Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/buildzoom.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-buildzoom.png',
+            'rating_title' => __('Buildzoom Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/buildzoom-black.svg',
+            'category' => 'home-service'
+        ],
+
+        'homeadvisor' => [
+            'theme_color' => '#3D9EA0',
+            'name' => __('Homeadvisor', 'proofratings'),
+            'title' => __('Homeadvisor Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/homeadvisor.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-homeadvisor.png',
+            'rating_title' => __('Homeadvisor Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/homeadvisor-black.svg',
+            'category' => 'home-service'
+        ],
+
+        'houzz' => [
+            'theme_color' => '#4DBC15',
+            'name' => __('Houzz', 'proofratings'),
+            'title' => __('Houzz Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/houzz.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-houzz.png',
+            'rating_title' => __('Houzz Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/houzz-black.svg',
             'category' => 'home-service'
         ],
 
@@ -270,7 +314,97 @@ class Proofratings_Site_Data {
             'rating_title' => __('Quickbooks Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/quickbooks-black.svg',
             'category' => 'software'
-        ]
+        ],
+
+        //Agency Review Sites
+        'agencyspotter' => [
+            'theme_color' => '#00769D',
+            'name' => __('Agency Spotter', 'proofratings'),
+            'title' => __('Agency Spotter Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/agencyspotter.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-agencyspotter.jpg',
+            'rating_title' => __('Agency Spotter Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/agencyspotter-black.svg',
+            'category' => 'agency'
+        ],
+
+        'clutch' => [
+            'theme_color' => '#00769D',
+            'name' => __('Clutch', 'proofratings'),
+            'title' => __('Clutch Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/clutch.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-clutch.jpg',
+            'rating_title' => __('Clutch Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/clutch-black.svg',
+            'category' => 'agency'
+        ],
+
+        'sortlist' => [
+            'theme_color' => '#00769D',
+            'name' => __('Sortlist', 'proofratings'),
+            'title' => __('Sortlist Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/sortlist.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-sortlist.jpg',
+            'rating_title' => __('Sortlist Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/sortlist-black.svg',
+            'category' => 'agency'
+        ],
+
+        'goodfirms' => [
+            'theme_color' => '#00769D',
+            'name' => __('Goodfirms', 'proofratings'),
+            'title' => __('Sortlist Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/goodfirms.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-goodfirms.jpg',
+            'rating_title' => __('Goodfirms Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/goodfirms-black.svg',
+            'category' => 'agency'
+        ],
+
+        //Dispensary Review Sites
+        'leafly' => [
+            'theme_color' => '#00769D',
+            'name' => __('Leafly', 'proofratings'),
+            'title' => __('Leafly Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/leafly.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-leafly.jpg',
+            'rating_title' => __('Leafly Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/leafly-black.svg',
+            'category' => 'dispensary'
+        ],
+
+        'wikileaf' => [
+            'theme_color' => '#00769D',
+            'name' => __('Wikileaf', 'proofratings'),
+            'title' => __('Wikileaf Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wikileaf.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-wikileaf.jpg',
+            'rating_title' => __('Wikileaf Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/wikileaf-black.svg',
+            'category' => 'dispensary'
+        ],
+
+        'allbud' => [
+            'theme_color' => '#00769D',
+            'name' => __('Allbud', 'proofratings'),
+            'title' => __('Allbud Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/allbud.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-allbud.jpg',
+            'rating_title' => __('Allbud Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/allbud-black.svg',
+            'category' => 'dispensary'
+        ],
+
+        'weedmaps' => [
+            'theme_color' => '#00769D',
+            'name' => __('Weedmaps', 'proofratings'),
+            'title' => __('Weedmaps Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/weedmaps.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-weedmaps.jpg',
+            'rating_title' => __('Weedmaps Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/weedmaps-black.svg',
+            'category' => 'dispensary'
+        ],
     ];
  }
 

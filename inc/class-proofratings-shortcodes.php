@@ -326,7 +326,7 @@ class Proofratings_Shortcodes {
 			$badge_class[] = 'proofratings-widget-customized';
 		}
 
-		if ( !empty($badge_widget->logo_color) ) {
+		if ( $badge_widget->customize && !empty($badge_widget->logo_color) ) {
 			$badge_class[] = 'proofratings-widget-logo-color';
 		}
 

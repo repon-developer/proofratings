@@ -217,6 +217,7 @@ html {
 .proofratings-widget.proofratings-widget-logo-color .review-site-logo {
     -webkit-mask-position: center;
     -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
     background-color: var(--logoColor)
 }
 
