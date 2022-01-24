@@ -364,3 +364,33 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 #analytics-chart {
     margin-top: 30px;
 }
+
+#reporting-email-addresses {
+    margin: 7px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-width: 800px;
+}
+
+#reporting-email-addresses > li {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px 5px 13px;
+    background-color: #fff;
+    border-radius: 100px;
+    transition: all 200ms;
+}
+
+#reporting-email-addresses > li:hover {
+    background-color: #f1eeee
+}
+
+#reporting-email-addresses li .remove {
+    margin-left: 2px;
+    cursor: pointer;
+    position: relative;
+    top: -1px;
+}
+
+#reporting-email-addresses li .remove:before {font-size: 16px;}
