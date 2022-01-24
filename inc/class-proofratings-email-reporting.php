@@ -57,32 +57,34 @@ class Proofratings_Email_Reporting {
 			$reporting_emails = [];
 		}
 
-	
-		$email_reporting_settings = array(
+		$settings = get_option('proofratings_settings');
+		if ( !is_array($settings) ) {
+			$settings = [];
+		}
+
+		$settings = wp_parse_args(array(
 			'automated-report' => isset($postdata['automated-email-report']),
 			'reporting-emails' => $reporting_emails,
 			'reporting-agency' => isset($postdata['agency']) ? $postdata['agency'] : []
-		);
+		), $settings);
 
-		update_option( 'proofratings_email_reporting', $email_reporting_settings);
+		update_option( 'proofratings_settings', $settings);
 
 		if ( sizeof($reporting_emails) == 0) {
-			$_POST['proofratings_error'] = __('Please aleast one email in email addresses field.', 'proofratings');
+			$_POST['proofratings_error'] = __('Please enter aleast one email in the email addresses field.', 'proofratings');
 			return;
 		}
 
-		$email_reporting_settings['domain'] = get_site_url();
-		$response = wp_remote_post(PROOFRATINGS_API_URL . '/save_settings', array('body' => $email_reporting_settings));
+		$settings['domain'] = get_site_url();
+		$response = wp_remote_post(PROOFRATINGS_API_URL . '/save_settings', array('body' => $settings));
 	}
 
 	function get_data() {
-		$email_reporting_settings = wp_parse_args(get_option( 'proofratings_email_reporting' ), array(
+		return wp_parse_args(get_option( 'proofratings_settings' ), array(
 			'automated-report' => false,
 			'reporting-emails' => [],
 			'reporting-agency' => []
 		));
-
-		return $email_reporting_settings;
 	}
 
 
