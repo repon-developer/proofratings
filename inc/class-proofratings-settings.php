@@ -172,7 +172,7 @@ class Proofratings_Settings {
 
 			<div id="proofratings-activation-tab" class="settings_panel">
 				<h3><?php _e('Please fill in the information below to activate and connect your account.', 'proofratings') ?></h3>
-				<p>Proofratings is the leader in rating widgets for your website. This plugin requires a paid yearly plan. You can learn more <a href="https://proofratings.com/" target="_blank">here</a>. We offer a money back guarantee. See our ratings below.</p>
+				<p>Proofratings is the leader in rating widgets for your website. This plugin requires a paid yearly plan. You can learn more <a href="https://proofratings.com/" target="_blank">here</a>. We offer a money back guarantee.</p>
 
 				<form method="POST">
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
@@ -212,6 +212,39 @@ class Proofratings_Settings {
 						</tr>
 					</table>
 				</form>
+
+				<div class="gap-30"></div>
+				<div class="proofratings-badge proofratings-badge-narrow">
+					<div class="proofratings-logos">
+						<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/icon-google.png" alt="google">
+						<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/icon-trustpilot.png" alt="trustpilot">
+						<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/icon-wordpress.jpg" alt="wordpress">
+					</div>
+					
+					<div class="proofratings-reviews">
+						<span class="proofratings-score">4.8</span>
+						<span class="proofratings-stars"><i style="width: 96%;"></i></span>
+					</div>
+					
+					<div class="proofratings-review-count">44 reviews</div>
+				</div>
+
+				<div class="gap-30"></div>
+				<div class="proofratings-review-widgets-grid proofratings-widgets-grid-square">
+					<div class="proofratings-widget proofratings-widget-square proofratings-widget-customized ">
+						<div class="review-site-logo">
+							<img src="<?php echo PROOFRATINGS_PLUGIN_URL; ?>/assets/images/google.svg" alt="Google">
+						</div>
+						
+						<div class="proofratings-reviews">
+							<span class="proofratings-score">4.0</span>
+							<span class="proofratings-stars"><i style="width: 80%;"></i></span>
+						</div>
+						
+						<div class="review-count"> 76 reviews </div>						
+						<p class="view-reviews">View Reviews</p>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php
