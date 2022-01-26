@@ -87,6 +87,18 @@ class Proofratings {
 			'callback' => [$this, 'set_reviews'],
 			'permission_callback' => '__return_true'
 		));
+
+		register_rest_route( 'proofratings/v1', 'save_location_settings', array(
+			'methods' => 'POST',
+			'callback' => [$this, 'save_location_settings'],
+			'permission_callback' => '__return_true'
+		));
+
+		register_rest_route( 'proofratings/v1', 'get_location_settings', array(
+			'methods' => 'GET',
+			'callback' => [$this, 'get_location_settings'],
+			'permission_callback' => '__return_true'
+		));
 	}
 
 	/**
@@ -133,6 +145,32 @@ class Proofratings {
 
 		update_option( 'proofratings_status', $request->get_param('status'));
 	}
+
+	/**
+	 * proofratings rest api callback
+	 */
+	public function get_location_settings(WP_REST_Request $request) {
+		$location = $this->locations->get_by_location($request->get_param('location_id'));
+
+		if ( isset($location->settings) ) {
+			return $location->settings;
+		}
+
+		return false;
+	}
+
+	/**
+	 * proofratings rest api callback
+	 */
+	public function save_location_settings(WP_REST_Request $request) {
+		$settings = $request->get_params();
+
+		$location_id = $settings['location_id'];
+		unset($settings['location_id']);
+		return $this->locations->save_settings_by_location($location_id, $settings);
+	}
+
+	
 
 	/**
 	 * proofratings activate

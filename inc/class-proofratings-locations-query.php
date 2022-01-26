@@ -50,6 +50,7 @@ class Proofratings_Locations  {
 		$this->total = sizeof($this->items);
 	}
 
+
 	/**
 	 * save location
 	 * @since  1.0.6
@@ -63,6 +64,19 @@ class Proofratings_Locations  {
 		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $data )], ['id' => $id]);
 		do_action( 'proofrating_location_save_settings' );
 		return $result;
+	}
+
+	/**
+	 * save location
+	 * @since  1.0.6
+	 */
+	function save_settings_by_location($location_id, $settings) {		
+		$key = array_search($location_id, array_column($this->items, 'location_id'));
+		if ( $key !== false) {
+			return $this->save_settings($this->items[$key]->id, $settings);
+		}
+
+		return array('success' => false);		
 	}
 
 	/**
@@ -241,6 +255,15 @@ class Proofratings_Locations  {
 	 */
 	function get($id) {
 		$key = array_search($id, array_column($this->items, 'id'));
+		return $key === false ? false : $this->items[$key];
+	}
+
+	/**
+	 * get single location by location id
+	 * @since  1.0.6
+	 */
+	function get_by_location($location_id) {
+		$key = array_search($location_id, array_column($this->items, 'location_id'));
 		return $key === false ? false : $this->items[$key];
 	}
 }
