@@ -151,7 +151,6 @@ class Proofratings {
 	 */
 	public function get_location_settings(WP_REST_Request $request) {
 		$location = $this->locations->get_by_location($request->get_param('location_id'));
-
 		if ( isset($location->settings) ) {
 			return $location->settings;
 		}
@@ -169,8 +168,6 @@ class Proofratings {
 		unset($settings['location_id']);
 		return $this->locations->save_settings_by_location($location_id, $settings);
 	}
-
-	
 
 	/**
 	 * proofratings activate

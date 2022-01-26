@@ -173,6 +173,7 @@ class Proofratings_Locations  {
 
 		return $this->sanitize_location((object) array(
 			'id' => 'overall',
+			'location_id' => 'overall',
 			'location' => __('ALL LOCATIONS (OVERALL)', 'proofratings'),
 			'settings' => get_option('proofratings_overall_rating_settings'),
 			'reviews' => $site_overall_review,
