@@ -141,7 +141,7 @@ class Proofratings_Email_Reporting {
 				<h2><?php _e('Settings for agency', 'proofratings') ?></h2>
 				<table class="form-table">
 					<tr>
-						<th scope="row"><?php _e('Sender name*', 'proofratings') ?></th>
+						<th scope="row"><?php _e('Sender name', 'proofratings') ?></th>
 						<td>
 							<input name="agency[sender-name]" type="text" value="<?php echo @$email_report_settings['reporting-agency']['sender-name'] ?>" />
 						</td>
