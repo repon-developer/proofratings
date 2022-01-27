@@ -150,7 +150,7 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();
-        printf('<%s %s itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $attribute_html);
+        printf('<%s %s>', $tag, $attribute_html);
 			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
@@ -165,22 +165,14 @@ class Proofratings_Shortcodes {
         return ob_get_clean();
 	}
 
-	private function get_meta($overall) {
-		echo '<meta itemprop="worstRating" content = "1">';
-		echo '<meta itemprop="ratingValue" content="'.$overall->rating.'">';
-		echo '<meta itemprop="bestRating" content="5">';
-	}
-
 	private function overall_ratings_rectangle($location) {		
 		echo '<div class="proofratings-inner">';
 			
 			$location->ratings->get_logos();
 
-			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+			echo '<div class="proofratings-reviews">';
 				printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
 				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
-
-				$this->get_meta($location->ratings);
 			echo '</div>';
 		echo '</div>';
 
@@ -190,10 +182,9 @@ class Proofratings_Shortcodes {
 	private function overall_ratings_narrow($location) {
 		$location->ratings->get_logos();
 
-        echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+        echo '<div class="proofratings-reviews">';
             printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
             printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
-			$this->get_meta($location->ratings);
         echo '</div>';
 
     	printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
@@ -244,7 +235,7 @@ class Proofratings_Shortcodes {
 				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s data-location="%s">', $tag, $key, $classes, $attribue, $location->id);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
-					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+					echo '<div class="proofratings-reviews">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
 			        echo '</div>';
@@ -364,7 +355,7 @@ class Proofratings_Shortcodes {
 	public function proofratings_widgets_sites_square($site) {			
     	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
-		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+		echo '<div class="proofratings-reviews"">';
 			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
@@ -400,7 +391,7 @@ class Proofratings_Shortcodes {
 		}
 
 	
-		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+		echo '<div class="proofratings-reviews">';
 			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
@@ -492,10 +483,6 @@ class Proofratings_Shortcodes {
 		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>" data-type="overall_cta_banner">
 			<?php echo $close_button; ?>
 			<?php $location->ratings->get_logos(); ?>
-			
-        	<meta itemprop="worstRating" content = "1">
-        	<meta itemprop="ratingValue" content="<?php echo $location->ratings->rating ?>">
-        	<meta itemprop="bestRating" content="5">
 
 			<div class="rating-box">
 				<span class="proofratings-stars medium"><i style="width: <?php echo $location->ratings->percent ?>%"></i></span> 
