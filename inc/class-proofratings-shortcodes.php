@@ -272,8 +272,7 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		$ratings = $location->reviews;
-		
+		$ratings = $location->reviews;	
 
 		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle', 'basic' => 'badge_basic');
 

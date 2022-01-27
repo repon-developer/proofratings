@@ -124,12 +124,22 @@ class Proofratings {
 				'reviews' => $reviews,
 				'status' => @$location['status']
 			);
+
 			
-			if ( $get_id = $wpdb->get_var("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
-				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_id]);
+			if ( $get_location = $wpdb->get_row("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
+
+				$settings = maybe_unserialize( $get_location->settings );
+				if ( is_array($settings) && isset($location['schema']) ) {
+					$settings['schema'] = $location['schema'];
+				}
+
+				$location_data['settings'] = maybe_serialize($settings);
+
+				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_location->id]);
 				continue;
 			}
 
+			$location_data['settings']['schema'] = maybe_serialize($location['schema']);
 			$wpdb->insert($wpdb->proofratings, $location_data);
 		}
 
@@ -254,6 +264,18 @@ class Proofratings {
 		$locations = get_proofratings()->locations->items;
 
 		foreach ($locations as $location) {
+			$schema = $location->settings->schema;
+			if ( !empty($schema)) {
+				$schema = str_replace('{{ratingValue}}', $location->ratings->rating, $schema);
+				$schema = str_replace('{{bestRating}}', 5, $schema);
+				$schema = str_replace('{{ratingCount}}', $location->ratings->count, $schema);
+			}
+
+			$schema = json_decode($schema);
+			if ( is_object($schema)) {
+				echo '<script type="application/ld+json">' . json_encode($schema, JSON_PRETTY_PRINT) . '</script>';
+			}
+
 			if( !isset($location->settings->badge_display['overall_rectangle_float']) || !$location->settings->badge_display['overall_rectangle_float'] ) {
 				continue;
 			}
