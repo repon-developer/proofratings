@@ -39,7 +39,7 @@ const BadgeDisplay = (props) => {
                         <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Basic)</th>
                         <td>
                             <div className="proofratings-image-option">
-                                <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
+                                <img src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings style" />
                                 <label>
                                     <input onChange={() => update_single('badge_basic')} className="checkbox-switch checkbox-onoff" checked={badge_display?.badge_basic} type="checkbox" />
                                     Embed only
