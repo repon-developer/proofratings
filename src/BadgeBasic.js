@@ -55,6 +55,7 @@ const BadgeBasic = (props) => {
                         </th>
                         <td>
                             <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="basic"]</code>
+                            <p className="description">Number of badges in a row adjusts automatically to the space available.</p>
                         </td>
                     </tr>
                 </tbody>
@@ -81,7 +82,7 @@ const BadgeBasic = (props) => {
                             
                             <div className="proofratings-stars"><i style={{width: '80%'}} /></div>
                             
-                            <div className="review-count">76 user rating</div>
+                            <div className="review-count">76 ratings</div>
                             <a className="view-reviews" href="#">View all reviews</a>
                         </div>
                     </div>

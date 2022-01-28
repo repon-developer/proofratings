@@ -226,6 +226,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 
 .shortocde-area {user-select: all}
+.shortocde-area + p {margin-top: 5px;}
 
 .proofratings-image-option {display: flex; align-items: center}
 

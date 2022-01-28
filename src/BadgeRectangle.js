@@ -93,6 +93,7 @@ const BadgeRectangle = (props) => {
                         </th>
                         <td>
                             <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="rectangle"]</code>
+                            <p className="description">Number of badges in a row adjusts automatically to the space available.</p>
                         </td>
                     </tr>
                 </tbody>
