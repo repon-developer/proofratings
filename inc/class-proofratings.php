@@ -194,6 +194,7 @@ class Proofratings {
 			`location` VARCHAR(100) NULL, 
 			`reviews` LONGTEXT NULL, 
 			`settings` LONGTEXT NULL, 
+			`meta_data` LONGTEXT NULL, 
 			`status` VARCHAR(20) NOT NULL DEFAULT 'pending', 
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
