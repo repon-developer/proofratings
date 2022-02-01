@@ -109,7 +109,7 @@ class Proofratings_Site_Data {
             'name' => __('Birdeye', 'proofratings'),
             'title' => __('Birdeye Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/birdeye.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-birdeye.jpg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-birdeye.png',
             'rating_title' => __('Birdeye Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/birdeye-black.svg',
             'category' => 'general'
