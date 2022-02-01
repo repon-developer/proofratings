@@ -320,6 +320,10 @@ class Proofratings_Shortcodes {
 			$badge_class[] = 'proofratings-widget-logo-color';
 		}
 
+		if ( $badge_widget->alignment ) {
+			$badge_class[] = sprintf('proofratings-widgets-align-%s', esc_attr($badge_widget->alignment) );
+		}
+
 		$wrapper_classes[] = 'proofratings-review-widgets-grid';
 		$wrapper_classes[] = sprintf('proofratings-widgets-%s', $location->id);
 		$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', $badge_style);

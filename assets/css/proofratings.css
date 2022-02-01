@@ -254,13 +254,17 @@ html {
 .proofratings-widget.proofratings-widget-basic {
     width: auto;
     padding: unset;
-    display: unset;
+    display: flex;
     min-height: unset;
-    margin-left: unset!important;
+    align-items: flex-start;
     border: unset!important;
+    margin-left: unset!important;
     background-color: transparent;
     box-shadow: unset!important;
 }
+
+.proofratings-widget.proofratings-widget-basic.proofratings-widgets-align-center {align-items: center;}
+.proofratings-widget.proofratings-widget-basic.proofratings-widgets-align-right {align-items: flex-end}
 
 .proofratings-widget.proofratings-widget-basic .proofratings-stars {margin-left: 0;}
 .proofratings-widget.proofratings-widget-basic .review-count {

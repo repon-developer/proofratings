@@ -16,9 +16,11 @@ const ActiveSites = (props) => {
         props.onUpdate(active_sites);
     }
 
+    const activated_sites = Array.isArray(activeSites) ? activeSites : [];
+
     return (
         <div className="review-sites-checkboxes review-sites-checkboxes-widget">
-            {activeSites.map(site_id => (
+            {activated_sites.map(site_id => (
                 <label key={site_id} className="checkbox-review-site">
                     <input type="checkbox" defaultChecked={active_sites.includes(site_id)} onClick={() => handleCheck(site_id)} />
                     <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />

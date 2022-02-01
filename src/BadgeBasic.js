@@ -1,8 +1,5 @@
 import store, { ACTIONS } from './Store';
 import ColorPicker from "./Component/ColorPicker";
-import Border from "./Component/Border";
-import Shadow from "./Component/Shadow";
-
 import ActiveSites from './Component/ActiveSites';
 
 const { useState, useEffect } = React;
@@ -40,6 +37,15 @@ const BadgeBasic = (props) => {
     
     let css_style = `.proofratings-widget.proofratings-widget-basic {${get_styles().join(';')}}`;
 
+    let widget_classes = 'proofratings-widget proofratings-widget-basic proofratings-widget-customized';
+    if ( state?.logo_color ) {
+        widget_classes += ' proofratings-widget-logo-color';
+    }
+
+    if ( state?.alignment ) {
+        widget_classes += ' proofratings-widgets-align-'+state.alignment;
+    }
+
     return (
         <React.Fragment>
             <style>{css_style}</style>
@@ -56,6 +62,17 @@ const BadgeBasic = (props) => {
                         <td>
                             <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="basic"]</code>
                             <p className="description">Number of badges in a row adjusts automatically to the space available.</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Alignment</th>
+                        <td>
+                            <select defaultValue={state?.alignment} onChange={(e) => handle_field({alignment: e.target.value})}>
+                                <option value="left">Left</option>
+                                <option value="center">Center</option>
+                                <option value="right">Right</option>
+                            </select>
                         </td>
                     </tr>
                 </tbody>
@@ -75,7 +92,7 @@ const BadgeBasic = (props) => {
             {state?.customize && (
                 <React.Fragment>
                     <div className="proofratings-review-widgets-grid proofratings-widget-grid-basic">
-                        <div className={`proofratings-widget proofratings-widget-basic proofratings-widget-customized ${state?.logo_color ? 'proofratings-widget-logo-color' : ''}`}>
+                        <div className={widget_classes}>
                             <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}images/google.svg)`}}>
                                 <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
                             </div>
