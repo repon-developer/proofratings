@@ -79,6 +79,13 @@ This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" ta
 
 
 == Changelog ==
+= 1.0.8 =
+* Added schema markup
+* Added onboarding support
+
+= 1.0.7 =
+* Fix minor bugs
+
 = 1.0.6 =
 * Support Locations
 
