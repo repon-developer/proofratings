@@ -173,6 +173,21 @@ class Proofratings_Generate_Style {
 				printf("\t--background_color: %s;\n", $overall_badge->background_color);
 			}
 
+			if ( !isset($overall_badge->border) || !$overall_badge->border['show']) {
+				printf("\t--border_color: transparent!important;\n");
+				printf("\t--border_hover: transparent!important;\n");
+			}
+
+			if ( isset($overall_badge->border['show']) && $overall_badge->border['show'] ) {		
+				if ( $overall_badge->border['color'] ) {
+					printf("\t--border_color: %s;\n", $overall_badge->border['color']);
+				}
+				
+				if ( $overall_badge->border['hover'] ) {
+					printf("\t--border_hover: %s;\n", $overall_badge->border['hover']);
+				}
+			}
+
 			if ( !isset($overall_badge->shadow) || !$overall_badge->shadow['shadow']) {
 				printf("\t--shadow_color: transparent!important;\n");
 				printf("\t--shadow_hover: transparent!important;\n");
@@ -229,6 +244,21 @@ class Proofratings_Generate_Style {
 
 			if ( $overall_badge->background_color ) {
 				printf("\t--background_color: %s;\n", $overall_badge->background_color);
+			}
+
+			if ( !isset($overall_badge->border) || !$overall_badge->border['show']) {
+				printf("\t--border_color: transparent!important;\n");
+				printf("\t--border_hover: transparent!important;\n");
+			}
+
+			if ( isset($overall_badge->border['show']) && $overall_badge->border['show'] ) {		
+				if ( $overall_badge->border['color'] ) {
+					printf("\t--border_color: %s;\n", $overall_badge->border['color']);
+				}
+				
+				if ( $overall_badge->border['hover'] ) {
+					printf("\t--border_hover: %s;\n", $overall_badge->border['hover']);
+				}
 			}
 
 			if ( !isset($overall_badge->shadow) || !$overall_badge->shadow['shadow']) {

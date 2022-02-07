@@ -19,6 +19,7 @@ html {
     border-radius: 10px;
     transition: all 200ms;
     background-color: var(--background_color, #fff);
+    border: 2px solid var(--border_color, transparent);
     box-shadow: 0 0 4px 4px var(--shadow_color, rgba(246,211,0,0.4))!important
 }
 
@@ -29,6 +30,7 @@ html {
 .proofratings-badge.right {left: auto; right: 30px}
 
 .proofratings-badge:hover {
+    border-color: var(--border_hover, transparent);
     box-shadow: 0 0 4px 4px var(--shadow_hover, #377dbc66)!important;
 }
 
@@ -141,7 +143,7 @@ html {
 .proofratings-badge.proofratings-badge-rectangle .proofratings-review-count {
     color: var(--review_text_color, #fff);
     padding: 10px var(--padx);
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 8px 8px;
     background-color: var(--review_background, #212a3d);
 }
 
