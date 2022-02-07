@@ -267,6 +267,8 @@ html {
 .proofratings-widget.proofratings-widget-basic.proofratings-widgets-align-center {align-items: center;}
 .proofratings-widget.proofratings-widget-basic.proofratings-widgets-align-right {align-items: flex-end}
 
+.proofratings-widget.proofratings-widget-basic .review-site-logo {height: 40px; margin-bottom: 10px;}
+
 .proofratings-widget.proofratings-widget-basic .proofratings-stars {margin-left: 0;}
 .proofratings-widget.proofratings-widget-basic .review-count {
     color: var(--review_count_textcolor, #8181ac);
