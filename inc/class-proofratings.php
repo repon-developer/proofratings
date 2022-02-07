@@ -275,7 +275,7 @@ class Proofratings {
 
 			$schema = json_decode($schema);
 			if ( is_object($schema)) {
-				echo '<script type="application/ld+json">' . json_encode($schema, JSON_PRETTY_PRINT) . '</script>';
+				echo '<script type="application/ld+json">' . stripslashes(json_encode($schema, JSON_PRETTY_PRINT)) . '</script>';
 			}
 
 			if( !isset($location->settings->badge_display['overall_rectangle_float']) || !$location->settings->badge_display['overall_rectangle_float'] ) {
