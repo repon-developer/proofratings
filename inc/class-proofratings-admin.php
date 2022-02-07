@@ -42,7 +42,6 @@ class Proofratings_Admin {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once dirname( __FILE__ ) . '/class-proofratings-generate-style.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-locations.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-email-reporting.php';
