@@ -8,6 +8,7 @@ import ReviewSites from './Sites';
 import BadgeDisplay from './BadgeDisplay';
 import BadgeSquare from './BadgeSquare'
 import BadgeBasic from './BadgeBasic'
+import Sites_Icon from './SitesIcon'
 import BadgeRectangle from './BadgeRectangle'
 
 import OverallRectangleEmbed from './OverallRectangle/Embed'
@@ -91,8 +92,9 @@ const ProofratingsWidgets = () => {
     const tabs = {
         'review-sites': 'Review Sites',
         'display-badges': 'Badges',
-        'badge-square': 'Sites (Square)',
-        'badge-basic': 'Sites (Basic)',
+        'badge-square': 'Sites Square',
+        'badge-basic': 'Sites Basic',
+        'sites-icon': 'Sites Icon',
         'badge-rectangle': 'Sites (Rectangle)',
         'overall-rectangle-embed': 'Overall Rating Rectangle - EMBED',
         'overall-rectangle-float': 'Overall Rating Rectangle - FLOAT',
@@ -111,6 +113,10 @@ const ProofratingsWidgets = () => {
 
     if ( badge_display?.badge_basic !== true ) {
         delete tabs['badge-basic'];
+    }
+
+    if ( badge_display?.sites_icon !== true ) {
+        delete tabs['sites-icon'];
     }
 
     if ( badge_display?.sites_rectangle !== true ) {
@@ -159,6 +165,7 @@ const ProofratingsWidgets = () => {
             {current_tab === 'badge-square' && <BadgeSquare id={location_id} />}
             {current_tab === 'badge-rectangle' && <BadgeRectangle id={location_id} />}
             {current_tab === 'badge-basic' && <BadgeBasic id={location_id} />}
+            {current_tab === 'sites-icon' && <Sites_Icon id={location_id} />}
             
             {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
             {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}

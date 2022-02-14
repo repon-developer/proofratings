@@ -133,6 +133,37 @@ class Proofratings_Generate_Style {
 	}
 
 	/**
+	 * Generate styles for sites icon
+	 * @since 1.0.8
+	 */
+	public function sites_icon($location) {
+		if ( $location->settings->font ) {
+			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-icon {\n", $location->id);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
+		$badge_settings = new Proofratings_Site_Data($location->settings->sites_icon);
+		if ( !$badge_settings->customize) {
+			return;
+		}
+
+		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-icon {\n", $location->id);
+			if ( $badge_settings->icon_color ) {
+				printf("\t--logoColor: %s;\n", $badge_settings->icon_color);
+			}
+
+			if ( $badge_settings->star_color ) {
+				printf("\t--star_color: %s;\n", $badge_settings->star_color);
+			}
+
+			if ( $badge_settings->textcolor ) {
+				printf("\t--textcolor: %s;\n", $badge_settings->textcolor);
+			}
+		echo "}\n\n";
+	}
+
+	/**
 	 * Generate styles overall ratings
 	 */
 	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
@@ -432,6 +463,7 @@ class Proofratings_Generate_Style {
 		foreach ($locations as $location) {
 			$this->sites_badge($location);
 			$this->badge_basic($location);
+			$this->sites_icon($location);
 			$this->sites_badge($location, 'sites_rectangle', 'rectangle');
 
 			$this->overall_rectangle($location);

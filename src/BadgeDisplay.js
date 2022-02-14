@@ -23,7 +23,7 @@ const BadgeDisplay = (props) => {
             <table className="form-table">
                 <tbody>
                     <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Square)</th>
+                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites Square</th>
                         <td>
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
@@ -36,7 +36,7 @@ const BadgeDisplay = (props) => {
                     </tr>
 
                     <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Basic)</th>
+                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites Basic</th>
                         <td>
                             <div className="proofratings-image-option">
                                 <img style={{marginLeft: 5}} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
@@ -49,7 +49,20 @@ const BadgeDisplay = (props) => {
                     </tr>
 
                     <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites (Rectangle)</th>
+                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites Icon</th>
+                        <td>
+                            <div className="proofratings-image-option">
+                                <img style={{marginLeft: 5}} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
+                                <label>
+                                    <input onChange={() => update_single('sites_icon')} className="checkbox-switch checkbox-onoff" checked={badge_display?.sites_icon} type="checkbox" />
+                                    Embed only
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" style={{ verticalAlign: "middle" }}>Sites Rectangle</th>
                         <td>
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/widget-style2.png`} alt="Proofratings style" />

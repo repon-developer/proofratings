@@ -294,9 +294,7 @@ html {
     transition: all 200ms;
 }
 
-.proofratings-widget.proofratings-widget-basic .view-reviews:hover:after {
-    width: 0;
-}
+.proofratings-widget.proofratings-widget-basic .view-reviews:hover:after {width: 0}
 
 .proofratings-widget.proofratings-widget-rectangle {
     --reviewCountTextColor: #767676;
@@ -352,10 +350,20 @@ html {
 
 .proofratings-widget.proofratings-widget-rectangle .proofratings-stars {width: 146px!important}
 
-.proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {
-    height: 22px!important;
-    -webkit-mask-size: 30px auto
-}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {height: 22px!important; -webkit-mask-size: 30px auto}
+
+.proofratings-review-widgets-grid.proofratings-widgets-grid-icon {grid-template-columns: repeat(auto-fit, minmax(200px, 300px))}
+.proofratings-widget.proofratings-widget-icon {--themeColor:var(--star_color); all: unset; flex: 0 0 auto; display: flex; align-items: center; border: none!important; box-shadow: none!important}
+.proofratings-widget.proofratings-widget-icon .proofratings-stars {margin-left: 0;}
+.proofratings-widget.proofratings-widget-icon .review-site-logo {flex: 0 0 46px; display: unset; height: auto}
+.proofratings-widget.proofratings-widget-icon .review-info-container {flex: 1 0 auto}
+.proofratings-widget.proofratings-widget-icon .review-info {color: var(--textcolor, inherit); display: flex; gap: 5px; align-items: center;}
+.proofratings-widget.proofratings-widget-icon .review-site-logo {margin-right: 15px;}
+
+.proofratings-widget.proofratings-widget-icon.proofratings-widget-vertical {flex-direction: column}
+.proofratings-widget.proofratings-widget-icon.proofratings-widget-vertical .review-site-logo {margin-right: 0;}
+.proofratings-widget.proofratings-widget-icon.proofratings-widget-vertical .review-info-container {gap: 5px; display: flex; margin-right: 0; align-items: center; flex-direction: column}
+
 
 .proofratings-widget.proofratings-widget-google:not(.proofratings-widget-customized) {--themeColor: #03AB4E}
 .proofratings-widget.proofratings-widget-facebook:not(.proofratings-widget-customized) {--themeColor: #0f7ff3}
