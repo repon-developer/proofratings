@@ -20,30 +20,27 @@ const Sites_Icon = (props) => {
             styles.push('--themeColor:' + state.star_color);
         }
 
-        if ( state?.logo_color ) {
-            styles.push('--logoColor:' + state.logo_color);
+        if ( state?.icon_color ) {
+            styles.push('--logoColor:' + state.icon_color);
         }
     
-        if ( state?.review_count_textcolor ) {
-            styles.push('--review_count_textcolor:' + state.review_count_textcolor);
+        if ( state?.textcolor ) {
+            styles.push('--textcolor:' + state.textcolor);
         }
 
-        if ( state?.view_reviews_text_color ) {
-            styles.push('--view_review_textcolor:' + state.view_reviews_text_color);
-        }
     
         return styles;
     }
     
-    let css_style = `.proofratings-widget.proofratings-widget-basic {${get_styles().join(';')}}`;
+    let css_style = `.proofratings-widget.proofratings-widget-icon {${get_styles().join(';')}}`;
 
-    let widget_classes = 'proofratings-widget proofratings-widget-basic proofratings-widget-customized';
-    if ( state?.logo_color ) {
+    let widget_classes = 'proofratings-widget proofratings-widget-icon proofratings-widget-customized';
+    if ( state?.icon_color ) {
         widget_classes += ' proofratings-widget-logo-color';
     }
 
-    if ( state?.alignment ) {
-        widget_classes += ' proofratings-widgets-align-'+state.alignment;
+    if ( state?.position ) {
+        widget_classes += ' proofratings-widget-'+state.position;
     }
 
     return (
@@ -79,16 +76,20 @@ const Sites_Icon = (props) => {
 
             {state?.customize && (
                 <React.Fragment>
-                    <div className="proofratings-review-widgets-grid proofratings-widget-grid-basic">
+                    <div className="proofratings-review-widgets-grid proofratings-widget-grid-icon" style={{padding: '10px 15px', backgroundColor: '#fff'}}>
                         <div className={widget_classes}>
-                            <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}images/google.svg)`}}>
-                                <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
+                            <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}images/icon3-yelp.svg)`}}>
+                                <img src={`${proofratings.assets_url}images/icon3-yelp.svg`} alt="Yelp" />
                             </div>
-                            
-                            <div className="proofratings-stars"><i style={{width: '80%'}} /></div>
-                            
-                            <div className="review-count">76 ratings</div>
-                            <a className="view-reviews" href="#">View all reviews</a>
+
+                            <div class="review-info-container">
+                                <span className="proofratings-stars"><i style={{width: '95.6%'}}></i></span>
+                                <div className="review-info">
+                                    <span className="proofratings-rating">Rated 4.8</span>
+                                    <span className="separator-circle">●</span>
+                                    <span className="proofratings-review-number">41 reviews</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
