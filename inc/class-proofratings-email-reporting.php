@@ -169,9 +169,9 @@ class Proofratings_Email_Reporting {
 					</tr>
 
 					<tr>
-						<th scope="row"><?php _e('Header Background Color', 'proofratings') ?></th>
+						<th scope="row"><?php _e('Email logo URL - Dark', 'proofratings') ?></th>
 						<td>
-							<input class="proofratings-color-input" name="agency[header-background-color]" type="text" value="<?php echo @$email_report_settings['reporting-agency']['header-background-color'] ?>" />
+							<input name="agency[email-logo-dark]" type="url" value="<?php echo @$email_report_settings['reporting-agency']['email-logo-dark'] ?>" />
 						</td>
 					</tr>
 				</table>
