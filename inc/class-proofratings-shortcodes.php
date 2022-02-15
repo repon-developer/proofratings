@@ -324,13 +324,13 @@ class Proofratings_Shortcodes {
 			$badge_class[] = sprintf('proofratings-widgets-align-%s', esc_attr($badge_widget->alignment) );
 		}
 
-		if ( $badge_widget->position ) {
-			$badge_class[] = sprintf('proofratings-widget-%s', esc_attr($badge_widget->position) );
-		}
-
 		$wrapper_classes[] = 'proofratings-review-widgets-grid';
 		$wrapper_classes[] = sprintf('proofratings-widgets-%s', $location->id);
 		$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', $badge_style);
+
+		if ( $badge_widget->position ) {
+			$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', esc_attr($badge_widget->position) );
+		}
 
 		if ( absint($atts['column']) > 0 ) {
 			$wrapper_classes[] = sprintf('proofratings-widgets-grid-column-%s', absint($atts['column']));

@@ -331,38 +331,29 @@ html {
     letter-spacing:0.05em;
 }
 
-.proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {
-    text-align: left;
-    justify-content: unset;
-}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {text-align: left; justify-content: unset}
 
-.proofratings-widget.proofratings-widget-rectangle .proofratings-score {
-    font-size: 28px;
-    font-weight: bold;
-}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-score {font-size: 28px; font-weight: bold}
 
-.proofratings-widget.proofratings-widget-rectangle .review-count {
-    padding: unset;
-    font-weight: unset;
-    letter-spacing:0.05em;
-    background-color: transparent;
-}
+.proofratings-widget.proofratings-widget-rectangle .review-count {padding: unset; font-weight: unset; letter-spacing:0.05em; background-color: transparent}
 
 .proofratings-widget.proofratings-widget-rectangle .proofratings-stars {width: 146px!important}
 
 .proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {height: 22px!important; -webkit-mask-size: 30px auto}
 
-.proofratings-review-widgets-grid.proofratings-widgets-grid-icon {grid-template-columns: repeat(auto-fit, minmax(200px, 300px))}
+.proofratings-review-widgets-grid.proofratings-widgets-grid-icon {grid-template-columns: repeat(auto-fit, minmax(200px, 255px))}
 .proofratings-widget.proofratings-widget-icon {--themeColor:var(--star_color); all: unset; flex: 0 0 auto; display: flex; align-items: center; border: none!important; box-shadow: none!important}
 .proofratings-widget.proofratings-widget-icon .proofratings-stars {margin-left: 0;}
 .proofratings-widget.proofratings-widget-icon .review-site-logo {flex: 0 0 46px; display: unset; height: auto}
 .proofratings-widget.proofratings-widget-icon .review-info-container {flex: 1 0 auto}
-.proofratings-widget.proofratings-widget-icon .review-info {color: var(--textcolor, inherit); display: flex; gap: 5px; align-items: center;}
+.proofratings-widget.proofratings-widget-icon .review-info {color: var(--textcolor, inherit); font-weight: 600; display: flex; gap: 5px; align-items: center;}
+.proofratings-widget.proofratings-widget-icon .review-info .separator-circle {font-size: 11px;}
 .proofratings-widget.proofratings-widget-icon .review-site-logo {margin-right: 15px;}
 
-.proofratings-widget.proofratings-widget-icon.proofratings-widget-vertical {flex-direction: column}
-.proofratings-widget.proofratings-widget-icon.proofratings-widget-vertical .review-site-logo {margin-right: 0;}
-.proofratings-widget.proofratings-widget-icon.proofratings-widget-vertical .review-info-container {gap: 5px; display: flex; margin-right: 0; align-items: center; flex-direction: column}
+.proofratings-widget.proofratings-widget-icon :is(.proofratings-stars, .proofratings-stars i) {height: 21px!important; -webkit-mask-size: 28px auto}
+.proofratings-widget.proofratings-widget-icon .proofratings-stars {width: 134.5px!important;}
+
+.proofratings-review-widgets-grid.proofratings-widgets-grid-vertical {display: flex; flex-wrap: wrap; flex-direction: column;}
 
 
 .proofratings-widget.proofratings-widget-google:not(.proofratings-widget-customized) {--themeColor: #03AB4E}

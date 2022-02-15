@@ -39,10 +39,6 @@ const Sites_Icon = (props) => {
         widget_classes += ' proofratings-widget-logo-color';
     }
 
-    if ( state?.position ) {
-        widget_classes += ' proofratings-widget-'+state.position;
-    }
-
     return (
         <React.Fragment>
             <style>{css_style}</style>
