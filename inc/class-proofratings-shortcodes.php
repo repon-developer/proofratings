@@ -418,9 +418,9 @@ class Proofratings_Shortcodes {
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
 
 			echo '<div class="review-info">';
-				printf('<span class="proofratings-rating">%s %s</span>', __('Rated', 'proofratings'), number_format($site->rating, 1));
+				printf('<span class="proofratings-rating">%s %s</span>', number_format($site->rating, 1), __('Rating', 'proofratings'));
 				echo '<span class="separator-circle">●</span>';
-				printf('<span class="proofratings-review-number">%d %s</span>', esc_html($site->count), __('reviews', 'proofratings'));
+				printf('<span class="proofratings-review-number">' . _n( '%s Review', '%s Reviews', $site->count, 'proofratings' ), number_format_i18n( $site->count ) . '</span>');
 			echo '</div>';          
 		echo '</div>';          
 	}
