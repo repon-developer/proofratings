@@ -342,7 +342,7 @@ html {
 .proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {height: 22px!important; -webkit-mask-size: 30px auto}
 
 .proofratings-review-widgets-grid.proofratings-widgets-grid-icon {grid-template-columns: repeat(auto-fit, minmax(200px, 255px))}
-.proofratings-widget.proofratings-widget-icon {--themeColor:var(--star_color); all: unset; flex: 0 0 auto; display: flex; align-items: center; border: none!important; box-shadow: none!important}
+.proofratings-widget.proofratings-widget-icon {--themeColor:var(--star_color); all: unset; text-align: left; flex: 0 0 auto; display: flex; align-items: center; border: none!important; box-shadow: none!important}
 .proofratings-widget.proofratings-widget-icon .proofratings-stars {margin-left: 0;}
 .proofratings-widget.proofratings-widget-icon .review-site-logo {flex: 0 0 46px; display: unset; height: auto}
 .proofratings-widget.proofratings-widget-icon .review-info-container {flex: 1 0 auto}
