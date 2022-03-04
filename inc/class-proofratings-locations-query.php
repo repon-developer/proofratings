@@ -40,6 +40,13 @@ class Proofratings_Locations  {
 		return self::$instance;
 	}
 
+	/**
+	 * Items
+	 * @var self
+	 * @since  1.1.0
+	 */
+	var $items = [];
+
 
 	/**
 	 * Constructor.
@@ -187,6 +194,11 @@ class Proofratings_Locations  {
      */
 	function get_locations() {
 		global $wpdb;
+
+		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->proofratings ) );
+		if ( ! $wpdb->get_var( $query ) == $wpdb->proofratings ) {
+			return [];
+		}
 
 		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status != 'deleted' ORDER BY location ASC");
 
