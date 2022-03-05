@@ -496,6 +496,7 @@ html {
     right: 0;
     display: flex;
     flex-wrap: wrap;
+    row-gap: 20px;
     justify-content: center;
     align-items: center;
     z-index: 150000;
@@ -638,19 +639,17 @@ html {
 @media screen and (max-width: 1024px) {
     .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
     .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
-    .proofratings-banner-badge .button-container {flex: 0 0 100%; margin-top: 20px}
+    .proofratings-banner-badge .button-container {flex: 0 0 100%}
 }
 
 @media screen and (max-width: 767px) {
     .badge-hidden-mobile {display: none!important}
-    .proofratings-banner-badge .proofratings-review-count {margin-top: 15px;}
 }
 
 @media screen and (max-width: 575px) {
     .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 10px 0;}
     .proofratings-banner-badge .rating-box {margin-right: 0;}
-    .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%; margin: 15px auto}
-    .proofratings-banner-badge .button-container {margin-top: 0}
+    .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%}
 
     .proofratings-popup-widgets-box {--column: 1!important; justify-content: center;}
 
