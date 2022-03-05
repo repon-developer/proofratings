@@ -571,6 +571,8 @@ html {
 
 .proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); margin: 0 100px 0 0; font-weight: normal;}
 
+.proofratings-banner-badge .button-container {display:flex; align-items: center; justify-content: center; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
+
 .proofratings-banner-badge .proofratings-button {
     color: #fff;
     min-width: 140px;
@@ -636,7 +638,7 @@ html {
 @media screen and (max-width: 1024px) {
     .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
     .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
-    .proofratings-banner-badge .button-container {display: flex; flex: 0 0 100%; align-items: center; justify-content: center; margin-top: 20px}
+    .proofratings-banner-badge .button-container {flex: 0 0 100%; margin-top: 20px}
 }
 
 @media screen and (max-width: 767px) {
@@ -648,8 +650,7 @@ html {
     .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 10px 0;}
     .proofratings-banner-badge .rating-box {margin-right: 0;}
     .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%; margin: 15px auto}
-
-    .proofratings-banner-badge .button-container {margin-top: 0; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
+    .proofratings-banner-badge .button-container {margin-top: 0}
 
     .proofratings-popup-widgets-box {--column: 1!important; justify-content: center;}
 
