@@ -583,7 +583,6 @@ html {
     letter-spacing: 0.05em;
     align-items: center;
     justify-content: center;
-    margin-right: 29px;
     text-decoration: none;
     border-radius: 100px;
     font-family: inherit;
@@ -650,7 +649,7 @@ html {
     .proofratings-banner-badge .rating-box {margin-right: 0;}
     .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%; margin: 15px auto}
 
-    .proofratings-banner-badge .button-container {margin-top: 0;}
+    .proofratings-banner-badge .button-container {margin-top: 0; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
 
     .proofratings-popup-widgets-box {--column: 1!important; justify-content: center;}
 
