@@ -488,18 +488,19 @@ html {
     --rating_text_color: #000;
     --review_rating_background_color: #f5f8ff;
 
-    min-height: 90px;
-    padding: 15px 20px;
-    position: fixed;    
-    bottom: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     display: flex;
-    flex-wrap: wrap;
     row-gap: 20px;
+    z-index: 150000;
+    position: fixed;    
+    flex-wrap: wrap;
+    column-gap: 30px;
+    min-height: 90px;
+    padding: 15px 20px;
     justify-content: center;
     align-items: center;
-    z-index: 150000;
     background-color: var(--backgroundColor, #fff);
     transform: translateY(calc(100% + 40px));
     transition: all 200ms;
@@ -546,13 +547,12 @@ html {
 }
 
 
-.proofratings-banner-badge .proofratings-logos {margin: 0 30px 0 0;}
+.proofratings-banner-badge .proofratings-logos {margin: 0}
 
 .proofratings-banner-badge .rating-box {
     color: var(--rating_text_color, #000);
     min-width: 230px;
     height: 48px;
-    margin-right: 30px;
     line-height: 1;
     padding: 14px;
     padding-left: 5px;
@@ -636,7 +636,7 @@ html {
     .badge-hidden-tablet {display: none!important}
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1199px) {
     .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
     .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
     .proofratings-banner-badge .button-container {flex: 0 0 100%}
@@ -647,7 +647,7 @@ html {
 }
 
 @media screen and (max-width: 575px) {
-    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 10px 0;}
+    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin-bottom: -5px;}
     .proofratings-banner-badge .rating-box {margin-right: 0;}
     .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%}
 
@@ -659,7 +659,6 @@ html {
     .proofratings-badge.badge-float:hover {--shadow_hover: transparent!important}
     .proofratings-badge.proofratings-badge-narrow.connected-more {max-width: 80%; flex-wrap: wrap; justify-content: center;}
     .proofratings-badge.proofratings-badge-narrow.connected-more .proofratings-logos {flex: 0 0 100%; margin-right: 0; margin-bottom: 5px;}
-    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 20px }
 
     .proofratings-badge.badge-float .proofratings-close {display: none;}
 }
