@@ -18,6 +18,19 @@ const Widgets = (props) => {
             styles.push('--review_text_color:' + props.review_text_color);
         }
 
+        if ( props?.border?.show === false ) {
+            styles.push('--border_color: transparent');
+            styles.push('--border_hover: transparent');
+        }
+
+        if ( props?.border?.show !== false && props?.border?.color ) {
+            styles.push('--border_color:' + props.border.color);
+        }
+
+        if ( props?.border?.show !== false && props?.border?.hover ) {
+            styles.push('--border_hover:' + props.border.hover);
+        }
+
         if ( props?.shadow?.shadow === false ) {
             styles.push('--shadow_color: transparent');
             styles.push('--shadow_hover: transparent');

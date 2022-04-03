@@ -42,13 +42,13 @@ class Proofratings_Admin {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once dirname( __FILE__ ) . '/class-proofratings-generate-style.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-locations.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
-
+		include_once dirname( __FILE__ ) . '/class-proofratings-email-reporting.php';
 		
 		$this->settings_page = Proofratings_Settings::instance();
 		$this->locations_page = Proofratings_Locations_Admin::instance();
+		$this->email_reporting = Proofratings_Email_Reporting::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 		
 		if ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES ) {
@@ -110,6 +110,8 @@ class Proofratings_Admin {
 			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
 			
 			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
+
+			add_submenu_page('proofratings', __('Emails Settings', 'proofratings'), __('Emails', 'proofratings'), 'manage_options', 'proofratings-emails', [$this->email_reporting, 'email_settings']);
 		}
 	}
 
@@ -138,7 +140,7 @@ class Proofratings_Admin {
 			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
-			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
+			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
 		
 		if ( $screen->id === 'proofratings_page_proofratings-locations' && (isset($_GET['location']) || get_proofratings()->locations->global) ) {

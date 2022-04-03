@@ -99,6 +99,71 @@ class Proofratings_Generate_Style {
 	}
 
 	/**
+	 * Generate styles for sites badge
+	 */
+	public function badge_basic($location) {
+		if ( $location->settings->font ) {
+			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
+		$badge_settings = new Proofratings_Site_Data($location->settings->badge_basic);
+		if ( !$badge_settings->customize) {
+			return;
+		}
+
+		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
+			if ( $badge_settings->star_color ) {
+				printf("\t--themeColor: %s;\n", $badge_settings->star_color);
+			}
+
+			if ( $badge_settings->logo_color ) {
+				printf("\t--logoColor: %s;\n", $badge_settings->logo_color);
+			}
+
+			if ( $badge_settings->review_count_textcolor ) {
+				printf("\t--review_count_textcolor: %s;\n", $badge_settings->review_count_textcolor);
+			}
+
+			if ( $badge_settings->view_reviews_text_color ) {
+				printf("\t--view_review_textcolor: %s;\n", $badge_settings->view_reviews_text_color);
+			}
+		echo "}\n\n";
+	}
+
+	/**
+	 * Generate styles for sites icon
+	 * @since 1.0.8
+	 */
+	public function sites_icon($location) {
+		if ( $location->settings->font ) {
+			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-icon {\n", $location->id);
+				printf("\tfont-family: %s!important;\n", $location->settings->font);
+			echo "}\n\n";
+		}
+
+		$badge_settings = new Proofratings_Site_Data($location->settings->sites_icon);
+		if ( !$badge_settings->customize) {
+			return;
+		}
+
+		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-icon {\n", $location->id);
+			if ( $badge_settings->icon_color ) {
+				printf("\t--logoColor: %s;\n", $badge_settings->icon_color);
+			}
+
+			if ( $badge_settings->star_color ) {
+				printf("\t--star_color: %s;\n", $badge_settings->star_color);
+			}
+
+			if ( $badge_settings->textcolor ) {
+				printf("\t--textcolor: %s;\n", $badge_settings->textcolor);
+			}
+		echo "}\n\n";
+	}
+
+	/**
 	 * Generate styles overall ratings
 	 */
 	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
@@ -137,6 +202,21 @@ class Proofratings_Generate_Style {
 
 			if ( $overall_badge->background_color ) {
 				printf("\t--background_color: %s;\n", $overall_badge->background_color);
+			}
+
+			if ( !isset($overall_badge->border) || !$overall_badge->border['show']) {
+				printf("\t--border_color: transparent!important;\n");
+				printf("\t--border_hover: transparent!important;\n");
+			}
+
+			if ( isset($overall_badge->border['show']) && $overall_badge->border['show'] ) {		
+				if ( $overall_badge->border['color'] ) {
+					printf("\t--border_color: %s;\n", $overall_badge->border['color']);
+				}
+				
+				if ( $overall_badge->border['hover'] ) {
+					printf("\t--border_hover: %s;\n", $overall_badge->border['hover']);
+				}
 			}
 
 			if ( !isset($overall_badge->shadow) || !$overall_badge->shadow['shadow']) {
@@ -195,6 +275,21 @@ class Proofratings_Generate_Style {
 
 			if ( $overall_badge->background_color ) {
 				printf("\t--background_color: %s;\n", $overall_badge->background_color);
+			}
+
+			if ( !isset($overall_badge->border) || !$overall_badge->border['show']) {
+				printf("\t--border_color: transparent!important;\n");
+				printf("\t--border_hover: transparent!important;\n");
+			}
+
+			if ( isset($overall_badge->border['show']) && $overall_badge->border['show'] ) {		
+				if ( $overall_badge->border['color'] ) {
+					printf("\t--border_color: %s;\n", $overall_badge->border['color']);
+				}
+				
+				if ( $overall_badge->border['hover'] ) {
+					printf("\t--border_hover: %s;\n", $overall_badge->border['hover']);
+				}
 			}
 
 			if ( !isset($overall_badge->shadow) || !$overall_badge->shadow['shadow']) {
@@ -367,6 +462,8 @@ class Proofratings_Generate_Style {
 
 		foreach ($locations as $location) {
 			$this->sites_badge($location);
+			$this->badge_basic($location);
+			$this->sites_icon($location);
 			$this->sites_badge($location, 'sites_rectangle', 'rectangle');
 
 			$this->overall_rectangle($location);

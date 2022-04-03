@@ -19,6 +19,7 @@ html {
     border-radius: 10px;
     transition: all 200ms;
     background-color: var(--background_color, #fff);
+    border: 2px solid var(--border_color, transparent);
     box-shadow: 0 0 4px 4px var(--shadow_color, rgba(246,211,0,0.4))!important
 }
 
@@ -29,6 +30,7 @@ html {
 .proofratings-badge.right {left: auto; right: 30px}
 
 .proofratings-badge:hover {
+    border-color: var(--border_hover, transparent);
     box-shadow: 0 0 4px 4px var(--shadow_hover, #377dbc66)!important;
 }
 
@@ -72,7 +74,7 @@ html {
 
 .proofratings-review-count {    
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     text-align: center;
     letter-spacing: 1px;
 }
@@ -98,6 +100,7 @@ html {
     margin-left: 7px;
     width: 97.5px!important;
     display: inline-block;
+    text-align: left!important;
     background-color: #ddd
 }
 
@@ -141,7 +144,7 @@ html {
 .proofratings-badge.proofratings-badge-rectangle .proofratings-review-count {
     color: var(--review_text_color, #fff);
     padding: 10px var(--padx);
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 8px 8px;
     background-color: var(--review_background, #212a3d);
 }
 
@@ -166,9 +169,8 @@ html {
 }
 
 
-.proofratings-review-widgets-grid.proofratings-widgets-grid-rectangle {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 260px))
-}
+.proofratings-review-widgets-grid.proofratings-widgets-grid-rectangle {grid-template-columns: repeat(auto-fit, minmax(200px, 260px))}
+.proofratings-review-widgets-grid.proofratings-widgets-grid-basic {grid-template-columns: repeat(auto-fit, minmax(130px, 1fr))}
 
 .proofratings-review-widgets-grid > * {margin-left: auto; margin-right: auto;}
 
@@ -217,6 +219,7 @@ html {
 .proofratings-widget.proofratings-widget-logo-color .review-site-logo {
     -webkit-mask-position: center;
     -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
     background-color: var(--logoColor)
 }
 
@@ -234,7 +237,7 @@ html {
     padding: 5px 12px;
     margin-top: 8px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 1px;
     background-color: var(--review_text_background, var(--themeColor, #0f7ff3));
     border-radius: 2px;
@@ -253,15 +256,23 @@ html {
 .proofratings-widget.proofratings-widget-basic {
     width: auto;
     padding: unset;
-    display: unset;
+    display: flex;
     min-height: unset;
+    align-items: flex-start;
+    border: unset!important;
+    margin-left: unset!important;
     background-color: transparent;
     box-shadow: unset!important;
 }
 
-.proofratings-widget.proofratings-widget-basic .proofratings-stars {margin-left: 0;}
+.proofratings-widget.proofratings-widget-basic.proofratings-widgets-align-center {align-items: center;}
+.proofratings-widget.proofratings-widget-basic.proofratings-widgets-align-right {align-items: flex-end}
+
+.proofratings-widget.proofratings-widget-basic .review-site-logo {height: 40px; margin-bottom: 10px;}
+
+.proofratings-widget.proofratings-widget-basic .proofratings-stars {margin-left: 0}
 .proofratings-widget.proofratings-widget-basic .review-count {
-    color: var(--reviewCountTextcolor, #8181ac);
+    color: var(--review_count_textcolor, #8181ac);
     padding: unset;
     background-color: unset;
 }
@@ -283,9 +294,7 @@ html {
     transition: all 200ms;
 }
 
-.proofratings-widget.proofratings-widget-basic .view-reviews:hover:after {
-    width: 0;
-}
+.proofratings-widget.proofratings-widget-basic .view-reviews:hover:after {width: 0}
 
 .proofratings-widget.proofratings-widget-rectangle {
     --reviewCountTextColor: #767676;
@@ -293,6 +302,7 @@ html {
     display: unset;
     min-height: 121px;
     padding-top: 14px;
+    text-align: left;
     padding-bottom: 14px;
     border-color: var(--borderColor, transparent)
 }
@@ -321,29 +331,31 @@ html {
     letter-spacing:0.05em;
 }
 
-.proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {
-    text-align: left;
-    justify-content: unset;
-}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {text-align: left; justify-content: unset}
 
-.proofratings-widget.proofratings-widget-rectangle .proofratings-score {
-    font-size: 28px;
-    font-weight: bold;
-}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-score {font-size: 28px; font-weight: bold}
 
-.proofratings-widget.proofratings-widget-rectangle .review-count {
-    padding: unset;
-    font-weight: unset;
-    letter-spacing:0.05em;
-    background-color: transparent;
-}
+.proofratings-widget.proofratings-widget-rectangle .review-count {padding: unset; font-weight: unset; letter-spacing:0.05em; background-color: transparent}
 
 .proofratings-widget.proofratings-widget-rectangle .proofratings-stars {width: 146px!important}
 
-.proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {
-    height: 22px!important;
-    -webkit-mask-size: 30px auto
-}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-stars, .proofratings-widget.proofratings-widget-rectangle .proofratings-stars i {height: 22px!important; -webkit-mask-size: 30px auto}
+
+.proofratings-review-widgets-grid.proofratings-widgets-grid-icon {grid-template-columns: repeat(auto-fit, minmax(200px, 255px))}
+.proofratings-widget.proofratings-widget-icon {--themeColor:var(--star_color); all: unset; font-size: 12px; text-align: left; flex: 0 0 auto; display: flex; align-items: center; border: none!important; box-shadow: none!important}
+.proofratings-widget.proofratings-widget-icon .proofratings-stars {margin-left: 0;}
+.proofratings-widget.proofratings-widget-icon .review-site-logo {flex: 0 0 46px; margin-bottom: 0; display: unset; height: auto}
+.proofratings-widget.proofratings-widget-icon .review-site-logo img {vertical-align: middle;}
+.proofratings-widget.proofratings-widget-icon .review-info-container {flex: 1 0 auto}
+.proofratings-widget.proofratings-widget-icon .review-info {color: var(--textcolor, inherit); line-height: 1; font-weight: 600; display: flex; gap: 5px; align-items: center;}
+.proofratings-widget.proofratings-widget-icon .review-info .separator-circle {font-size: 11px;}
+.proofratings-widget.proofratings-widget-icon .review-site-logo {margin-right: 15px;}
+
+.proofratings-widget.proofratings-widget-icon :is(.proofratings-stars, .proofratings-stars i) {height: 21px!important; -webkit-mask-size: 28px auto}
+.proofratings-widget.proofratings-widget-icon .proofratings-stars {width: 134.5px!important;}
+
+.proofratings-review-widgets-grid.proofratings-widgets-grid-vertical {display: flex; flex-wrap: wrap; flex-direction: column;}
+
 
 .proofratings-widget.proofratings-widget-google:not(.proofratings-widget-customized) {--themeColor: #03AB4E}
 .proofratings-widget.proofratings-widget-facebook:not(.proofratings-widget-customized) {--themeColor: #0f7ff3}
@@ -476,17 +488,19 @@ html {
     --rating_text_color: #000;
     --review_rating_background_color: #f5f8ff;
 
-    min-height: 90px;
-    padding: 15px 20px;
-    position: fixed;    
-    bottom: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     display: flex;
+    row-gap: 20px;
+    z-index: 150000;
+    position: fixed;    
     flex-wrap: wrap;
+    column-gap: 30px;
+    min-height: 90px;
+    padding: 15px 20px;
     justify-content: center;
     align-items: center;
-    z-index: 150000;
     background-color: var(--backgroundColor, #fff);
     transform: translateY(calc(100% + 40px));
     transition: all 200ms;
@@ -533,13 +547,12 @@ html {
 }
 
 
-.proofratings-banner-badge .proofratings-logos {margin: 0 30px 0 0;}
+.proofratings-banner-badge .proofratings-logos {margin: 0}
 
 .proofratings-banner-badge .rating-box {
     color: var(--rating_text_color, #000);
     min-width: 230px;
     height: 48px;
-    margin-right: 30px;
     line-height: 1;
     padding: 14px;
     padding-left: 5px;
@@ -557,7 +570,9 @@ html {
 
 .proofratings-banner-badge .rating-box .rating {color: inherit; font-size: 14px; font-weight: bold; line-height: 1.5;}
 
-.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); margin: 0 100px 0 0; font-weight: normal;}
+.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); line-height: 1.1; margin: 0 100px 0 0; font-weight: normal;}
+
+.proofratings-banner-badge .button-container {display:flex; align-items: center; justify-content: center; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
 
 .proofratings-banner-badge .proofratings-button {
     color: #fff;
@@ -571,7 +586,6 @@ html {
     letter-spacing: 0.05em;
     align-items: center;
     justify-content: center;
-    margin-right: 29px;
     text-decoration: none;
     border-radius: 100px;
     font-family: inherit;
@@ -622,23 +636,20 @@ html {
     .badge-hidden-tablet {display: none!important}
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1199px) {
     .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
     .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
-    .proofratings-banner-badge .button-container {display: flex; flex: 0 0 100%; align-items: center; justify-content: center; margin-top: 20px}
+    .proofratings-banner-badge .button-container {flex: 0 0 100%}
 }
 
 @media screen and (max-width: 767px) {
     .badge-hidden-mobile {display: none!important}
-    .proofratings-banner-badge .proofratings-review-count {margin-top: 15px;}
 }
 
 @media screen and (max-width: 575px) {
-    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 10px 0;}
+    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin-bottom: -5px;}
     .proofratings-banner-badge .rating-box {margin-right: 0;}
-    .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%; margin: 15px auto}
-
-    .proofratings-banner-badge .button-container {margin-top: 0;}
+    .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%}
 
     .proofratings-popup-widgets-box {--column: 1!important; justify-content: center;}
 
@@ -648,7 +659,6 @@ html {
     .proofratings-badge.badge-float:hover {--shadow_hover: transparent!important}
     .proofratings-badge.proofratings-badge-narrow.connected-more {max-width: 80%; flex-wrap: wrap; justify-content: center;}
     .proofratings-badge.proofratings-badge-narrow.connected-more .proofratings-logos {flex: 0 0 100%; margin-right: 0; margin-bottom: 5px;}
-    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin: 0 0 20px }
 
     .proofratings-badge.badge-float .proofratings-close {display: none;}
 }

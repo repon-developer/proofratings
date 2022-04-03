@@ -172,7 +172,7 @@ class Proofratings_Settings {
 
 			<div id="proofratings-activation-tab" class="settings_panel">
 				<h3><?php _e('Please fill in the information below to activate and connect your account.', 'proofratings') ?></h3>
-				<p>Proofratings is the leader in rating widgets for your website. This plugin requires a paid yearly plan. You can learn more <a href="https://proofratings.com/" target="_blank">here</a>. We offer a money back guarantee. See our ratings below.</p>
+				<p>Proofratings is the leader in rating widgets for your website. This plugin requires a paid yearly plan. You can learn more <a href="https://proofratings.com/rating-widgets/" target="_blank">here</a>. We offer a money back guarantee.</p>
 
 				<form method="POST">
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
@@ -259,6 +259,81 @@ class Proofratings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function add_location() {
+		?>
+		<div class="wrap proofratings-settings-wrap">
+			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>
+			<hr class="wp-header-end">
+
+			<?php if (!empty($_POST['error_msg'])) : ?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php echo $_POST['error_msg'] ?></p>
+			</div>
+			<?php endif; ?>
+			
+			<form method="post">
+				<?php wp_nonce_field( '_nonce_add_location', '_nonce' ) ?>
+				<table class="form-table">
+					<tr>
+						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
+						<td>
+							<input name="name" type="text" value="<?php echo @$_POST['name'] ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
+						<td>
+							<input name="street" type="text" value="<?php echo @$_POST['street'] ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
+						<td>
+							<input name="street2" type="text" value="<?php echo @$_POST['street2'] ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
+						<td>
+							<input name="city" type="text" value="<?php echo @$_POST['city'] ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
+						<td>
+							<input name="state" type="text" value="<?php echo @$_POST['state'] ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
+						<td>
+							<input name="zip" type="text" value="<?php echo @$_POST['zip'] ?>" />
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
+						<td>
+							<input name="country" type="text" value="<?php echo @$_POST['country'] ?>" />
+						</td>
+					</tr>
+				</table>
+
+				<?php submit_button('Request location'); ?>
+			</form>
+		</div>
+		<?php
+	}
+
+
+	/**
+	 * Shows the plugin's settings page.
+	 */
+	public function email_settings() {
 		?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>

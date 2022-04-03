@@ -46,10 +46,12 @@ class Proofratings {
 		$this->add_proofratings_tables();
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-generate-style.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ratings.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-locations-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
+
 		
 		$this->locations = Proofratings_Locations::instance();
 		$this->shortcodes = Proofratings_Shortcodes::instance();
@@ -87,6 +89,18 @@ class Proofratings {
 			'callback' => [$this, 'set_reviews'],
 			'permission_callback' => '__return_true'
 		));
+
+		register_rest_route( 'proofratings/v1', 'save_location_settings', array(
+			'methods' => 'POST',
+			'callback' => [$this, 'save_location_settings'],
+			'permission_callback' => '__return_true'
+		));
+
+		register_rest_route( 'proofratings/v1', 'get_location_settings', array(
+			'methods' => 'GET',
+			'callback' => [$this, 'get_location_settings'],
+			'permission_callback' => '__return_true'
+		));
 	}
 
 	/**
@@ -112,12 +126,22 @@ class Proofratings {
 				'reviews' => $reviews,
 				'status' => @$location['status']
 			);
+
 			
-			if ( $get_id = $wpdb->get_var("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
-				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_id]);
+			if ( $get_location = $wpdb->get_row("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
+
+				$settings = maybe_unserialize( $get_location->settings );
+				if ( is_array($settings) && isset($location['schema']) ) {
+					$settings['schema'] = $location['schema'];
+				}
+
+				$location_data['settings'] = maybe_serialize($settings);
+
+				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_location->id]);
 				continue;
 			}
 
+			$location_data['settings']['schema'] = maybe_serialize($location['schema']);
 			$wpdb->insert($wpdb->proofratings, $location_data);
 		}
 
@@ -135,6 +159,29 @@ class Proofratings {
 	}
 
 	/**
+	 * proofratings rest api callback
+	 */
+	public function get_location_settings(WP_REST_Request $request) {
+		$location = $this->locations->get_by_location($request->get_param('location_id'));
+		if ( isset($location->settings) ) {
+			return $location->settings;
+		}
+
+		return false;
+	}
+
+	/**
+	 * proofratings rest api callback
+	 */
+	public function save_location_settings(WP_REST_Request $request) {
+		$settings = $request->get_params();
+
+		$location_id = $settings['location_id'];
+		unset($settings['location_id']);
+		return $this->locations->save_settings_by_location($location_id, $settings);
+	}
+
+	/**
 	 * proofratings activate
 	 */
 	public function activate() {
@@ -149,6 +196,7 @@ class Proofratings {
 			`location` VARCHAR(100) NULL, 
 			`reviews` LONGTEXT NULL, 
 			`settings` LONGTEXT NULL, 
+			`meta_data` LONGTEXT NULL, 
 			`status` VARCHAR(20) NOT NULL DEFAULT 'pending', 
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
@@ -219,6 +267,18 @@ class Proofratings {
 		$locations = get_proofratings()->locations->items;
 
 		foreach ($locations as $location) {
+			$schema = $location->settings->schema;
+			if ( !empty($schema)) {
+				$schema = str_replace('{{ratingValue}}', $location->ratings->rating, $schema);
+				$schema = str_replace('{{bestRating}}', 5, $schema);
+				$schema = str_replace('{{ratingCount}}', $location->ratings->count, $schema);
+			}
+
+			$schema = json_decode($schema);
+			if ( is_object($schema)) {
+				echo '<script type="application/ld+json">' . stripslashes(json_encode($schema, JSON_PRETTY_PRINT)) . '</script>';
+			}
+
 			if( !isset($location->settings->badge_display['overall_rectangle_float']) || !$location->settings->badge_display['overall_rectangle_float'] ) {
 				continue;
 			}

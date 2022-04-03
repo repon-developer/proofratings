@@ -150,7 +150,7 @@ class Proofratings_Shortcodes {
 		}
 
         ob_start();
-        printf('<%s %s itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">', $tag, $attribute_html);
+        printf('<%s %s>', $tag, $attribute_html);
 			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
 				echo  '<i class="proofratings-close">&times;</i>';
 			}
@@ -165,22 +165,14 @@ class Proofratings_Shortcodes {
         return ob_get_clean();
 	}
 
-	private function get_meta($overall) {
-		echo '<meta itemprop="worstRating" content = "1">';
-		echo '<meta itemprop="ratingValue" content="'.$overall->rating.'">';
-		echo '<meta itemprop="bestRating" content="5">';
-	}
-
 	private function overall_ratings_rectangle($location) {		
 		echo '<div class="proofratings-inner">';
 			
 			$location->ratings->get_logos();
 
-			echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+			echo '<div class="proofratings-reviews">';
 				printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
 				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
-
-				$this->get_meta($location->ratings);
 			echo '</div>';
 		echo '</div>';
 
@@ -190,10 +182,9 @@ class Proofratings_Shortcodes {
 	private function overall_ratings_narrow($location) {
 		$location->ratings->get_logos();
 
-        echo '<div class="proofratings-reviews" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">';
+        echo '<div class="proofratings-reviews">';
             printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
             printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
-			$this->get_meta($location->ratings);
         echo '</div>';
 
     	printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
@@ -244,7 +235,7 @@ class Proofratings_Shortcodes {
 				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s data-location="%s">', $tag, $key, $classes, $attribue, $location->id);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
-					echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+					echo '<div class="proofratings-reviews">';
 						printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
 			        echo '</div>';
@@ -268,7 +259,8 @@ class Proofratings_Shortcodes {
 	public function proofratings_widgets($atts, $content = null) {
 		$atts = shortcode_atts([
 			'style' => 'square',
-            'id' => 'overall'
+            'id' => 'overall',
+			'column' => false
         ], $atts);
 
 		$location = get_proofratings()->locations->get($atts['id']);
@@ -280,10 +272,9 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		$ratings = $location->reviews;
-		
+		$ratings = $location->reviews;	
 
-		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle');
+		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle', 'basic' => 'badge_basic', 'icon' => 'sites_icon');
 
 		$badge_type = 'sites_square';
 		
@@ -292,14 +283,13 @@ class Proofratings_Shortcodes {
 			$badge_type = $badge_styles[$badge_style];
 		}
 
-		if ( !method_exists($this, 'proofratings_widgets_' . $badge_type)) {
+		if ( !method_exists($this, 'widgets_' . $badge_type)) {
 			$badge_style = 'square';
 			$badge_type = 'sites_square';
 		}
 
 		$badge_widget = isset($location->settings->$badge_type) ? $location->settings->$badge_type : [];
 		$badge_widget = new Proofratings_Site_Data($badge_widget);
-
 
 		if ( isset($location->settings->badge_display[$badge_type]) && !$location->settings->badge_display[$badge_type]) {
 			return;
@@ -326,23 +316,40 @@ class Proofratings_Shortcodes {
 			$badge_class[] = 'proofratings-widget-customized';
 		}
 
-		if ( !empty($badge_widget->logo_color) ) {
+		if ( $badge_widget->customize && ($badge_widget->logo_color || $badge_widget->icon_color) ) {
 			$badge_class[] = 'proofratings-widget-logo-color';
 		}
 
-        ob_start();		
-        printf('<div class="proofratings-widgets-%s proofratings-review-widgets-grid proofratings-widgets-grid-%s">', $location->id, $badge_style);
+		if ( $badge_widget->alignment ) {
+			$badge_class[] = sprintf('proofratings-widgets-align-%s', esc_attr($badge_widget->alignment) );
+		}
+
+		$wrapper_classes[] = 'proofratings-review-widgets-grid';
+		$wrapper_classes[] = sprintf('proofratings-widgets-%s', $location->id);
+		$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', $badge_style);
+
+		if ( $badge_widget->position ) {
+			$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', esc_attr($badge_widget->position) );
+		}
+
+		if ( absint($atts['column']) > 0 ) {
+			$wrapper_classes[] = sprintf('proofratings-widgets-grid-column-%s', absint($atts['column']));
+		}
+
+        ob_start();
+
+        printf('<div class="%s">', implode(' ', $wrapper_classes));
 	        foreach ($ratings as $site_id => $rating) {
 				$tag = 'div';
 				$attribue = '';
 			
-				if( !empty($rating->review_url) ) {
+				if( !empty($rating->review_url) && $badge_type !== 'badge_basic') {
 					$tag = 'a';
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($rating->review_url));
 				}
 				
 				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
-					$this->{'proofratings_widgets_' . $badge_type}($rating);
+					$this->{'widgets_' . $badge_type}($rating);
 				printf('</%s>', $tag);
 	        }
 
@@ -353,10 +360,10 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function proofratings_widgets_sites_square($site) {			
+	public function widgets_sites_square($site) {			
     	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
-		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+		echo '<div class="proofratings-reviews"">';
 			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
@@ -367,9 +374,24 @@ class Proofratings_Shortcodes {
 	}
 
 	/**
+	 * Embed badge basic
+	 */
+	public function widgets_badge_basic($site) {
+    	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
+	
+		printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
+
+		printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('ratings', 'proofratings'));
+
+		if ( $review_url = esc_url($site->review_url) ) {
+			printf('<a class="view-reviews" href="%s">%s</a>', $review_url, __('View all reviews', 'proofratings'));
+		}            
+	}
+
+	/**
 	 * Embed badge style2
 	 */
-	public function proofratings_widgets_sites_rectangle($site) {		
+	public function widgets_sites_rectangle($site) {		
     	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
 
 		if ( $site->rating_title ) {
@@ -377,12 +399,30 @@ class Proofratings_Shortcodes {
 		}
 
 	
-		echo '<div class="proofratings-reviews" itemprop="reviewRating">';
+		echo '<div class="proofratings-reviews">';
 			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
 
 		printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('reviews', 'proofratings'));
+	}
+
+	/**
+	 * Sites icon
+	 * @since 1.0.9
+	 */
+	public function widgets_sites_icon($site) {
+    	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon3), esc_attr($site->name));
+
+		echo '<div class="review-info-container">';	
+			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
+
+			echo '<div class="review-info">';
+				printf('<span class="proofratings-rating">%s %s</span>', number_format($site->rating, 1), __('Rating', 'proofratings'));
+				echo '<span class="separator-circle">●</span>';
+				printf('<span class="proofratings-review-number">' . _n( '%s Review', '%s Reviews', $site->count, 'proofratings' ), number_format_i18n( $site->count ) . '</span>');
+			echo '</div>';          
+		echo '</div>';          
 	}
 
 	/**
@@ -469,10 +509,6 @@ class Proofratings_Shortcodes {
 		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>" data-type="overall_cta_banner">
 			<?php echo $close_button; ?>
 			<?php $location->ratings->get_logos(); ?>
-			
-        	<meta itemprop="worstRating" content = "1">
-        	<meta itemprop="ratingValue" content="<?php echo $location->ratings->rating ?>">
-        	<meta itemprop="bestRating" content="5">
 
 			<div class="rating-box">
 				<span class="proofratings-stars medium"><i style="width: <?php echo $location->ratings->percent ?>%"></i></span> 

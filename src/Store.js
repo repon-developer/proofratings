@@ -8,6 +8,7 @@ const ACTIONS = {
     BADGE_DISPLAY: "BADGE_DISPLAY",
     SITES_SQUARE: "SITES_SQUARE",
     BADGE_BASIC: "BADGE_BASIC",
+    SITES_ICON: "SITES_ICON",
     SITES_RECTANGLE: "SITES_RECTANGLE",
     
     
@@ -22,6 +23,7 @@ const settings = {
     badge_display: {
         sites_square: false,
         badge_basic: false,
+        sites_icon: false,
         sites_rectangle: false,
         overall_cta_banner: false,
         overall_rectangle_embed: false,
@@ -31,6 +33,7 @@ const settings = {
     },
     sites_square: {active_sites: null},
     badge_basic: {active_sites: null},
+    sites_icon: {active_sites: null},
     sites_rectangle: {active_sites: null},
 
     overall_rectangle_embed: {},
@@ -69,6 +72,9 @@ const settingsReducer = (state = settings, action) => {
 
         case "BADGE_BASIC":
             return {...state, badge_basic: {...state.badge_basic, ...action.payload}};
+
+        case "SITES_ICON":
+            return {...state, sites_icon: {...state.sites_icon, ...action.payload}};
 
         case "SITES_RECTANGLE":
             return {...state, sites_rectangle: {...state.sites_rectangle, ...action.payload}};

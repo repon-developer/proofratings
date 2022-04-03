@@ -1,8 +1,9 @@
 import store, { ACTIONS } from "./../Store";
 import ColorPicker from "./../Component/ColorPicker";
-import Shadow from "./../Component/Shadow";
 import Widgets from "./Widgets";
 import Link from '../Component/Link'
+import Border from "./../Component/Border";
+import Shadow from "./../Component/Shadow";
 
 const { useState, useEffect } = React;
 
@@ -26,6 +27,12 @@ const OverallRectangle_Embed = (props) => {
     const handle_link = (name, value) => {
         link[name] = value;
         handle_field({link})
+    }
+
+    const border = Object.assign({ show: false, color: "", hover: "" }, state?.border)
+    const handleBorder = (name, value) => {
+        border[name] = value;
+        handle_field({border})
     }
 
     const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
@@ -66,7 +73,7 @@ const OverallRectangle_Embed = (props) => {
 
                 {state?.customize && (
                     <React.Fragment>
-                        <Widgets {...state} shadow={shadow} />
+                        <Widgets {...state} shadow={shadow} border={border} />
 
                         <tr>
                             <th scope="row">Star Color</th>
@@ -77,6 +84,8 @@ const OverallRectangle_Embed = (props) => {
                             <th scope="row">Rating Color</th>
                             <td><ColorPicker color={state?.rating_color} onUpdate={(rating_color) => handle_field({rating_color})} /></td>
                         </tr>
+
+                        <Border name="border" border={border} onUpdate={handleBorder} />
 
                         <Shadow shadow={shadow} onUpdate={handleShadow} />
                     

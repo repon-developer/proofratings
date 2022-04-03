@@ -40,6 +40,13 @@ class Proofratings_Locations  {
 		return self::$instance;
 	}
 
+	/**
+	 * Items
+	 * @var self
+	 * @since  1.1.0
+	 */
+	var $items = [];
+
 
 	/**
 	 * Constructor.
@@ -49,6 +56,7 @@ class Proofratings_Locations  {
         $this->get_locations();
 		$this->total = sizeof($this->items);
 	}
+
 
 	/**
 	 * save location
@@ -63,6 +71,19 @@ class Proofratings_Locations  {
 		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $data )], ['id' => $id]);
 		do_action( 'proofrating_location_save_settings' );
 		return $result;
+	}
+
+	/**
+	 * save location
+	 * @since  1.0.6
+	 */
+	function save_settings_by_location($location_id, $settings) {		
+		$key = array_search($location_id, array_column($this->items, 'location_id'));
+		if ( $key !== false) {
+			return $this->save_settings($this->items[$key]->id, $settings);
+		}
+
+		return array('success' => false);		
 	}
 
 	/**
@@ -159,6 +180,7 @@ class Proofratings_Locations  {
 
 		return $this->sanitize_location((object) array(
 			'id' => 'overall',
+			'location_id' => 'overall',
 			'location' => __('ALL LOCATIONS (OVERALL)', 'proofratings'),
 			'settings' => get_option('proofratings_overall_rating_settings'),
 			'reviews' => $site_overall_review,
@@ -172,6 +194,11 @@ class Proofratings_Locations  {
      */
 	function get_locations() {
 		global $wpdb;
+
+		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->proofratings ) );
+		if ( ! $wpdb->get_var( $query ) == $wpdb->proofratings ) {
+			return [];
+		}
 
 		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status != 'deleted' ORDER BY location ASC");
 
@@ -241,6 +268,15 @@ class Proofratings_Locations  {
 	 */
 	function get($id) {
 		$key = array_search($id, array_column($this->items, 'id'));
+		return $key === false ? false : $this->items[$key];
+	}
+
+	/**
+	 * get single location by location id
+	 * @since  1.0.6
+	 */
+	function get_by_location($location_id) {
+		$key = array_search($location_id, array_column($this->items, 'location_id'));
 		return $key === false ? false : $this->items[$key];
 	}
 }
