@@ -570,7 +570,7 @@ html {
 
 .proofratings-banner-badge .rating-box .rating {color: inherit; font-size: 14px; font-weight: bold; line-height: 1.5;}
 
-.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); margin: 0 100px 0 0; font-weight: normal;}
+.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); line-height: 1.1; margin: 0 100px 0 0; font-weight: normal;}
 
 .proofratings-banner-badge .button-container {display:flex; align-items: center; justify-content: center; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
 
