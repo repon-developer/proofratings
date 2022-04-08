@@ -127,7 +127,6 @@ class Proofratings {
 				'status' => @$location['status']
 			);
 
-			
 			if ( $get_location = $wpdb->get_row("SELECT * FROM $wpdb->proofratings WHERE location_id = '$id'") ) {
 
 				$settings = maybe_unserialize( $get_location->settings );
@@ -156,12 +155,29 @@ class Proofratings {
 		}
 
 		update_option( 'proofratings_status', $request->get_param('status'));
+
+		$this->clear_cache();
+	}
+
+	/**
+	 * Clear cache
+	 * @since 1.1.2
+	 */
+	public function clear_cache() {
+		if ( function_exists( 'wp_cache_flush' ) ) {
+			wp_cache_flush();
+		}
+
+		if ( class_exists( '\\LiteSpeed\\Purge' ) && method_exists( '\\LiteSpeed\\Purge', 'purge_all' ) ) {
+			\LiteSpeed\Purge::purge_all( 'Purged by WP Maintenance Mode' );
+		}
 	}
 
 	/**
 	 * proofratings rest api callback
 	 */
 	public function get_location_settings(WP_REST_Request $request) {
+		$this->clear_cache();
 		$location = $this->locations->get_by_location($request->get_param('location_id'));
 		if ( isset($location->settings) ) {
 			return $location->settings;
