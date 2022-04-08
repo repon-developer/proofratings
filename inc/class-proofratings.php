@@ -208,6 +208,11 @@ class Proofratings {
 		if ( function_exists( 'rocket_clean_domain' ) ) {
 			rocket_clean_domain();
 		}
+
+		// NitroPack - https://wordpress.org/plugins/nitropack/
+		if ( function_exists('nitropack_sdk_purge') ) {
+			nitropack_sdk_purge(NULL, NULL, 'Manual purge of all pages');
+		}
 	}
 
 	/**

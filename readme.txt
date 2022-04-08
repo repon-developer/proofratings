@@ -4,7 +4,7 @@ Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews
 Requires at least: 5.2
 Tested up to: 5.9.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Author: Proofratings <info@proofratings.com>
@@ -79,6 +79,9 @@ This plugin requires a paid plan: <a href="https://proofratings.com/pricing/" ta
 
 
 == Changelog ==
+= 1.1.3 =
+* Fix cache problem
+
 = 1.1.2 =
 * Fix cache problem
 
