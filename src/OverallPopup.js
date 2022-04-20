@@ -88,21 +88,7 @@ const OverallPopup = () => {
                                             </div>
 
                                             <div className={widget_class}>
-                                                <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}/images/trustpilot.svg)`}}>
-                                                    <img src={`${proofratings.assets_url}/images/trustpilot.svg`} alt="Trustpilot"/>
-                                                </div>
-                                                <div className="proofratings-reviews" itemProp="reviewRating">
-                                                    <span className="proofratings-score">4.4</span>
-                                                    <span className="proofratings-stars">
-                                                        <i style={{ width: "88%" }} />
-                                                    </span>
-                                                </div>
-                                                <div className="review-count"> 10 reviews </div>
-                                                <p className="view-reviews">View Reviews</p>
-                                            </div>
-
-                                            <div className={widget_class}>
-                                                <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}/images/trustpilot.svg)`}}>
+                                                <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}/images/wordpress.svg)`}}>
                                                     <img src={`${proofratings.assets_url}/images/wordpress.svg`} alt="Wordpress"/>
                                                 </div>
                                                 <div className="proofratings-reviews" itemProp="reviewRating">

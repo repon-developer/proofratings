@@ -85,18 +85,6 @@ class Proofratings_Site_Data {
             'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-bbb.svg',
             'category' => 'general'
         ],
-        
-        'trustpilot' => [
-            'theme_color' => '#01B67B',
-            'name' => __('Trustpilot', 'proofratings'),
-            'title' => __('Trustpilot Review Settings', 'proofratings'),
-            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot.svg',
-            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-trustpilot.png',
-            'rating_title' => __('Trustpilot Rating', 'proofratings'),
-            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/trustpilot-black.svg',
-            'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-trustpilot.svg',
-            'category' => 'general'
-        ],
 
         'bestcompany' => [
             'theme_color' => '#3c5170',

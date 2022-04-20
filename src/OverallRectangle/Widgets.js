@@ -62,7 +62,6 @@ const Widgets = (props) => {
                         <div className="proofratings-inner">
                             <div className="proofratings-logos">
                                 <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google"/>
-                                <img src={`${proofratings.assets_url}/images/icon-trustpilot.png`} alt="trustpilot"/>
                                 <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
                             </div>
                             <div className="proofratings-reviews">

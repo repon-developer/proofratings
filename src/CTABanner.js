@@ -139,7 +139,6 @@ const CTABanner = (props) => {
                                     <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
                                         <div className="proofratings-logos">
                                             <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google"/>
-                                            <img src={`${proofratings.assets_url}/images/icon-trustpilot.png`} alt="trustpilot"/>
                                             <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
                                         </div>
                                         <div className="rating-box">
