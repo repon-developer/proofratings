@@ -32,25 +32,29 @@ class Proofratings_Ajax {
 	}
 
 	public function notice_feedback() {
-		if ( !isset($_POST['days']) ) {
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		if ( !isset($postdata['days']) ) {
 			update_option('proofratings_feedback_hide', true);
 			wp_send_json_success();
 		}
 
-		$days = $_POST['days'];
+		$days = $postdata['days'];
 		setcookie("proofratings_feedback_hide", true, strtotime("+ $days days"));
 		wp_send_json_success();
 	}
 
 	public function save_location() {
-		$location = @$_POST['location_id'];
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		$location = @$postdata['location_id'];
 		if ( empty($location)) {
 			wp_send_json_error();
 		}
 
-		unset($_POST['location_id'], $_POST['action']);
-		get_proofratings()->locations->save_settings($location, $_POST);
-		wp_send_json( $_POST );
+		unset($postdata['location_id'], $postdata['action']);
+		get_proofratings()->locations->save_settings($location, $postdata);
+		wp_send_json( $postdata );
 	}
 
 	function sanitize_data($string) {
@@ -74,7 +78,9 @@ class Proofratings_Ajax {
 	}
 
 	public function get_location() {
-		$location = @$_POST['location_id'];
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		$location = @$postdata['location_id'];
 		if ( empty($location)) {
 			wp_send_json_error();
 		}

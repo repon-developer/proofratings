@@ -92,15 +92,16 @@ class Proofratings_Email_Reporting {
 	 * Shows the plugin's settings page.
 	 */
 	public function email_settings() {
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		$email_report_settings = $this->get_data();
 		$reporting_emails = is_array($email_report_settings['reporting-emails']) ? $email_report_settings['reporting-emails'] : []; ?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Email Reporting', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
 
-			<?php if (!empty($_POST['proofratings_error'])) : ?>
+			<?php if (!empty($postdata['proofratings_error'])) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo $_POST['proofratings_error'] ?></p>
+				<p><?php echo esc_html($postdata['proofratings_error']) ?></p>
 			</div>
 			<?php endif; ?>
 			

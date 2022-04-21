@@ -3,7 +3,7 @@
     <tbody>
         <tr>
             <td align="center" style="padding:0px 40px"><img
-                    src="https://proofratings.com/wp-content/uploads/2021/08/proofrating-4123ff.png"
+                    src="<?php echo PROOFRATINGS_PLUGIN_URL ?>/assets/images/proofrating.png"
                     border="0" alt="" width="120">
             </td>
         </tr>

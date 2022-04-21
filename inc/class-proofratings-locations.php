@@ -68,16 +68,18 @@ class Proofratings_Locations_Admin {
      * @since  1.0.6
 	 */
 	public function handle_delete_action() {
-		if ( !isset($_GET['_nonce']) || empty($_GET['id'])) {
+		$data = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+
+		if ( !isset($data['_nonce']) || empty($data['id'])) {
 			return;
 		}
 
-		if( !wp_verify_nonce($_GET['_nonce'], 'delete-location' ) ) {
+		if( !wp_verify_nonce($data['_nonce'], 'delete-location' ) ) {
 			return;
 		}
 
 		global $wpdb;
-		$wpdb->update($wpdb->proofratings, ['status' => 'deleted'], ['id' => $_GET['id']]);
+		$wpdb->update($wpdb->proofratings,  ['status' => 'deleted'],  ['id' => $data['id']]);
 
 		exit(wp_safe_redirect(admin_url( 'admin.php?page=' . 'proofratings-locations')));
 	}
@@ -87,7 +89,9 @@ class Proofratings_Locations_Admin {
 	 * @since  1.0.6
 	 */
 	public function render() {
-		$location_id = isset($_GET['location']) ? $_GET['location'] : false;
+		$data = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+
+		$location_id = isset($data['location']) ? $data['location'] : false;
 		if ( get_proofratings()->locations->global ) {
 			$location_id = get_proofratings()->locations->get_global_id();
 		}

@@ -162,7 +162,8 @@ class Proofratings_Settings {
 	/**
 	 * Shows the plugin's settings page.
 	 */
-	public function account_inactive_output() { ?>
+	public function account_inactive_output() {
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
@@ -182,7 +183,7 @@ class Proofratings_Settings {
 						echo '</div>';
 					}
 
-					if( @$_POST['success'] === true ) {
+					if( @$postdata['success'] === true ) {
 						echo '<div  class="notice notice-success settings-error is-dismissible">';
 							echo '<p><strong>' . __('Successfully sent message', 'proofratings') . '</strong></p>';
 						echo '</div>';
@@ -193,14 +194,14 @@ class Proofratings_Settings {
 						<tr>
 							<th scope="row"><?php _e('Email', 'proofratings') ?>*</th>
 							<td>
-								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo @$_POST['email'] ?>">
+								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo @$postdata['email'] ?>">
 							</td>
 						</tr>
 
 						<tr>
 							<th scope="row"><?php _e('Confirmation', 'proofratings') ?></th>
 							<td>
-								<input name="confirmation_code" type="text" placeholder="<?php _e('Confirmation code', 'proofratings') ?>" value="<?php echo @$_POST['confirmation_code'] ?>">
+								<input name="confirmation_code" type="text" placeholder="<?php _e('Confirmation code', 'proofratings') ?>" value="<?php echo @$postdata['confirmation_code'] ?>">
 							</td>
 						</tr>
 
@@ -259,14 +260,14 @@ class Proofratings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function add_location() {
-		?>
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
 
-			<?php if (!empty($_POST['error_msg'])) : ?>
+			<?php if (!empty($postdata['error_msg'])) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo $_POST['error_msg'] ?></p>
+				<p><?php echo $postdata['error_msg'] ?></p>
 			</div>
 			<?php endif; ?>
 			
@@ -276,49 +277,49 @@ class Proofratings_Settings {
 					<tr>
 						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
 						<td>
-							<input name="name" type="text" value="<?php echo @$_POST['name'] ?>" />
+							<input name="name" type="text" value="<?php echo @$postdata['name'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
 						<td>
-							<input name="street" type="text" value="<?php echo @$_POST['street'] ?>" />
+							<input name="street" type="text" value="<?php echo @$postdata['street'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
 						<td>
-							<input name="street2" type="text" value="<?php echo @$_POST['street2'] ?>" />
+							<input name="street2" type="text" value="<?php echo @$postdata['street2'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
 						<td>
-							<input name="city" type="text" value="<?php echo @$_POST['city'] ?>" />
+							<input name="city" type="text" value="<?php echo @$postdata['city'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
 						<td>
-							<input name="state" type="text" value="<?php echo @$_POST['state'] ?>" />
+							<input name="state" type="text" value="<?php echo @$postdata['state'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
 						<td>
-							<input name="zip" type="text" value="<?php echo @$_POST['zip'] ?>" />
+							<input name="zip" type="text" value="<?php echo @$postdata['zip'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
 						<td>
-							<input name="country" type="text" value="<?php echo @$_POST['country'] ?>" />
+							<input name="country" type="text" value="<?php echo @$postdata['country'] ?>" />
 						</td>
 					</tr>
 				</table>
@@ -334,14 +335,15 @@ class Proofratings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function email_settings() {
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>
 			<hr class="wp-header-end">
 
-			<?php if (!empty($_POST['error_msg'])) : ?>
+			<?php if (!empty($postdata['error_msg'])) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo $_POST['error_msg'] ?></p>
+				<p><?php echo $postdata['error_msg'] ?></p>
 			</div>
 			<?php endif; ?>
 			
@@ -351,49 +353,49 @@ class Proofratings_Settings {
 					<tr>
 						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
 						<td>
-							<input name="name" type="text" value="<?php echo @$_POST['name'] ?>" />
+							<input name="name" type="text" value="<?php echo @$postdata['name'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
 						<td>
-							<input name="street" type="text" value="<?php echo @$_POST['street'] ?>" />
+							<input name="street" type="text" value="<?php echo @$postdata['street'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
 						<td>
-							<input name="street2" type="text" value="<?php echo @$_POST['street2'] ?>" />
+							<input name="street2" type="text" value="<?php echo @$postdata['street2'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
 						<td>
-							<input name="city" type="text" value="<?php echo @$_POST['city'] ?>" />
+							<input name="city" type="text" value="<?php echo @$postdata['city'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
 						<td>
-							<input name="state" type="text" value="<?php echo @$_POST['state'] ?>" />
+							<input name="state" type="text" value="<?php echo @$postdata['state'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
 						<td>
-							<input name="zip" type="text" value="<?php echo @$_POST['zip'] ?>" />
+							<input name="zip" type="text" value="<?php echo @$postdata['zip'] ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
 						<td>
-							<input name="country" type="text" value="<?php echo @$_POST['country'] ?>" />
+							<input name="country" type="text" value="<?php echo @$postdata['country'] ?>" />
 						</td>
 					</tr>
 				</table>

@@ -137,14 +137,16 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_action( $location ) {
+        $input_data = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+
         if ( $location->id === 'overall' ) {
             return;
         }
 
 		$permalink = add_query_arg( ['id' => $location->id, '_nonce' => wp_create_nonce( 'delete-location' )], menu_page_url('proofratings-locations', false));
 
-		if ( !empty($_GET['s']) ) {
-			$permalink = add_query_arg( ['s' => $_GET['s']], $permalink );
+		if ( !empty($input_data['s']) ) {
+			$permalink = add_query_arg( ['s' => $input_data['s']], $permalink );
 		}
 
 		if ( $this->get_pagenum() > 1 ) {
