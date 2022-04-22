@@ -384,7 +384,7 @@ class Proofratings_Shortcodes {
 		printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('ratings', 'proofratings'));
 
 		if ( $review_url = esc_url($site->review_url) ) {
-			printf('<a class="view-reviews" href="%s">%s</a>', $review_url, __('View all reviews', 'proofratings'));
+			printf('<a class="view-reviews" href="%s">%s</a>', esc_attr($review_url), __('View all reviews', 'proofratings'));
 		}            
 	}
 
@@ -395,7 +395,7 @@ class Proofratings_Shortcodes {
     	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
 
 		if ( $site->rating_title ) {
-			echo '<h4 class="rating-title">'.$site->rating_title.'</h4>';
+			echo '<h4 class="rating-title">'. esc_html($site->rating_title).'</h4>';
 		}
 
 	

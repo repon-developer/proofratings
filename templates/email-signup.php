@@ -75,7 +75,7 @@
                                                 valign="top"><span style="color: #000000;">Registered Email:</span></td>
                                             <td id="value_7" class="valueColumn"
                                                 style="padding: 12px 0px; color: #0a1551; font-weight: 500; width: 65.4685%;">
-                                                <span style="color: #000000;"><?php echo $email ?></span></td>
+                                                <span style="color: #000000;"><?php esc_html_e($email) ?></span></td>
                                         </tr>
                                         <tr>
                                             <td
@@ -84,7 +84,7 @@
                                                     #:</span></td>
                                             <td id="value_24" class="valueColumn"
                                                 style="padding: 12px 0px; color: #0a1551; font-weight: 500; width: 65.4685%;">
-                                                <span style="color: #000000;"><?php echo $confirmation_code; ?></span></td>
+                                                <span style="color: #000000;"><?php esc_html_e($confirmation_code); ?></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
