@@ -179,7 +179,7 @@ class Proofratings_Settings {
 					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
 					if( $this->signup_error->has_errors() ) {
 						echo '<div class="notice notice-error settings-error is-dismissible">';
-							echo '<p>'.$this->signup_error->get_error_message().'</p>';
+							echo '<p>'. esc_html($this->signup_error->get_error_message()).'</p>';
 						echo '</div>';
 					}
 
@@ -194,14 +194,14 @@ class Proofratings_Settings {
 						<tr>
 							<th scope="row"><?php _e('Email', 'proofratings') ?>*</th>
 							<td>
-								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo @$postdata['email'] ?>">
+								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo esc_attr(@$postdata['email']) ?>">
 							</td>
 						</tr>
 
 						<tr>
 							<th scope="row"><?php _e('Confirmation', 'proofratings') ?></th>
 							<td>
-								<input name="confirmation_code" type="text" placeholder="<?php _e('Confirmation code', 'proofratings') ?>" value="<?php echo @$postdata['confirmation_code'] ?>">
+								<input name="confirmation_code" type="text" placeholder="<?php _e('Confirmation code', 'proofratings') ?>" value="<?php echo esc_attr(@$postdata['confirmation_code']) ?>">
 							</td>
 						</tr>
 
@@ -267,7 +267,7 @@ class Proofratings_Settings {
 
 			<?php if (!empty($postdata['error_msg'])) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo $postdata['error_msg'] ?></p>
+				<p><?php echo esc_html( $postdata['error_msg']) ?></p>
 			</div>
 			<?php endif; ?>
 			
@@ -277,49 +277,49 @@ class Proofratings_Settings {
 					<tr>
 						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
 						<td>
-							<input name="name" type="text" value="<?php echo @$postdata['name'] ?>" />
+							<input name="name" type="text" value="<?php echo esc_attr(@$postdata['name']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
 						<td>
-							<input name="street" type="text" value="<?php echo @$postdata['street'] ?>" />
+							<input name="street" type="text" value="<?php echo esc_attr(@$postdata['street']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
 						<td>
-							<input name="street2" type="text" value="<?php echo @$postdata['street2'] ?>" />
+							<input name="street2" type="text" value="<?php echo esc_attr(@$postdata['street2']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
 						<td>
-							<input name="city" type="text" value="<?php echo @$postdata['city'] ?>" />
+							<input name="city" type="text" value="<?php echo esc_attr(@$postdata['city']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
 						<td>
-							<input name="state" type="text" value="<?php echo @$postdata['state'] ?>" />
+							<input name="state" type="text" value="<?php echo esc_attr(@$postdata['state']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
 						<td>
-							<input name="zip" type="text" value="<?php echo @$postdata['zip'] ?>" />
+							<input name="zip" type="text" value="<?php echo esc_attr(@$postdata['zip']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
 						<td>
-							<input name="country" type="text" value="<?php echo @$postdata['country'] ?>" />
+							<input name="country" type="text" value="<?php echo esc_attr(@$postdata['country']) ?>" />
 						</td>
 					</tr>
 				</table>
@@ -343,7 +343,7 @@ class Proofratings_Settings {
 
 			<?php if (!empty($postdata['error_msg'])) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo $postdata['error_msg'] ?></p>
+				<p><?php echo esc_html($postdata['error_msg']) ?></p>
 			</div>
 			<?php endif; ?>
 			
@@ -353,49 +353,49 @@ class Proofratings_Settings {
 					<tr>
 						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
 						<td>
-							<input name="name" type="text" value="<?php echo @$postdata['name'] ?>" />
+							<input name="name" type="text" value="<?php echo esc_attr(@$postdata['name']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
 						<td>
-							<input name="street" type="text" value="<?php echo @$postdata['street'] ?>" />
+							<input name="street" type="text" value="<?php echo esc_attr(@$postdata['street']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
 						<td>
-							<input name="street2" type="text" value="<?php echo @$postdata['street2'] ?>" />
+							<input name="street2" type="text" value="<?php echo esc_attr(@$postdata['street2']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
 						<td>
-							<input name="city" type="text" value="<?php echo @$postdata['city'] ?>" />
+							<input name="city" type="text" value="<?php echo esc_attr(@$postdata['city']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
 						<td>
-							<input name="state" type="text" value="<?php echo @$postdata['state'] ?>" />
+							<input name="state" type="text" value="<?php echo esc_attr(@$postdata['state']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
 						<td>
-							<input name="zip" type="text" value="<?php echo @$postdata['zip'] ?>" />
+							<input name="zip" type="text" value="<?php echo esc_attr(@$postdata['zip']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
 						<td>
-							<input name="country" type="text" value="<?php echo @$postdata['country'] ?>" />
+							<input name="country" type="text" value="<?php echo esc_attr(@$postdata['country']) ?>" />
 						</td>
 					</tr>
 				</table>

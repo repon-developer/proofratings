@@ -171,23 +171,23 @@ class Proofratings_Shortcodes {
 			$location->ratings->get_logos();
 
 			echo '<div class="proofratings-reviews">';
-				printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
-				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
+				printf('<span class="proofratings-score">%s</span>', esc_html( $location->ratings->rating));
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_html($location->ratings->percent));
 			echo '</div>';
 		echo '</div>';
 
-		printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
+		printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->ratings->count), __('reviews', 'proofratings'));
 	}
 
 	private function overall_ratings_narrow($location) {
 		$location->ratings->get_logos();
 
         echo '<div class="proofratings-reviews">';
-            printf('<span class="proofratings-score">%s</span>', $location->ratings->rating);
-            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', $location->ratings->percent);
+            printf('<span class="proofratings-score">%s</span>', esc_html($location->ratings->rating));
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_html($location->ratings->percent));
         echo '</div>';
 
-    	printf('<div class="proofratings-review-count">%d %s</div>', $location->ratings->count, __('reviews', 'proofratings'));
+    	printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->ratings->count), __('reviews', 'proofratings'));
 	}
 
 	/**
@@ -506,19 +506,19 @@ class Proofratings_Shortcodes {
 		}
 		
 		ob_start(); ?>
-		<div class="<?php echo $class; ?>" data-location="<?php echo $location->id ?>" data-type="overall_cta_banner">
+		<div class="<?php echo $class; ?>" data-location="<?php echo esc_attr($location->id) ?>" data-type="overall_cta_banner">
 			<?php echo $close_button; ?>
 			<?php $location->ratings->get_logos(); ?>
 
 			<div class="rating-box">
-				<span class="proofratings-stars medium"><i style="width: <?php echo $location->ratings->percent ?>%"></i></span> 
-				<span class="rating"><?php echo $location->ratings->rating; ?> / 5</span>
+				<span class="proofratings-stars medium"><i style="width: <?php echo esc_attr( $location->ratings->percent) ?>%"></i></span> 
+				<span class="rating"><?php echo esc_html($location->ratings->rating); ?> / 5</span>
 			</div>
 
-			<div class="proofratings-review-count"><?php echo $location->ratings->count; ?> customer reviews</div>
+			<div class="proofratings-review-count"><?php echo esc_html($location->ratings->count); ?> customer reviews</div>
 
 			<div class="button-container">
-				<?php echo $button1 . $button2; ?>
+				<?php echo wp_kses($button1 . $button2); ?>
 			</div>
 		</div>
 		<?php

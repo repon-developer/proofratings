@@ -144,35 +144,35 @@ class Proofratings_Email_Reporting {
 					<tr>
 						<th scope="row"><?php _e('Sender name', 'proofratings') ?></th>
 						<td>
-							<input name="agency[sender-name]" type="text" value="<?php echo @$email_report_settings['reporting-agency']['sender-name'] ?>" />
+							<input name="agency[sender-name]" type="text" value="<?php echo esc_attr(@$email_report_settings['reporting-agency']['sender-name']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Sender email', 'proofratings') ?></th>
 						<td>
-							<input name="agency[sender-email]" type="email" value="<?php echo @$email_report_settings['reporting-agency']['sender-email'] ?>" />
+							<input name="agency[sender-email]" type="email" value="<?php echo esc_attr(@$email_report_settings['reporting-agency']['sender-email']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Reply to email', 'proofratings') ?></th>
 						<td>
-							<input name="agency[reply-to-email]" type="email" value="<?php echo @$email_report_settings['reporting-agency']['reply-to-email'] ?>" />
+							<input name="agency[reply-to-email]" type="email" value="<?php echo esc_attr(@$email_report_settings['reporting-agency']['reply-to-email']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Email logo URL', 'proofratings') ?></th>
 						<td>
-							<input name="agency[email-logo]" type="url" value="<?php echo @$email_report_settings['reporting-agency']['email-logo'] ?>" />
+							<input name="agency[email-logo]" type="url" value="<?php echo esc_attr(@$email_report_settings['reporting-agency']['email-logo']) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Email logo URL - Dark', 'proofratings') ?></th>
 						<td>
-							<input name="agency[email-logo-dark]" type="url" value="<?php echo @$email_report_settings['reporting-agency']['email-logo-dark'] ?>" />
+							<input name="agency[email-logo-dark]" type="url" value="<?php echo esc_attr(@$email_report_settings['reporting-agency']['email-logo-dark']) ?>" />
 						</td>
 					</tr>
 				</table>

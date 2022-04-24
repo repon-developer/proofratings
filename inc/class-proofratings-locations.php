@@ -109,7 +109,7 @@ class Proofratings_Locations_Admin {
 		$location_table->prepare_items(); ?>
 
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Locations', 'proofratings'); ?> (<?php echo $location_table->total_items ?>)</h1>
+			<h1 class="wp-heading-inline"><?php _e('Locations', 'proofratings'); ?> (<?php echo esc_html($location_table->total_items) ?>)</h1>
 			<hr class="wp-header-end">
 
             <form method="post">
@@ -137,9 +137,9 @@ class Proofratings_Locations_Admin {
 		} ?>
 
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings'); ?> (<?php echo $location_name ?>)</h1>
+			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings'); ?> (<?php echo esc_html($location_name) ?>)</h1>
 			<hr class="wp-header-end">
-			<div id="proofratings-widgets-root" data-location=<?php echo $location_id ?>></div>
+			<div id="proofratings-widgets-root" data-location=<?php echo esc_attr($location_id) ?>></div>
 			<p class="review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
 		</div>
 		<?php
