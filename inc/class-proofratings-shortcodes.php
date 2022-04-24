@@ -518,7 +518,7 @@ class Proofratings_Shortcodes {
 			<div class="proofratings-review-count"><?php echo esc_html($location->ratings->count); ?> customer reviews</div>
 
 			<div class="button-container">
-				<?php echo wp_kses($button1 . $button2); ?>
+				<?php echo wp_kses_post($button1 . $button2); ?>
 			</div>
 		</div>
 		<?php
