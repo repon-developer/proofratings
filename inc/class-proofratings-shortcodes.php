@@ -506,8 +506,8 @@ class Proofratings_Shortcodes {
 		}
 		
 		ob_start(); ?>
-		<div class="<?php echo $class; ?>" data-location="<?php echo esc_attr($location->id) ?>" data-type="overall_cta_banner">
-			<?php echo $close_button; ?>
+		<div class="<?php echo esc_attr($class); ?>" data-location="<?php echo esc_attr($location->id) ?>" data-type="overall_cta_banner">
+			<?php echo wp_kses_post($close_button); ?>
 			<?php $location->ratings->get_logos(); ?>
 
 			<div class="rating-box">
