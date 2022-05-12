@@ -108,11 +108,6 @@ const BadgeBasic = (props) => {
                     <table className="form-table">
                         <tbody>
                             <tr>
-                                <th scope="row">Logo Color</th>
-                                <td><ColorPicker color={state?.logo_color} onUpdate={(logo_color) => handle_field({logo_color})} /></td>
-                            </tr>
-
-                            <tr>
                                 <th scope="row">Star Color</th>
                                 <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({star_color})} /></td>
                             </tr>

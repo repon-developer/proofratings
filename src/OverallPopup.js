@@ -111,11 +111,6 @@ const OverallPopup = () => {
                             </tr>
 
                             <tr>
-                                <th scope="row">Logo Color</th>
-                                <td><ColorPicker color={state?.logo_color} onUpdate={(logo_color) => handle_field({logo_color})} /></td>
-                            </tr>
-
-                            <tr>
                                 <th scope="row">Review Text Color</th>
                                 <td><ColorPicker color={state?.review_text_color} onUpdate={(review_text_color) => handle_field({review_text_color})} /></td>
                             </tr>

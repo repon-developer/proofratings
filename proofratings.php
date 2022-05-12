@@ -28,6 +28,7 @@ define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v
 
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
 
+
 /**
  * Initialize the plugin tracker
  *

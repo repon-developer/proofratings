@@ -201,8 +201,20 @@ const CTABanner = (props) => {
             <h2 style={{fontSize: 25}}>Call-to-action Button</h2>
             <table className="form-table">
                 <caption>First Button</caption>
-                <tbody>                    
-                    <Button key={'button1'} onUpdate={handle_button} {...state?.button1}  />
+                <tbody>
+                    <tr>
+                        <td colSpan={2} style={{paddingLeft: 0}}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    defaultChecked={state?.button2?.show}
+                                    className="checkbox-switch"
+                                    onChange={() => handle_button('show', !state.button1?.show)}
+                                /> Second Button
+                            </label>
+                        </td>
+                    </tr>
+                    {state?.button1?.show && <Button key={'button1'} onUpdate={handle_button} {...state?.button1}  />}
                 </tbody>
             </table>
 
