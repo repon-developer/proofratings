@@ -282,7 +282,7 @@ class Proofratings {
 		}
 
 		if( $response['response']['code'] !== 200) {
-			return;			
+			return;
 		}
 
 		$data = json_decode(wp_remote_retrieve_body($response));

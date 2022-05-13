@@ -57,6 +57,18 @@ class Proofratings_Admin {
 		
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+
+		add_filter( 'admin_body_class', [$this, 'body_class']);
+	}
+
+	function body_class($classes) {
+		$screen = get_current_screen();
+		if ( strpos($screen->id, 'proofratings') === false ) {
+			return $classes;
+		}
+
+		$classes .= ' screen-proofratings';	 
+		return $classes;
 	}
 
 	function admin_notice_rating_us() {
@@ -126,6 +138,10 @@ class Proofratings_Admin {
 		));
 
 		$screen = get_current_screen();
+		if ( strpos($screen->id, 'proofratings') === false ) {
+			return;
+		}
+
 		
 		preg_match('/(proofratings_page|proofratings-widgets)/', $screen->id, $matches);
 		

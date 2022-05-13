@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File containing the class Proofratings_Settings.
  *
@@ -9,6 +10,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+use IdeoLogix\DigitalLicenseManager\Utils\StringHasher;
+use IdeoLogix\DigitalLicenseManager\Utils\Data\License as License;
 
 /**
  * Handles core plugin hooks and action setup.
@@ -37,16 +41,18 @@ class Proofratings_Settings {
 	}
 
 
-	var $signup_error;
+	var $license_confirm;
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->signup_error = new WP_Error;
+		$this->license_confirm = new WP_Error;
 
 		add_action( 'init', [$this, 'handle_signup_form'] );
 		add_action( 'init', [$this, 'handle_add_location'] );
+
+		
 	}
 
 	public function handle_signup_form() {
@@ -54,35 +60,87 @@ class Proofratings_Settings {
 			return;
 		}
 
-		if ( !wp_verify_nonce( $_POST['_nonce'], 'proofratings_signup_nonce')) {
+		if ( !wp_verify_nonce( $_POST['_nonce'], 'proofratings_license_confirm_nonce')) {
 			return;
 		}
 
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-		$email = sanitize_email( $postdata['email'] );
-		if ( empty($email)) {
-			return $this->signup_error->add('email', 'Please fill email field with correct value.');
+		$license_key = @$postdata['license-key'];
+		if ( empty($license_key) ) {
+			return $this->license_confirm->add('license_key', 'Please enter your license key');
 		}
 
-		$confirmation_code = @$postdata['confirmation_code'];
+		$result = License::find( $license_key . 'sfsf' );
+		if ( is_wp_error( $result ) ) {
+			return new WP_Error( 'invalid', sprintf("The license key '%s' is not valid", $licenseKey ), array( 'code' => 404 ) );
+		}
 
-		$_POST['confirmation_code'] = '';
-		$_POST['email'] = '';
+		var_dump($result);
+
+
+		// $res = License::activate( $license_key, array(
+		// 	'label' => get_bloginfo( 'name' )
+		// ) );
+
+		// $hash = StringHasher::license( $licenseKey );
+
+
+
+		// var_dump($hash);
+
+
+		exit;
+
+
+
+
+		$response = wp_remote_get(add_query_arg(array(
+			'name' => get_bloginfo( 'name' ),
+			'email' => get_bloginfo( 'admin_email' ),
+			'url' => get_site_url(),
+			'license_key' => $license_key
+		), PROOFRATINGS_API_URL . '/activate_license'));
+
+		var_dump($response);
+		return;
+
+		if ( is_wp_error( $response ) ) {
+			return;
+		}
+
+		if( $response['response']['code'] !== 200) {
+			return;
+		}
+
+		$data = json_decode(wp_remote_retrieve_body($response));
+		if ( is_object($data) && $data->success ) {
+			update_option('proofratings_status', $data->status );
+		}
+
+
+		
+
+
+
+
+
+
+
+
+		$_POST['license-key'] = '';
 
 		ob_start();
-		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-signup.php';
+		include PROOFRATINGS_PLUGIN_DIR . '/templates/license-activated.php';
 		$content = ob_get_clean();
 		
 		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
 
 		$sendto = 'jonathan@proofratings.com';
 		get_proofratings()->registration();		
-		if (!wp_mail( $sendto, 'New Account Signup Request', $content, $headers) ) {
-			return $this->signup_error->add('failed', sprintf('Send mail have not successful. Please send email here <a href="mailto:%1$s">%1$s</a>', $sendto));
+		if (!wp_mail( $sendto, 'New license have been activated', $content, $headers) ) {
+			return $this->license_confirm->add('failed', sprintf('Send mail have not successful. Please send email here <a href="mailto:%1$s">%1$s</a>', $sendto));
 		}
-		
-		$_POST['success'] = true;
 	}
 
 	/**
@@ -164,54 +222,34 @@ class Proofratings_Settings {
 	 */
 	public function account_inactive_output() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
-		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proofratings Settings', 'proofratings') ?></h1>
-			<hr class="wp-header-end">
-			<h2 class="nav-tab-wrapper">
-				<a href="#proofratings-activation-tab" class="nav-tab"><?php _e('Activation', 'proofratings'); ?></a>
-			</h2>
+		<div class="wrap proofratings-settings-wrap">		
+			<header class="proofratins-header">
+				<h1 class="title"><?php _e('Proofratings Activation', 'proofratings') ?></h1>
+			</header>
 
-			<div id="proofratings-activation-tab" class="settings_panel">
-				<h3><?php _e('Please fill in the information below to activate and connect your account.', 'proofratings') ?></h3>
-				<p>Proofratings is the leader in rating widgets for your website. This plugin requires a paid yearly plan. You can learn more <a href="https://proofratings.com/rating-widgets/" target="_blank">here</a>. We offer a money back guarantee.</p>
+			<div class="proofratings-form-activation-wrapper">
+				<p class="lead-text"><?php _e('This plugin requires an annual subscription to cover daily, automatic rating updates. You can try Proofratings free for 30 days by signing up for a trial below.', 'proofratings') ?></p>
+				<a class="button btn-primary" href="#"><?php _e('SIGN UP FOR TRIAL', 'proofratings') ?></a>
 
-				<form method="POST">
-					<?php wp_nonce_field('proofratings_signup_nonce', '_nonce'); 
-					if( $this->signup_error->has_errors() ) {
+				<div class="gap-30"></div>
+
+				<hr class="wp-header-end">
+
+				<form class="proofratings-activation" method="POST">
+					<?php wp_nonce_field('proofratings_license_confirm_nonce', '_nonce'); 
+					if( $this->license_confirm->has_errors() ) {
 						echo '<div class="notice notice-error settings-error is-dismissible">';
-							echo '<p>'. esc_html($this->signup_error->get_error_message()).'</p>';
+							echo '<p>'. esc_html($this->license_confirm->get_error_message()).'</p>';
 						echo '</div>';
 					}
 
-					if( @$postdata['success'] === true ) {
-						echo '<div  class="notice notice-success settings-error is-dismissible">';
-							echo '<p><strong>' . __('Successfully sent message', 'proofratings') . '</strong></p>';
-						echo '</div>';
-					}
 					?>
 
-					<table class="form-table">
-						<tr>
-							<th scope="row"><?php _e('Email', 'proofratings') ?>*</th>
-							<td>
-								<input name="email" type="text" placeholder="<?php _e('Email', 'proofratings') ?>" value="<?php echo esc_attr(@$postdata['email']) ?>">
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><?php _e('Confirmation', 'proofratings') ?></th>
-							<td>
-								<input name="confirmation_code" type="text" placeholder="<?php _e('Confirmation code', 'proofratings') ?>" value="<?php echo esc_attr(@$postdata['confirmation_code']) ?>">
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"></th>
-							<td>
-								<button class="button-primary"><?php _e('Activate', 'proofratings') ?></button>
-							</td>
-						</tr>
-					</table>
+					<p>If you already signed up, please enter your license key below.</p>
+					<div class="inline-field">
+						<input name="license-key" type="text" placeholder="<?php _e('License key', 'proofratings') ?>">
+						<button class="button btn-primary"><?php _e('CONFIRM', 'proofratings') ?></button>
+					</div>
 				</form>
 			</div>
 		</div>

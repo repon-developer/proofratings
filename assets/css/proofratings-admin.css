@@ -1,6 +1,39 @@
+.gap-10 {height: 10px;}
+.gap-20 {height: 20px;}
 .gap-30 {height: 30px;}
 
+body.screen-proofratings {
+    background-color: #fff;
+}
+
+body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin: 0 0 0 -20px}
+
+.screen-proofratings .btn-primary {color: #fff; background-color: #3858e9; border-color: #3858e9!important}
+.screen-proofratings .btn-primary:hover {color: #fff; background-color: #2348ec}
+
+.proofratins-header {padding: 30px; margin: -30px -30px 30px -30px; background-color: #F4F7FE; border-bottom: 1px solid #CED0D7}
+
+.proofratins-header .title {
+    color: #2C3149;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 36px;
+    margin-right: 16px;
+    padding: 0;
+}
+
 .proofratings-instruction {font-size: 20px; font-weight: bold}
+
+.proofratings-form-activation-wrapper {
+    max-width: 800px;
+}
+
+.screen-proofratings .lead-text {
+    color: #1d2327;
+    font-size: 1.3em;
+    margin: 1em 0;
+    font-weight: 500;
+}
 
 table.form-table caption {
     text-align: left;
