@@ -71,76 +71,19 @@ class Proofratings_Settings {
 			return $this->license_confirm->add('license_key', 'Please enter your license key');
 		}
 
-		$result = License::find( $license_key . 'sfsf' );
-		if ( is_wp_error( $result ) ) {
-			return new WP_Error( 'invalid', sprintf("The license key '%s' is not valid", $licenseKey ), array( 'code' => 404 ) );
-		}
-
-		var_dump($result);
-
-
-		// $res = License::activate( $license_key, array(
-		// 	'label' => get_bloginfo( 'name' )
-		// ) );
-
-		// $hash = StringHasher::license( $licenseKey );
-
-
-
-		// var_dump($hash);
-
-
-		exit;
-
-
-
-
 		$response = wp_remote_get(add_query_arg(array(
 			'name' => get_bloginfo( 'name' ),
 			'email' => get_bloginfo( 'admin_email' ),
-			'url' => get_site_url(),
+			'site_url' => get_site_url(),
 			'license_key' => $license_key
-		), PROOFRATINGS_API_URL . '/activate_license'));
+		), PROOFRATINGS_API_URL . '/register_site'));
 
-		var_dump($response);
-		return;
-
-		if ( is_wp_error( $response ) ) {
-			return;
+		$result = json_decode(wp_remote_retrieve_body($response));
+		if ( !isset($result->success) || $result->success !== true ) {
+			return $this->license_confirm->add('license_key', $result->message);
 		}
 
-		if( $response['response']['code'] !== 200) {
-			return;
-		}
-
-		$data = json_decode(wp_remote_retrieve_body($response));
-		if ( is_object($data) && $data->success ) {
-			update_option('proofratings_status', $data->status );
-		}
-
-
-		
-
-
-
-
-
-
-
-
-		$_POST['license-key'] = '';
-
-		ob_start();
-		include PROOFRATINGS_PLUGIN_DIR . '/templates/license-activated.php';
-		$content = ob_get_clean();
-		
-		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', get_bloginfo('name'), $email), 'Reply-To: ' . $email);
-
-		$sendto = 'jonathan@proofratings.com';
-		get_proofratings()->registration();		
-		if (!wp_mail( $sendto, 'New license have been activated', $content, $headers) ) {
-			return $this->license_confirm->add('failed', sprintf('Send mail have not successful. Please send email here <a href="mailto:%1$s">%1$s</a>', $sendto));
-		}
+		update_option('proofratings_status', $result->data->status );
 	}
 
 	/**

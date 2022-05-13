@@ -264,32 +264,6 @@ class Proofratings {
 		$this->registration('activate');
 	}
 
-	/**
-	 * Sign up 
-	 * @since 1.0.6
-	 */
-	function registration($source = 'registration') {
-		$request_url = add_query_arg(array(
-			'name' => get_bloginfo( 'name' ),
-			'email' => get_bloginfo( 'admin_email' ),
-			'url' => get_site_url(),
-			'source' => $source
-		), PROOFRATINGS_API_URL . '/register');
-
-		$response = wp_remote_get($request_url);
-		if ( is_wp_error( $response ) ) {
-			return;
-		}
-
-		if( $response['response']['code'] !== 200) {
-			return;
-		}
-
-		$data = json_decode(wp_remote_retrieve_body($response));
-		if ( is_object($data) && $data->success ) {
-			update_option('proofratings_status', $data->status );
-		}
-	 }
 
 	/**
 	 * Loads textdomain for plugin.
