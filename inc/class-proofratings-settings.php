@@ -79,6 +79,7 @@ class Proofratings_Settings {
 		), PROOFRATINGS_API_URL . '/register_site'));
 
 		$result = json_decode(wp_remote_retrieve_body($response));
+
 		if ( !isset($result->success) || $result->success !== true ) {
 			return $this->license_confirm->add('license_key', $result->message);
 		}
@@ -184,13 +185,11 @@ class Proofratings_Settings {
 						echo '<div class="notice notice-error settings-error is-dismissible">';
 							echo '<p>'. esc_html($this->license_confirm->get_error_message()).'</p>';
 						echo '</div>';
-					}
-
-					?>
+					} ?>
 
 					<p>If you already signed up, please enter your license key below.</p>
 					<div class="inline-field">
-						<input name="license-key" type="text" placeholder="<?php _e('License key', 'proofratings') ?>">
+						<input name="license-key" type="text" value="<?php echo esc_attr( $postdata['license-key'] )  ?>" placeholder="<?php _e('License key', 'proofratings') ?>" style="width: 285px">
 						<button class="button btn-primary"><?php _e('CONFIRM', 'proofratings') ?></button>
 					</div>
 				</form>
