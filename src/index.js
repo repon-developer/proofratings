@@ -90,18 +90,17 @@ const ProofratingsWidgets = () => {
     }
 
     const tabs = {
-        'review-sites': 'Review Sites',
-        'display-badges': 'Badges',
-        'badge-square': 'Sites Square',
+        'badge-overview': 'Badge Overview',
+        'badge-square': 'Square',
         'badge-basic': 'Sites Basic',
-        'sites-icon': 'Sites Icon',
+        'sites-icon': 'Icon',
         'badge-rectangle': 'Sites (Rectangle)',
         'overall-rectangle-embed': 'Overall Rating Rectangle - EMBED',
         'overall-rectangle-float': 'Overall Rating Rectangle - FLOAT',
         'overall-narrow-embed': 'Overall Rating Narrow - EMBED',
-        'overall-narrow-float': 'Overall Rating Narrow - FLOAT',
+        'overall-narrow-float': 'Overall Narrow (Float)',
         'badge-popup': 'Popup Badges',
-        'overall-cta-banner': 'Overall Rating (CTA Banner)',
+        'overall-cta-banner': 'Overall CTA Banner',
     }
 
     
@@ -147,12 +146,14 @@ const ProofratingsWidgets = () => {
         delete tabs['badge-popup'];
     }
 
-    const current_tab = settings?.current_tab || 'review-sites';
+    const current_tab = settings?.current_tab || 'badge-overview';
+
+    console.log(settings)
 
     return (
         <React.Fragment>
             <header className="proofratins-header">
-				<a className="btn-back-main-menu" href="#">Back to Main Menu</a>
+				<a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
 				<h1 className="title">Rating Badges</h1>
 
                 <div className="rating-badges-navtab">
@@ -163,8 +164,8 @@ const ProofratingsWidgets = () => {
                 </div>
 			</header>
 
-            {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} id={location_id} />}
-            {current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
+            {/* {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} id={location_id} />} */}
+            {current_tab === 'badge-overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'badge-square' && <BadgeSquare id={location_id} />}
             {current_tab === 'badge-rectangle' && <BadgeRectangle id={location_id} />}
             {current_tab === 'badge-basic' && <BadgeBasic id={location_id} />}

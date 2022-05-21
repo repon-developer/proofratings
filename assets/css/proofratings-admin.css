@@ -1,6 +1,6 @@
 :root {
-    --primary_color: #4123FF;
     --wrap_edge: 30px;
+    --primary_color: #4123FF;
 }
 
 .gap-10 {height: 10px;}
@@ -17,6 +17,9 @@ body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin
 .screen-proofratings .btn-primary:hover {color: #fff; background-color: #2348ec}
 
 .proofratins-header {padding: 30px; margin: -30px -30px 30px -30px; background-color: #F4F7FE; border-bottom: 1px solid #CED0D7}
+
+.btn-back-main-menu {color: inherit; text-decoration: none}
+.btn-back-main-menu .icon-back {position: relative; top: 0px; font-size: 80%}
 
 .proofratins-header .title {
     color: #2C3149;
@@ -262,10 +265,6 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 #pfb-exclude-page {min-width: 300px}
 
-
-.shortocde-area {user-select: all}
-.shortocde-area + p {margin-top: 5px;}
-
 .proofratings-image-option {display: flex; align-items: center}
 
 .proofratings-image-option > img {margin-right: 20px;}
@@ -493,4 +492,24 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 .rating-badges-navtab a.active {
     color: var(--primary_color);
     border-bottom-color: var(--primary_color);
+}
+
+.proofratings-copyarea h3 {font-weight: 600; margin-bottom: 10px}
+.proofratings-copyarea .shortocde-area {
+    padding: 10px;
+    font-size: 16px;
+    user-select: all;
+    display: inline-block;
+    margin-bottom: 3px;
+    background-color: #fff;
+    border: 1px solid #CED0D7;
+    border-radius: 5px;
+}
+
+.proofratings-copyarea .description {font-size: 12px;}
+
+.section-title-large {
+    color: #2C3149;
+    font-size: 30px;
+    font-weight: bold;
 }

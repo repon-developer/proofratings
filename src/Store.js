@@ -18,7 +18,7 @@ const ACTIONS = {
 };
 
 const settings = {
-    current_tab: 'review-sites',
+    current_tab: 'badge-overview',
     activeSites: [],
     badge_display: {
         sites_square: false,

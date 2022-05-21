@@ -83,6 +83,18 @@ const BadgeSquare = (props) => {
         <React.Fragment>
             <style>{css_style}</style>
 
+            <div className="proofratings-copyarea">
+                <h3>Shortcode</h3>
+                <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="square"]</code>
+                <p className="description">
+                    Copy and paste this shortcode where you want to display the review badge. <br />
+                    Note: Number of badges in a row is responsive and adjusts automatically to the space available
+                </p>
+            </div>
+
+            <div className='gap-30' />
+
+            
             <ActiveSites onUpdate={(active_sites) => handle_field({active_sites})} active_sites={state?.active_sites} />
 
             <table className="form-table">
@@ -115,7 +127,7 @@ const BadgeSquare = (props) => {
                 <React.Fragment>
                     <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
                         <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized ${state?.logo_color ? 'proofratings-widget-logo-color' : ''}`}>
-                            <div className="review-site-logo" style={{WebkitMaskImage: `url(${proofratings.assets_url}images/google.svg)`}}>
+                            <div className="review-site-logo">
                                 <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
                             </div>
                             

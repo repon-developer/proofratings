@@ -19,13 +19,18 @@ const ActiveSites = (props) => {
     const activated_sites = Array.isArray(activeSites) ? activeSites : [];
 
     return (
-        <div className="review-sites-checkboxes review-sites-checkboxes-widget">
-            {activated_sites.map(site_id => (
-                <label key={site_id} className="checkbox-review-site">
-                    <input type="checkbox" defaultChecked={active_sites.includes(site_id)} onClick={() => handleCheck(site_id)} />
-                    <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />
-                </label>
-            ))}
+        <div className="connected-sites-wrapper">
+            <h2 className='section-title-large'>Customize</h2>
+            <div className="review-sites-checkboxes review-sites-checkboxes-widget">
+                {activated_sites.map(site_id => (
+                    <label key={site_id} className="checkbox-review-site">
+                        <input type="checkbox" defaultChecked={active_sites.includes(site_id)} onClick={() => handleCheck(site_id)} />
+                        <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />
+                    </label>
+                ))}
+            </div>
+
+            <p>Select/deselect which review sites you want to appear.</p>
         </div>
     );
 };
