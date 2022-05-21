@@ -11,9 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use IdeoLogix\DigitalLicenseManager\Utils\StringHasher;
-use IdeoLogix\DigitalLicenseManager\Utils\Data\License as License;
-
 /**
  * Handles core plugin hooks and action setup.
  *
@@ -40,19 +37,21 @@ class Proofratings_Settings {
 		return self::$instance;
 	}
 
-
-	var $license_confirm;
+	/**
+	 * Hold all errors
+	 * @var WP_Error
+	 * @since  1.0.1
+	 */
+	var $error;
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->license_confirm = new WP_Error;
+		$this->error = new WP_Error;
 
 		add_action( 'init', [$this, 'handle_signup_form'] );
-		add_action( 'init', [$this, 'handle_add_location'] );
-
-		
+		add_action( 'init', [$this, 'handle_add_location'] );		
 	}
 
 	public function handle_signup_form() {
@@ -68,7 +67,7 @@ class Proofratings_Settings {
 
 		$license_key = @$postdata['license-key'];
 		if ( empty($license_key) ) {
-			return $this->license_confirm->add('license_key', 'Please enter your license key');
+			return $this->error->add('license_key', 'Please enter your license key');
 		}
 
 		$response = wp_remote_get(add_query_arg(array(
@@ -81,7 +80,7 @@ class Proofratings_Settings {
 		$result = json_decode(wp_remote_retrieve_body($response));
 
 		if ( !isset($result->success) || $result->success !== true ) {
-			return $this->license_confirm->add('license_key', $result->message);
+			return $this->error->add('license_key', $result->message);
 		}
 
 		update_option('proofratings_status', $result->data->status );
@@ -96,42 +95,33 @@ class Proofratings_Settings {
 			return;
 		}
 
-
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-		$validate_data = true;
-
-		if ( empty($postdata['country'])) {
-			$validate_data = false;
-			$_POST['error_msg'] = __('Please fill location country field', 'proofratings');
-		}
-
-		if ( empty($postdata['zip'])) {
-			$validate_data = false;
-			$_POST['error_msg'] = __('Please fill location zip/postal field', 'proofratings');
-		}
-
-		if ( empty($postdata['state'])) {
-			$validate_data = false;
-			$_POST['error_msg'] = __('Please fill location state/province field', 'proofratings');
-		}
-
-		if ( empty($postdata['city'])) {
-			$validate_data = false;
-			$_POST['error_msg'] = __('Please fill location city field', 'proofratings');
+		
+		if ( empty($postdata['name'])) {
+			$this->error->add('name', __('Please fill location name field', 'proofratings'));
 		}
 
 		if ( empty($postdata['street'])) {
-			$validate_data = false;
-			$_POST['error_msg'] = __('Please fill location street field', 'proofratings');
+			$this->error->add('street', __('Please fill location street field', 'proofratings'));
 		}
 
-		if ( empty($postdata['name'])) {
-			$validate_data = false;
-			$_POST['error_msg'] = __('Please fill location name field', 'proofratings');
+		if ( empty($postdata['city'])) {
+			$this->error->add('city', __('Please fill location city field', 'proofratings'));
 		}
 
-		if (!$validate_data ) {
+		if ( empty($postdata['state'])) {
+			$this->error->add('state', __('Please fill location state/province field', 'proofratings'));
+		}
+
+		if ( empty($postdata['zip'])) {
+			$this->error->add('zip', __('Please fill location zip/postal field', 'proofratings'));
+		}
+
+		if ( empty($postdata['country'])) {
+			$this->error->add('country', __('Please fill location country field', 'proofratings'));
+		}
+
+		if ( $this->error->has_errors()) {
 			return;
 		}		
 		
@@ -164,7 +154,7 @@ class Proofratings_Settings {
 	/**
 	 * Shows the plugin's settings page.
 	 */
-	public function account_inactive_output() {
+	public function license_page() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
 		<div class="wrap proofratings-settings-wrap">		
 			<header class="proofratins-header">
@@ -181,9 +171,9 @@ class Proofratings_Settings {
 
 				<form class="proofratings-activation" method="POST">
 					<?php wp_nonce_field('proofratings_license_confirm_nonce', '_nonce'); 
-					if( $this->license_confirm->has_errors() ) {
+					if( $this->error->has_errors() ) {
 						echo '<div class="notice notice-error settings-error is-dismissible">';
-							echo '<p>'. esc_html($this->license_confirm->get_error_message()).'</p>';
+							echo '<p>'. $this->error->get_error_message().'</p>';
 						echo '</div>';
 					} ?>
 
@@ -199,38 +189,44 @@ class Proofratings_Settings {
 	}
 
 	/**
-	 * Shows the plugin's settings page.
+	 * Main menu of proofratings
 	 */
-	public function awaiting() {
-		?>
-		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proofrating Status', 'proofratings') ?></h1>
-			<hr class="wp-header-end">
-			<h2 class="nav-tab-wrapper">
-				<a href="#proofratings-activation-tab" class="nav-tab"><?php _e('Activation', 'proofratings'); ?></a>
-			</h2>
+	public function main_menu() {?>
+		<div class="wrap proofratings-settings-wrap">		
+			<header class="proofratins-header">
+				<h1 class="title"><?php _e('Proofratings main menu', 'proofratings') ?></h1>
+			</header>
 
-			<div id="proofratings-activation-tab" class="settings_panel">
-				<h3><?php _e('Awaiting Activation...', 'proofratings') ?></h3>
-			</div>
-		</div>
-		<?php
-	}
+			<div class="proofratings-dashboard-menu">
+				<a href="<?php menu_page_url('proofratings-analytics') ?>">
+					<i class="menu-icon fa-solid fa-chart-line"></i>
+					<span class="menu-label">Analytics</span>
+					<p>View your rating widget data from impressions, hover, clicks, to conversions</p>
+				</a>
 
-	/**
-	 * Shows the plugin's settings page.
-	 */
-	public function pause() {
-		?>
-		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Proofrating Status', 'proofratings') ?></h1>
-			<hr class="wp-header-end">
-			<h2 class="nav-tab-wrapper">
-				<a href="#proofratings-pause-tab" class="nav-tab"><?php _e('Pause', 'proofratings'); ?></a>
-			</h2>
+				<a href="<?php menu_page_url('proofratings-rating-badges') ?>">
+					<i class="menu-icon fa-solid fa-star"></i>
+					<span class="menu-label">Ratings Badges</span>
+					<p>Create and view all your rating trust badges</p>
+				</a>
 
-			<div id="proofratings-pause-tab" class="settings_panel">
-				<h3><?php _e('Your account has been paused', 'proofratings') ?></h3>
+				<a href="<?php menu_page_url('proofratings-settings') ?>">
+					<i class="menu-icon fa-solid fa-screwdriver-wrench"></i>
+					<span class="menu-label">Settings</span>
+					<p>Edit review site connections, manage monthly reports and add schema</p>
+				</a>
+
+				<a href="<?php menu_page_url('proofratings-support') ?>">
+					<i class="menu-icon fa-solid fa-circle-question"></i>
+					<span class="menu-label">Support</span>
+					<p>Need help? Submit a ticket</p>
+				</a>
+
+				<a href="<?php menu_page_url('proofratings-billing') ?>">
+					<i class="menu-icon fa-solid fa-credit-card"></i>
+					<span class="menu-label">Billing</span>
+					<p>Manage and update your payment source, subscription and invoices</p>
+				</a>
 			</div>
 		</div>
 		<?php
@@ -242,14 +238,18 @@ class Proofratings_Settings {
 	public function add_location() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
 		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>
+			<header class="proofratins-header">
+				<h1 class="title"><?php _e('Add a Location', 'proofratings') ?></h1>
+			</header>
+
 			<hr class="wp-header-end">
 
-			<?php if (!empty($postdata['error_msg'])) : ?>
+			<?php if ( $this->error->has_errors() ) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo esc_html( $postdata['error_msg']) ?></p>
+				<p><?php echo $this->error->get_error_message() ?></p>
 			</div>
 			<?php endif; ?>
+
 			
 			<form method="post">
 				<?php wp_nonce_field( '_nonce_add_location', '_nonce' ) ?>
