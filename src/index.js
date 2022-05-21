@@ -1,5 +1,5 @@
 const proofratings_widgets_root = document.getElementById(
-    "proofratings-widgets-root"
+    "proofratings-root"
 );
 
 import store, { ACTIONS } from './Store';
@@ -149,16 +149,19 @@ const ProofratingsWidgets = () => {
 
     const current_tab = settings?.current_tab || 'review-sites';
 
-
-
     return (
         <React.Fragment>
-            <h2 className="nav-tab-wrapper">
+            <header className="proofratins-header">
+				<a className="btn-back-main-menu" href="#">Back to Main Menu</a>
+				<h1 className="title">Rating Badges</h1>
+
+                <div className="rating-badges-navtab">
                 {Object.keys(tabs).map((key) => {
-                    const tab_class = (current_tab === key) ? 'nav-tab-active' : '';
-                    return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={`nav-tab ${tab_class}`}>{tabs[key]}</a>
+                    const tab_class = (current_tab === key) ? 'active' : '';
+                    return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={tab_class}>{tabs[key]}</a>
                 })}
-            </h2>
+                </div>
+			</header>
 
             {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} id={location_id} />}
             {current_tab === 'display-badges' && <BadgeDisplay badge_display={badge_display} id={location_id} />}

@@ -148,7 +148,7 @@ class Proofratings_Admin {
 			remove_all_actions('all_admin_notices');
 		}, 1000);
 		
-		preg_match('/(proofratings_page|proofratings-widgets|admin_page_proofratings-add-location)/', $screen->id, $matches);
+		preg_match('/(proofratings_page|proofratings-widgets|proofratings-add-location)/', $screen->id, $matches);
 
 		wp_register_style('fontawesome', PROOFRATINGS_PLUGIN_URL . '/assets/css/fontawesome.css', [], '6.1.1');
 		
@@ -158,8 +158,10 @@ class Proofratings_Admin {
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
+
+		preg_match('/(proofratings-rating-badges|proofratings-locations)/', $screen->id, $widget_matches);		
 		
-		if ( $screen->id === 'proofratings_page_proofratings-locations' && (isset($_GET['location']) || get_proofratings()->locations->global) ) {
+		if ( $widget_matches ) {
 			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
 				'ajaxurl' => admin_url('admin-ajax.php'),

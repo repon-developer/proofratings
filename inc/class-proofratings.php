@@ -108,7 +108,9 @@ class Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
-		$review_locations = $request->get_param('review_locations');
+		error_log( print_r($request->get_params(), true) );
+
+		$review_locations = $request->get_param('locations');
 		if ( !is_array($review_locations) ) {
 			$review_locations = [];
 		}
@@ -128,21 +130,12 @@ class Proofratings {
 				'status' => @$location['status']
 			);
 			
-			$sql = $wpdb->prepare("SELECT * FROM $wpdb->proofratings WHERE location_id = '%d'", $id);
+			$sql = $wpdb->prepare("SELECT * FROM $wpdb->proofratings WHERE location_id = '%s'", $id);
 			if ( $get_location = $wpdb->get_row($sql) ) {
-
-				$settings = maybe_unserialize( $get_location->settings );
-				if ( is_array($settings) && isset($location['schema']) ) {
-					$settings['schema'] = $location['schema'];
-				}
-
-				$location_data['settings'] = maybe_serialize($settings);
-
 				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_location->id]);
 				continue;
 			}
 
-			$location_data['settings']['schema'] = maybe_serialize($location['schema']);
 			$wpdb->insert($wpdb->proofratings, $location_data);
 		}
 

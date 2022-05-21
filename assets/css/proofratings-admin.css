@@ -472,3 +472,25 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 }
 
 .proofratings-dashboard-menu p {margin: 2px 0 0}
+
+.rating-badges-navtab {
+    display: flex;
+    gap: 30px;
+    margin-top: 15px;
+    margin-bottom: -30px;
+}
+
+.rating-badges-navtab a {
+    color: inherit;
+    padding: 8px 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: none!important;
+    border-bottom: 3px solid transparent;
+    text-decoration: none!important;
+}
+
+.rating-badges-navtab a.active {
+    color: var(--primary_color);
+    border-bottom-color: var(--primary_color);
+}
