@@ -254,8 +254,6 @@ class Proofratings {
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		);");
-
-		$this->registration('activate');
 	}
 
 

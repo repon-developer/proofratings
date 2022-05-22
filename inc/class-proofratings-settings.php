@@ -77,7 +77,13 @@ class Proofratings_Settings {
 			'license_key' => $license_key
 		), PROOFRATINGS_API_URL . '/register_site'));
 
+		if ( is_wp_error( $response ) ) {
+			return $this->error->add('remote_request', $response->get_error_message());
+		}
+
+
 		$result = json_decode(wp_remote_retrieve_body($response));
+
 
 		if ( !isset($result->success) || $result->success !== true ) {
 			return $this->error->add('license_key', $result->message);
