@@ -162,7 +162,7 @@ class Proofratings_Admin {
 		preg_match('/(proofratings-rating-badges|proofratings-locations)/', $screen->id, $widget_matches);		
 		
 		if ( $widget_matches ) {
-			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
+			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
 				'ajaxurl' => admin_url('admin-ajax.php'),
 				'api' => PROOFRATINGS_API_URL,
