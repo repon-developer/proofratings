@@ -23,6 +23,11 @@ class Proofratings_Ajax {
 		add_action( 'wp_ajax_proofratings_notice_feedback', [$this, 'notice_feedback']);
 		add_action( 'wp_ajax_nopriv_proofratings_notice_feedback', [$this, 'notice_feedback']);
 
+		add_action( 'wp_ajax_proofratings_get_settings', [$this, 'get_settings']);
+		add_action( 'wp_ajax_nopriv_proofratings_get_settings', [$this, 'get_settings']);
+
+		
+
 
 		add_action( 'wp_ajax_proofratings_save_location', [$this, 'save_location']);
 		add_action( 'wp_ajax_nopriv_proofratings_save_location', [$this, 'save_location']);
@@ -42,6 +47,10 @@ class Proofratings_Ajax {
 		$days = $postdata['days'];
 		setcookie("proofratings_feedback_hide", true, strtotime("+ $days days"));
 		wp_send_json_success();
+	}
+
+	public function get_settings() {
+		wp_send_json_success(get_proofratings_settings());
 	}
 
 	public function save_location() {

@@ -216,7 +216,7 @@ class Proofratings_Locations  {
 			}
 		}
 
-		$rating_sites = get_proofratings_rating_sites();
+		$rating_sites = get_proofratings_review_sites();
 
 		foreach ($locations as $key => $location) {
 			$active_sites = [];

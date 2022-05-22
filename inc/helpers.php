@@ -40,7 +40,7 @@ class Proofratings_Site_Data {
  * get default settings of rating sites
  * @since  1.0.6
  */
- function get_proofratings_rating_sites() {
+ function get_proofratings_review_sites() {
     return [
         'google' => [
             'theme_color' => '#03AB4E',
@@ -433,33 +433,12 @@ class Proofratings_Site_Data {
     ];
  }
 
-/**
- * get settings of proof ratings settings
- * @since  1.0.1
- */
-function get_proofratings_settings() {
-    $rating_sites = get_proofratings_rating_sites();
-
-
-    $settings = get_option('proofratings_review_sites', []);
-    
-    array_walk($rating_sites, function(&$item, $key) use($settings) {
-        if ( !isset($settings[$key]) ) {
-            return $item = new Proofratings_Site_Data($item);
-        }
-        
-        $item = new Proofratings_Site_Data(array_merge($item, $settings[$key]));
-    });    
-
-    return $rating_sites;
-}
-
-
+ 
 /**
  * get review sites
  * @since  1.0.4
  */
-function get_proofratings_review_sites($group) {
+function get_proofratings_review_sites__DEPRECATED($group) {
     $group_sites = array_filter(get_proofratings_settings(), function($item) use($group) {
         return $item->category == $group;
     });
@@ -473,6 +452,38 @@ function get_proofratings_review_sites($group) {
     }
     echo '</div>';
 }
+
+/**
+ * get settings of proof ratings settings
+ * @since  1.0.1
+ */
+function get_proofratings_settings($key = null) { 
+    $settings = get_option( 'proofratings_settings');
+    if ( !is_array($settings) ) {
+        $settings = [];
+    }
+
+    if ( $key && isset($settings[$key]) ) {
+        return $settings[$key];
+    }
+
+    return $settings;
+}
+
+/**
+ * Save settings
+ * @since  1.1.7
+ */
+function save_proofratings_settings($key, $data) { 
+    $settings = get_option( 'proofratings_settings');
+    if ( !is_array($settings) ) {
+        $settings = [];
+    }
+
+    $settings[$key] = $data;
+}
+
+
 
 /**
  * get square badges settings

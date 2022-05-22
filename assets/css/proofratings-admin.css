@@ -1,15 +1,25 @@
 :root {
     --wrap_edge: 30px;
+    --text_color: #2C3149;
+    --text_color_gray: #6e6f72;
     --primary_color: #4123FF;
 }
 
 .gap-10 {height: 10px;}
 .gap-20 {height: 20px;}
 .gap-30 {height: 30px;}
+.gap-40 {height: 40px;}
+.gap-50 {height: 50px;}
 
-body.screen-proofratings {
-    background-color: #fff;
-}
+
+.button.button-primary {padding: 4px 20px; font-weight: 500; background-color: var(--primary_color)}
+.button.button-primary:hover {background-color: #2a0fda}
+
+.button.btn-save {min-width: 100px;}
+
+.bold {font-weight: bold!important}
+
+body.screen-proofratings {background-color: #fff}
 
 body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin: 0 0 0 -20px}
 
@@ -18,7 +28,11 @@ body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin
 
 .proofratins-header {padding: 30px; margin: -30px -30px 30px -30px; background-color: #F4F7FE; border-bottom: 1px solid #CED0D7}
 
-.btn-back-main-menu {color: inherit; text-decoration: none}
+body.screen-proofratings .form-footer {display: flex; font-weight: 500; align-items: center; gap: 10px; margin-top: 40px;}
+body.screen-proofratings .form-footer a {text-decoration: none}
+body.screen-proofratings .form-footer .btn-cancel {padding-inline: 20px}
+
+.btn-back-main-menu {color: inherit; text-decoration: none; font-weight: 500}
 .btn-back-main-menu .icon-back {position: relative; top: 0px; font-size: 80%}
 
 .proofratins-header .title {
@@ -49,10 +63,7 @@ table.form-table caption {
     font-weight: bold;
 }
 
-table.locations_table tr.overall-location {
-    font-weight: bold;
-    background-color: #d4d4d4;
-}
+table.locations_table tr.overall-location {font-weight: bold; background-color: #d4d4d4}
 
 table.locations_table tr .column-edit {width: 50px;}
 table.locations_table tr td.column-status {text-transform: capitalize}
@@ -231,8 +242,8 @@ input[type="checkbox"].checkbox-switch:after {
 input[type="checkbox"].checkbox-switch:checked {
     padding-right: 20px!important;
     padding-left: 8px!important;
-    background-color: #2271b1;
-    border-color: #2271b1;
+    background-color: var(--primary_color);
+    border-color: var(--primary_color)
 }
 
 
@@ -512,4 +523,78 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
     color: #2C3149;
     font-size: 30px;
     font-weight: bold;
+}
+
+form.form-search-review-sites {
+    position: relative;
+    width: min(400px, 100%);
+    align-self: baseline;
+    flex: 0 0 auto;
+}
+
+form.form-search-review-sites input {
+    width: 100%;
+    font-size: 16px;
+    padding: 7px 15px;
+    padding-inline-end: 45px!important;
+    border-color: #CED0D7;
+}
+
+form.form-search-review-sites button {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    border: none!important;
+    transform: translateY(-50%);
+    background: url(../images/icon-search.svg) no-repeat;
+    background-size: cover;
+}
+
+.proofratings-settings-wrap .intro-text {
+    padding: 16px;
+    border-radius: 4px;
+    border: 1px solid #C5C6CD;
+    background-color: #F4F7FE;
+}
+
+.proofratings-settings-wrap .intro-text h3 {
+    color: #2C3149;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 20px;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.search-review-sites-wrapper {display: flex; gap: 50px}
+
+table.table-review-sites {border-collapse: collapse; width: calc(100% + (var(--wrap_edge) * 2)); margin-inline: calc(var(--wrap_edge) * -1)}
+
+table.table-review-sites thead th {color: #3c434a; text-align: left}
+table.table-review-sites thead th.column-review-sites {width: 25%; min-width: 250px;}
+
+table.table-review-sites :is(th, td) {padding: 12px 15px; vertical-align: middle; border-block: 1px solid #C5C6CD}
+table.table-review-sites thead th {color: var(--text_color_gray); border-top: none}
+
+table.table-review-sites :is(th, td):first-child {width: 2%; min-width: 60px; padding-inline-start: var(--wrap_edge)}
+table.table-review-sites :is(th, td):last-child {padding-inline-end: var(--wrap_edge)}
+
+table.table-review-sites tbody {font-size: 18px}
+
+table.table-review-sites .review-site-logo img {max-width: 200px; vertical-align: middle;}
+
+table.table-review-sites .click-through-url input {
+    font-size: 15px;
+    padding: 3px 12px;
+    margin-right: 10px;
+    width: min(100%, 300px);
+}
+
+table.table-review-sites .click-through-url a {
+    color: var(--text_color_gray);
+    text-decoration: none;
+    font-size: 16px;
 }

@@ -314,8 +314,24 @@ class Proofratings_Settings {
 	/**
 	 * Shows the plugin's settings page.
 	 */
-	public function email_settings() {
+	public function settings() {?>
+		<div class="wrap proofratings-settings-wrap">
+			<div id="proofratings-settings-root"></div>
+			<p class="review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
+		</div>
+		<?php
+	}
+
+
+	public function asdfasfasfsafasf() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+
+
+
+
+
+		return;
 		?>
 		<div class="wrap proofratings-settings-wrap">
 			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>

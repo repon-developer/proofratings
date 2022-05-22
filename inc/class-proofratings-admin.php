@@ -112,12 +112,12 @@ class Proofratings_Admin {
 			$rating_badges_menu = add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
 			add_action( "load-$rating_badges_menu", [$rating_badges, 'screen_option' ] );
 
+			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), 'manage_options', 'proofratings-settings', [$this->settings_page, 'settings']);
 
 			
 			
 			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
 
-			add_submenu_page('proofratings', __('Emails Settings', 'proofratings'), __('Emails', 'proofratings'), 'manage_options', 'proofratings-emails', [$this->email_reporting, 'email_settings']);
 		}
 	}
 
@@ -125,10 +125,24 @@ class Proofratings_Admin {
 	 * Enqueues CSS and JS assets.
 	 */
 	public function admin_enqueue_scripts() {
+
+		if ( WP_DEBUG ) {
+			wp_deregister_script( 'react' );
+			wp_deregister_script( 'react-dom' );
+			wp_register_script('react', 'https://unpkg.com/react@17.0.1/umd/react.development.js', []);
+			wp_register_script('react-dom', 'https://unpkg.com/react-dom@17.0.1/umd/react-dom.development.js', []);
+		}
+
+
 		wp_enqueue_style( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-dashboard.css', [], PROOFRATINGS_VERSION);
 		wp_enqueue_script( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-dashboard.js', ['jquery'], PROOFRATINGS_VERSION, true);
-		wp_localize_script( 'proofratings-dashboard', 'proofratingsDashboard', array(
-			'ajaxurl' => admin_url('admin-ajax.php')
+		wp_localize_script( 'proofratings-dashboard', 'proofratings', array(
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'api' => PROOFRATINGS_API_URL,
+			'site_url' => home_url(),
+			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
+			'review_sites' => get_proofratings_review_sites(),
+			'pages' => get_pages()
 		));
 
 		$screen = get_current_screen();
@@ -153,18 +167,18 @@ class Proofratings_Admin {
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
 
-		preg_match('/(proofratings-rating-badges|proofratings-locations)/', $screen->id, $widget_matches);		
+		preg_match('/(proofratings-rating-badges|proofratings-locations)/', $screen->id, $widget_matches);
 		
 		if ( $widget_matches ) {
 			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
-			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
-				'ajaxurl' => admin_url('admin-ajax.php'),
-				'api' => PROOFRATINGS_API_URL,
-				'site_url' => home_url(),
-				'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
-				'review_sites' => get_proofratings_settings(),
-				'pages' => get_pages()
-			));
+		}
+
+		preg_match('/proofratings-settings/', $screen->id, $matches_settings);
+
+
+
+		if ( $matches_settings ) {
+			wp_enqueue_script( 'proofratings-settings', PROOFRATINGS_PLUGIN_URL . '/assets/js/settings.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 		}
 	}
 }
