@@ -46,7 +46,6 @@ class Proofratings {
 		$this->add_proofratings_tables();
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/rating-badges.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-generate-style.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ratings.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-locations-query.php';
@@ -108,9 +107,7 @@ class Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
-		error_log( print_r($request->get_params(), true) );
-
-		$review_locations = $request->get_param('locations');
+		$review_locations = $request->get_param('review_locations');
 		if ( !is_array($review_locations) ) {
 			$review_locations = [];
 		}
@@ -132,10 +129,19 @@ class Proofratings {
 			
 			$sql = $wpdb->prepare("SELECT * FROM $wpdb->proofratings WHERE location_id = '%s'", $id);
 			if ( $get_location = $wpdb->get_row($sql) ) {
+
+				$settings = maybe_unserialize( $get_location->settings );
+				if ( is_array($settings) && isset($location['schema']) ) {
+					$settings['schema'] = $location['schema'];
+				}
+
+				$location_data['settings'] = maybe_serialize($settings);
+
 				$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_location->id]);
 				continue;
 			}
 
+			$location_data['settings']['schema'] = maybe_serialize($location['schema']);
 			$wpdb->insert($wpdb->proofratings, $location_data);
 		}
 
@@ -258,6 +264,32 @@ class Proofratings {
 		$this->registration('activate');
 	}
 
+	/**
+	 * Sign up 
+	 * @since 1.0.6
+	 */
+	function registration($source = 'registration') {
+		$request_url = add_query_arg(array(
+			'name' => get_bloginfo( 'name' ),
+			'email' => get_bloginfo( 'admin_email' ),
+			'url' => get_site_url(),
+			'source' => $source
+		), PROOFRATINGS_API_URL . '/register');
+
+		$response = wp_remote_get($request_url);
+		if ( is_wp_error( $response ) ) {
+			return;
+		}
+
+		if( $response['response']['code'] !== 200) {
+			return;			
+		}
+
+		$data = json_decode(wp_remote_retrieve_body($response));
+		if ( is_object($data) && $data->success ) {
+			update_option('proofratings_status', $data->status );
+		}
+	 }
 
 	/**
 	 * Loads textdomain for plugin.

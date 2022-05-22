@@ -361,7 +361,7 @@ class Proofratings_Shortcodes {
 	 * Embed badge sites square
 	 */
 	public function widgets_sites_square($site) {			
-    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
+    	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews"">';
 			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
@@ -377,7 +377,7 @@ class Proofratings_Shortcodes {
 	 * Embed badge basic
 	 */
 	public function widgets_badge_basic($site) {
-    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
+    	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
 
@@ -392,10 +392,15 @@ class Proofratings_Shortcodes {
 	 * Embed badge style2
 	 */
 	public function widgets_sites_rectangle($site) {		
-    	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->logo));
-		printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
+    	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->icon2));
+
+		if ( $site->rating_title ) {
+			echo '<h4 class="rating-title">'. esc_html($site->rating_title).'</h4>';
+		}
+
 	
 		echo '<div class="proofratings-reviews">';
+			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
 
@@ -407,7 +412,7 @@ class Proofratings_Shortcodes {
 	 * @since 1.0.9
 	 */
 	public function widgets_sites_icon($site) {
-    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->icon3), esc_attr($site->name));
+    	printf('<div class="review-site-logo" style="-webkit-mask-image:url(%1$s)"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon3), esc_attr($site->name));
 
 		echo '<div class="review-info-container">';	
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
@@ -450,7 +455,7 @@ class Proofratings_Shortcodes {
 		$class = implode(' ', $classes);
 
 		$button1 = '';
-		if ( isset($badge_settings->button1['show']) && $badge_settings->button1['show'] === true ) {
+		if ( isset($badge_settings->button1) ) {
 			$button1_settings = new Proofratings_Site_Data($badge_settings->button1);
 
 			$button1_class = 'proofratings-button button1';

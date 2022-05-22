@@ -3,7 +3,7 @@
  * Plugin Name: Proofratings
  * Plugin URI: https://proofratings.com
  * Description: Proofratings monitors all your third party sites for reviews by your customers. Sharing review ratings badges on your website increases conversions.
- * Version: 1.1.6
+ * Version: 1.1.5
  * Author: Proofratings
  * Requires at least: 5.2
  * Tested up to: 5.5
@@ -20,19 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define constants.
-define( 'PROOFRATINGS_VERSION', '1.1.6' );
+define( 'PROOFRATINGS_VERSION', '1.1.5' );
 define( 'PROOFRATINGS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'PROOFRATINGS_PLUGIN_URL', untrailingslashit(plugin_dir_url(__FILE__)));
 define( 'PROOFRATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-
-if ( !defined('PROOFRATINGS_API_URL') ) {
-  define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
-}
-
-
+define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
 
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
-
 
 /**
  * Initialize the plugin tracker

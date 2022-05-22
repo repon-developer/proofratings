@@ -57,18 +57,6 @@ class Proofratings_Admin {
 		
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
-
-		add_filter( 'admin_body_class', [$this, 'body_class']);
-	}
-
-	function body_class($classes) {
-		$screen = get_current_screen();
-		if ( strpos($screen->id, 'proofratings') === false ) {
-			return $classes;
-		}
-
-		$classes .= ' screen-proofratings';	 
-		return $classes;
 	}
 
 	function admin_notice_rating_us() {
@@ -94,32 +82,32 @@ class Proofratings_Admin {
 	public function admin_menu() {
 		$proofratings_status = get_proofratings_current_status();		
 
-		$main_screen = [$this->settings_page, 'license_page'];
+		$main_screen = [$this->settings_page, 'account_inactive_output'];
+		if ( 'pending' == $proofratings_status ) {
+			$main_screen = [$this->settings_page, 'awaiting'];
+		}
+
+		if ('pause' == $proofratings_status) { 
+			$main_screen = [$this->settings_page, 'pause'];
+		}
+
 		if ($proofratings_status == 'active' ) {
-			$main_screen = [$this->settings_page, 'main_menu'];
+			$main_screen = [$this->analytics, 'output'];
 		}
 		
 		$proofratings_icon = PROOFRATINGS_PLUGIN_URL . '/assets/images/proofratings-icon.png';
 
 		$menu_name = get_proofratings()->locations->global ? __('Widgets', 'proofratings') :  __('Locations', 'proofratings');
 
-		$rating_badges = new \Proofratings_Admin\Rating_Badges();
 
 
 		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen, $proofratings_icon, 25);
 
 		if ($proofratings_status == 'active' ) {
-			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen);
-			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->analytics, 'output']);
+			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings', [$this->analytics, 'output']);
 			
 			$location_menu = add_submenu_page('proofratings', $menu_name, $menu_name, 'manage_options', 'proofratings-locations', [$this->locations_page, 'render']);
 			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
-
-			$rating_badges_menu = add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
-			add_action( "load-$rating_badges_menu", [$rating_badges, 'screen_option' ] );
-
-
-			
 			
 			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
 
@@ -138,30 +126,17 @@ class Proofratings_Admin {
 		));
 
 		$screen = get_current_screen();
-		if ( strpos($screen->id, 'proofratings') === false ) {
-			return;
-		}
-
-
-		add_action('in_admin_header', function () {
-			remove_all_actions('admin_notices');
-			remove_all_actions('all_admin_notices');
-		}, 1000);
 		
-		preg_match('/(proofratings_page|proofratings-widgets|proofratings-add-location)/', $screen->id, $matches);
-
-		wp_register_style('fontawesome', PROOFRATINGS_PLUGIN_URL . '/assets/css/fontawesome.css', [], '6.1.1');
+		preg_match('/(proofratings_page|proofratings-widgets)/', $screen->id, $matches);
 		
 		if ( $screen->id == 'toplevel_page_proofratings' || $matches  ) {
 			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
-			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker', 'fontawesome'], PROOFRATINGS_VERSION);
+			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
 		}
-
-		preg_match('/(proofratings-rating-badges|proofratings-locations)/', $screen->id, $widget_matches);		
 		
-		if ( $widget_matches ) {
+		if ( $screen->id === 'proofratings_page_proofratings-locations' && (isset($_GET['location']) || get_proofratings()->locations->global) ) {
 			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 			wp_localize_script( 'proofratings-widgets', 'proofratings', array(
 				'ajaxurl' => admin_url('admin-ajax.php'),

@@ -27,10 +27,6 @@ class Proofratings_Site_Data {
         }
     }
 
-    public function __isset($key) {
-        return isset($this->$key);
-    }
-
     public function __get($key) {
         return isset($this->$key) ? $this->$key : null;
     }

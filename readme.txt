@@ -4,7 +4,7 @@ Link: https://proofratings.com
 Tags: testimonials, reviews badge, ratings badge, reviews widget, ratings widget, solar reviews, trust badges, roofing reviews, solar ratings, roofing ratings
 Requires at least: 5.2
 Tested up to: 5.9.3
-Stable tag: 1.1.6
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Author: Proofratings <info@proofratings.com>

@@ -1,47 +1,6 @@
-:root {
-    --wrap_edge: 30px;
-    --primary_color: #4123FF;
-}
-
-.gap-10 {height: 10px;}
-.gap-20 {height: 20px;}
 .gap-30 {height: 30px;}
 
-body.screen-proofratings {
-    background-color: #fff;
-}
-
-body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin: 0 0 0 -20px}
-
-.screen-proofratings .btn-primary {color: #fff; background-color: #3858e9; border-color: #3858e9!important}
-.screen-proofratings .btn-primary:hover {color: #fff; background-color: #2348ec}
-
-.proofratins-header {padding: 30px; margin: -30px -30px 30px -30px; background-color: #F4F7FE; border-bottom: 1px solid #CED0D7}
-
-.btn-back-main-menu {color: inherit; text-decoration: none}
-.btn-back-main-menu .icon-back {position: relative; top: 0px; font-size: 80%}
-
-.proofratins-header .title {
-    color: #2C3149;
-    font-size: 28px;
-    font-weight: bold;
-    line-height: 36px;
-    margin-right: 16px;
-    padding: 0;
-}
-
 .proofratings-instruction {font-size: 20px; font-weight: bold}
-
-.proofratings-form-activation-wrapper {
-    max-width: 800px;
-}
-
-.screen-proofratings .lead-text {
-    color: #1d2327;
-    font-size: 1.3em;
-    margin: 1em 0;
-    font-weight: 500;
-}
 
 table.form-table caption {
     text-align: left;
@@ -265,6 +224,10 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 #pfb-exclude-page {min-width: 300px}
 
+
+.shortocde-area {user-select: all}
+.shortocde-area + p {margin-top: 5px;}
+
 .proofratings-image-option {display: flex; align-items: center}
 
 .proofratings-image-option > img {margin-right: 20px;}
@@ -432,84 +395,3 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 }
 
 #reporting-email-addresses li .remove:before {font-size: 16px;}
-
-#toplevel_page_proofratings .wp-submenu-head + li {display: none!important}
-
-.proofratings-dashboard-menu {
-    margin-top: -31px;
-    margin-inline: calc(var(--wrap_edge) * -1);
-}
-
-.proofratings-dashboard-menu a {
-    display: flex;
-    color: #6E7289;
-    position: relative;
-    text-decoration: none;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px var(--wrap_edge);
-    border-block: 1px solid #C5C6CD;
-    box-shadow: none!important;
-    margin-bottom: -1px;
-    padding-inline-start: calc(var(--wrap_edge) + 55px)!important;
-}
-
-.proofratings-dashboard-menu .menu-icon {
-    color: var(--primary_color);
-    top: calc(50% - 3px);
-    font-size: 35px;
-    position: absolute;
-    left: var(--wrap_edge);
-    transform: translateY(-50%);
-}
-
-.proofratings-dashboard-menu .menu-label {
-    color: var(--primary_color);
-    display: block;
-    font-size: 130%;
-    font-weight: bold;
-}
-
-.proofratings-dashboard-menu p {margin: 2px 0 0}
-
-.rating-badges-navtab {
-    display: flex;
-    gap: 30px;
-    margin-top: 15px;
-    margin-bottom: -30px;
-}
-
-.rating-badges-navtab a {
-    color: inherit;
-    padding: 8px 0;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: none!important;
-    border-bottom: 3px solid transparent;
-    text-decoration: none!important;
-}
-
-.rating-badges-navtab a.active {
-    color: var(--primary_color);
-    border-bottom-color: var(--primary_color);
-}
-
-.proofratings-copyarea h3 {font-weight: 600; margin-bottom: 10px}
-.proofratings-copyarea .shortocde-area {
-    padding: 10px;
-    font-size: 16px;
-    user-select: all;
-    display: inline-block;
-    margin-bottom: 3px;
-    background-color: #fff;
-    border: 1px solid #CED0D7;
-    border-radius: 5px;
-}
-
-.proofratings-copyarea .description {font-size: 12px;}
-
-.section-title-large {
-    color: #2C3149;
-    font-size: 30px;
-    font-weight: bold;
-}
