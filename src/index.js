@@ -4,7 +4,6 @@ const proofratings_widgets_root = document.getElementById(
 
 import store, { ACTIONS } from './Store';
 
-import ReviewSites from './Sites';
 import BadgeDisplay from './BadgeDisplay';
 import BadgeSquare from './BadgeSquare'
 import BadgeBasic from './BadgeBasic'
@@ -147,8 +146,6 @@ const ProofratingsWidgets = () => {
     }
 
     const current_tab = settings?.current_tab || 'badge-overview';
-
-    console.log(settings)
 
     return (
         <React.Fragment>

@@ -1,5 +1,6 @@
 const { useEffect, useState } = React;
 
+import store, { ACTIONS } from './Store';
 import SiteConnections from './Connections';
 
 const ProofratingsSettings = () => {
@@ -9,20 +10,16 @@ const ProofratingsSettings = () => {
         saving: false,
         current_tab: 'connections',
     });
-    
-
-    const [settings, setSettings] = useState({});
 
     useEffect(() => {               
         const request = jQuery.post(proofratings.ajaxurl, {action: 'proofratings_get_settings'}, function (response) {
-            console.log(response);
-
             if ( response?.success == false ) {
                 return setState({...state, error: true, loading: false});
             }
             
+            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.data });
+
             setState({...state, error: false, loading: false});
-            setSettings({...settings });
         });
 
         request.fail(function() {
@@ -39,8 +36,13 @@ const ProofratingsSettings = () => {
         if ( state.saving ) {
             return;
         }
+
+        console.log(store.getState())
         
-        setState({...state, saving: true});
+        //setState({...state, saving: true});
+
+
+        return;
 
         settings.action = 'proofratings_save_location';
         settings.location_id = location_id;
@@ -53,7 +55,6 @@ const ProofratingsSettings = () => {
             setState({...state, saving: false})
         })
     }
-
     
     if ( state.loading === true) {
         return <div className="proofraing-progress-msg">Loading...</div>
@@ -70,6 +71,8 @@ const ProofratingsSettings = () => {
     }
 
     const current_tab = state?.current_tab || 'badge-overview';
+
+    //console.log(settings);
 
 
     return (

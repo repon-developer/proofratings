@@ -463,6 +463,12 @@ function get_proofratings_settings($key = null) {
         $settings = [];
     }
 
+    $settings['connection_approved'] = ['facebook', 'yelp'];
+
+    if ( !isset($settings['connections']) || !in_array($settings['connections'])) {
+        $settings['connections'] = ['bbb' => array('active' => true, 'url' => 'https://bbb.org')];
+    }
+
     if ( $key && isset($settings[$key]) ) {
         return $settings[$key];
     }
@@ -471,16 +477,18 @@ function get_proofratings_settings($key = null) {
 }
 
 /**
- * Save settings
+ * Update key of settings
  * @since  1.1.7
  */
-function save_proofratings_settings($key, $data) { 
+function update_proofratings_settings_key($key, $data) { 
     $settings = get_option( 'proofratings_settings');
     if ( !is_array($settings) ) {
         $settings = [];
     }
 
     $settings[$key] = $data;
+
+    update_option('proofratings_settings', $settings);
 }
 
 

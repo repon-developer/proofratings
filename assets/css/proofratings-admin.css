@@ -226,7 +226,7 @@ input[type="checkbox"].checkbox-switch:before {
     display: inline-block;
     background: #fff;
     border-radius: 100px;
-    transition: all 150ms;
+    transition: all 70ms;
 }
 
 input[type="checkbox"].checkbox-switch:after {
@@ -575,6 +575,7 @@ table.table-review-sites {border-collapse: collapse; width: calc(100% + (var(--w
 
 table.table-review-sites thead th {color: #3c434a; text-align: left}
 table.table-review-sites thead th.column-review-sites {width: 25%; min-width: 250px;}
+table.table-review-sites thead th.column-click-through-url {width: 40%}
 
 table.table-review-sites :is(th, td) {padding: 12px 15px; vertical-align: middle; border-block: 1px solid #C5C6CD}
 table.table-review-sites thead th {color: var(--text_color_gray); border-top: none}
