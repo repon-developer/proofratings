@@ -2,13 +2,14 @@ const { useEffect, useState } = React;
 
 import store, { ACTIONS } from './Store';
 import SiteConnections from './Connections';
+import Report from './Report';
 
 const ProofratingsSettings = () => {
     const [state, setState ] = useState({
         error: null,
         loading: true,
         saving: false,
-        current_tab: 'connections',
+        current_tab: 'report',
     });
 
     useEffect(() => {               
@@ -42,9 +43,6 @@ const ProofratingsSettings = () => {
         settings.action = 'save_proofratings_settings';
 
         const request = jQuery.post(proofratings.ajaxurl, settings, (response) => {
-
-            console.log(response)
-
             setState({...state, saving: false})
         })
         
@@ -88,7 +86,7 @@ const ProofratingsSettings = () => {
 			</header>
 
             {current_tab === 'connections' && <SiteConnections />}
-            {current_tab === 'report' && <SiteConnections />}
+            {current_tab === 'report' && <Report />}
             {current_tab === 'schema' && <SiteConnections />}
 
             

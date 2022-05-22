@@ -185,7 +185,7 @@ class Proofratings_Settings {
 
 					<p>If you already signed up, please enter your license key below.</p>
 					<div class="inline-field">
-						<input name="license-key" type="text" value="<?php echo esc_attr( $postdata['license-key'] )  ?>" placeholder="<?php _e('License key', 'proofratings') ?>" style="width: 285px">
+						<input name="license-key" type="text" value="<?php echo esc_attr( @$postdata['license-key'] )  ?>" placeholder="<?php _e('License key', 'proofratings') ?>" style="width: 285px">
 						<button class="button btn-primary"><?php _e('CONFIRM', 'proofratings') ?></button>
 					</div>
 				</form>

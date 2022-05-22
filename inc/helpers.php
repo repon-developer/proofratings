@@ -484,22 +484,20 @@ function get_proofratings_review_sites__DEPRECATED($group) {
 function get_proofratings_settings($key = null) { 
     $settings = get_option( 'proofratings_settings');
     if ( !is_array($settings) ) {
-        $settings = [];
+        $settings = (object) [];
     }
 
     if ( !isset($settings['connections']) || !is_array($settings['connections'])) {
-        $settings['connections'] = ['bbb' => array('active' => true, 'url' => 'https://bbb.org')];
+        $settings['connections'] = (object) [];
     }
 
     if (!isset($settings['connection_approved']) || !is_array($settings['connection_approved']) ) {
-        $settings['connection_approved'] = [];
+        $settings['connection_approved'] = ['facebook', 'angi', 'yelp'];
     }
 
     if ( $key && isset($settings[$key]) ) {
         return $settings[$key];
     }
-
-    //error_log(print_r($settings, true));
 
     return sanitize_proofrating_boolean_data($settings);
 }

@@ -80,18 +80,23 @@ class Proofratings_Ajax {
 			wp_send_json_success();
 		}
 
-		$response = wp_remote_get(PROOFRATINGS_API_URL . '/request_connection______', array(
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/request_connection', array(
 			'body' => get_proofratings_api_args(['connections' => $new_connections])
 		));
 
+		$result = json_decode(wp_remote_retrieve_body( $response ));
+		if ( !is_object($result) ) {
+			wp_send_json_error();
+		}
+
 		
-			wp_send_json_error(array(
-				'error' => $response->get_error_message()
-			));
+
+		
+			
 		
 		
 
-		error_log(print_r($response, true));
+		error_log(print_r($result, true));
 
 
 

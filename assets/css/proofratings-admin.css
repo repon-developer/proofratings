@@ -419,8 +419,9 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 
 #reporting-email-addresses > li {
     display: flex;
+    font-size: 12px;
     align-items: center;
-    padding: 5px 10px 5px 13px;
+    padding: 5px 10px 5px 4px;
     background-color: #fff;
     border-radius: 100px;
     transition: all 200ms;

@@ -22,6 +22,7 @@ const SiteConnections = () => {
     const handle_connections = (slug, key, value) => {
         const connection = (typeof connections[slug] === 'object') ? connections[slug] : {};
         connections[slug] = Object.assign(connection, { [key]: value });
+
         store.dispatch({ type: ACTIONS.UPDATE_CONNECTIONS, payload: connections });
     }
 
@@ -53,8 +54,8 @@ const SiteConnections = () => {
                         <td className="bold">55</td>
                         <td className="bold">4</td>
                         <td className="click-through-url">
-                            <input type="text" defaultValue={review_site.url} onInput={(e) => handle_connections(slug, 'url', e.target.value)} />
-                            {isUrl(review_site.url) ? <a className="fa-solid fa-up-right-from-square" href={review_site.url} target="_blank"></a> : ''}
+                            <input type="text" defaultValue={review_site.click_through_url} onInput={(e) => handle_connections(slug, 'click_through_url', e.target.value)} />
+                            {isUrl(review_site.click_through_url) ? <a className="fa-solid fa-up-right-from-square" href={review_site.click_through_url} target="_blank"></a> : ''}
                         </td>
                     </>
                 )

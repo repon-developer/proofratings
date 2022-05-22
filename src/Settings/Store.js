@@ -7,8 +7,9 @@ const ACTIONS = {
 };
 
 const settings = {
+    agency: false,
+    connections: {},
     connection_approved: [],
-    connections: {}
 };
 
 const settingsReducer = (state = settings, action) => {   
