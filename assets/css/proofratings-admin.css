@@ -584,18 +584,12 @@ table.table-review-sites :is(th, td):first-child {width: 2%; min-width: 60px; pa
 table.table-review-sites :is(th, td):last-child {padding-inline-end: var(--wrap_edge)}
 
 table.table-review-sites tbody {font-size: 18px}
+table.table-review-sites tbody td {height: 40px}
 
 table.table-review-sites .review-site-logo img {max-width: 200px; vertical-align: middle;}
 
-table.table-review-sites .click-through-url input {
-    font-size: 15px;
-    padding: 3px 12px;
-    margin-right: 10px;
-    width: min(100%, 300px);
-}
+table.table-review-sites .click-through-url input {font-size: 15px; padding: 3px 12px; margin-right: 10px; width: min(100%, 300px)}
 
-table.table-review-sites .click-through-url a {
-    color: var(--text_color_gray);
-    text-decoration: none;
-    font-size: 16px;
-}
+table.table-review-sites .click-through-url a {color: var(--text_color_gray); text-decoration: none; font-size: 16px}
+
+table.table-review-sites .message-pending-connections {color: var(--text_color_gray); font-style: italic}
