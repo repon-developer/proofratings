@@ -129,12 +129,7 @@ body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {paddi
 
 .connect-sites-container .review-sites-checkboxes {margin-bottom: 0;}
 .connect-sites-container .review-sites-checkboxes > label:last-child {margin-right: 0;}
-
-
-.review-sites-checkboxes .checkbox-review-site {
-    margin-right: 20px;
-    margin-bottom: 20px;
-}
+.review-sites-checkboxes .checkbox-review-site {margin-right: 20px; margin-bottom: 20px}
 
 .review-sites-checkboxes.review-sites-checkboxes-widget {margin-top: 30px; margin-bottom: 0;}
 

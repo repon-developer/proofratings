@@ -26,6 +26,9 @@ class Proofratings_Ajax {
 		add_action( 'wp_ajax_proofratings_get_settings', [$this, 'get_settings']);
 		add_action( 'wp_ajax_nopriv_proofratings_get_settings', [$this, 'get_settings']);
 
+		add_action( 'wp_ajax_save_proofratings_settings', [$this, 'save_settings']);
+		add_action( 'wp_ajax_nopriv_save_proofratings_settings', [$this, 'save_settings']);
+
 		
 
 
@@ -51,6 +54,48 @@ class Proofratings_Ajax {
 
 	public function get_settings() {
 		wp_send_json_success(get_proofratings_settings());
+	}
+
+	public function save_settings() {
+		$settings = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		unset($settings['action']);
+		update_option('proofratings_settings', $settings);
+
+		$review_sites = get_proofratings_review_sites();	
+		
+
+		$connections = isset($settings['connections']) && is_array($settings['connections']) ? $settings['connections'] : [];
+		$connection_approved = $settings['connection_approved'];
+
+		$new_connections = [];
+		foreach ($connections as $slug => $connection) {			
+			if ( isset($connection['active']) && $connection['active'] == true ) {
+				if ( !in_array($slug, $connection_approved) ) {
+				 	$new_connections[] = $review_sites[$slug]['name'];
+				}		
+			}				
+		}
+
+		if ( empty($new_connections) ) {
+			wp_send_json_success();
+		}
+
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/request_connection______', array(
+			'body' => get_proofratings_api_args(['connections' => $new_connections])
+		));
+
+		
+			wp_send_json_error(array(
+				'error' => $response->get_error_message()
+			));
+		
+		
+
+		error_log(print_r($response, true));
+
+
+
+		wp_send_json_success();
 	}
 
 	public function save_location() {

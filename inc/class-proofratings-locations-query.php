@@ -103,7 +103,7 @@ class Proofratings_Locations  {
 			$settings = [];
 		}
 
-		$settings = $location->settings = new Proofratings_Site_Data($this->sanitize_boolean_data($settings));
+		$settings = $location->settings = new Proofratings_Site_Data(sanitize_proofrating_boolean_data($settings));
 
 		$location->connected = 0;
 		if ( is_array($settings->activeSites) ) {
@@ -116,30 +116,6 @@ class Proofratings_Locations  {
 		}
 
 		return $location;
-	}
-
-	/**
-	 * Sanitize boolean data
-	 * @since  1.0.6
-	 */
-	function sanitize_boolean_data($string) {
-		if (is_array($string)) {
-			foreach ($string as $k => $v) {
-				$string[$k] = $this->sanitize_boolean_data($v); 
-			}
-
-			return $string;
-		}
-
-		if ( $string === 'true' ) {
-			return true;
-		}
-
-		if ( $string === 'false' ) {
-			return false;
-		}
-		
-		return $string;
 	}
 
 	/**

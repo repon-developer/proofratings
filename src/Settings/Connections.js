@@ -5,6 +5,7 @@ import store, { ACTIONS } from './Store';
 const SiteConnections = () => {
     const [search, setSearch] = useState('')
     const [state, setState] = useState(store.getState())
+    
     const connections = (typeof state?.connections === 'object') ? state.connections : {};
     const connection_approved = Array.isArray(state?.connection_approved) ? state.connection_approved : [];
 
@@ -85,12 +86,11 @@ const SiteConnections = () => {
     });
 
 
-
     return (
         <React.Fragment>
 
             <div className="search-review-sites-wrapper">
-                <form className="form-search-review-sites" style={{ alignSelf: 'flex-end' }}>
+                <form className="form-search-review-sites" style={{ alignSelf: 'flex-end' }} onSubmit={(e) => e.preventDefault()}>
                     <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
                     <button></button>
                 </form>

@@ -37,6 +37,30 @@ class Proofratings_Site_Data {
 }
 
 /**
+ * Sanitize boolean data
+ * @since  1.1.7
+ */
+function sanitize_proofrating_boolean_data($string) {
+    if (is_array($string)) {
+        foreach ($string as $k => $v) {
+            $string[$k] = sanitize_proofrating_boolean_data($v); 
+        }
+
+        return $string;
+    }
+
+    if ( $string === 'true' ) {
+        return true;
+    }
+
+    if ( $string === 'false' ) {
+        return false;
+    }
+    
+    return $string;
+}
+
+/**
  * get default settings of rating sites
  * @since  1.0.6
  */
@@ -463,17 +487,21 @@ function get_proofratings_settings($key = null) {
         $settings = [];
     }
 
-    $settings['connection_approved'] = ['facebook', 'yelp'];
-
-    if ( !isset($settings['connections']) || !in_array($settings['connections'])) {
+    if ( !isset($settings['connections']) || !is_array($settings['connections'])) {
         $settings['connections'] = ['bbb' => array('active' => true, 'url' => 'https://bbb.org')];
+    }
+
+    if (!isset($settings['connection_approved']) || !is_array($settings['connection_approved']) ) {
+        $settings['connection_approved'] = [];
     }
 
     if ( $key && isset($settings[$key]) ) {
         return $settings[$key];
     }
 
-    return $settings;
+    //error_log(print_r($settings, true));
+
+    return sanitize_proofrating_boolean_data($settings);
 }
 
 /**
@@ -491,7 +519,13 @@ function update_proofratings_settings_key($key, $data) {
     update_option('proofratings_settings', $settings);
 }
 
-
+function get_proofratings_api_args($args = []) {
+    return array_merge(array(
+        'name' => get_bloginfo( 'name' ),
+        'email' => get_bloginfo( 'admin_email' ),
+        'site_url' => get_site_url()
+    ), (array) $args);
+}
 
 /**
  * get square badges settings
