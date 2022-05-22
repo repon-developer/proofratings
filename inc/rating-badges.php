@@ -50,11 +50,11 @@ class Rating_Badges {
     }
 
     /**
-	 * add options for screen setting.
-     * @since  1.0.6
+	 * Get dashboard menu name
+     * @since  1.0.7
 	 */
 	public function get_menu_label() {
-        return __('Rating Badges', 'proofratings');
+		return get_proofratings()->locations->global ? __('Rating Badges', 'proofratings') :  __('Rating Badges Locations', 'proofratings');
     }
 
 	/**

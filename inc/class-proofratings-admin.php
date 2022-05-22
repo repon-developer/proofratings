@@ -42,12 +42,10 @@ class Proofratings_Admin {
 	 * Constructor.
 	 */
 	public function __construct() {
-		include_once dirname( __FILE__ ) . '/class-proofratings-locations.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
 		include_once dirname( __FILE__ ) . '/class-proofratings-email-reporting.php';
 		
 		$this->settings_page = Proofratings_Settings::instance();
-		$this->locations_page = Proofratings_Locations_Admin::instance();
 		$this->email_reporting = Proofratings_Email_Reporting::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 		
@@ -101,8 +99,6 @@ class Proofratings_Admin {
 		
 		$proofratings_icon = PROOFRATINGS_PLUGIN_URL . '/assets/images/proofratings-icon.png';
 
-		$menu_name = get_proofratings()->locations->global ? __('Widgets', 'proofratings') :  __('Locations', 'proofratings');
-
 		$rating_badges = new \Proofratings_Admin\Rating_Badges();
 
 
@@ -111,9 +107,7 @@ class Proofratings_Admin {
 		if ($proofratings_status == 'active' ) {
 			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen);
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->analytics, 'output']);
-			
-			$location_menu = add_submenu_page('proofratings', $menu_name, $menu_name, 'manage_options', 'proofratings-locations', [$this->locations_page, 'render']);
-			add_action( "load-$location_menu", [$this->locations_page, 'screen_option' ] );
+		
 
 			$rating_badges_menu = add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
 			add_action( "load-$rating_badges_menu", [$rating_badges, 'screen_option' ] );
