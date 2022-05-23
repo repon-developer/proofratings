@@ -249,7 +249,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-settings-wrap .proofratings-review-widgets-grid *, .proofratings-badge, .proofratings-banner-badge, .proofratings-banner-badge * {box-sizing: border-box}
 
-.proofratings-settings-wrap .proofratings-review-widgets-grid {display: inline-flex; justify-content: flex-start; margin-bottom: 40px}
+.proofratings-settings-wrap .proofratings-review-widgets-grid {display: inline-flex; justify-content: flex-start; margin-bottom: 20px}
 
 #sites-square-badge-customize {display: none}
 
@@ -446,12 +446,12 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
     border-bottom-color: var(--primary_color);
 }
 
-.proofratings-copyarea {max-width: 500px}
+.proofratings-copyarea {max-width: 550px}
 
 .proofratings-copyarea h3 {font-weight: 600; margin-bottom: 10px}
 .proofratings-copyarea .shortocde-area {
     padding: 10px;
-    font-size: 16px;
+    font-size: 15px;
     user-select: all;
     display: inline-block;
     margin-bottom: 3px;
@@ -462,7 +462,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-copyarea .description {font-size: 12px;}
 
-.section-title-large {color: #2C3149; font-size: 30px; font-weight: bold; margin-top: 10px}
+.section-title-large {color: #2C3149; font-size: 30px; line-height: 1.3; font-weight: bold; margin-top: 40px; margin-bottom: 10px;}
 
 form.form-search-review-sites {
     position: relative;

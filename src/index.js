@@ -16,7 +16,6 @@ import OverallRectangleFloat from './OverallRectangle/Float'
 import OverallNarrowEmbed from './OverallNarrow/Embed';
 import OverallNarrowFloat from './OverallNarrow/Float';
 
-import OverallPopup from './OverallPopup';
 import CTABanner from './CTABanner';
 
 const { useEffect, useState, useRef } = React;
@@ -107,7 +106,6 @@ const ProofratingsWidgets = () => {
         'overall-rectangle-float': 'Overall Rectangle (FLOAT)',
         'overall-narrow-embed': 'Overall Narrow (EMBED)',
         'overall-narrow-float': 'Overall Narrow (Float)',
-        'popup': 'Popup Badges',
         'overall-cta-banner': 'Banner',
     }
 
@@ -150,10 +148,6 @@ const ProofratingsWidgets = () => {
         delete tabs['overall-cta-banner'];
     }
 
-    if (badge_display?.overall_rectangle_float !== true && badge_display?.overall_narrow_float !== true) {
-        delete tabs['popup'];
-    }
-
     const current_tab = settings?.current_tab || 'overview';
 
     return (
@@ -190,7 +184,6 @@ const ProofratingsWidgets = () => {
             {current_tab === 'overall-narrow-embed' && <OverallNarrowEmbed id={location_id} />}
             {current_tab === 'overall-narrow-float' && <OverallNarrowFloat id={location_id} />}
 
-            {current_tab === 'popup' && <OverallPopup />}
             {current_tab === 'overall-cta-banner' && <CTABanner id={location_id} />}
 
             <div className="form-footer">

@@ -92,14 +92,12 @@ const BadgeSquare = (props) => {
                 </p>
             </div>
 
-            <div className='gap-30' />
-
             <ActiveSites onUpdate={(active_connections) => handle_field({ active_connections })} active_connections={state?.active_connections} />
 
-            <h3>Color Selection</h3>
 
+            <h2 className="section-title-large">Color Selection</h2>
             <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized ${state?.logo_color ? 'proofratings-widget-logo-color' : ''}`}>
+                <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized`}>
                     <div className="review-site-logo">
                         <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
                     </div>
