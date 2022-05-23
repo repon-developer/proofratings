@@ -81,15 +81,13 @@ class Proofratings_Settings {
 			return $this->error->add('remote_request', $response->get_error_message());
 		}
 
-
 		$result = json_decode(wp_remote_retrieve_body($response));
-
-
+		
 		if ( !isset($result->success) || $result->success !== true ) {
 			return $this->error->add('license_key', $result->message);
 		}
 
-		update_option('proofratings_status', $result->data->status );
+		update_proofratings_settings(['status' => $result->data->status]);
 	}
 
 	/**

@@ -503,20 +503,35 @@ function get_proofratings_settings($key = null) {
 }
 
 /**
- * Update key of settings
+ * Update proofratings settings
  * @since  1.1.7
  */
-function update_proofratings_settings_key($key, $data) { 
+function update_proofratings_settings($args) { 
     $settings = get_option( 'proofratings_settings');
     if ( !is_array($settings) ) {
         $settings = [];
     }
 
-    $settings[$key] = $data;
-
-    update_option('proofratings_settings', $settings);
+    update_option('proofratings_settings', array_merge($settings, $args));
 }
 
+/**
+ * get current status
+ * @since  1.0.1
+ */
+function get_proofratings_current_status() {
+    $proofratings_status = get_proofratings_settings('status');
+    if ( !$proofratings_status || !in_array($proofratings_status, ['pending', 'pause', 'active'])) {
+        return false;
+    }
+
+    return $proofratings_status;
+}
+
+/**
+ * Get api request args
+ * @since  1.4.7
+ */
 function get_proofratings_api_args($args = []) {
     return array_merge(array(
         'name' => get_bloginfo( 'name' ),
@@ -623,17 +638,3 @@ function get_proofratings_overall_ratings_cta_banner() {
         'button2_border' => 'yes'
     ]));
 }
-/**
- * get current status
- * @since  1.0.1
- */
-function get_proofratings_current_status() {
-    $proofratings_status = get_option( 'proofratings_status');
-
-    if ( !$proofratings_status || !in_array($proofratings_status, ['pending', 'pause', 'active'])) {
-        return false;
-    }
-
-    return $proofratings_status;
-}
-

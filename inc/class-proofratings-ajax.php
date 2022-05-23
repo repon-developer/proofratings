@@ -90,13 +90,10 @@ class Proofratings_Ajax {
 		}
 
 		
-
-		
-			
 		
 		
 
-		error_log(print_r($result, true));
+		//error_log(print_r($result, true));
 
 
 

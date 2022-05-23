@@ -589,3 +589,6 @@ table.table-review-sites .click-through-url input {font-size: 15px; padding: 3px
 table.table-review-sites .click-through-url a {color: var(--text_color_gray); text-decoration: none; font-size: 16px}
 
 table.table-review-sites .message-pending-connections {color: var(--text_color_gray); font-style: italic}
+
+.email-reporting-wrap {gap: 40px; display: flex; align-items: flex-start}
+.email-reporting-wrap .form-table {max-width: 900px}
