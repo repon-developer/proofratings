@@ -19,12 +19,12 @@ import OverallNarrowFloat from './OverallNarrow/Float';
 import OverallPopup from './OverallPopup';
 import CTABanner from './CTABanner';
 
-const { useEffect, useState } = React;
+const { useEffect, useState, useRef } = React;
 
 const location_id = proofratings_widgets_root.getAttribute("data-location");
 
 const ProofratingsWidgets = () => {
-    const [state, setState ] = useState({
+    const [state, setState] = useState({
         error: null,
         loading: true,
         saving: false,
@@ -33,58 +33,66 @@ const ProofratingsWidgets = () => {
     const [settings, setSettings] = useState(store.getState());
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setSettings({...store.getState()}))
+        const unsubscribe = store.subscribe(() => setSettings({ ...store.getState() }))
         return () => unsubscribe();
     }, [])
 
+    const support_button = useRef(null);
+
+    useEffect(() => {
+        if ( support_button.current ) {
+            tippy(support_button.current, { content: 'Need Help?' });
+        }        
+        
+    }, [support_button.current])
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
-        store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: {...settings, current_tab} });
+        store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: { ...settings, current_tab } });
     }
 
-    useEffect(() => {               
-        const request = jQuery.post(proofratings.ajaxurl, {location_id, action: 'proofratings_get_location'}, function (response) {
-            if ( response?.success == false ) {
-                return setState({...state, error: true, loading: false});
+    useEffect(() => {
+        const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'proofratings_get_location' }, function (response) {
+            if (response?.success == false) {
+                return setState({ ...state, error: true, loading: false });
             }
-            
-            setState({...state, error: false, loading: false});
-            if ( Object.keys(response).length !== 0 ) {
+
+            setState({ ...state, error: false, loading: false });
+            if (Object.keys(response).length !== 0) {
                 store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response });
             }
         });
 
-        request.fail(function() {
-            return setState({...state, error: true, loading: false});
+        request.fail(function () {
+            return setState({ ...state, error: true, loading: false });
         })
     }, []);
 
     const save_data = () => {
-        if ( state.saving ) {
+        if (state.saving) {
             return;
         }
-        
-        setState({...state, saving: true});
+
+        setState({ ...state, saving: true });
 
         settings.action = 'proofratings_save_location';
         settings.location_id = location_id;
 
         jQuery.post(proofratings.ajaxurl, settings, function (response) {
-            if ( response?.success == false ) {
+            if (response?.success == false) {
                 alert('Something wrong with saving data')
             }
 
-            setState({...state, saving: false})
+            setState({ ...state, saving: false })
         })
     }
 
-    
-    if ( state.loading === true) {
+
+    if (state.loading === true) {
         return <div className="proofraing-progress-msg">Loading...</div>
     }
-    
-    if ( state.error === true) {
+
+    if (state.error === true) {
         return <div className="proofraing-progress-msg">Failed to retrive this location.</div>
     }
 
@@ -102,46 +110,46 @@ const ProofratingsWidgets = () => {
         'overall-cta-banner': 'Overall CTA Banner',
     }
 
-    
-    const { badge_display, activeSites } = settings;
-    
-    if ( badge_display?.sites_square !== true ) {
+
+    const { badge_display } = settings;
+
+    if (badge_display?.sites_square !== true) {
         delete tabs['badge-square'];
     }
 
-    if ( badge_display?.badge_basic !== true ) {
+    if (badge_display?.badge_basic !== true) {
         delete tabs['badge-basic'];
     }
 
-    if ( badge_display?.sites_icon !== true ) {
+    if (badge_display?.sites_icon !== true) {
         delete tabs['sites-icon'];
     }
 
-    if ( badge_display?.sites_rectangle !== true ) {
+    if (badge_display?.sites_rectangle !== true) {
         delete tabs['badge-rectangle'];
     }
 
-    if ( badge_display?.overall_rectangle_embed !== true ) {
+    if (badge_display?.overall_rectangle_embed !== true) {
         delete tabs['overall-rectangle-embed']
     }
 
-    if ( badge_display?.overall_rectangle_float !== true ) {
+    if (badge_display?.overall_rectangle_float !== true) {
         delete tabs['overall-rectangle-float']
     }
 
-    if ( badge_display?.overall_narrow_embed !== true ) {
+    if (badge_display?.overall_narrow_embed !== true) {
         delete tabs['overall-narrow-embed']
     }
 
-    if ( badge_display?.overall_narrow_float !== true ) {
+    if (badge_display?.overall_narrow_float !== true) {
         delete tabs['overall-narrow-float']
     }
 
-    if ( badge_display?.overall_cta_banner !== true ) {
+    if (badge_display?.overall_cta_banner !== true) {
         delete tabs['overall-cta-banner'];
     }
 
-    if ( badge_display?.overall_rectangle_float !== true && badge_display?.overall_narrow_float !== true) {
+    if (badge_display?.overall_rectangle_float !== true && badge_display?.overall_narrow_float !== true) {
         delete tabs['badge-popup'];
     }
 
@@ -150,16 +158,24 @@ const ProofratingsWidgets = () => {
     return (
         <React.Fragment>
             <header className="proofratins-header">
-				<a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
-				<h1 className="title">Rating Badges</h1>
+                <div className="header-row">
+                    <div className="header-left">
+                        <a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i className="icon-back fa-solid fa-angle-left" /> Back to Main Menu</a>
+                        <h1 className="title">Rating Badges</h1>
+                    </div>
+
+                    <div className="header-right">
+                        <a ref={support_button} className="btn-support fa-regular fa-circle-question" href="/wp-admin/admin.php?page=proofratings-support" />
+                    </div>
+                </div>
 
                 <div className="rating-badges-navtab">
-                {Object.keys(tabs).map((key) => {
-                    const tab_class = (current_tab === key) ? 'active' : '';
-                    return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={tab_class}>{tabs[key]}</a>
-                })}
+                    {Object.keys(tabs).map((key) => {
+                        const tab_class = (current_tab === key) ? 'active' : '';
+                        return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={tab_class}>{tabs[key]}</a>
+                    })}
                 </div>
-			</header>
+            </header>
 
             {/* {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} id={location_id} />} */}
             {current_tab === 'badge-overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
@@ -167,7 +183,7 @@ const ProofratingsWidgets = () => {
             {current_tab === 'badge-rectangle' && <BadgeRectangle id={location_id} />}
             {current_tab === 'badge-basic' && <BadgeBasic id={location_id} />}
             {current_tab === 'sites-icon' && <Sites_Icon id={location_id} />}
-            
+
             {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
             {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}
 

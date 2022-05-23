@@ -109,6 +109,8 @@
             $(".analytics-information .conversions").hide()
         }
 
+        console.log( analytics_input )
+
 
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
 
@@ -138,6 +140,8 @@
     analytics_store.subscribe(() => {
         const state = analytics_store.getState();
         const {start, end, domain, location } = state;
+
+        
 
         const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 2;
 
