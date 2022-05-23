@@ -446,6 +446,8 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
     border-bottom-color: var(--primary_color);
 }
 
+.proofratings-copyarea {max-width: 500px}
+
 .proofratings-copyarea h3 {font-weight: 600; margin-bottom: 10px}
 .proofratings-copyarea .shortocde-area {
     padding: 10px;

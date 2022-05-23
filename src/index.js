@@ -108,7 +108,7 @@ const ProofratingsWidgets = () => {
         'overall-narrow-embed': 'Overall Narrow (EMBED)',
         'overall-narrow-float': 'Overall Narrow (Float)',
         'popup': 'Popup Badges',
-        'overall-cta-banner': 'Overall CTA Banner',
+        'overall-cta-banner': 'Banner',
     }
 
 
@@ -180,9 +180,9 @@ const ProofratingsWidgets = () => {
 
             {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'square' && <BadgeSquare id={location_id} />}
-            {current_tab === 'rectangle' && <BadgeRectangle id={location_id} />}
             {current_tab === 'basic' && <BadgeBasic id={location_id} />}
             {current_tab === 'icon' && <Sites_Icon id={location_id} />}
+            {current_tab === 'rectangle' && <BadgeRectangle id={location_id} />}
 
             {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
             {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}

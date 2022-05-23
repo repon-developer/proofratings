@@ -59,6 +59,17 @@ const CTABanner = (props) => {
         <React.Fragment>
             <style>{css_style}</style>
 
+            <div className="proofratings-copyarea">
+                <h3>Webhook URL</h3>
+                <code className="shortocde-area">{proofratings.api}/webhooks?id={props?.id}&amp;site_url={proofratings.site_url}</code>
+                <p className="description">
+                    Use this URL to track conversions. And the URL to any software you use for your Call-to-action button(s). <br/>
+                    Note: Set the webhook as a POST.
+                </p>
+            </div>
+
+            <div className='gap-30' />
+
             <table className="form-table">
                 <tbody>
                     <tr>

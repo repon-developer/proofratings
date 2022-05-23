@@ -42,13 +42,16 @@ const OverallNarrow = (props) => {
 
     return (
         <React.Fragment>
+            <div className="proofratings-copyarea">
+                <h3>Shortcode</h3>
+                <code className="shortocde-area">[proofratings_overall_narrow id="{props?.id}"]</code>
+                <p className="description">Copy and paste this shortcode where you want to display the review badge.</p>
+            </div>
+
+            <div className='gap-30' />
+
             <table className="form-table">
                 <tbody>
-                    <tr>
-                        <th scope="row">Shortcode <p className="description" style={{ fontWeight: "normal" }}>Embed shortcode</p></th>
-                        <td><code className="shortocde-area">[proofratings_overall_narrow id="{props?.id}"]</code></td>
-                    </tr>
-
                     <Link {...link} onUpdate={handle_link} />
 
                     <tr>
