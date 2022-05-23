@@ -7,7 +7,7 @@ const SiteConnections = () => {
     const [state, setState] = useState(store.getState())
     
     const connections = (typeof state?.connections === 'object') ? state.connections : {};
-    const connection_approved = Array.isArray(state?.connection_approved) ? state.connection_approved : [];
+    const active_connections = Array.isArray(state?.active_connections) ? state.active_connections : [];
 
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setState(store.getState()))
@@ -36,7 +36,7 @@ const SiteConnections = () => {
     if (typeof proofratings?.review_sites === 'object') {
         Object.entries(proofratings.review_sites).forEach((item) => {
             item[1].slug = item[0];
-            item[1].approved = connection_approved.includes(item[0])
+            item[1].approved = active_connections.includes(item[0])
             review_sites.push(item[1])
         })
     }

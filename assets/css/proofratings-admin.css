@@ -13,7 +13,7 @@
 
 
 .button.button-primary {padding: 4px 20px; font-weight: 500; background-color: var(--primary_color)}
-.button.button-primary:hover {background-color: #2a0fda}
+.button.button-primary:hover, .button.button-primary:focus {background-color: #2a0fda}
 
 .button.btn-save {min-width: 100px;}
 
@@ -118,34 +118,8 @@ table.locations_table tr .column-action {width: 100px}
 
 .proofratings-settings-wrap .nav-tab-wrapper {margin-bottom: 20px!important}
 
-.review-sites-checkboxes {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
 
-.connect-sites-container {
-    padding: 25px;
-    display: table;
-    padding-bottom: 0;
-    margin-bottom: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
-}
-
-.connect-sites-container > h2 {
-    font-size: 25px;
-    font-weight: bold;
-    margin: 0 0 20px 0;
-    text-transform: uppercase;
-}
-
-.connect-sites-container .review-sites-checkboxes {margin-bottom: 0;}
-.connect-sites-container .review-sites-checkboxes > label:last-child {margin-right: 0;}
-.review-sites-checkboxes .checkbox-review-site {margin-right: 20px; margin-bottom: 20px}
-
-.review-sites-checkboxes.review-sites-checkboxes-widget {margin-top: 30px; margin-bottom: 0;}
+.review-sites-checkboxes {display: flex; flex-wrap: wrap; gap: 20px}
 
 .checkbox-review-site {
     padding: 20px;
@@ -159,10 +133,7 @@ table.locations_table tr .column-action {width: 100px}
     border-radius: 10px;
 }
 
-.checkbox-review-site img {
-    max-width: 100px;
-    max-height: 100%;
-}
+.checkbox-review-site img {max-width: 100px; max-height: 100%}
 
 .checkbox-review-site input {
     position: absolute;
@@ -180,30 +151,13 @@ table.locations_table tr .column-action {width: 100px}
     box-shadow: none!important;
 }
 
-.checkbox-review-site input:before {
-    float: none!important;
-    content: "\f12a"!important;
-    vertical-align: text-bottom!important;
-}
-
-.checkbox-review-site input:checked {
-    color: green;
-    visibility: visible;
-}
-
-.checkbox-review-site input:checked:before {
-    margin: 0!important;
-    height: auto!important;
-    width: auto!important;
-}
+.checkbox-review-site input:before {float: none!important; content: "\f12a"!important; vertical-align: text-bottom!important}
+.checkbox-review-site input:checked {color: var(--primary_color); visibility: visible}
+.checkbox-review-site input:checked:before {margin: 0!important; height: auto!important; width: auto!important}
 
 fieldset.fieldset-site-review {display: none; margin-bottom: 30px;}
 
-
-.review-us {
-    text-align: center;
-    font-size: 17px;
-}
+.review-us {text-align: center; font-size: 17px}
 
 input[type="checkbox"].checkbox-switch {
     text-align: center;

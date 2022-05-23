@@ -53,6 +53,7 @@ const ProofratingsWidgets = () => {
 
     useEffect(() => {
         const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'proofratings_get_location' }, function (response) {
+            console.log(response)
             if (response?.success == false) {
                 return setState({ ...state, error: true, loading: false });
             }
@@ -97,36 +98,36 @@ const ProofratingsWidgets = () => {
     }
 
     const tabs = {
-        'badge-overview': 'Badge Overview',
-        'badge-square': 'Square',
-        'badge-basic': 'Sites Basic',
-        'sites-icon': 'Icon',
-        'badge-rectangle': 'Sites (Rectangle)',
-        'overall-rectangle-embed': 'Overall Rating Rectangle - EMBED',
-        'overall-rectangle-float': 'Overall Rating Rectangle - FLOAT',
-        'overall-narrow-embed': 'Overall Rating Narrow - EMBED',
+        'overview': 'Badge Overview',
+        'square': 'Square',
+        'basic': 'Basic',
+        'icon': 'Icon',
+        'rectangle': 'Rectangle',
+        'overall-rectangle-embed': 'Overall Rectangle (EMBED)',
+        'overall-rectangle-float': 'Overall Rectangle (FLOAT)',
+        'overall-narrow-embed': 'Overall Narrow (EMBED)',
         'overall-narrow-float': 'Overall Narrow (Float)',
-        'badge-popup': 'Popup Badges',
+        'popup': 'Popup Badges',
         'overall-cta-banner': 'Overall CTA Banner',
     }
 
 
     const { badge_display } = settings;
 
-    if (badge_display?.sites_square !== true) {
-        delete tabs['badge-square'];
+    if (badge_display?.square !== true) {
+        delete tabs['square'];
     }
 
-    if (badge_display?.badge_basic !== true) {
-        delete tabs['badge-basic'];
+    if (badge_display?.basic !== true) {
+        delete tabs['basic'];
     }
 
-    if (badge_display?.sites_icon !== true) {
-        delete tabs['sites-icon'];
+    if (badge_display?.icon !== true) {
+        delete tabs['icon'];
     }
 
-    if (badge_display?.sites_rectangle !== true) {
-        delete tabs['badge-rectangle'];
+    if (badge_display?.rectangle !== true) {
+        delete tabs['rectangle'];
     }
 
     if (badge_display?.overall_rectangle_embed !== true) {
@@ -150,10 +151,10 @@ const ProofratingsWidgets = () => {
     }
 
     if (badge_display?.overall_rectangle_float !== true && badge_display?.overall_narrow_float !== true) {
-        delete tabs['badge-popup'];
+        delete tabs['popup'];
     }
 
-    const current_tab = settings?.current_tab || 'badge-overview';
+    const current_tab = settings?.current_tab || 'overview';
 
     return (
         <React.Fragment>
@@ -177,12 +178,11 @@ const ProofratingsWidgets = () => {
                 </div>
             </header>
 
-            {/* {current_tab === 'review-sites' && <ReviewSites activeSites={activeSites} id={location_id} />} */}
-            {current_tab === 'badge-overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
-            {current_tab === 'badge-square' && <BadgeSquare id={location_id} />}
-            {current_tab === 'badge-rectangle' && <BadgeRectangle id={location_id} />}
-            {current_tab === 'badge-basic' && <BadgeBasic id={location_id} />}
-            {current_tab === 'sites-icon' && <Sites_Icon id={location_id} />}
+            {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
+            {current_tab === 'square' && <BadgeSquare id={location_id} />}
+            {current_tab === 'rectangle' && <BadgeRectangle id={location_id} />}
+            {current_tab === 'basic' && <BadgeBasic id={location_id} />}
+            {current_tab === 'icon' && <Sites_Icon id={location_id} />}
 
             {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
             {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}
@@ -190,12 +190,13 @@ const ProofratingsWidgets = () => {
             {current_tab === 'overall-narrow-embed' && <OverallNarrowEmbed id={location_id} />}
             {current_tab === 'overall-narrow-float' && <OverallNarrowFloat id={location_id} />}
 
-            {current_tab === 'badge-popup' && <OverallPopup />}
+            {current_tab === 'popup' && <OverallPopup />}
             {current_tab === 'overall-cta-banner' && <CTABanner id={location_id} />}
 
-            <p className="submit">
-                <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'Save Changes'}</button>
-            </p>
+            <div className="form-footer">
+                <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
+                <a className='btn-cancel' href="/wp-admin/admin.php?page=proofratings">CANCEL</a>
+            </div>
 
         </React.Fragment>
     );

@@ -491,8 +491,8 @@ function get_proofratings_settings($key = null) {
         $settings['connections'] = (object) [];
     }
 
-    if (!isset($settings['connection_approved']) || !is_array($settings['connection_approved']) ) {
-        $settings['connection_approved'] = ['facebook', 'angi', 'yelp'];
+    if (!isset($settings['active_connections']) || !is_array($settings['active_connections']) ) {
+        $settings['active_connections'] = [];
     }
 
     if ( $key ) {
@@ -507,12 +507,7 @@ function get_proofratings_settings($key = null) {
  * @since  1.1.7
  */
 function update_proofratings_settings($args) { 
-    $settings = get_option( 'proofratings_settings');
-    if ( !is_array($settings) ) {
-        $settings = [];
-    }
-
-    update_option('proofratings_settings', array_merge($settings, $args));
+    update_option('proofratings_settings', array_merge(get_proofratings_settings(), (array) $args));
 }
 
 /**

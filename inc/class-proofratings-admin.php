@@ -147,6 +147,7 @@ class Proofratings_Admin {
 			'site_url' => home_url(),
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
+			'active_connections' => get_proofratings_settings('active_connections'),
 			'pages' => get_pages()
 		));
 

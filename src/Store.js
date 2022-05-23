@@ -18,7 +18,7 @@ const ACTIONS = {
 };
 
 const settings = {
-    current_tab: 'badge-overview',
+    current_tab: 'overview',
     activeSites: [],
     badge_display: {
         sites_square: false,
@@ -31,10 +31,10 @@ const settings = {
         overall_narrow_embed: false,
         overall_narrow_float: false
     },
-    sites_square: {active_sites: null},
-    badge_basic: {active_sites: null},
-    sites_icon: {active_sites: null},
-    sites_rectangle: {active_sites: null},
+    sites_square: {},
+    badge_basic: {},
+    sites_icon: {},
+    sites_rectangle: {},
 
     overall_rectangle_embed: {},
     overall_rectangle_float: {tablet: true, mobile: true, close_button: true},

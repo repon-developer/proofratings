@@ -1,31 +1,34 @@
-import store from './../Store';
-
 const ActiveSites = (props) => {
-    const { activeSites } = store.getState();
-
-    const active_sites = Array.isArray(props.active_sites) ? props.active_sites : [];
+    const active_connections = Array.isArray(props.active_connections) ? props.active_connections : [];
 
     const handleCheck = (site_id) => {
-        const index = active_sites.indexOf(site_id);
+        const index = active_connections.indexOf(site_id);
         if (index !== -1) {
-            active_sites.splice(index, 1);
+            active_connections.splice(index, 1);
         } else {
-            active_sites.push(site_id);
+            active_connections.push(site_id);
         }      
         
-        props.onUpdate(active_sites);
+        props.onUpdate(active_connections);
     }
 
-    const activated_sites = Array.isArray(activeSites) ? activeSites : [];
+    const connections = proofratings.active_connections.map((slug) => {
+        if ( typeof proofratings.review_sites[slug] !== 'object' ) {
+            return false;
+        }
+
+        proofratings.review_sites[slug].slug = slug;
+        return proofratings.review_sites[slug];
+    }).filter(item => item !== false)
 
     return (
         <div className="connected-sites-wrapper">
             <h2 className='section-title-large'>Customize</h2>
             <div className="review-sites-checkboxes review-sites-checkboxes-widget">
-                {activated_sites.map(site_id => (
-                    <label key={site_id} className="checkbox-review-site">
-                        <input type="checkbox" defaultChecked={active_sites.includes(site_id)} onClick={() => handleCheck(site_id)} />
-                        <img src={proofratings.review_sites[site_id].logo} alt={proofratings.review_sites[site_id].name} />
+                {connections.map(connection => (
+                    <label key={connection.slug} className="checkbox-review-site">
+                        <input type="checkbox" defaultChecked={active_connections.includes(connection.slug)} onClick={() => handleCheck(connection.slug)} />
+                        <img src={connection.logo} alt={connection.name} />
                     </label>
                 ))}
             </div>
