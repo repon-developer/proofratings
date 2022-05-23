@@ -9,7 +9,6 @@ import PopupWidget from "../Component/Popup";
 const { useState, useEffect } = React;
 
 const OverallNarrow = () => {
-    const settings = store.getState();
 
     const [state, setState] = useState(store.getState().overall_narrow_float);
 
@@ -18,17 +17,18 @@ const OverallNarrow = () => {
         return () => unsubscribe();
     }, [])
 
-    const handle_field = (data) => store.dispatch({
-        type: ACTIONS.OVERALL_SAVE,
-        payload: {
-            name: 'overall_narrow_float', data
-        }
-    });
+    const handle_field = (data) => store.dispatch({ type: ACTIONS.OVERALL_SAVE, payload: { name: 'overall_narrow_float', data } });
 
     const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
         shadow[name] = value;
         handle_field({ shadow })
+    }
+
+    const popup_settings = (typeof state.popup_settings === 'object') ? state.popup_settings : {};
+    const handle_popup = (key, value) => {
+        popup_settings[key] = value;
+        handle_field({ popup_settings } )            
     }
 
     return (
@@ -123,8 +123,7 @@ const OverallNarrow = () => {
                     </tbody>
                 </table>
 
-
-                <PopupWidget />
+                <PopupWidget settings={popup_settings} onUpdate={handle_popup} />
             </div>
 
             <div className="column-page-selection">

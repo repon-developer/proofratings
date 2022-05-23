@@ -32,10 +32,16 @@ const OverallRectangle_Embed = (props) => {
         handle_field({ shadow })
     }
 
+    const popup_settings = (typeof state.popup_settings === 'object') ? state.popup_settings : {};
+    const handle_popup = (key, value) => {
+        popup_settings[key] = value;
+        handle_field({ popup_settings } )            
+    }
+
     return (
         <div className="wrapper-page-selection">
             <div className="settings-column">
-                <h2 className="section-title-large" style={{marginTop: 0}}>Device Visibility</h2>
+                <h2 className="section-title-large" style={{ marginTop: 0 }}>Device Visibility</h2>
                 <table className="form-table">
                     <tbody>
                         <tr>
@@ -129,7 +135,7 @@ const OverallRectangle_Embed = (props) => {
                     </tbody>
                 </table>
 
-                <PopupWidget />
+                <PopupWidget settings={popup_settings} onUpdate={handle_popup} />
             </div>
 
             <div className="column-page-selection">
