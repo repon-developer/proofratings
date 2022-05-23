@@ -333,80 +333,35 @@ class Proofratings_Settings {
 	}
 
 
-	public function asdfasfasfsafasf() {
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+	public function support() {
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
+		<div class="wrap proofratings-settings-wrap">		
+			<header class="proofratins-header header-row">
+				<div class="header-left">
+					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<h1 class="title"><?php _e('Support', 'proofratings') ?></h1>
+				</div>
+				
+				<div class="header-right">
+					<!-- <a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a> -->
+				</div>
+			</header>
 
-
-
-
-
-
-		return;
-		?>
-		<div class="wrap proofratings-settings-wrap">
-			<h1 class="wp-heading-inline"><?php _e('Add Location', 'proofratings') ?></h1>
-			<hr class="wp-header-end">
-
-			<?php if (!empty($postdata['error_msg'])) : ?>
+			<?php if ( $this->error->has_errors() ) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php echo esc_html($postdata['error_msg']) ?></p>
+				<p><?php echo $this->error->get_error_message() ?></p>
 			</div>
-			<?php endif; ?>
-			
-			<form method="post">
-				<?php wp_nonce_field( '_nonce_add_location', '_nonce' ) ?>
-				<table class="form-table">
-					<tr>
-						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
-						<td>
-							<input name="name" type="text" value="<?php echo esc_attr(@$postdata['name']) ?>" />
-						</td>
-					</tr>
+			<?php endif; ?>				
 
-					<tr>
-						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
-						<td>
-							<input name="street" type="text" value="<?php echo esc_attr(@$postdata['street']) ?>" />
-						</td>
-					</tr>
+			<form class="form-submit-ticket" method="post">
+				<?php wp_nonce_field( '_nonce_submit_ticket', '_nonce' ) ?>
 
-					<tr>
-						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
-						<td>
-							<input name="street2" type="text" value="<?php echo esc_attr(@$postdata['street2']) ?>" />
-						</td>
-					</tr>
+				<label>Subject</label>
+				<input name="subject" type="text" value="">
 
-					<tr>
-						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
-						<td>
-							<input name="city" type="text" value="<?php echo esc_attr(@$postdata['city']) ?>" />
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
-						<td>
-							<input name="state" type="text" value="<?php echo esc_attr(@$postdata['state']) ?>" />
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
-						<td>
-							<input name="zip" type="text" value="<?php echo esc_attr(@$postdata['zip']) ?>" />
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
-						<td>
-							<input name="country" type="text" value="<?php echo esc_attr(@$postdata['country']) ?>" />
-						</td>
-					</tr>
-				</table>
-
-				<?php submit_button('Request location'); ?>
+				<label>Message</label>
+				<textarea name="message"></textarea>
+				<?php submit_button('SUBMIT'); ?>
 			</form>
 		</div>
 		<?php

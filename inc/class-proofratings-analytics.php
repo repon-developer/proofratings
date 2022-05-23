@@ -105,8 +105,6 @@ class Proofratings_Analytics {
 				</div>
 			</header>
 
-			
-
 			<div class="analytics-information">
 				<div class="impressions">
 					<span class="counter">0</span>

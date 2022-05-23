@@ -43,10 +43,8 @@ class Proofratings_Admin {
 	 */
 	public function __construct() {
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
-		include_once dirname( __FILE__ ) . '/class-proofratings-email-reporting.php';
 		
 		$this->settings_page = Proofratings_Settings::instance();
-		$this->email_reporting = Proofratings_Email_Reporting::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
 		
 		if ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES ) {
@@ -108,16 +106,13 @@ class Proofratings_Admin {
 			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen);
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->analytics, 'output']);
 		
-
 			$rating_badges_menu = add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
 			add_action( "load-$rating_badges_menu", [$rating_badges, 'screen_option' ] );
 
 			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), 'manage_options', 'proofratings-settings', [$this->settings_page, 'settings']);
+			add_submenu_page('proofratings', __('Support', 'proofratings'), __('Support', 'proofratings'), 'manage_options', 'proofratings-support', [$this->settings_page, 'support']);
 
-			
-			
 			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
-
 		}
 	}
 
