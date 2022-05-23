@@ -135,6 +135,11 @@ class Proofratings_Admin {
 
 
 		wp_enqueue_style( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-dashboard.css', [], PROOFRATINGS_VERSION);
+
+		wp_register_script( 'popper', PROOFRATINGS_PLUGIN_URL . '/assets/js/popper.min.js', [], '2.11.5', true);
+		wp_register_script( 'tippy', PROOFRATINGS_PLUGIN_URL . '/assets/js/tippy.js', ['popper'], 6, true);
+
+
 		wp_enqueue_script( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-dashboard.js', ['jquery'], PROOFRATINGS_VERSION, true);
 		wp_localize_script( 'proofratings-dashboard', 'proofratings', array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
@@ -164,19 +169,15 @@ class Proofratings_Admin {
 			wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker', 'fontawesome'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
-			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker'], PROOFRATINGS_VERSION, true);
+			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker', 'tippy'], PROOFRATINGS_VERSION, true);
 		}
 
-		preg_match('/(proofratings-rating-badges|proofratings-locations)/', $screen->id, $widget_matches);
-		
+		preg_match('/(proofratings-rating-badges)/', $screen->id, $widget_matches);		
 		if ( $widget_matches ) {
 			wp_enqueue_script( 'proofratings-widgets', PROOFRATINGS_PLUGIN_URL . '/assets/js/widgets.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 		}
 
 		preg_match('/proofratings-settings/', $screen->id, $matches_settings);
-
-
-
 		if ( $matches_settings ) {
 			wp_enqueue_script( 'proofratings-settings', PROOFRATINGS_PLUGIN_URL . '/assets/js/settings.js', ['react', 'react-dom'], PROOFRATINGS_VERSION, true);
 		}

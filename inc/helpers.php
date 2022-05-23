@@ -495,8 +495,8 @@ function get_proofratings_settings($key = null) {
         $settings['connection_approved'] = ['facebook', 'angi', 'yelp'];
     }
 
-    if ( $key && isset($settings[$key]) ) {
-        return $settings[$key];
+    if ( $key ) {
+        return isset($settings[$key]) ? $settings[$key] : false;
     }
 
     return sanitize_proofrating_boolean_data($settings);

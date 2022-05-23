@@ -3,6 +3,8 @@
         return;
     }
 
+    $('body').addClass('proofratings-analytics');
+
     const ctx = document.getElementById("analytics-chart").getContext("2d");
 
     const impression_gradient = ctx.createLinearGradient(0, 0, 0, 600);
@@ -149,7 +151,7 @@
 
         request.always(function () {
             $(".proofratings-analytics-wrap").removeClass("loading");
-        });
+        });   
     })
 
     $('.analytics-filter > .location-filter').on('change', function(){

@@ -19,6 +19,20 @@
 
 .bold {font-weight: bold!important}
 
+.btn-support {
+    color: inherit;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+#tooltip {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
 body.screen-proofratings {background-color: #fff}
 
 body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin: 0 0 0 -20px}
@@ -27,6 +41,8 @@ body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin
 .screen-proofratings .btn-primary:hover {color: #fff; background-color: #2348ec}
 
 .proofratins-header {padding: 30px; margin: -30px -30px 30px -30px; background-color: #F4F7FE; border-bottom: 1px solid #CED0D7}
+
+.header-row {display: flex; justify-content: space-between; align-items: center;}
 
 body.screen-proofratings .form-footer {display: flex; font-weight: 500; align-items: center; gap: 10px; margin-top: 40px;}
 body.screen-proofratings .form-footer a {text-decoration: none}
@@ -89,8 +105,6 @@ table.locations_table tr .column-action {width: 100px}
     margin: 0;
     font-size: inherit;
 }
-
-body.proofratings_page_proofratings-analytics .proofratings-settings-wrap {padding-left: 0}
 
 .proofratings-settings-wrap .shortcode-info {
     margin-bottom: 20px;
@@ -323,26 +337,15 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 
 .proofratings-popup-widgets-box > * {box-sizing: border-box;}
 
-body.proofratings-analytics {background-color: #fff}
-body.proofratings-analytics #wpcontent {padding-left: 0}
 
-.proofratings-analytics-wrap {margin: 0; padding: 20px 30px}
 
-.analytics-filter {
-    display: flex;
-    align-items: center;
-    padding: 15px 30px;
-    margin: 0 -30px;
-    margin-bottom: 20px;
-    justify-content: space-between;
-    border-bottom: 1px solid #f3f3f3;
-}
+.analytics-filter {display: flex; gap: 15px; align-items: center}
 
 .analytics-filter select, #analytics-date {
     line-height: 32px;
     height: 34px;
     border: 1px solid #8c8f94;
-    border-radius: 0;
+    border-radius: 5px;
     box-sizing: border-box;
 }
 
@@ -353,14 +356,12 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
     align-items: center;
     display: inline-flex;
     font-weight: 600;
+    padding-inline-start: 20px;
     background-color: #fff;
     cursor: pointer;
 }
 
-#analytics-date .dashicons {
-    margin-left: -10px;
-    margin-right: 6px;
-}
+#analytics-date .dashicons { margin-left: -10px; margin-right: 6px}
 
 .analytics-information {
     gap: 30px;
@@ -369,15 +370,9 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
 }
 
-.analytics-information p {
-    color: #a8a8a8;
-    font-size: 14px;
-}
+.analytics-information p {color: #a8a8a8; font-size: 14px}
 
-.analytics-information .name {
-    margin: 0;
-    font-size: 16px;
-}
+.analytics-information .name {margin: 0; font-size: 16px}
 
 .analytics-information .name + p {margin-top: 5px;}
 
@@ -402,12 +397,8 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 
 .analytics-information .impressions .counter:before {background-color: #4123FF}
 .analytics-information .hovers .counter:before {background-color: rgba(76, 175, 80, 1)}
-
 .analytics-information .engagements .counter:before {visibility: hidden;}
-
-#analytics-chart {
-    margin-top: 30px;
-}
+#analytics-chart {margin-top: 30px}
 
 #reporting-email-addresses {
     margin: 7px 0 0;
@@ -515,11 +506,7 @@ body.proofratings-analytics #wpcontent {padding-left: 0}
 
 .proofratings-copyarea .description {font-size: 12px;}
 
-.section-title-large {
-    color: #2C3149;
-    font-size: 30px;
-    font-weight: bold;
-}
+.section-title-large {color: #2C3149; font-size: 30px; font-weight: bold; margin-top: 10px}
 
 form.form-search-review-sites {
     position: relative;
@@ -592,3 +579,15 @@ table.table-review-sites .message-pending-connections {color: var(--text_color_g
 
 .email-reporting-wrap {gap: 40px; display: flex; align-items: flex-start}
 .email-reporting-wrap .form-table {max-width: 900px}
+
+.schema-wrapper {display: flex; gap: 40px; align-items: flex-start;}
+.schema-wrapper .left-column {flex: 0 0 auto; width: 450px;}
+.schema-wrapper textarea {width: 100%; padding: 10px; font-size: 15px; min-height: 500px; border-color: #C5C6CD; box-shadow: none!important}
+
+.proofratings-join-date {
+    font-weight: bold;
+    padding: 5px 15px;
+    display: inline-block;
+    border: 1px solid #C5C6CD;
+    border-radius: 100px;
+}

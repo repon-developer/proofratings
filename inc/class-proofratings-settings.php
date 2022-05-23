@@ -197,8 +197,14 @@ class Proofratings_Settings {
 	 */
 	public function main_menu() {?>
 		<div class="wrap proofratings-settings-wrap">		
-			<header class="proofratins-header">
-				<h1 class="title"><?php _e('Proofratings main menu', 'proofratings') ?></h1>
+			<header class="proofratins-header header-row">
+				<h1 class="title"><?php _e('Proofratings Main Menu', 'proofratings') ?></h1>
+
+				<?php 
+					if ( $join_date = wp_date('d-m-Y', strtotime(get_proofratings_settings('registered')) ) ) {
+						printf('<span class="proofratings-join-date">Date Joined: %s</span>', $join_date);
+					}
+				?>
 			</header>
 
 			<div class="proofratings-dashboard-menu">

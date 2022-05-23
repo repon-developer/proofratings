@@ -60,8 +60,8 @@ class Proofratings_Analytics {
 	 * Enqueues CSS and JS assets.
 	 */
 	public function admin_enqueue_scripts() {
-		$current_screen = preg_match('/toplevel_page_proofratings/', get_current_screen()->id, $matches);
-		if(!$current_screen) {
+		preg_match('/proofratings-analytics/', get_current_screen()->id, $matches);
+		if(!$matches) {
 			return;
 		}
 
@@ -82,23 +82,30 @@ class Proofratings_Analytics {
 	 */
 	public function output() {
 		$locations = get_proofratings()->locations->items; ?>
-		<div class="wrap proofratings-analytics-wrap loading">
-			<hr class="wp-header-end">
-
-			<div class="analytics-filter">
-				<?php if(get_proofratings()->locations->global !== true): ?>
-				<select class="location-filter">
-					<option value="">View all</option>
-					<?php foreach ($locations as $location) {
-						printf('<option value="%s">%s</option>', $location->id, $location->location);
-					} ?>
-				</select>
-				<?php endif; ?>
-
-				<div class="right">
-					<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
+		<div class="wrap proofratings-settings-wrap proofratings-analytics-wrap">
+			<header class="proofratins-header header-row">
+				<div class="header-left">
+					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<h1 class="title"><?php _e('Analytics', 'proofratings') ?></h1>
 				</div>
-			</div>
+				
+				<div class="header-right analytics-filter">
+					<?php if(get_proofratings()->locations->global !== true): ?>
+					<select class="location-filter">
+						<option value="">View all</option>
+						<?php foreach ($locations as $location) {
+							printf('<option value="%s">%s</option>', $location->id, $location->location);
+						} ?>
+					</select>
+					<?php endif; ?>
+
+					<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
+
+					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
+				</div>
+			</header>
+
+			
 
 			<div class="analytics-information">
 				<div class="impressions">

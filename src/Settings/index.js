@@ -3,13 +3,14 @@ const { useEffect, useState } = React;
 import store, { ACTIONS } from './Store';
 import SiteConnections from './Connections';
 import Report from './Report';
+import Schema from './Schema';
 
 const ProofratingsSettings = () => {
     const [state, setState ] = useState({
         error: null,
         loading: true,
         saving: false,
-        current_tab: 'report',
+        current_tab: 'schema',
     });
 
     useEffect(() => {               
@@ -87,7 +88,7 @@ const ProofratingsSettings = () => {
 
             {current_tab === 'connections' && <SiteConnections />}
             {current_tab === 'report' && <Report />}
-            {current_tab === 'schema' && <SiteConnections />}
+            {current_tab === 'schema' && <Schema />}
 
             
 
