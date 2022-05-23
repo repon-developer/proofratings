@@ -68,164 +68,173 @@ const CTABanner = (props) => {
                 </p>
             </div>
 
-            <h2 className="section-title-large">Device Visibility</h2>
-            <table className="form-table">
-                <tbody>
-                    <tr>
-                        <th scope="row">Tablet Visibility</th>
-                        <td>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={state?.tablet}
-                                    className="checkbox-switch"
-                                    onChange={() => handle_field({ tablet: !state?.tablet })}
-                                />
-                                Show/Hide on tablet
-                            </label>
-                        </td>
-                    </tr>
+            <div className="gap-40" />
 
-                    <tr>
-                        <th scope="row">Mobile Visibility</th>
-                        <td>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={state?.mobile}
-                                    className="checkbox-switch"
-                                    onChange={() => handle_field({ mobile: !state?.mobile })}
-                                />
-                                Show/Hide on mobile
-                            </label>
-                        </td>
-                    </tr>
+            <div className="wrapper-page-selection">
+                <div className="settings-column">
+                    <h2 className="section-title-large" style={{marginTop: 0}}>Device Visibility</h2>
+                    <table className="form-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Tablet Visibility</th>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={state?.tablet}
+                                            className="checkbox-switch"
+                                            onChange={() => handle_field({ tablet: !state?.tablet })}
+                                        />
+                                        Show/Hide on tablet
+                                    </label>
+                                </td>
+                            </tr>
 
-                    <tr>
-                        <th scope="row">Close option</th>
-                        <td>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={state?.close_button}
-                                    className="checkbox-switch"
-                                    onChange={() => handle_field({ close_button: !state?.close_button })}
-                                />
-                            </label>
-                            Add close option when hovered on desktop. No close option available on mobile.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <tr>
+                                <th scope="row">Mobile Visibility</th>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={state?.mobile}
+                                            className="checkbox-switch"
+                                            onChange={() => handle_field({ mobile: !state?.mobile })}
+                                        />
+                                        Show/Hide on mobile
+                                    </label>
+                                </td>
+                            </tr>
 
-            <h2 className="section-title-large" style={{marginBottom: 0}}>Color Selection</h2>
-            <table className="form-table">
-                <tbody>
+                            <tr>
+                                <th scope="row">Close option</th>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={state?.close_button}
+                                            className="checkbox-switch"
+                                            onChange={() => handle_field({ close_button: !state?.close_button })}
+                                        />
+                                    </label>
+                                    Add close option when hovered on desktop. No close option available on mobile.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <tr>
-                        <td colSpan={2} style={{ paddingLeft: 0 }}>
-                            <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
-                                <div className="proofratings-logos">
-                                    <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google" />
-                                    <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
-                                </div>
-                                <div className="rating-box">
-                                    <span className="proofratings-stars medium">
-                                        <i style={{ width: "96%" }} />
-                                    </span>
-                                    <span className="rating">4.8 / 5</span>
-                                </div>
-                                <div className="proofratings-review-count">44 customer reviews</div>
-                                <div className="button-container">
-                                    <div className="proofratings-button button1 has-border">Buy Now</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Star Color</th>
-                        <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({ star_color })} /></td>
-                    </tr>
+                    <h2 className="section-title-large" style={{ marginBottom: 0 }}>Color Selection</h2>
+                    <table className="form-table">
+                        <tbody>
 
-                    <tr>
-                        <th scope="row">Top Shadow</th>
-                        <td>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={state?.shadow}
-                                    className="checkbox-switch"
-                                    onChange={() => handle_field({ shadow: !state.shadow })}
-                                />
-                            </label>
-                        </td>
-                    </tr>
+                            <tr>
+                                <td colSpan={2} style={{ paddingLeft: 0 }}>
+                                    <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
+                                        <div className="proofratings-logos">
+                                            <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google" />
+                                            <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
+                                        </div>
+                                        <div className="rating-box">
+                                            <span className="proofratings-stars medium">
+                                                <i style={{ width: "96%" }} />
+                                            </span>
+                                            <span className="rating">4.8 / 5</span>
+                                        </div>
+                                        <div className="proofratings-review-count">44 customer reviews</div>
+                                        <div className="button-container">
+                                            <div className="proofratings-button button1 has-border">Buy Now</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Star Color</th>
+                                <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({ star_color })} /></td>
+                            </tr>
 
-                    <tr>
-                        <th scope="row">Background Color</th>
-                        <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({ background_color })} /></td>
-                    </tr>
+                            <tr>
+                                <th scope="row">Top Shadow</th>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={state?.shadow}
+                                            className="checkbox-switch"
+                                            onChange={() => handle_field({ shadow: !state.shadow })}
+                                        />
+                                    </label>
+                                </td>
+                            </tr>
 
-                    <tr>
-                        <th scope="row">Rating Text Color</th>
-                        <td><ColorPicker color={state?.rating_text_color} onUpdate={(rating_text_color) => handle_field({ rating_text_color })} /></td>
-                    </tr>
+                            <tr>
+                                <th scope="row">Background Color</th>
+                                <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({ background_color })} /></td>
+                            </tr>
 
-                    <tr>
-                        <th scope="row">Review Rating Background Color</th>
-                        <td><ColorPicker color={state?.review_rating_background_color} onUpdate={(review_rating_background_color) => handle_field({ review_rating_background_color })} /></td>
-                    </tr>
+                            <tr>
+                                <th scope="row">Rating Text Color</th>
+                                <td><ColorPicker color={state?.rating_text_color} onUpdate={(rating_text_color) => handle_field({ rating_text_color })} /></td>
+                            </tr>
 
-                    <tr>
-                        <th scope="row">Number of Review Text Color</th>
-                        <td><ColorPicker color={state?.number_review_text_color} onUpdate={(number_review_text_color) => handle_field({ number_review_text_color })} /></td>
-                    </tr>
-                </tbody>
-            </table>
+                            <tr>
+                                <th scope="row">Review Rating Background Color</th>
+                                <td><ColorPicker color={state?.review_rating_background_color} onUpdate={(review_rating_background_color) => handle_field({ review_rating_background_color })} /></td>
+                            </tr>
 
-            <h2 className="section-title-large">Call-to-action Button</h2>
-            <table className="form-table">
-                <caption>First Button</caption>
-                <tbody>
-                    <tr>
-                        <td colSpan={2} style={{ paddingLeft: 0 }}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={state?.button2?.show}
-                                    className="checkbox-switch"
-                                    onChange={() => handle_button('show', !state.button1?.show)}
-                                /> Second Button
-                            </label>
-                        </td>
-                    </tr>
-                    {state?.button1?.show && <Button key={'button1'} onUpdate={handle_button} {...state?.button1} />}
-                </tbody>
-            </table>
+                            <tr>
+                                <th scope="row">Number of Review Text Color</th>
+                                <td><ColorPicker color={state?.number_review_text_color} onUpdate={(number_review_text_color) => handle_field({ number_review_text_color })} /></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            <div className="gap-30" />
-            <table className="form-table">
-                <caption>Second Button</caption>
-                <tbody>
-                    <tr>
-                        <td colSpan={2} style={{ paddingLeft: 0 }}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked={state?.button2?.show}
-                                    className="checkbox-switch"
-                                    onChange={() => handle_button2('show', !state.button2?.show)}
-                                /> Second Button
-                            </label>
-                        </td>
-                    </tr>
+                    <h2 className="section-title-large">Call-to-action Button</h2>
+                    <table className="form-table">
+                        <caption>First Button</caption>
+                        <tbody>
+                            <tr>
+                                <td colSpan={2} style={{ paddingLeft: 0 }}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={state?.button2?.show}
+                                            className="checkbox-switch"
+                                            onChange={() => handle_button('show', !state.button1?.show)}
+                                        /> Second Button
+                                    </label>
+                                </td>
+                            </tr>
+                            {state?.button1?.show && <Button key={'button1'} onUpdate={handle_button} {...state?.button1} />}
+                        </tbody>
+                    </table>
 
-                    {state?.button2?.show && <Button key={'button2'} onUpdate={handle_button2} {...state?.button2} />}
-                </tbody>
-            </table>
+                    <div className="gap-30" />
+                    <table className="form-table">
+                        <caption>Second Button</caption>
+                        <tbody>
+                            <tr>
+                                <td colSpan={2} style={{ paddingLeft: 0 }}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={state?.button2?.show}
+                                            className="checkbox-switch"
+                                            onChange={() => handle_button2('show', !state.button2?.show)}
+                                        /> Second Button
+                                    </label>
+                                </td>
+                            </tr>
 
-            <Pages onUpdate={handle_field} on_pages={state?.on_pages} />
+                            {state?.button2?.show && <Button key={'button2'} onUpdate={handle_button2} {...state?.button2} />}
+                        </tbody>
+                    </table>
 
+                </div>
+
+                <div className="column-page-selection">
+                    <h2 className="section-title-large" style={{marginTop: 0}}>Page(s) to Show on</h2>
+                    <Pages onUpdate={handle_field} on_pages={state?.on_pages} />
+                </div>
+            </div>
         </React.Fragment>
     );
 };

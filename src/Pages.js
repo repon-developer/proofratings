@@ -25,7 +25,6 @@ const Pages = (props) => {
 
     return (
         <table className="form-table">
-            <caption>Page to show on</caption>
             <tbody>
                 {proofratings.pages.map(page => (
                     <tr key={page.ID}>
