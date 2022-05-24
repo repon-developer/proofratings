@@ -53,19 +53,6 @@ class Proofratings_Ratings {
             $review_sites = [];
         }
 
-        $total_reviews = array_sum(array_column($review_sites, 'reviews'));
-
-        $has_reviews = array_filter($review_sites, function($item) {
-            return $item['reviews'] > 0;
-        });
-        
-        $total_score = 0.0;
-        if (count($has_reviews) > 0) {
-            $total_score = array_sum(wp_list_pluck($review_sites, 'rating')) / count($has_reviews);
-        }
-
-        $total_score = number_format(floor($total_score*100)/100, 1);
-
         foreach ($connections as $site_key => $current) {
             $current = array_merge($current, array('reviews' => 0, 'rating' => 0, 'percent' => 0));
             if ( isset($review_sites[$site_key]) ) {
@@ -75,8 +62,22 @@ class Proofratings_Ratings {
             $current['percent'] = $current['rating'] * 20;
             $this->review_sites[$site_key] = $current;
         }
+        
 
-        if ( sizeof($review_sites) > 0 ) {
+        $total_reviews = array_sum(array_column($this->review_sites, 'reviews'));
+
+        $has_reviews = array_filter($this->review_sites, function($item) {
+            return $item['reviews'] > 0;
+        });
+        
+        $total_score = 0.0;
+        if (count($has_reviews) > 0) {
+            $total_score = array_sum(wp_list_pluck($this->review_sites, 'rating')) / count($has_reviews);
+        }
+
+        $total_score = number_format(floor($total_score*100)/100, 1);
+
+        if ( sizeof($this->review_sites) > 0 ) {
             $this->has_ratings = true;
         }
         

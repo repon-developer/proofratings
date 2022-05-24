@@ -49,7 +49,6 @@ class Proofratings_Query  {
 
 	/**
 	 * Connections
-	 * @var self
 	 * @since  1.1.6
 	 */
 	var $connections = [];
@@ -59,7 +58,11 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	public function __construct() {
-		$this->connections = get_proofratings_active_connections();
+		foreach (get_proofratings_active_connections() as $key => $connection) {
+			if ( $connection['approved'] === true ) {
+				$this->connections[$key] = $connection;
+			}
+		}
 
         $this->get_locations();
 		$this->total = sizeof($this->items);
@@ -210,7 +213,7 @@ class Proofratings_Query  {
 				$location->has_ratings = true;
 			}			
 
-			$location->reviews = new Proofratings_Ratings( $location->reviews, $this->connections );
+			$location->overall_reviews = new Proofratings_Ratings( $location->reviews, $this->connections );
 		}
 
 		return $this->items = $locations;

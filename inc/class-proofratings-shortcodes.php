@@ -287,64 +287,57 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-
-		//$connections = wp_list_pluck($this->connections, 'slug');
-
-		$widget_connections = array_map(function($slug){
-			
-			return get_proofratings()->query->connections[$slug];
-
-		}, $current_widget->widget_connections);
-
-
-		//var_dump($widget_connections);
+		$widget_connections = [];
+		foreach ($current_widget->widget_connections as $site_key) {
+			if ( isset( get_proofratings()->query->connections[$site_key] )) {
+				$widget_connections[$site_key] = get_proofratings()->query->connections[$site_key];
+			}			
+		}
 		
-		
-		var_dump($location->reviews);
-		exit;
-		
-		$ratings = $location->reviews;
-		
-		if ( sizeof($ratings) === 0) {
+
+		$location->overall_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );
+		if ( !$location->overall_reviews->has_ratings ) {
 			return;
 		}
 
-		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $atts['style']];
+		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $badge_style];
 		
-		if ( $badge_widget->customize ) {
-			$badge_class[] = 'proofratings-widget-customized';
-		}
-
-		if ( $badge_widget->customize && ($badge_widget->logo_color || $badge_widget->icon_color) ) {
+		if ( $current_widget->logo_color || $current_widget->icon_color ) {
 			$badge_class[] = 'proofratings-widget-logo-color';
 		}
 
-		if ( $badge_widget->alignment ) {
-			$badge_class[] = sprintf('proofratings-widgets-align-%s', esc_attr($badge_widget->alignment) );
+		if ( $current_widget->alignment ) {
+			$badge_class[] = sprintf('proofratings-widgets-align-%s', esc_attr($current_widget->alignment) );
 		}
 
 		$wrapper_classes[] = 'proofratings-review-widgets-grid';
 		$wrapper_classes[] = sprintf('proofratings-widgets-%s', $location->id);
 		$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', $badge_style);
 
-		if ( $badge_widget->position ) {
-			$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', esc_attr($badge_widget->position) );
+		if ( $current_widget->position ) {
+			$wrapper_classes[] = sprintf('proofratings-widgets-grid-%s', esc_attr($current_widget->position) );
 		}
 
 		if ( absint($atts['column']) > 0 ) {
 			$wrapper_classes[] = sprintf('proofratings-widgets-grid-column-%s', absint($atts['column']));
 		}
 
-        ob_start();
+		$review_sites = $location->overall_reviews->review_sites;
 
+		foreach ($review_sites as $key => &$review_site) {
+			$review_site = new Proofratings_Site_Data($review_site);
+		}
+
+        ob_start();
+		
         printf('<div class="%s">', implode(' ', $wrapper_classes));
-	        foreach ($ratings as $site_id => $rating) {
+			foreach ($review_sites as $site_id => $rating) {
 				$tag = 'div';
 				$attribue = '';
 			
-				if( !empty($rating->review_url) && $badge_type !== 'badge_basic') {
+				if( !empty($rating->url) && $widget_type !== 'widget_basic') {
 					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', esc_url($rating->review_url));
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($rating->url));
 				}
 				
 				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
@@ -367,7 +360,7 @@ class Proofratings_Shortcodes {
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
 
-		printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('reviews', 'proofratings'));
+		printf('<div class="review-count"> %d %s </div>', esc_html($site->reviews), __('reviews', 'proofratings'));
 
 		echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
 	}
