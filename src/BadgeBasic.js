@@ -5,14 +5,14 @@ import ActiveSites from './Component/ActiveSites';
 const { useState, useEffect } = React;
 
 const BadgeBasic = (props) => {
-    const [state, setState] = useState(store.getState().badge_basic)
+    const [state, setState] = useState(store.getState().widget_basic)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().badge_basic))
+        const unsubscribe = store.subscribe(() => setState(store.getState().widget_basic))
         return () => unsubscribe();
     }, [])
 
-    const handle_field = (data) => store.dispatch({ type: ACTIONS.BADGE_BASIC, payload: data })
+    const handle_field = (data) => store.dispatch({ type: ACTIONS.WIDGET_BASIC, payload: data })
 
     const get_styles = () => {
         const styles = []

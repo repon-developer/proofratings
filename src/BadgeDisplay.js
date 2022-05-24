@@ -42,7 +42,7 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img style={{marginLeft: 5}} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
                                 <label>
-                                    <input onChange={() => update_single('basic')} className="checkbox-switch checkbox-onoff" checked={badge_display?.basic} type="checkbox" />
+                                    <input onChange={() => update_single('widget_basic')} className="checkbox-switch checkbox-onoff" checked={badge_display?.widget_basic} type="checkbox" />
                                     Embed only
                                 </label>
                             </div>

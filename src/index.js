@@ -99,7 +99,7 @@ const ProofratingsWidgets = () => {
     const tabs = {
         'overview': 'Badge Overview',
         'widget_square': 'Square',
-        'basic': 'Basic',
+        'widget_basic': 'Basic',
         'icon': 'Icon',
         'rectangle': 'Rectangle',
         'overall-rectangle-embed': 'Overall Rectangle (EMBED)',
@@ -116,8 +116,8 @@ const ProofratingsWidgets = () => {
         delete tabs['widget_square'];
     }
 
-    if (badge_display?.basic !== true) {
-        delete tabs['basic'];
+    if (badge_display?.widget_basic !== true) {
+        delete tabs['widget_basic'];
     }
 
     if (badge_display?.icon !== true) {
@@ -174,7 +174,7 @@ const ProofratingsWidgets = () => {
 
             {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'widget_square' && <BadgeSquare id={location_id} />}
-            {current_tab === 'basic' && <BadgeBasic id={location_id} />}
+            {current_tab === 'widget_basic' && <BadgeBasic id={location_id} />}
             {current_tab === 'icon' && <Sites_Icon id={location_id} />}
             {current_tab === 'rectangle' && <BadgeRectangle id={location_id} />}
 

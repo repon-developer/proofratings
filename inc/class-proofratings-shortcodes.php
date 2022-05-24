@@ -287,6 +287,10 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
+		if( !is_array($current_widget->widget_connections)) {
+			return;
+		}
+
 		$widget_connections = [];
 		foreach ($current_widget->widget_connections as $site_key) {
 			if ( isset( get_proofratings()->query->connections[$site_key] )) {
@@ -294,11 +298,8 @@ class Proofratings_Shortcodes {
 			}			
 		}
 		
-
 		$location->overall_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );
-		if ( !$location->overall_reviews->has_ratings ) {
-			return;
-		}
+		
 
 		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $badge_style];
 		
@@ -368,14 +369,14 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge basic
 	 */
-	public function widgets_badge_basic($site) {
+	public function widget_basic($site) {
     	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
 
-		printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('ratings', 'proofratings'));
+		printf('<div class="review-count"> %d %s </div>', esc_html($site->reviews), __('ratings', 'proofratings'));
 
-		if ( $review_url = esc_url($site->review_url) ) {
+		if ( $review_url = esc_url($site->url) ) {
 			printf('<a class="view-reviews" href="%s">%s</a>', esc_attr($review_url), __('View all reviews', 'proofratings'));
 		}            
 	}
