@@ -109,7 +109,7 @@ class Proofratings_Ajax {
 		}
 
 		unset($postdata['location_id'], $postdata['action']);
-		get_proofratings()->locations->save_settings($location, $postdata);
+		get_proofratings()->query->save_settings($location, $postdata);
 		wp_send_json( $postdata );
 	}
 

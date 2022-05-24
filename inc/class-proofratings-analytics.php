@@ -81,7 +81,7 @@ class Proofratings_Analytics {
 	 * @since  1.0.1
 	 */
 	public function output() {
-		$locations = get_proofratings()->locations->items; ?>
+		$locations = get_proofratings()->query->items; ?>
 		<div class="wrap proofratings-settings-wrap proofratings-analytics-wrap">
 			<header class="proofratins-header header-row">
 				<div class="header-left">
@@ -90,7 +90,7 @@ class Proofratings_Analytics {
 				</div>
 				
 				<div class="header-right analytics-filter">
-					<?php if(get_proofratings()->locations->global !== true): ?>
+					<?php if(get_proofratings()->query->global !== true): ?>
 					<select class="location-filter">
 						<option value="">View all</option>
 						<?php foreach ($locations as $location) {

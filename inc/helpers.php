@@ -465,23 +465,16 @@ function get_proofratings_active_connections() {
     $settings = get_proofratings_settings();
     $connection_sites = get_proofratings_review_sites();
 
-    $connections = $settings['connections'];
-    array_walk($connections, function(&$connection, $key) use($connection_sites) {
-        if ( isset($connection_sites[$key]) ) {
-            $connection = array_merge(['slug' => $key, 'approved' => false], $connection_sites[$key], $connection);
-        }
-    });
-
     $active_connection_slugs = (array) $settings['connections_approved'];
 
-    $active_connections = [];
-    foreach ($active_connection_slugs as $slug ) {
-        if ( isset($connections[$slug]) ) {
-            $active_connections[] = array_merge($connections[$slug], ['approved' => true]);
-        }        
+    $connections = $settings['connections'];
+    foreach ($connections as $key => $connection) {        
+        if ( isset($connection_sites[$key]) ) {
+            $connections[$key] = array_merge(['slug' => $key, 'approved' => in_array($key, $active_connection_slugs)], $connection_sites[$key], $connection);
+        }
     }
 
-    return $active_connections;
+    return $connections;
 }
 
 

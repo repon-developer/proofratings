@@ -48,10 +48,19 @@ class Proofratings_Query  {
 	var $items = [];
 
 	/**
+	 * Connections
+	 * @var self
+	 * @since  1.1.6
+	 */
+	var $connections = [];
+
+	/**
 	 * Constructor.
 	 * @since  1.0.6
 	 */
 	public function __construct() {
+		$this->connections = get_proofratings_active_connections();
+
         $this->get_locations();
 		$this->total = sizeof($this->items);
 	}
@@ -104,11 +113,7 @@ class Proofratings_Query  {
 
 		$settings = $location->settings = new Proofratings_Site_Data(sanitize_proofrating_boolean_data($settings));
 
-		$location->connected = 0;
-		if ( is_array($settings->activeSites) ) {
-			$location->connected = sizeof($settings->activeSites);
-		}
-
+		
 		$location->widgets = 0;
 		if ( is_array($settings->badge_display) ) {
 			$location->widgets = sizeof(array_filter($settings->badge_display));
@@ -191,38 +196,21 @@ class Proofratings_Query  {
 			}
 		}
 
-		$rating_sites = get_proofratings_review_sites();
+		$connections = wp_list_pluck($this->connections, 'slug');
 
 		foreach ($locations as $key => $location) {
-			$active_sites = [];
-			if ( isset($location->settings->activeSites) && is_array($location->settings->activeSites)) {
-				$active_sites = $location->settings->activeSites;
-			}
-
 			foreach ($location->reviews as $id => $rating) {
-				if ( !in_array($id, $active_sites) ) {
+				if ( !in_array($id, $connections) ) {
 					unset($location->reviews[$id]);
 				}
 			}
-	
-			while ($site_id = current($active_sites)) {
-				next($active_sites);
-				if ( !isset($location->reviews[$site_id])) {
-					$location->reviews[$site_id] = array('rating' => 0, 'count' => 0, 'percent' => 0);
-				}			
-			}
-
-			array_walk($location->reviews, function(&$rating, $key) use($rating_sites) {
-				$data = isset($rating_sites[$key]) && is_array($rating_sites[$key]) ? $rating_sites[$key] : [];
-				$rating = new Proofratings_Site_Data(array_merge($data, $rating));
-			});
 
 			$location->has_ratings = false;
 			if ( sizeof($location->reviews) > 0 ) {
 				$location->has_ratings = true;
-			}
+			}			
 
-			$location->ratings = new Proofratings_Ratings($location->reviews);
+			$location->reviews = new Proofratings_Ratings( $location->reviews, $this->connections );
 		}
 
 		return $this->items = $locations;

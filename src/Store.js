@@ -6,7 +6,7 @@ const ACTIONS = {
     SAVE_SETTINGS: "SAVE_SETTINGS",
     ACTIVE_SITES: "ACTIVE_SITES",
     BADGE_DISPLAY: "BADGE_DISPLAY",
-    SITES_SQUARE: "SITES_SQUARE",
+    WIDGET_SQUARE: "WIDGET_SQUARE",
     BADGE_BASIC: "BADGE_BASIC",
     SITES_ICON: "SITES_ICON",
     SITES_RECTANGLE: "SITES_RECTANGLE",
@@ -21,7 +21,7 @@ const settings = {
     current_tab: 'overview',
     activeSites: [],
     badge_display: {
-        sites_square: false,
+        widget_square: false,
         badge_basic: false,
         sites_icon: false,
         sites_rectangle: false,
@@ -31,7 +31,7 @@ const settings = {
         overall_narrow_embed: false,
         overall_narrow_float: false
     },
-    sites_square: { widget_connections: null },
+    widget_square: { widget_connections: null },
     badge_basic: { widget_connections: null },
     sites_icon: { widget_connections: null },
     sites_rectangle: { widget_connections: null },
@@ -67,8 +67,8 @@ const settingsReducer = (state = settings, action) => {
         case "BADGE_DISPLAY":
             return { ...state, badge_display: action.payload };
 
-        case "SITES_SQUARE":
-            return { ...state, sites_square: { ...state.sites_square, ...action.payload } };
+        case "WIDGET_SQUARE":
+            return { ...state, widget_square: { ...state.widget_square, ...action.payload } };
 
         case "BADGE_BASIC":
             return { ...state, badge_basic: { ...state.badge_basic, ...action.payload } };
@@ -96,17 +96,14 @@ const settingsReducer = (state = settings, action) => {
 const store = createStore(settingsReducer);
 
 
-const get_active_connections = () => {
-    const active_connections = Array.isArray(active_connections.active_connections) ? active_connections.active_connections : [];
+const get_active_connections = (approved = false) => {
+    const connections = Object.values(proofratings.active_connections).map(item => item).sort((a,b) => b.approved - a.approved);
+    if ( approved ) {
+        return connections.filter(item => item.approved == true)
+    }
 
-    return proofratings.active_connections.map((slug) => {
-        if ( typeof proofratings.review_sites[slug] !== 'object' ) {
-            return false;
-        }
+    return connections;
 
-        proofratings.review_sites[slug].slug = slug;
-        return proofratings.review_sites[slug];
-    }).filter(item => item !== false)
 }
 
 export default store;

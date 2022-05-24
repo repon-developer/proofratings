@@ -98,7 +98,7 @@ const ProofratingsWidgets = () => {
 
     const tabs = {
         'overview': 'Badge Overview',
-        'square': 'Square',
+        'widget_square': 'Square',
         'basic': 'Basic',
         'icon': 'Icon',
         'rectangle': 'Rectangle',
@@ -112,8 +112,8 @@ const ProofratingsWidgets = () => {
 
     const { badge_display } = settings;
 
-    if (badge_display?.square !== true) {
-        delete tabs['square'];
+    if (badge_display?.widget_square !== true) {
+        delete tabs['widget_square'];
     }
 
     if (badge_display?.basic !== true) {
@@ -173,7 +173,7 @@ const ProofratingsWidgets = () => {
             </header>
 
             {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
-            {current_tab === 'square' && <BadgeSquare id={location_id} />}
+            {current_tab === 'widget_square' && <BadgeSquare id={location_id} />}
             {current_tab === 'basic' && <BadgeBasic id={location_id} />}
             {current_tab === 'icon' && <Sites_Icon id={location_id} />}
             {current_tab === 'rectangle' && <BadgeRectangle id={location_id} />}

@@ -82,7 +82,7 @@ class Proofratings_Shortcodes {
 			$overall_slug = "overall_{$type}_float";
 		}
 
-		$location = get_proofratings()->locations->get($atts['id']);
+		$location = get_proofratings()->query->get($atts['id']);
 		if ( !$location ) {
 			return;
 		}
@@ -196,7 +196,7 @@ class Proofratings_Shortcodes {
 	public function proofratings_badges_popup($atts, $content = null) {
 		$atts = shortcode_atts(['id' => 'overall'], $atts);
 
-		$location = get_proofratings()->locations->get($atts['id']);
+		$location = get_proofratings()->query->get($atts['id']);
 		if ( !$location || !$location->has_ratings ) {
 			return;
 		}
@@ -272,39 +272,38 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		$ratings = $location->reviews;	
+		$badge_style = sanitize_key( $atts['style']);
+		$widget_type = sprintf('widget_%s', $badge_style);
 
-		$badge_styles = array('square' => 'sites_square', 'rectangle' => 'sites_rectangle', 'basic' => 'badge_basic', 'icon' => 'sites_icon');
-
-		$badge_type = 'sites_square';
-		
-		$badge_style = sanitize_key($atts['style']);
-		if ( array_key_exists($badge_style, $badge_styles) ) {
-			$badge_type = $badge_styles[$badge_style];
-		}
-
-		if ( !method_exists($this, 'widgets_' . $badge_type)) {
+		if ( !method_exists($this, $widget_type)) {
 			$badge_style = 'square';
-			$badge_type = 'sites_square';
+			$widget_type = 'widget_square';
 		}
 
-		$badge_widget = isset($location->settings->$badge_type) ? $location->settings->$badge_type : [];
-		$badge_widget = new Proofratings_Site_Data($badge_widget);
+		$current_widget = isset($location->settings->$widget_type) ? $location->settings->$widget_type : [];
+		$current_widget = new Proofratings_Site_Data($current_widget);
 
-		if ( isset($location->settings->badge_display[$badge_type]) && !$location->settings->badge_display[$badge_type]) {
+		if ( isset($location->settings->badge_display[$widget_type]) && !$location->settings->badge_display[$widget_type]) {
 			return;
 		}
+
+
+		//$connections = wp_list_pluck($this->connections, 'slug');
+
+		$widget_connections = array_map(function($slug){
+			
+			return get_proofratings()->query->connections[$slug];
+
+		}, $current_widget->widget_connections);
+
+
+		//var_dump($widget_connections);
 		
-		$active_sites = $location->settings->activeSites;
-		if ( is_array($badge_widget->active_sites) ) {
-			$active_sites = array_intersect($active_sites, $badge_widget->active_sites);
-		}
 		
-		foreach ($ratings as $id => $rating) {
-			if ( !in_array($id, $active_sites) ) {
-				unset($ratings[$id]);
-			}
-		}
+		var_dump($location->reviews);
+		exit;
+		
+		$ratings = $location->reviews;
 		
 		if ( sizeof($ratings) === 0) {
 			return;
@@ -349,7 +348,7 @@ class Proofratings_Shortcodes {
 				}
 				
 				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
-					$this->{'widgets_' . $badge_type}($rating);
+					$this->{$widget_type}($rating);
 				printf('</%s>', $tag);
 	        }
 
@@ -360,7 +359,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function widgets_sites_square($site) {			
+	public function widget_square($site) {			
     	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews"">';
@@ -424,7 +423,7 @@ class Proofratings_Shortcodes {
 	 * CTA banner 
 	 */
 	public function overall_ratings_cta_banner($atts, $content = null) {
-		$location = get_proofratings()->locations->get($atts['id']);
+		$location = get_proofratings()->query->get($atts['id']);
 		if ( !$location || !$location->has_ratings ) {
 			return;
 		}

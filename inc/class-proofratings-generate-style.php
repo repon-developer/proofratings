@@ -456,7 +456,7 @@ class Proofratings_Generate_Style {
 	 */
 	public function generate_css() {
 		//Get location again - Must use
-		$locations = get_proofratings()->locations->get_locations();
+		$locations = get_proofratings()->query->get_locations();
 
 		ob_start();
 

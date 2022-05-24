@@ -3,7 +3,7 @@ import store, { ACTIONS } from './Store';
 const BadgeDisplay = (props) => {
 
     const badge_display = Object.assign({
-        square: false,
+        widget_square: false,
         basic: false,
         icon: false,
         rectangle: false,
@@ -29,7 +29,7 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
                                 <label>
-                                    <input onChange={() => update_single('square')} className="checkbox-switch checkbox-onoff" checked={badge_display?.square} type="checkbox" />
+                                    <input onChange={() => update_single('widget_square')} className="checkbox-switch checkbox-onoff" checked={badge_display?.widget_square} type="checkbox" />
                                     Embed only
                                 </label>
                             </div>

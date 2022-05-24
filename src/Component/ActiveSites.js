@@ -12,13 +12,19 @@ const ActiveSites = (props) => {
         props.onUpdate(widget_connections);
     }
 
+    const active_connections = Object.values(proofratings.active_connections).map(item => item).sort((a,b) => b.approved - a.approved)
+
+    if ( active_connections.length === 0) {
+        return <div className="no-connection">Please select a connection from settings</div>
+    }
+
     return (
         <div className="connected-sites-wrapper">
             <h2 className='section-title-large'>Customize</h2>
             <div className="review-sites-checkboxes review-sites-checkboxes-widget">
-                {proofratings.active_connections.map(connection => (
-                    <label key={connection.slug} className="checkbox-review-site">
-                        <input type="checkbox" defaultChecked={widget_connections.includes(connection.slug)} onClick={() => handleCheck(connection.slug)} />
+                {active_connections.map(connection => (
+                    <label key={connection.slug} className={`checkbox-review-site ${connection.approved ? '' : 'has-pending'}`}>
+                        {connection.approved && <input type="checkbox" defaultChecked={widget_connections.includes(connection.slug)} onClick={() => handleCheck(connection.slug)} />}                        
                         <img src={connection.logo} alt={connection.name} />
                     </label>
                 ))}

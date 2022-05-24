@@ -33,7 +33,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 	 */
 	public function __construct() {
         $this->per_page = $this->get_items_per_page( 'locations_per_page', 15 );
-        $this->total_items = get_proofratings()->locations->total;
+        $this->total_items = get_proofratings()->query->total;
 		parent::__construct(array('singular' => 'singular_form', 'plural' => 'locations_table', 'ajax' => false));
 	}
 
@@ -56,7 +56,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
         $sortable = $this->get_sortable_columns(); 
         $this->_column_headers = array($this->get_columns());
 
-		$this->items = get_proofratings()->locations->items;
+		$this->items = get_proofratings()->query->items;
         
         $this->set_pagination_args( array(
             'total_items' => $this->total_items,

@@ -1,4 +1,4 @@
-import store, { ACTIONS } from './Store';
+import store, { ACTIONS, get_active_connections } from './Store';
 import ColorPicker from "./Component/ColorPicker";
 import Border from "./Component/Border";
 import Shadow from "./Component/Shadow";
@@ -8,14 +8,14 @@ import ActiveSites from './Component/ActiveSites';
 const { useState, useEffect } = React;
 
 const BadgeSquare = (props) => {
-    const [state, setState] = useState(store.getState().sites_square)
+    const [state, setState] = useState(store.getState().widget_square)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().sites_square))
+        const unsubscribe = store.subscribe(() => setState(store.getState().widget_square))
         return () => unsubscribe();
     }, [])
 
-    const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_SQUARE, payload: data })
+    const handle_field = (data) => store.dispatch({ type: ACTIONS.WIDGET_SQUARE, payload: data })
 
     const border = Object.assign({ show: false, color: "", hover: "" }, state?.border)
     const handleBorder = (name, value) => {
@@ -79,6 +79,30 @@ const BadgeSquare = (props) => {
         css_style += `.proofratings-widget.proofratings-widget-square:hover {--shadowColor: ${shadow.hover}}`;
     }
 
+    const get_widget = () => {
+        const connection = Object.assign({reviews: 76}, get_active_connections(true)[0]);
+
+        console.log(connection)
+
+        return (
+            <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
+                <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized`}>
+                    <div className="review-site-logo">
+                        <img src={connection.logo} alt="Google" />
+                    </div>
+
+                    <div className="proofratings-reviews" itemProp="reviewRating">
+                        <span className="proofratings-score">4.0</span>
+                        <span className="proofratings-stars"><i style={{ width: '80%' }} /></span>
+                    </div>
+
+                    <div className="review-count"> {connection.reviews} reviews </div>
+                    <p className="view-reviews">View Reviews</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <React.Fragment>
             <style>{css_style}</style>
@@ -96,22 +120,9 @@ const BadgeSquare = (props) => {
 
 
             <h2 className="section-title-large">Color Selection</h2>
-            <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized`}>
-                    <div className="review-site-logo">
-                        <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
-                    </div>
+            {get_widget()}
 
-                    <div className="proofratings-reviews" itemProp="reviewRating">
-                        <span className="proofratings-score">4.0</span>
-                        <span className="proofratings-stars"><i style={{ width: '80%' }} /></span>
-                    </div>
 
-                    <div className="review-count"> 76 reviews </div>
-                    <p className="view-reviews">View Reviews</p>
-                </div>
-            </div>
-            
             <table className="form-table">
                 <tbody>
                     <tr>
