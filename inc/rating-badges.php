@@ -54,7 +54,7 @@ class Rating_Badges {
      * @since  1.0.7
 	 */
 	public function get_menu_label() {
-		return get_proofratings()->locations->global ? __('Rating Badges', 'proofratings') :  __('Rating Badges Locations', 'proofratings');
+		return get_proofratings()->query->global ? __('Rating Badges', 'proofratings') :  __('Rating Badges Locations', 'proofratings');
     }
 
 	/**
@@ -86,8 +86,8 @@ class Rating_Badges {
 		$data = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 
 		$location_id = isset($data['location']) ? $data['location'] : false;
-		if ( get_proofratings()->locations->global ) {
-			$location_id = get_proofratings()->locations->get_global_id();
+		if ( get_proofratings()->query->global ) {
+			$location_id = get_proofratings()->query->get_global_id();
 		}
 
 		$this->widgets_settings($location_id);
@@ -121,7 +121,7 @@ class Rating_Badges {
 	public function widgets_settings($location_id) {
 		global $wpdb;
 
-		$location = get_proofratings()->locations->get($location_id);
+		$location = get_proofratings()->query->get($location_id);
 		if ( !$location ) {
 			return $this->output();
 		}

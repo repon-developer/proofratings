@@ -120,7 +120,6 @@ class Proofratings_Admin {
 	 * Enqueues CSS and JS assets.
 	 */
 	public function admin_enqueue_scripts() {
-
 		if ( WP_DEBUG ) {
 			wp_deregister_script( 'react' );
 			wp_deregister_script( 'react-dom' );
@@ -142,8 +141,8 @@ class Proofratings_Admin {
 			'site_url' => home_url(),
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
-			'active_connections' => get_proofratings_settings('active_connections'),
-			'pages' => get_pages()
+			'active_connections' => get_proofratings_active_connections(),
+			'pages' => get_pages(),
 		));
 
 		$screen = get_current_screen();
@@ -162,7 +161,7 @@ class Proofratings_Admin {
 		wp_register_style('fontawesome', PROOFRATINGS_PLUGIN_URL . '/assets/css/fontawesome.css', [], '6.1.1');
 		
 		if ( $screen->id == 'toplevel_page_proofratings' || $matches  ) {
-			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker', 'fontawesome'], PROOFRATINGS_VERSION);
+			wp_enqueue_style( 'proofratings-frontend', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['wp-color-picker', 'fontawesome', 'proofratings-fonts'], PROOFRATINGS_VERSION);
 			wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-admin.css', ['wp-color-picker'], PROOFRATINGS_VERSION);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker', 'tippy'], PROOFRATINGS_VERSION, true);
 		}

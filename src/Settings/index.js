@@ -10,7 +10,7 @@ const ProofratingsSettings = () => {
         error: null,
         loading: true,
         saving: false,
-        current_tab: 'schema',
+        current_tab: 'connections',
     });
 
     useEffect(() => {               
@@ -89,10 +89,6 @@ const ProofratingsSettings = () => {
             {current_tab === 'connections' && <SiteConnections />}
             {current_tab === 'report' && <Report />}
             {current_tab === 'schema' && <Schema />}
-
-            
-
-            
 
             <div className="form-footer">
                 <button className="button button-primary btn-save" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>

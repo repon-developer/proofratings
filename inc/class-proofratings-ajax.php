@@ -141,7 +141,7 @@ class Proofratings_Ajax {
 			wp_send_json_error();
 		}
 		
-		$location = get_proofratings()->locations->get($location);
+		$location = get_proofratings()->query->get($location);
 
 		if ( !$location ) {
 			wp_send_json_error();

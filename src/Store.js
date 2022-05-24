@@ -31,10 +31,10 @@ const settings = {
         overall_narrow_embed: false,
         overall_narrow_float: false
     },
-    sites_square: { active_connections: null },
-    badge_basic: { active_connections: null },
-    sites_icon: { active_connections: null },
-    sites_rectangle: { active_connections: null },
+    sites_square: { widget_connections: null },
+    badge_basic: { widget_connections: null },
+    sites_icon: { widget_connections: null },
+    sites_rectangle: { widget_connections: null },
 
     overall_rectangle_embed: {},
     overall_rectangle_float: { tablet: true, mobile: true, close_button: true },
@@ -95,6 +95,20 @@ const settingsReducer = (state = settings, action) => {
 
 const store = createStore(settingsReducer);
 
+
+const get_active_connections = () => {
+    const active_connections = Array.isArray(active_connections.active_connections) ? active_connections.active_connections : [];
+
+    return proofratings.active_connections.map((slug) => {
+        if ( typeof proofratings.review_sites[slug] !== 'object' ) {
+            return false;
+        }
+
+        proofratings.review_sites[slug].slug = slug;
+        return proofratings.review_sites[slug];
+    }).filter(item => item !== false)
+}
+
 export default store;
 
-export { ACTIONS };
+export { ACTIONS, get_active_connections };

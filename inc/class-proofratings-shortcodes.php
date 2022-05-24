@@ -263,7 +263,7 @@ class Proofratings_Shortcodes {
 			'column' => false
         ], $atts);
 
-		$location = get_proofratings()->locations->get($atts['id']);
+		$location = get_proofratings()->query->get($atts['id']);
 		if ( !$location ) {
 			return;
 		}

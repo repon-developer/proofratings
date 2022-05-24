@@ -6,6 +6,8 @@ html {
     scroll-behavior: smooth;
 }
 
+:is(.proofratings-widget, .proofratings-badge), :is(.proofratings-widget, .proofratings-badge) * {box-sizing: border-box}
+
 .proofratings-badge {
     --padx: 20px;
     color: #000!important;

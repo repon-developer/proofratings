@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Get locations
  * @since 1.0.6
  */
-class Proofratings_Locations  {
+class Proofratings_Query  {
 	/**
 	 * Is global
 	 * @since  1.0.6
@@ -46,7 +46,6 @@ class Proofratings_Locations  {
 	 * @since  1.1.0
 	 */
 	var $items = [];
-
 
 	/**
 	 * Constructor.

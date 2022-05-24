@@ -47,14 +47,14 @@ class Proofratings {
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/rating-badges.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-generate-style.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ratings.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-locations-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 
 		
-		$this->locations = Proofratings_Locations::instance();
+		$this->query = Proofratings_Query::instance();
 		$this->shortcodes = Proofratings_Shortcodes::instance();
 
 		if ( is_admin(  ) ) {
@@ -70,6 +70,9 @@ class Proofratings {
 
 		add_action( 'wp_footer', [ $this, 'overall_ratings_float' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
+
+		add_action( 'init', [$this, 'register_scripts']);
+
 	}
 
 	/**
@@ -79,6 +82,14 @@ class Proofratings {
 	function add_proofratings_tables() {
 	    global $wpdb;
 		$wpdb->proofratings = $wpdb->prefix . 'proofratings';
+	}
+
+	/**
+	 * Register proofratings script
+	 * @since 1.1.7
+	 */	
+	public function register_scripts() {
+		wp_register_style( 'proofratings-fonts', PROOFRATINGS_PLUGIN_URL . '/assets/webfonts/fonts.css', [], PROOFRATINGS_VERSION);
 	}
 		
 	/**
@@ -271,10 +282,7 @@ class Proofratings {
 	 * frontend CSS and JS assets.
 	 */
 	public function enqueue_scripts() {
-		// wp_enqueue_style( 'didact-gothic', 'https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap', [], PROOFRATINGS_VERSION);
-		wp_enqueue_style( 'proofratings-font', PROOFRATINGS_PLUGIN_URL . '/assets/webfonts/fonts.css', [], PROOFRATINGS_VERSION);
-		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', [], PROOFRATINGS_VERSION);
-
+		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['proofratings-fonts'], PROOFRATINGS_VERSION);
 		wp_register_script( 'js-cookie', PROOFRATINGS_PLUGIN_URL.  '/assets/js/js.cookie.min.js', [], '3.0.1', true);
 
 		$upload_dir = wp_upload_dir();
@@ -292,7 +300,7 @@ class Proofratings {
 	 * @since 1.0.4
 	 */
 	public function overall_ratings_float() {
-		$locations = get_proofratings()->locations->items;
+		$locations = get_proofratings()->query->items;
 
 		foreach ($locations as $location) {
 			$schema = $location->settings->schema;
@@ -355,7 +363,7 @@ class Proofratings {
 	 * Banner badge on frontend
 	 */
 	public function banner_badge() {
-		$locations = get_proofratings()->locations->items;
+		$locations = get_proofratings()->query->items;
 
 		foreach ($locations as $location) {
 			if( !isset($location->settings->badge_display['overall_cta_banner']) || !$location->settings->badge_display['overall_cta_banner'] ) {

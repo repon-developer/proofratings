@@ -54,7 +54,7 @@ const Sites_Icon = (props) => {
 
             <div className='gap-30' />
 
-            <ActiveSites onUpdate={(active_connections) => handle_field({ active_connections })} active_connections={state?.active_connections} />
+            <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
 
             <div className="proofratings-review-widgets-grid proofratings-widget-grid-icon" style={{ padding: '10px 15px', backgroundColor: '#fff' }}>
                 <div className={widget_classes}>

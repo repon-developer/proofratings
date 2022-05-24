@@ -95,7 +95,7 @@ const BadgeRectangle = (props) => {
 
             <div className='gap-30' />
 
-            <ActiveSites onUpdate={(active_connections) => handle_field({ active_connections })} active_connections={state?.active_connections} />
+            <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
 
 
 

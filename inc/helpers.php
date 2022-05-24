@@ -457,7 +457,34 @@ function sanitize_proofrating_boolean_data($string) {
     ];
  }
 
- 
+/**
+ * Get active and approved connections
+ * @since  1.1.7
+ */
+function get_proofratings_active_connections() {
+    $settings = get_proofratings_settings();
+    $connection_sites = get_proofratings_review_sites();
+
+    $connections = $settings['connections'];
+    array_walk($connections, function(&$connection, $key) use($connection_sites) {
+        if ( isset($connection_sites[$key]) ) {
+            $connection = array_merge(['slug' => $key, 'approved' => false], $connection_sites[$key], $connection);
+        }
+    });
+
+    $active_connection_slugs = (array) $settings['connections_approved'];
+
+    $active_connections = [];
+    foreach ($active_connection_slugs as $slug ) {
+        if ( isset($connections[$slug]) ) {
+            $active_connections[] = array_merge($connections[$slug], ['approved' => true]);
+        }        
+    }
+
+    return $active_connections;
+}
+
+
 /**
  * get review sites
  * @since  1.0.4
@@ -478,7 +505,7 @@ function get_proofratings_review_sites__DEPRECATED($group) {
 }
 
 /**
- * get settings of proof ratings settings
+ * get settings of proofratings settings
  * @since  1.0.1
  */
 function get_proofratings_settings($key = null) { 
@@ -491,8 +518,8 @@ function get_proofratings_settings($key = null) {
         $settings['connections'] = (object) [];
     }
 
-    if (!isset($settings['active_connections']) || !is_array($settings['active_connections']) ) {
-        $settings['active_connections'] = [];
+    if (!isset($settings['connections_approved']) || !is_array($settings['connections_approved']) ) {
+        $settings['connections_approved'] = [];
     }
 
     if ( $key ) {
@@ -635,3 +662,15 @@ function get_proofratings_overall_ratings_cta_banner() {
         'button2_border' => 'yes'
     ]));
 }
+
+
+
+add_action( 'init', function(){
+    return;
+
+    $locations = get_proofratings()->Query->items[0];
+
+    var_dump($locations);
+    exit;
+});
+
