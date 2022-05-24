@@ -45,13 +45,21 @@ class Proofratings_Settings {
 	var $error;
 
 	/**
+	 * Hold form data
+	 * @since  1.1.7
+	 */
+	var $form_data;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->error = new WP_Error;
+		$this->error = new WP_Error();
+		$this->form_data = new Proofratings_Site_Data();
 
 		add_action( 'init', [$this, 'handle_signup_form'] );
-		add_action( 'init', [$this, 'handle_add_location'] );		
+		add_action( 'init', [$this, 'handle_support_form'] );
+		add_action( 'init', [$this, 'handle_add_location'] );
 	}
 
 	public function handle_signup_form() {
@@ -89,6 +97,47 @@ class Proofratings_Settings {
 
 		update_proofratings_settings(['status' => $result->data->status]);
 	}
+
+	public function handle_support_form() {
+		if ( !isset($_POST['_nonce']) || !wp_verify_nonce( $_POST['_nonce'], '_nonce_submit_ticket')) {
+			return;
+		}
+
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		if ( empty($postdata['subject']) ) {
+			$this->error->add('subject_missing', __('Please fill your subject.'));
+		}
+
+		if ( empty($postdata['message']) ) {
+			$this->error->add('message_missing', __('Please fill your message.'));
+		}
+
+		$this->form_data->subject = sanitize_text_field( $postdata['subject'] );
+		$this->form_data->message = sanitize_textarea_field($postdata['message']);
+
+		if ( $this->error->has_errors() ) {
+			return;
+		}		
+
+		$request = wp_safe_remote_post(PROOFRATINGS_API_URL . '/submit_ticket', get_proofratings_api_args(array(
+			'subject' => $this->form_data->subject,
+			'message' => $this->form_data->message,
+		)));
+
+		if ( is_wp_error( $request ) ) {
+			return $this->error = $request;			
+		}
+
+		$response = json_decode(wp_remote_retrieve_body( $request ) );
+		if ( isset($response->code) ) {
+			return $this->error->add($response->code, $response->message);
+		}
+
+		$this->form_data = new Proofratings_Site_Data(['success' => 'You have successfully placed your ticket.']);		
+	}
+
+	
 
 	/**
 	 * handle add location form submit
@@ -332,9 +381,7 @@ class Proofratings_Settings {
 		<?php
 	}
 
-
-	public function support() {
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
+	public function support() { ?>
 		<div class="wrap proofratings-settings-wrap">		
 			<header class="proofratins-header header-row">
 				<div class="header-left">
@@ -351,16 +398,24 @@ class Proofratings_Settings {
 			<div class="notice notice-error is-dismissible">
 				<p><?php echo $this->error->get_error_message() ?></p>
 			</div>
-			<?php endif; ?>				
+			<?php endif;
+			
+			if ( $this->form_data->success ) : ?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php echo $this->form_data->success; ?></p>
+			</div>
+			<?php endif; ?>
 
 			<form class="form-submit-ticket" method="post">
+				<hr class="wp-header-end">
+
 				<?php wp_nonce_field( '_nonce_submit_ticket', '_nonce' ) ?>
 
 				<label>Subject</label>
-				<input name="subject" type="text" value="">
+				<input class="input-field" name="subject" type="text" value="<?php echo esc_attr( $this->form_data->subject ) ?>">
 
 				<label>Message</label>
-				<textarea name="message"></textarea>
+				<textarea class="input-field" name="message"><?php echo esc_textarea($this->form_data->message ) ?></textarea>
 				<?php submit_button('SUBMIT'); ?>
 			</form>
 		</div>

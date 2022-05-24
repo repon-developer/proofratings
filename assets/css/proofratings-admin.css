@@ -551,3 +551,18 @@ table.table-review-sites .message-pending-connections {color: var(--text_color_g
 .wrapper-page-selection {display: flex; gap: 40px}
 .wrapper-page-selection .settings-column {flex: 1; max-width: 800px}
 .wrapper-page-selection .column-page-selection {padding-left: 50px; border-left: 1px solid #C5C6CD}
+
+form.form-submit-ticket {
+    max-width: 500px;
+}
+
+form.form-submit-ticket label {display: table; margin-bottom: 10px;}
+
+form.form-submit-ticket .input-field {
+    display: block;
+    width: 100%;
+    padding-block: 5px;
+    margin-bottom: 20px;
+}
+
+form.form-submit-ticket textarea {min-height: 100px;}

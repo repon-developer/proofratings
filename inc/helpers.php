@@ -528,11 +528,13 @@ function get_proofratings_current_status() {
  * @since  1.4.7
  */
 function get_proofratings_api_args($args = []) {
-    return array_merge(array(
+    $params = array_merge(array(
         'name' => get_bloginfo( 'name' ),
         'email' => get_bloginfo( 'admin_email' ),
         'site_url' => get_site_url()
     ), (array) $args);
+
+    return array('body' => $params);
 }
 
 /**
