@@ -100,8 +100,8 @@ const ProofratingsWidgets = () => {
         'overview': 'Badge Overview',
         'widget_square': 'Square',
         'widget_basic': 'Basic',
-        'icon': 'Icon',
-        'rectangle': 'Rectangle',
+        'widget_icon': 'Icon',
+        'widget_rectangle': 'Rectangle',
         'overall-rectangle-embed': 'Overall Rectangle (EMBED)',
         'overall-rectangle-float': 'Overall Rectangle (FLOAT)',
         'overall-narrow-embed': 'Overall Narrow (EMBED)',
@@ -120,12 +120,12 @@ const ProofratingsWidgets = () => {
         delete tabs['widget_basic'];
     }
 
-    if (badge_display?.icon !== true) {
-        delete tabs['icon'];
+    if (badge_display?.widget_icon !== true) {
+        delete tabs['widget_icon'];
     }
 
-    if (badge_display?.rectangle !== true) {
-        delete tabs['rectangle'];
+    if (badge_display?.widget_rectangle !== true) {
+        delete tabs['widget_rectangle'];
     }
 
     if (badge_display?.overall_rectangle_embed !== true) {
@@ -175,8 +175,8 @@ const ProofratingsWidgets = () => {
             {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'widget_square' && <BadgeSquare id={location_id} />}
             {current_tab === 'widget_basic' && <BadgeBasic id={location_id} />}
-            {current_tab === 'icon' && <Sites_Icon id={location_id} />}
-            {current_tab === 'rectangle' && <BadgeRectangle id={location_id} />}
+            {current_tab === 'widget_icon' && <Sites_Icon id={location_id} />}
+            {current_tab === 'widget_rectangle' && <BadgeRectangle id={location_id} />}
 
             {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
             {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}

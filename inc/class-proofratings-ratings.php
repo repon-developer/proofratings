@@ -60,6 +60,11 @@ class Proofratings_Ratings {
             }
 
             $current['percent'] = $current['rating'] * 20;
+
+            if ( !empty($current['click_through_url']) && ($url = esc_url_raw( $current['click_through_url'] ) ) ) {
+                $current['url'] = $url;
+            }
+
             $this->review_sites[$site_key] = $current;
         }
         

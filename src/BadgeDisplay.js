@@ -4,9 +4,9 @@ const BadgeDisplay = (props) => {
 
     const badge_display = Object.assign({
         widget_square: false,
-        basic: false,
-        icon: false,
-        rectangle: false,
+        widget_basic: false,
+        widget_icon: false,
+        widget_rectangle: false,
         overall_cta_banner: false,
         overall_rectangle_embed: false,
         overall_rectangle_float: false,
@@ -55,7 +55,7 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img style={{marginLeft: 5, padding: 10, width: 140, backgroundColor: '#fff', borderRadius: 5}} src={`${proofratings.assets_url}images/sites-icon.jpg`} alt="Proofratings" />
                                 <label>
-                                    <input onChange={() => update_single('icon')} className="checkbox-switch checkbox-onoff" checked={badge_display?.icon} type="checkbox" />
+                                    <input onChange={() => update_single('widget_icon')} className="checkbox-switch checkbox-onoff" checked={badge_display?.widget_icon} type="checkbox" />
                                     Embed only
                                 </label>
                             </div>
@@ -68,7 +68,7 @@ const BadgeDisplay = (props) => {
                             <div className="proofratings-image-option">
                                 <img src={`${proofratings.assets_url}images/widget-style2.png`} alt="Proofratings style" />
                                 <label>
-                                    <input className="checkbox-switch checkbox-onoff" onChange={() => update_single('rectangle')} type="checkbox" checked={badge_display?.rectangle} /> Embed only
+                                    <input className="checkbox-switch checkbox-onoff" onChange={() => update_single('widget_rectangle')} type="checkbox" checked={badge_display?.widget_rectangle} /> Embed only
                                 </label>
                             </div>
                         </td>

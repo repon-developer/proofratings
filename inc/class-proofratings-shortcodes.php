@@ -287,9 +287,13 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
+		
+
 		if( !is_array($current_widget->widget_connections)) {
 			return;
 		}
+
+		
 
 		$widget_connections = [];
 		foreach ($current_widget->widget_connections as $site_key) {
@@ -297,9 +301,8 @@ class Proofratings_Shortcodes {
 				$widget_connections[$site_key] = get_proofratings()->query->connections[$site_key];
 			}			
 		}
-		
-		$location->overall_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );
-		
+
+		$widget_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );		
 
 		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $badge_style];
 		
@@ -323,8 +326,7 @@ class Proofratings_Shortcodes {
 			$wrapper_classes[] = sprintf('proofratings-widgets-grid-column-%s', absint($atts['column']));
 		}
 
-		$review_sites = $location->overall_reviews->review_sites;
-
+		$review_sites = $widget_reviews->review_sites;
 		foreach ($review_sites as $key => &$review_site) {
 			$review_site = new Proofratings_Site_Data($review_site);
 		}
@@ -384,7 +386,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge style2
 	 */
-	public function widgets_sites_rectangle($site) {		
+	public function widget_rectangle($site) {		
     	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->logo));
 		printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 	
@@ -392,14 +394,14 @@ class Proofratings_Shortcodes {
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
         echo '</div>';
 
-		printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('reviews', 'proofratings'));
+		printf('<div class="review-count"> %d %s </div>', esc_html($site->reviews), __('reviews', 'proofratings'));
 	}
 
 	/**
 	 * Sites icon
 	 * @since 1.0.9
 	 */
-	public function widgets_sites_icon($site) {
+	public function widget_icon($site) {
     	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->icon3), esc_attr($site->name));
 
 		echo '<div class="review-info-container">';	
@@ -408,7 +410,7 @@ class Proofratings_Shortcodes {
 			echo '<div class="review-info">';
 				printf('<span class="proofratings-rating">%s %s</span>', number_format($site->rating, 1), __('Rating', 'proofratings'));
 				echo '<span class="separator-circle">●</span>';
-				printf('<span class="proofratings-review-number">' . _n( '%s Review', '%s Reviews', $site->count, 'proofratings' ), number_format_i18n( $site->count ) . '</span>');
+				printf('<span class="proofratings-review-number">' . _n( '%s Review', '%s Reviews', $site->reviews, 'proofratings' ), number_format_i18n( $site->reviews ) . '</span>');
 			echo '</div>';          
 		echo '</div>';          
 	}

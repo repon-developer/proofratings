@@ -8,15 +8,15 @@ import ActiveSites from './Component/ActiveSites';
 const { useState, useEffect } = React;
 
 const BadgeRectangle = (props) => {
-    const [state, setState] = useState(store.getState().sites_rectangle)
+    const [state, setState] = useState(store.getState().widget_rectangle)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().sites_rectangle))
+        const unsubscribe = store.subscribe(() => setState(store.getState().widget_rectangle))
         return () => unsubscribe();
     }, [])
 
 
-    const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_RECTANGLE, payload: data })
+    const handle_field = (data) => store.dispatch({ type: ACTIONS.WIDGET_RECTANGLE, payload: data })
 
     const border = Object.assign({ show: false, color: "", hover: "" }, state?.border)
     const handleBorder = (name, value) => {

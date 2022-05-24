@@ -8,12 +8,9 @@ const ACTIONS = {
     BADGE_DISPLAY: "BADGE_DISPLAY",
     WIDGET_SQUARE: "WIDGET_SQUARE",
     WIDGET_BASIC: "WIDGET_BASIC",
-    SITES_ICON: "SITES_ICON",
-    SITES_RECTANGLE: "SITES_RECTANGLE",
+    WIDGET_ICON: "WIDGET_ICON",
+    WIDGET_RECTANGLE: "WIDGET_RECTANGLE",
 
-
-
-    OVERALL_POPUP: "OVERALL_POPUP",
     OVERALL_CTA_BANNER: "OVERALL_CTA_BANNER",
 };
 
@@ -22,9 +19,9 @@ const settings = {
     activeSites: [],
     badge_display: {
         widget_square: false,
-        badge_basic: false,
-        sites_icon: false,
-        sites_rectangle: false,
+        widget_basic: false,
+        widget_icon: false,
+        widget_rectangle: false,
         overall_cta_banner: false,
         overall_rectangle_embed: false,
         overall_rectangle_float: false,
@@ -33,8 +30,8 @@ const settings = {
     },
     widget_square: { widget_connections: null },
     widget_basic: { widget_connections: null },
-    sites_icon: { widget_connections: null },
-    sites_rectangle: { widget_connections: null },
+    widget_icon: { widget_connections: null },
+    widget_rectangle: { widget_connections: null },
 
     overall_rectangle_embed: {},
     overall_rectangle_float: { tablet: true, mobile: true, close_button: true },
@@ -73,17 +70,14 @@ const settingsReducer = (state = settings, action) => {
         case "WIDGET_BASIC":
             return { ...state, widget_basic: { ...state.widget_basic, ...action.payload } };
 
-        case "SITES_ICON":
-            return { ...state, sites_icon: { ...state.sites_icon, ...action.payload } };
+        case "WIDGET_ICON":
+            return { ...state, widget_icon: { ...state.widget_icon, ...action.payload } };
 
-        case "SITES_RECTANGLE":
-            return { ...state, sites_rectangle: { ...state.sites_rectangle, ...action.payload } };
+        case "WIDGET_RECTANGLE":
+            return { ...state, widget_rectangle: { ...state.widget_rectangle, ...action.payload } };
 
         case "OVERALL_SAVE":
             return { ...state, [action.payload.name]: { ...state[action.payload.name], ...action.payload.data } };
-
-        case "OVERALL_POPUP":
-            return { ...state, overall_popup: { ...state.overall_popup, ...action.payload } };
 
         case "OVERALL_CTA_BANNER":
             return { ...state, overall_cta_banner: { ...state.overall_cta_banner, ...action.payload } };

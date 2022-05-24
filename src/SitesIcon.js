@@ -5,14 +5,14 @@ import ActiveSites from './Component/ActiveSites';
 const { useState, useEffect } = React;
 
 const Sites_Icon = (props) => {
-    const [state, setState] = useState(store.getState().sites_icon)
+    const [state, setState] = useState(store.getState().widget_icon)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().sites_icon))
+        const unsubscribe = store.subscribe(() => setState(store.getState().widget_icon))
         return () => unsubscribe();
     }, [])
 
-    const handle_field = (data) => store.dispatch({ type: ACTIONS.SITES_ICON, payload: data })
+    const handle_field = (data) => store.dispatch({ type: ACTIONS.WIDGET_ICON, payload: data })
 
     const get_styles = () => {
         const styles = []
