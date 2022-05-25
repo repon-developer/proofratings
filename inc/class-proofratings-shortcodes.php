@@ -351,7 +351,7 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function widget_square($site) {			
+	public function widget_square($site) {		
     	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews"">';

@@ -25,7 +25,7 @@ class Proofratings_Generate_Style {
 	/**
 	 * Generate styles for sites badge
 	 */
-	public function sites_badge($location, $slug = 'sites_square', $type = 'square') {
+	public function sites_badge($location, $slug = 'widget_square', $type = 'square') {
 		if ( $location->settings->font ) {
 			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
 				printf("\tfont-family: %s!important;\n", $location->settings->font);
@@ -33,9 +33,6 @@ class Proofratings_Generate_Style {
 		}
 
 		$sites_badge = new Proofratings_Site_Data($location->settings->$slug);
-		if ( !$sites_badge->customize) {
-			return;
-		}
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
 			if ( $sites_badge->star_color ) {
@@ -109,9 +106,6 @@ class Proofratings_Generate_Style {
 		}
 
 		$badge_settings = new Proofratings_Site_Data($location->settings->badge_basic);
-		if ( !$badge_settings->customize) {
-			return;
-		}
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
 			if ( $badge_settings->star_color ) {
@@ -144,9 +138,7 @@ class Proofratings_Generate_Style {
 		}
 
 		$badge_settings = new Proofratings_Site_Data($location->settings->sites_icon);
-		if ( !$badge_settings->customize) {
-			return;
-		}
+		
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-icon {\n", $location->id);
 			if ( $badge_settings->icon_color ) {
@@ -174,9 +166,6 @@ class Proofratings_Generate_Style {
 		}
 
 		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
-		if ( !$overall_badge->customize) {
-			return;
-		}
 
 		$type_class = 'badge-embed';
 		if ( $type === 'overall_rectangle_float') {
@@ -247,9 +236,6 @@ class Proofratings_Generate_Style {
 		}
 
 		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
-		if ( !$overall_badge->customize) {
-			return;
-		}
 
 		$type_class = 'badge-embed';
 		if ( $type === 'overall_narrow_float') {
@@ -320,9 +306,6 @@ class Proofratings_Generate_Style {
 		}
 		
 		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
-		if ( !$badges_popup->customize) {
-			return;
-		}
 
 		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);
 			if ( $badges_popup->star_color ) {
@@ -361,30 +344,30 @@ class Proofratings_Generate_Style {
 			echo "}\n\n";
 		}
 
-		if ( $banner_badge->customize) {			
-			printf(".proofratings-banner-badge.proofratings-banner-badge-%s {\n", $location->id);
-
-				if ( $banner_badge->star_color ) {
-					printf("\t--star_color: %s;\n", $banner_badge->star_color);
-				}
-
-				if ( $banner_badge->number_review_text_color ) {
-					printf("\t--reviewCountTextcolor: %s;\n", $banner_badge->number_review_text_color);
-				}
 				
-				if ( $banner_badge->background_color ) {
-					printf("\t--backgroundColor: %s;\n", $banner_badge->background_color);
-				}
+		printf(".proofratings-banner-badge.proofratings-banner-badge-%s {\n", $location->id);
 
-				if ( $banner_badge->rating_text_color ) {
-					printf("\t--rating_text_color: %s;\n", $banner_badge->rating_text_color);
-				}
+			if ( $banner_badge->star_color ) {
+				printf("\t--star_color: %s;\n", $banner_badge->star_color);
+			}
 
-				if ( $banner_badge->review_rating_background_color ) {
-					printf("\t--review_rating_background_color: %s;\n", $banner_badge->review_rating_background_color);
-				}
-			echo "}\n\n";
-		}
+			if ( $banner_badge->number_review_text_color ) {
+				printf("\t--reviewCountTextcolor: %s;\n", $banner_badge->number_review_text_color);
+			}
+			
+			if ( $banner_badge->background_color ) {
+				printf("\t--backgroundColor: %s;\n", $banner_badge->background_color);
+			}
+
+			if ( $banner_badge->rating_text_color ) {
+				printf("\t--rating_text_color: %s;\n", $banner_badge->rating_text_color);
+			}
+
+			if ( $banner_badge->review_rating_background_color ) {
+				printf("\t--review_rating_background_color: %s;\n", $banner_badge->review_rating_background_color);
+			}
+		echo "}\n\n";
+		
 
 		if ( isset($banner_badge->button1) ) {
 			$button1 = new Proofratings_Site_Data($banner_badge->button1);
@@ -464,7 +447,7 @@ class Proofratings_Generate_Style {
 			$this->sites_badge($location);
 			$this->badge_basic($location);
 			$this->sites_icon($location);
-			$this->sites_badge($location, 'sites_rectangle', 'rectangle');
+			$this->sites_badge($location, 'widget_rectangle', 'rectangle');
 
 			$this->overall_rectangle($location);
 			$this->overall_rectangle($location, 'overall_rectangle_float');

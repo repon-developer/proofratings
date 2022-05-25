@@ -316,7 +316,7 @@ html {
 
 .proofratings-review-widgets-grid.proofratings-widgets-grid-vertical {display: flex; flex-wrap: wrap; flex-direction: column;}
 
-
+/* 
 .proofratings-widget.proofratings-widget-google:not(.proofratings-widget-customized) {--themeColor: #03AB4E}
 .proofratings-widget.proofratings-widget-facebook:not(.proofratings-widget-customized) {--themeColor: #0f7ff3}
 .proofratings-widget.proofratings-widget-yelp:not(.proofratings-widget-customized) {--themeColor: #e21c21}
@@ -336,7 +336,7 @@ html {
 .proofratings-widget.proofratings-widget-softwareadvice:not(.proofratings-widget-customized) {--themeColor: #FD810D}
 .proofratings-widget.proofratings-widget-saasworthy:not(.proofratings-widget-customized) {--themeColor: #FEBA52}
 .proofratings-widget.proofratings-widget-crozdesk:not(.proofratings-widget-customized) {--themeColor: #015BE3}
-.proofratings-widget.proofratings-widget-quickbooks:not(.proofratings-widget-customized) {--themeColor: #2C9F1C}
+.proofratings-widget.proofratings-widget-quickbooks:not(.proofratings-widget-customized) {--themeColor: #2C9F1C} */
 
 .proofratings-popup-widgets-box::-webkit-scrollbar {
     height: 5px;

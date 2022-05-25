@@ -101,8 +101,8 @@ const BadgeRectangle = (props) => {
 
             <div id={`proofratings-widgets-${props?.id}`} className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
                 <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
-                    
-                    <h4 className="rating-title">Google Rating</h4>
+                    <div className="review-site-logo"><img src="https://proofratings.me/wp-content/plugins/proofratings/assets/images/energysage.svg" alt="Energy Sage" /></div>
+
                     <div className="proofratings-reviews" itemProp="reviewRating">
                         <span className="proofratings-score">5.0</span>
                         <span className="proofratings-stars">
@@ -121,10 +121,10 @@ const BadgeRectangle = (props) => {
                         <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({ star_color })} /></td>
                     </tr>
 
-                    <tr>
+                    {/* <tr>
                         <th scope="row">Site Icon Color</th>
                         <td><ColorPicker color={state?.icon_color} onUpdate={(icon_color) => handle_field({ icon_color })} /></td>
-                    </tr>
+                    </tr> */}
 
                     <tr>
                         <th scope="row">Text Color</th>

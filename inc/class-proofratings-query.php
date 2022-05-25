@@ -214,19 +214,31 @@ class Proofratings_Query  {
 				$active_connections = $location->settings->active_connections;
 			}
 
+			foreach ($active_connections as $key => $review_site) {
+				if ( !isset($review_site['active']) || $review_site['active'] !== true ) {
+					unset($active_connections[$key]);
+				}				
+			}
+
 			$location->reviews_connections = [];
 			foreach ($active_connections as $key => $connection_info) {
-				if ( !isset($review_sites[$key]) || !in_array($key, $connections_approved) || !isset($location->reviews[$key] )) {
+				if ( !isset($review_sites[$key]) || !in_array($key, $connections_approved)) {
 					continue;
 				}
 
-				$location->reviews_connections[$key] = array_merge($review_sites[$key], $connection_info, $location->reviews[$key] );
+				$site_ratings = array('rating' => 0, 'reviews' => 0, 'url' => '');
+				if ( isset($location->reviews[$key] ) ) {
+					$site_ratings = $location->reviews[$key];
+
+				}
+				
+				$location->reviews_connections[$key] = array_merge($review_sites[$key], $connection_info, $site_ratings);
 			}
 
 			$location->overall_reviews = new Proofratings_Ratings($location->reviews_connections);
 		}
 
-		var_dump($locations);
+		
 
 
 		return $this->items = $locations;
