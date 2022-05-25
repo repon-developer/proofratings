@@ -304,12 +304,19 @@ html {
 .proofratings-review-widgets-grid.proofratings-widgets-grid-icon {grid-template-columns: repeat(auto-fit, minmax(200px, 255px))}
 .proofratings-widget.proofratings-widget-icon {--themeColor:var(--star_color); all: unset; font-size: 12px; text-align: left; flex: 0 0 auto; display: flex; align-items: center; border: none!important; box-shadow: none!important}
 .proofratings-widget.proofratings-widget-icon .proofratings-stars {margin-left: 0;}
-.proofratings-widget.proofratings-widget-icon .review-site-logo {flex: 0 0 46px; margin-bottom: 0; display: unset; height: auto}
+.proofratings-widget.proofratings-widget-icon .review-site-logo {flex: 0 0 46px; margin-bottom: 0; display: unset; height: auto; margin-right: 15px;}
 .proofratings-widget.proofratings-widget-icon .review-site-logo img {vertical-align: middle;}
 .proofratings-widget.proofratings-widget-icon .review-info-container {flex: 1 0 auto}
 .proofratings-widget.proofratings-widget-icon .review-info {color: var(--textcolor, inherit); line-height: 1; font-weight: 600; display: flex; gap: 5px; align-items: center;}
 .proofratings-widget.proofratings-widget-icon .review-info .separator-circle {font-size: 11px;}
-.proofratings-widget.proofratings-widget-icon .review-site-logo {margin-right: 15px;}
+
+
+.proofratings-widget.proofratings-widget-icon.proofratings-widget-logo-color .review-site-logo {-webkit-mask-position: center; -webkit-mask-repeat: no-repeat; -webkit-mask-size: contain; background-color: var(--logoColor)}
+.proofratings-widget.proofratings-widget-icon.proofratings-widget-logo-color .review-site-logo img {visibility: hidden; opacity: 0}
+
+.proofratings-widget.proofratings-widget-icon:not(.proofratings-widget-logo-color) .review-site-logo {-webkit-mask: none!important}
+
+
 
 .proofratings-widget.proofratings-widget-icon :is(.proofratings-stars, .proofratings-stars i) {height: 21px!important; -webkit-mask-size: 28px auto}
 .proofratings-widget.proofratings-widget-icon .proofratings-stars {width: 134.5px!important;}

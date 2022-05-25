@@ -62,13 +62,13 @@ class Proofratings_Ratings {
         }
 
         array_walk($review_sites, function(&$current){
-            $current = array_merge(array('reviews' => 0, 'rating' => 0, 'percent' => 0), $current);
-
-        
+            $current = array_merge(array('reviews' => 0, 'rating' => 0, 'percent' => 0), $current);        
             $current['percent'] = $current['rating'] * 20;
             if ( !empty($current['click_through_url']) && ($url = esc_url_raw( $current['click_through_url'] ) ) ) {
                 $current['url'] = $url;
             }
+
+            $current = new Proofratings_Site_Data($current);
         });
         
         $this->review_sites = $review_sites;
@@ -76,7 +76,7 @@ class Proofratings_Ratings {
         $total_reviews = array_sum(array_column($this->review_sites, 'reviews'));
 
         $has_reviews = array_filter($this->review_sites, function($item) {
-            return $item['reviews'] > 0;
+            return $item->reviews > 0;
         });
         
         $total_score = 0.0;

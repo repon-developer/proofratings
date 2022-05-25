@@ -137,7 +137,7 @@ class Proofratings_Generate_Style {
 			echo "}\n\n";
 		}
 
-		$badge_settings = new Proofratings_Site_Data($location->settings->sites_icon);
+		$badge_settings = new Proofratings_Site_Data($location->settings->widget_icon);
 		
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-icon {\n", $location->id);

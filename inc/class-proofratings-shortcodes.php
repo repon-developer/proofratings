@@ -87,10 +87,6 @@ class Proofratings_Shortcodes {
 			return;
 		}
 		
-		if ( !$location->has_ratings ) {
-			return;
-		}
-
 		if ( $atts['float'] !== 'yes' && isset($location->settings->badge_display[$overall_slug]) && !$location->settings->badge_display[$overall_slug]) {
 			return;
 		}
@@ -168,15 +164,15 @@ class Proofratings_Shortcodes {
 	private function overall_ratings_rectangle($location) {		
 		echo '<div class="proofratings-inner">';
 			
-			$location->ratings->get_logos();
+			$location->overall_reviews->get_logos();
 
 			echo '<div class="proofratings-reviews">';
-				printf('<span class="proofratings-score">%s</span>', esc_html( $location->ratings->rating));
-				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_html($location->ratings->percent));
+				printf('<span class="proofratings-score">%s</span>', esc_html( $location->overall_reviews->rating));
+				printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_html($location->overall_reviews->percent));
 			echo '</div>';
 		echo '</div>';
 
-		printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->ratings->count), __('reviews', 'proofratings'));
+		printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->overall_reviews->reviews), __('reviews', 'proofratings'));
 	}
 
 	private function overall_ratings_narrow($location) {
@@ -197,7 +193,7 @@ class Proofratings_Shortcodes {
 		$atts = shortcode_atts(['id' => 'overall'], $atts);
 
 		$location = get_proofratings()->query->get($atts['id']);
-		if ( !$location || !$location->has_ratings ) {
+		if ( !$location) {
 			return;
 		}
 
@@ -398,7 +394,7 @@ class Proofratings_Shortcodes {
 	 * @since 1.0.9
 	 */
 	public function widget_icon($site) {
-    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->icon3), esc_attr($site->name));
+    	printf('<div class="review-site-logo" style="-webkit-mask-image: url(%1$s);"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->icon3), esc_attr($site->name));
 
 		echo '<div class="review-info-container">';	
 			printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
