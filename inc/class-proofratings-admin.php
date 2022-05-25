@@ -133,6 +133,9 @@ class Proofratings_Admin {
 		wp_register_script( 'popper', PROOFRATINGS_PLUGIN_URL . '/assets/js/popper.min.js', [], '2.11.5', true);
 		wp_register_script( 'tippy', PROOFRATINGS_PLUGIN_URL . '/assets/js/tippy.js', ['popper'], 6, true);
 
+		$settings = get_proofratings_settings();
+
+		error_log(print_r($settings, true));
 
 		wp_enqueue_script( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-dashboard.js', ['jquery'], PROOFRATINGS_VERSION, true);
 		wp_localize_script( 'proofratings-dashboard', 'proofratings', array(
@@ -141,8 +144,9 @@ class Proofratings_Admin {
 			'site_url' => home_url(),
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
-			'connections_approved' => get_proofratings_settings('connections_approved'),
 			'pages' => get_pages(),
+			'connections_approved' => $settings['connections_approved'],
+			'agency' => $settings['agency']
 		));
 
 		$screen = get_current_screen();

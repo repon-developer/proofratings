@@ -256,23 +256,19 @@ class Proofratings_Shortcodes {
 	/**
 	 * embed badge shortcode
 	 */
-	public function proofratings_widgets($atts, $content = null) {
-		
+	public function proofratings_widgets($atts, $content = null) {		
 		$atts = shortcode_atts([
 			'style' => 'square',
             'id' => 'overall',
 			'column' => false
         ], $atts);
 
-		$location = get_proofratings()->query->get($atts['id']);
-		
+		$location = get_proofratings()->query->get($atts['id']);		
 		if ( !$location ) {
 			return;
 		}
 
-		if ( !$location->has_ratings ) {
-			return;
-		}
+		$settings = $location->settings;
 
 		$badge_style = sanitize_key( $atts['style']);
 		$widget_type = sprintf('widget_%s', $badge_style);
@@ -282,13 +278,11 @@ class Proofratings_Shortcodes {
 			$widget_type = 'widget_square';
 		}
 
-		
-
-		$current_widget = isset($location->settings->$widget_type) ? $location->settings->$widget_type : [];
+		$current_widget = isset($settings->$widget_type) ? $settings->$widget_type : [];
 		$current_widget = new Proofratings_Site_Data($current_widget);
 
 		
-		if ( isset($location->settings->badge_display[$widget_type]) && !$location->settings->badge_display[$widget_type]) {
+		if ( isset($settings->badge_display[$widget_type]) && !$settings->badge_display[$widget_type]) {
 			return;
 		}
 
@@ -296,20 +290,14 @@ class Proofratings_Shortcodes {
 			return;
 		}
 
-		
-		
-		$widget_connections = [];
-		foreach ($current_widget->widget_connections as $site_key) {
-			if ( isset( get_proofratings()->query->connections[$site_key] )) {
-				$widget_connections[$site_key] = get_proofratings()->query->connections[$site_key];
-			}			
+		$widget_reviews = new Proofratings_Ratings( $location->reviews_connections, $current_widget->widget_connections );
+		if ( !$widget_reviews->has_ratings ) {
+			if ( is_admin(  ) ) {
+				return sprintf('<div class="proofratings-noconnections">No connection available</div>');
+			}
+			
+			return;
 		}
-
-		
-
-		$widget_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );
-
-		
 
 		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $badge_style];
 		
@@ -333,15 +321,14 @@ class Proofratings_Shortcodes {
 			$wrapper_classes[] = sprintf('proofratings-widgets-grid-column-%s', absint($atts['column']));
 		}
 
-		
-
+	
 		$review_sites = $widget_reviews->review_sites;
 		foreach ($review_sites as $key => &$review_site) {
 			$review_site = new Proofratings_Site_Data($review_site);
 		}
 
         ob_start();
-		
+
         printf('<div class="%s">', implode(' ', $wrapper_classes));
 			foreach ($review_sites as $site_id => $rating) {
 				$tag = 'div';

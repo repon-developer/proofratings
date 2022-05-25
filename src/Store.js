@@ -16,7 +16,7 @@ const ACTIONS = {
 
 const settings = {
     current_tab: 'overview',
-    activeSites: [],
+    active_connections: [],
     badge_display: {
         widget_square: false,
         widget_basic: false,
@@ -90,16 +90,22 @@ const settingsReducer = (state = settings, action) => {
 const store = createStore(settingsReducer);
 
 
-const get_active_connections = (approved = false) => {
-    const connections = Object.values(proofratings.active_connections).map(item => item).sort((a,b) => b.approved - a.approved);
-    if ( approved ) {
-        return connections.filter(item => item.approved == true)
-    }
+const get_connections = () => {
+    const active_connections = store.getState().active_connections;
+    let connections = Object.keys(proofratings.review_sites).map(key => {
+        return {slug: key, approved: proofratings.connections_approved.includes(key),  ...proofratings.review_sites[key]}
+    })
 
+    connections = connections.filter(item => {
+
+        return typeof active_connections[item.slug] === 'object' && active_connections[item.slug]?.active === true
+
+    });
+
+    connections = connections.sort((a,b) => b.approved - a.approved);
     return connections;
-
 }
 
 export default store;
 
-export { ACTIONS, get_active_connections };
+export { ACTIONS, get_connections };

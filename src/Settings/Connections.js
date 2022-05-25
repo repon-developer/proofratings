@@ -6,8 +6,9 @@ const SiteConnections = () => {
     const [search, setSearch] = useState('')
     const [state, setState] = useState(store.getState())
     
-    const connections = (typeof state?.connections === 'object') ? state.connections : {};
-    const active_connections = Array.isArray(state?.active_connections) ? state.active_connections : [];
+    const active_connections = (typeof state?.active_connections === 'object') ? state.active_connections : {};
+
+    const connections_approved = Array.isArray(proofratings?.connections_approved) ? proofratings.connections_approved : [];
 
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setState(store.getState()))
@@ -20,14 +21,14 @@ const SiteConnections = () => {
     }
 
     const handle_connections = (slug, key, value) => {
-        const connection = (typeof connections[slug] === 'object') ? connections[slug] : {};
-        connections[slug] = Object.assign(connection, { [key]: value });
+        const connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
+        active_connections[slug] = Object.assign(connection, { [key]: value });
 
-        store.dispatch({ type: ACTIONS.UPDATE_CONNECTIONS, payload: connections });
+        store.dispatch({ type: ACTIONS.UPDATE_CONNECTIONS, payload: active_connections });
     }
 
     const handle_check_connection = (slug) => {
-        const connection = (typeof connections[slug] === 'object') ? connections[slug] : {};
+        const connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         const active = typeof connection.active === 'undefined' || connection.active === false ? true : false;
         handle_connections(slug, 'active', active)
     }
@@ -36,13 +37,13 @@ const SiteConnections = () => {
     if (typeof proofratings?.review_sites === 'object') {
         Object.entries(proofratings.review_sites).forEach((item) => {
             item[1].slug = item[0];
-            item[1].approved = active_connections.includes(item[0])
+            item[1].approved = connections_approved.includes(item[0])
             review_sites.push(item[1])
         })
     }
 
     const get_row = (item) => {
-        const slug = item.slug, current_connection = (typeof connections[slug] === 'object') ? connections[slug] : {};
+        const slug = item.slug, current_connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         const review_site = Object.assign(item, { selected: false, url: '' }, current_connection);
 
         const pending_items = () => <td className="message-pending-connections" colSpan={4}>We are working on you connection and notify you when complete.</td>

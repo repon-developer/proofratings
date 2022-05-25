@@ -53,22 +53,25 @@ class Proofratings_Ratings {
             $review_sites = [];
         }
 
-        foreach ($connections as $site_key => $current) {
-            $current = array_merge($current, array('reviews' => 0, 'rating' => 0, 'percent' => 0));
-            if ( isset($review_sites[$site_key]) ) {
-                $current = array_merge($current, $review_sites[$site_key]);
+        if ( sizeof($connections) > 0 ) {
+            foreach ($review_sites as $key => $review_site) {
+                if ( !in_array($key, $connections) ) {
+                    unset($review_sites[$key]);
+                }                
             }
+        }
+
+        $this->review_sites = $review_sites;
+
+        array_walk($review_sites, function(&$current){
+            $current = array_merge(array('reviews' => 0, 'rating' => 0, 'percent' => 0), $current);          
 
             $current['percent'] = $current['rating'] * 20;
-
             if ( !empty($current['click_through_url']) && ($url = esc_url_raw( $current['click_through_url'] ) ) ) {
                 $current['url'] = $url;
             }
-
-            $this->review_sites[$site_key] = $current;
-        }
+        });
         
-
         $total_reviews = array_sum(array_column($this->review_sites, 'reviews'));
 
         $has_reviews = array_filter($this->review_sites, function($item) {

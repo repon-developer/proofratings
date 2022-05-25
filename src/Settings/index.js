@@ -14,8 +14,8 @@ const ProofratingsSettings = () => {
     });
 
     useEffect(() => {               
-        const request = jQuery.post(proofratings.ajaxurl, {action: 'proofratings_get_settings'}, function (response) {
-            console.log(response.data);
+        const request = jQuery.post(proofratings.ajaxurl, {action: 'proofratings_get_location_settings'}, function (response) {
+            console.log(response.data, proofratings);
             if ( response?.success == false ) {
                 return setState({...state, error: true, loading: false});
             }
@@ -42,11 +42,11 @@ const ProofratingsSettings = () => {
         setState({...state, saving: true});
         
         const settings = store.getState();
-        settings.action = 'save_proofratings_settings';
+        settings.action = 'save_proofratings_location_settings';
         settings.location = 'global';
 
         const request = jQuery.post(proofratings.ajaxurl, settings, (response) => {
-            console.log(response);
+            console.log(response.data);
             setState({...state, saving: false})
         })
         

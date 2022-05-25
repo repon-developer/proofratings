@@ -78,7 +78,7 @@ class Proofratings_Query  {
 			return;
 		}
 		
-		$settings = array_merge($data, (array) maybe_unserialize($location->settings));
+		$settings = array_merge((array) maybe_unserialize($location->settings), $data);
 		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $settings )], ['id' => $id]);
 		do_action( 'proofrating_location_save_settings' );
 		return $result;
@@ -203,12 +203,12 @@ class Proofratings_Query  {
 			}
 		}
 
+
 		$review_sites = get_proofratings_review_sites();
 
 		$connections_approved = get_proofratings_settings('connections_approved');
 
 		foreach ($locations as $key => $location) {
-			//var_dump( $location);
 			$active_connections = [];
 			if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections)) {
 				$active_connections = $location->settings->active_connections;
@@ -223,29 +223,10 @@ class Proofratings_Query  {
 				$location->reviews_connections[$key] = array_merge($review_sites[$key], $connection_info, $location->reviews[$key] );
 			}
 
-			var_dump( $location->reviews_connections );
-
-			continue;
-	
-			while ($site_id = current($active_connections)) {
-				next($active_connections);
-				if ( !isset($location->reviews[$site_id])) {
-					$location->reviews[$site_id] = array('rating' => 0, 'count' => 0, 'percent' => 0);
-				}			
-			}
-
-			array_walk($location->reviews, function(&$rating, $key) use($review_sites) {
-				$data = isset($review_sites[$key]) && is_array($review_sites[$key]) ? $review_sites[$key] : [];
-				$rating = new Proofratings_Site_Data(array_merge($data, $rating));
-			});
-
-			$location->has_ratings = false;
-			if ( sizeof($location->reviews) > 0 ) {
-				$location->has_ratings = true;
-			}
-
-			$location->ratings = new Proofratings_Ratings($location->reviews);
+			$location->overall_reviews = new Proofratings_Ratings($location->reviews_connections);
 		}
+
+		var_dump($locations);
 
 
 		return $this->items = $locations;

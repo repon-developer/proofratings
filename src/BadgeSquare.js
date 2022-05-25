@@ -1,4 +1,4 @@
-import store, { ACTIONS, get_active_connections } from './Store';
+import store, { ACTIONS, get_connections } from './Store';
 import ColorPicker from "./Component/ColorPicker";
 import Border from "./Component/Border";
 import Shadow from "./Component/Shadow";
@@ -80,13 +80,11 @@ const BadgeSquare = (props) => {
     }
 
     const get_widget = () => {
-        const connection = Object.assign({reviews: 76}, get_active_connections(true)[0]);
-
-        console.log(connection)
+        const connection = Object.assign({reviews: 76}, get_connections(true)[0]);
 
         return (
             <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                <div className={`proofratings-widget proofratings-widget-square proofratings-widget-customized`}>
+                <div className="proofratings-widget proofratings-widget-square">
                     <div className="review-site-logo">
                         <img src={connection.logo} alt="Google" />
                     </div>
@@ -118,10 +116,8 @@ const BadgeSquare = (props) => {
 
             <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
 
-
             <h2 className="section-title-large">Color Selection</h2>
             {get_widget()}
-
 
             <table className="form-table">
                 <tbody>
