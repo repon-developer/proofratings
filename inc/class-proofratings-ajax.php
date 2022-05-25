@@ -53,28 +53,77 @@ class Proofratings_Ajax {
 	}
 
 	public function get_settings() {
-		wp_send_json_success(get_proofratings_settings());
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		
+
+		$settings = get_proofratings_settings();
+
+
+		$location = get_proofratings()->query->get_by_location(@$postdata['location_id']);
+		$location = get_proofratings()->query->get_by_location('global');
+
+
+
+		error_log(print_r($location->settings, true));
+
+		
+
+
+		wp_send_json_success($settings);
 	}
 
 	public function save_settings() {
-		$settings = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-		unset($settings['action']);
-		update_option('proofratings_settings', $settings);
+		$post_data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		unset($post_data['action']);
 
-		$review_sites = get_proofratings_review_sites();	
+		$location_id = false;
+		if ( isset($post_data['location']) ) {
+			$location_id = $post_data['location'];
+			unset($post_data['location']);
+		}
+
+		if ( $location_id === false ) {
+			wp_send_json_error();
+		}
+
+		$active_connections = [];
+		if ( isset($post_data['connections']) && is_array($post_data['connections'])) {
+			$active_connections = $post_data['connections'];
+			unset($post_data['connections']);
+		}
+
+		//Update settings after clearing extra data
+		update_option('proofratings_settings', $post_data);
+
+
+		$location = get_proofratings()->query;
+
 		
 
-		$connections = isset($settings['connections']) && is_array($settings['connections']) ? $settings['connections'] : [];
-		$connection_approved = $settings['connection_approved'];
+		$location->save_settings_by_location($location_id, array('active_connections' => $active_connections));
+	
+	
+		$connection_approved = get_proofratings_settings('connections_approved');
+		$new_connections = array_diff(array_keys($active_connections), $connection_approved);
 
-		$new_connections = [];
-		foreach ($connections as $slug => $connection) {			
-			if ( isset($connection['active']) && $connection['active'] == true ) {
-				if ( !in_array($slug, $connection_approved) ) {
-				 	$new_connections[] = $review_sites[$slug]['name'];
-				}		
-			}				
-		}
+		//REMOVE LATER FOR APPROVAL
+		wp_send_json_success();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		if ( empty($new_connections) ) {
 			wp_send_json_success();
@@ -88,14 +137,6 @@ class Proofratings_Ajax {
 		if ( !is_object($result) ) {
 			wp_send_json_error();
 		}
-
-		
-		
-		
-
-		//error_log(print_r($result, true));
-
-
 
 		wp_send_json_success();
 	}

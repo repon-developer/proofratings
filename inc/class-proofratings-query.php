@@ -48,22 +48,10 @@ class Proofratings_Query  {
 	var $items = [];
 
 	/**
-	 * Connections
-	 * @since  1.1.6
-	 */
-	var $connections = [];
-
-	/**
 	 * Constructor.
 	 * @since  1.0.6
 	 */
 	public function __construct() {
-		foreach (get_proofratings_active_connections() as $key => $connection) {
-			if ( $connection['approved'] === true ) {
-				$this->connections[$key] = $connection;
-			}
-		}
-
         $this->get_locations();
 		$this->total = sizeof($this->items);
 	}
@@ -74,12 +62,24 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function save_settings($id, $data) {
+		if ( !is_array($data) ) {
+			$data = [];
+		}
+
 		if ( $id === 'overall' ) {
-			return update_option('proofratings_overall_rating_settings', $data);
+			$settings = (array) get_option('proofratings_overall_rating_settings');
+			return update_option('proofratings_overall_rating_settings', array_merge($settings, $data));
 		}
 
 		global $wpdb;
-		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $data )], ['id' => $id]);
+
+		$location = $this->get($id);
+		if ( !$location ) {
+			return;
+		}
+		
+		$settings = array_merge($data, (array) maybe_unserialize($location->settings));
+		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $settings )], ['id' => $id]);
 		do_action( 'proofrating_location_save_settings' );
 		return $result;
 	}
@@ -88,7 +88,7 @@ class Proofratings_Query  {
 	 * save location
 	 * @since  1.0.6
 	 */
-	function save_settings_by_location($location_id, $settings) {		
+	function save_settings_by_location($location_id, $settings) {
 		$key = array_search($location_id, array_column($this->items, 'location_id'));
 		if ( $key !== false) {
 			return $this->save_settings($this->items[$key]->id, $settings);
@@ -116,7 +116,11 @@ class Proofratings_Query  {
 
 		$settings = $location->settings = new Proofratings_Site_Data(sanitize_proofrating_boolean_data($settings));
 
-		
+		$location->connected = 0;
+		if ( is_array($settings->active_connections) ) {
+			$location->connected = sizeof($settings->active_connections);
+		}
+
 		$location->widgets = 0;
 		if ( is_array($settings->badge_display) ) {
 			$location->widgets = sizeof(array_filter($settings->badge_display));
@@ -157,7 +161,7 @@ class Proofratings_Query  {
 			$site_overall_review[$key] = array(
 				'rating' => $rating,
 				'percent' => $rating * 20,
-				'count' => array_sum(wp_list_pluck( $reviews, 'count')),
+				'reviews' => array_sum(wp_list_pluck( $reviews, 'reviews')),
 			);
 		}
 
@@ -199,22 +203,50 @@ class Proofratings_Query  {
 			}
 		}
 
-		$connections = wp_list_pluck($this->connections, 'slug');
+		$review_sites = get_proofratings_review_sites();
+
+		$connections_approved = get_proofratings_settings('connections_approved');
 
 		foreach ($locations as $key => $location) {
-			foreach ($location->reviews as $id => $rating) {
-				if ( !in_array($id, $connections) ) {
-					unset($location->reviews[$id]);
-				}
+			//var_dump( $location);
+			$active_connections = [];
+			if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections)) {
+				$active_connections = $location->settings->active_connections;
 			}
+
+			$location->reviews_connections = [];
+			foreach ($active_connections as $key => $connection_info) {
+				if ( !isset($review_sites[$key]) || !in_array($key, $connections_approved) || !isset($location->reviews[$key] )) {
+					continue;
+				}
+
+				$location->reviews_connections[$key] = array_merge($review_sites[$key], $connection_info, $location->reviews[$key] );
+			}
+
+			var_dump( $location->reviews_connections );
+
+			continue;
+	
+			while ($site_id = current($active_connections)) {
+				next($active_connections);
+				if ( !isset($location->reviews[$site_id])) {
+					$location->reviews[$site_id] = array('rating' => 0, 'count' => 0, 'percent' => 0);
+				}			
+			}
+
+			array_walk($location->reviews, function(&$rating, $key) use($review_sites) {
+				$data = isset($review_sites[$key]) && is_array($review_sites[$key]) ? $review_sites[$key] : [];
+				$rating = new Proofratings_Site_Data(array_merge($data, $rating));
+			});
 
 			$location->has_ratings = false;
 			if ( sizeof($location->reviews) > 0 ) {
 				$location->has_ratings = true;
-			}			
+			}
 
-			$location->overall_reviews = new Proofratings_Ratings( $location->reviews, $this->connections );
+			$location->ratings = new Proofratings_Ratings($location->reviews);
 		}
+
 
 		return $this->items = $locations;
 	}

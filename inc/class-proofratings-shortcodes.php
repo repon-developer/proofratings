@@ -257,6 +257,7 @@ class Proofratings_Shortcodes {
 	 * embed badge shortcode
 	 */
 	public function proofratings_widgets($atts, $content = null) {
+		
 		$atts = shortcode_atts([
 			'style' => 'square',
             'id' => 'overall',
@@ -264,6 +265,7 @@ class Proofratings_Shortcodes {
         ], $atts);
 
 		$location = get_proofratings()->query->get($atts['id']);
+		
 		if ( !$location ) {
 			return;
 		}
@@ -280,21 +282,22 @@ class Proofratings_Shortcodes {
 			$widget_type = 'widget_square';
 		}
 
+		
+
 		$current_widget = isset($location->settings->$widget_type) ? $location->settings->$widget_type : [];
 		$current_widget = new Proofratings_Site_Data($current_widget);
 
+		
 		if ( isset($location->settings->badge_display[$widget_type]) && !$location->settings->badge_display[$widget_type]) {
 			return;
 		}
-
-		
 
 		if( !is_array($current_widget->widget_connections)) {
 			return;
 		}
 
 		
-
+		
 		$widget_connections = [];
 		foreach ($current_widget->widget_connections as $site_key) {
 			if ( isset( get_proofratings()->query->connections[$site_key] )) {
@@ -302,7 +305,11 @@ class Proofratings_Shortcodes {
 			}			
 		}
 
-		$widget_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );		
+		
+
+		$widget_reviews = new Proofratings_Ratings( $location->reviews, $widget_connections );
+
+		
 
 		$badge_class = ['proofratings-widget', 'proofratings-widget-' . $location->id, 'proofratings-widget-' . $badge_style];
 		
@@ -325,6 +332,8 @@ class Proofratings_Shortcodes {
 		if ( absint($atts['column']) > 0 ) {
 			$wrapper_classes[] = sprintf('proofratings-widgets-grid-column-%s', absint($atts['column']));
 		}
+
+		
 
 		$review_sites = $widget_reviews->review_sites;
 		foreach ($review_sites as $key => &$review_site) {
@@ -386,8 +395,8 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge style2
 	 */
-	public function widget_rectangle($site) {		
-    	printf('<div class="review-site-logo">%s</div>', @file_get_contents($site->logo));
+	public function widget_rectangle($site) {
+    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 		printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
 	
 		echo '<div class="proofratings-reviews">';

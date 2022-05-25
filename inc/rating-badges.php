@@ -54,7 +54,7 @@ class Rating_Badges {
      * @since  1.0.7
 	 */
 	public function get_menu_label() {
-		return get_proofratings()->query->global ? __('Rating Badges', 'proofratings') :  __('Rating Badges Locations', 'proofratings');
+		return get_proofratings()->query->global ? __('Rating Badges', 'proofratings') :  __('Locations & Rating Badges', 'proofratings');
     }
 
 	/**
@@ -103,8 +103,15 @@ class Rating_Badges {
 		$location_table->prepare_items(); ?>
 
 		<div class="wrap proofratings-settings-wrap">
-            <header class="proofratins-header">
-				<h1 class="title"><?php _e('Rating Badges', 'proofratings') ?></h1>
+			<header class="proofratins-header header-row">
+				<div class="header-left">
+					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<h1 class="title"><?php _e('Locations & Rating Badges', 'proofratings') ?></h1>
+				</div>
+				
+				<div class="header-right">
+					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
+				</div>
 			</header>
 
             <form method="post">

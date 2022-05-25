@@ -265,7 +265,7 @@ class Proofratings_Settings {
 
 				<a href="<?php menu_page_url('proofratings-rating-badges') ?>">
 					<i class="menu-icon fa-solid fa-star"></i>
-					<span class="menu-label">Ratings Badges</span>
+					<span class="menu-label"><?php echo get_proofratings()->query->global ? __('Rating Badges', 'proofratings') :  __('Locations & Rating Badges', 'proofratings'); ?></span>
 					<p>Create and view all your rating trust badges</p>
 				</a>
 
@@ -373,7 +373,7 @@ class Proofratings_Settings {
 	/**
 	 * Shows the plugin's settings page.
 	 */
-	public function settings() {?>
+	public function settings() { ?>
 		<div class="wrap proofratings-settings-wrap">
 			<div id="proofratings-settings-root"></div>
 			<p class="review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>

@@ -293,9 +293,9 @@ html {
 }
 
 .proofratings-widget.proofratings-widget-rectangle:hover {border-color: var(--borderHoverColor, var(--themeColor))}
-.proofratings-widget.proofratings-widget-rectangle .review-site-logo {height: 40px; margin-bottom: 8px;}
+.proofratings-widget.proofratings-widget-rectangle .review-site-logo {height: 35px; margin-bottom: 8px; margin-top: -5px}
 .proofratings-widget.proofratings-widget-rectangle .proofratings-reviews {text-align: left; justify-content: unset}
-.proofratings-widget.proofratings-widget-rectangle .proofratings-score {position: absolute; right: 11px; top: 8px; font-size: 28px; font-weight: bold}
+.proofratings-widget.proofratings-widget-rectangle .proofratings-score {position: absolute; right: 11px; top: 10px; font-size: 28px; font-weight: bold}
 .proofratings-widget.proofratings-widget-rectangle .review-count {padding: unset; font-weight: unset; letter-spacing:0.05em; background-color: transparent}
 .proofratings-widget.proofratings-widget-rectangle .proofratings-stars {width: 146px!important; margin-left: 0}
 

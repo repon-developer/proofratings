@@ -458,27 +458,6 @@ function sanitize_proofrating_boolean_data($string) {
  }
 
 /**
- * Get active and approved connections
- * @since  1.1.7
- */
-function get_proofratings_active_connections() {
-    $settings = get_proofratings_settings();
-    $connection_sites = get_proofratings_review_sites();
-
-    $active_connection_slugs = (array) $settings['connections_approved'];
-
-    $connections = $settings['connections'];
-    foreach ($connections as $key => $connection) {        
-        if ( isset($connection_sites[$key]) ) {
-            $connections[$key] = array_merge(['slug' => $key, 'approved' => in_array($key, $active_connection_slugs)], $connection_sites[$key], $connection);
-        }
-    }
-
-    return $connections;
-}
-
-
-/**
  * get review sites
  * @since  1.0.4
  */
@@ -504,11 +483,7 @@ function get_proofratings_review_sites__DEPRECATED($group) {
 function get_proofratings_settings($key = null) { 
     $settings = get_option( 'proofratings_settings');
     if ( !is_array($settings) ) {
-        $settings = (object) [];
-    }
-
-    if ( !isset($settings['connections']) || !is_array($settings['connections'])) {
-        $settings['connections'] = (object) [];
+        $settings = [];
     }
 
     if (!isset($settings['connections_approved']) || !is_array($settings['connections_approved']) ) {
