@@ -159,12 +159,6 @@ class Proofratings_Generate_Style {
 	 * Generate styles overall ratings
 	 */
 	public function overall_rectangle($location, $type = 'overall_rectangle_embed') {		
-		if ( $location->settings->font ) {
-			printf(".proofratings-badge-%d.proofratings-badge.proofratings-badge-rectangle.%s {\n", $location->id, $type_class);
-				printf("\tfont-family: %s!important;\n", $location->settings->font);
-			echo "}\n\n";
-		}
-
 		$overall_badge = new Proofratings_Site_Data($location->settings->$type);
 
 		$type_class = 'badge-embed';
@@ -223,7 +217,16 @@ class Proofratings_Generate_Style {
 				}
 			}
 		echo "}\n\n";
+
+		$popup_settings = [];
+		if ( isset($overall_badge->popup_settings) ) {
+			$popup_settings = $overall_badge->popup_settings;
+		}
+
+		$popup_settings = new Proofratings_Site_Data($popup_settings);
+		$this->popover_style($popup_settings, $location->overall_reviews);
 	}
+
 
 	/**
 	 * Generate styles overall ratings narrow
@@ -293,44 +296,45 @@ class Proofratings_Generate_Style {
 				}
 			}
 		echo "}\n\n";
+
+		$popup_settings = [];
+		if ( isset($overall_badge->popup_settings) ) {
+			$popup_settings = $overall_badge->popup_settings;
+		}
+
+		$popup_settings = new Proofratings_Site_Data($popup_settings);
+		$this->popover_style($popup_settings, $location->overall_reviews);
 	}
 
 	/**
-	 * Generate styles overall popup badges
+	 * Generate styles popover badges
 	 */
-	public function overall_popup_badges($location) {
-		if ( $location->settings->font ) {
-			printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);
-				printf("\tfont-family: %s!important;\n", $location->settings->font);
-			echo "}\n\n";
-		}
-		
-		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
-
-		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $location->id);
-			if ( $badges_popup->star_color ) {
-				printf("\t--themeColor: %s;\n", $badges_popup->star_color);
+	public function popover_style($popup_settings, $overall_reviews) {
+		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $overall_reviews->location_id);
+			if ( $popup_settings->star_color ) {
+				printf("\t--themeColor: %s;\n", $popup_settings->star_color);
 			}
 
-			if ( $badges_popup->review_text_color ) {
-				printf("\t--reviewCountTextColor: %s;\n", $badges_popup->review_text_color);
+			if ( $popup_settings->review_text_color ) {
+				printf("\t--reviewCountTextColor: %s;\n", $popup_settings->review_text_color);
 			}
 
-			if ( $badges_popup->review_text_background ) {
-				printf("\t--review_text_background: %s;\n", $badges_popup->review_text_background);
+			if ( $popup_settings->review_text_background ) {
+				printf("\t--review_text_background: %s;\n", $popup_settings->review_text_background);
 			}
 
-			if ( $badges_popup->view_review_color ) {
-				printf("\t--view_review_color: %s;\n", $badges_popup->view_review_color);
+			if ( $popup_settings->view_review_color ) {
+				printf("\t--view_review_color: %s;\n", $popup_settings->view_review_color);
 			}
 
-			if ( $badges_popup->rating_color ) {
-				printf("\t--rating_color: %s;\n", $badges_popup->rating_color);
+			if ( $popup_settings->rating_color ) {
+				printf("\t--rating_color: %s;\n", $popup_settings->rating_color);
 			}
-
 
 		echo "}\n\n";			
 	}
+
+	
 
 	/**
 	 * Generate styles overall banner badges
@@ -455,7 +459,6 @@ class Proofratings_Generate_Style {
 			$this->overall_narrow($location);
 			$this->overall_narrow($location, 'overall_narrow_float');
 			
-			$this->overall_popup_badges($location);
 			$this->overall_banner_badges($location);
 		}
 

@@ -96,6 +96,8 @@ class Proofratings_Shortcodes {
 		
 		$badge_settings = new Proofratings_Site_Data($location->settings->$overall_slug);
 		
+		
+		
 		$classes = ['proofratings-badge', 'proofratings-badge-'.$type];
 		$classes[] = 'proofratings-badge-' . $location->id;
 
@@ -145,6 +147,8 @@ class Proofratings_Shortcodes {
 			$attribute_html .= sprintf(' %s="%s"', $ak, $attribute_value);
 		}
 
+		
+
         ob_start();
         printf('<%s %s>', $tag, $attribute_html);
 			if ( $badge_settings->close_button && $atts['float'] == 'yes' ) {
@@ -158,6 +162,70 @@ class Proofratings_Shortcodes {
 			}
 			
         printf('</%s>', $tag);
+        $overall_ratings = ob_get_clean();
+
+		if ( $atts['float'] !== 'yes' ) {
+			return $overall_ratings;
+		}
+
+		$popup_settings = [];
+		if ( isset($badge_settings->popup_settings) ) {
+			$popup_settings = $badge_settings->popup_settings;
+		}
+
+		$popup_settings = new Proofratings_Site_Data($popup_settings);
+
+		$popover = $this->get_popup_widgets($popup_settings, $location->overall_reviews);
+		if ( empty($popover) ) {
+			return $overall_ratings;
+		}
+
+		return sprintf('<div>%s %s</div>', $overall_ratings, $popover);
+	}
+
+	private function get_popup_widgets($popup_settings, $overall_reviews) {
+		$review_sites = $overall_reviews->review_sites;
+
+		$column = 4;
+		if ( count($review_sites) == 5 ) {
+			$column = 5;
+		}
+
+		if ( count($review_sites) < 4 ) {
+			$column = count($review_sites);
+		}
+
+        ob_start(); 
+		
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $overall_reviews->location_id);
+			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
+	        foreach ($review_sites as $key => $site) {
+				$tag = 'div';
+				$attribue= '';
+				
+				if( !empty($site->url) ) {
+					$tag = 'a';
+					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->url));
+				}
+				
+				printf('<%s class="proofratings-widget proofratings-widget-%s %s" data-location="%s">', $tag, $key, $attribue, $overall_reviews->location_id);
+	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
+				
+					echo '<div class="proofratings-reviews">';
+						printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
+						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
+			        echo '</div>';
+
+					printf('<div class="review-count"> %d %s </div>', esc_html($site->reviews), __('reviews', 'proofratings'));
+
+					echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
+
+				printf('</%s>', $tag);
+	        }
+			echo '</div>';
+
+			echo '<span class="proofrating-close">-<span>';
+        echo '</div>';
         return ob_get_clean();
 	}
 
@@ -184,69 +252,6 @@ class Proofratings_Shortcodes {
         echo '</div>';
 
     	printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->ratings->count), __('reviews', 'proofratings'));
-	}
-
-	/**
-	 * Floating widgets shortcode
-	 */
-	public function proofratings_badges_popup($atts, $content = null) {
-		$atts = shortcode_atts(['id' => 'overall'], $atts);
-
-		$location = get_proofratings()->query->get($atts['id']);
-		if ( !$location) {
-			return;
-		}
-
-		$review_sites = $location->reviews;
-
-		$column = 4;
-		if ( count($review_sites) == 5 ) {
-			$column = 5;
-		}
-
-		if ( count($review_sites) < 4 ) {
-			$column = count($review_sites);
-		}
-
-		$badges_popup = new Proofratings_Site_Data($location->settings->overall_popup);
-
-		$classes = '';
-		if ( $badges_popup->customize ) {
-			$classes = 'proofratings-widget-customized';
-		}
-
-        ob_start(); 
-		
-        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $location->id);
-			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
-	        foreach ($review_sites as $key => $site) {
-				$tag = 'div';
-				$attribue= '';
-				
-				if( !empty($site->review_url) ) {
-					$tag = 'a';
-					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->review_url));
-				}
-				
-				printf('<%s class="proofratings-widget proofratings-widget-%s %s" %s data-location="%s">', $tag, $key, $classes, $attribue, $location->id);
-	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
-				
-					echo '<div class="proofratings-reviews">';
-						printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
-						printf('<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_attr($site->percent));
-			        echo '</div>';
-
-					printf('<div class="review-count"> %d %s </div>', esc_html($site->count), __('reviews', 'proofratings'));
-
-					echo '<p class="view-reviews">' . __('View Reviews', 'proofratings') . '</p>';
-
-				printf('</%s>', $tag);
-	        }
-			echo '</div>';
-
-			echo '<span class="proofrating-close">-<span>';
-        echo '</div>';
-        return ob_get_clean();
 	}
 
 	/**
