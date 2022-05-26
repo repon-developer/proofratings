@@ -7,17 +7,17 @@ const ACTIONS = {
 };
 
 const settings = {
-    location_id: 'global',
+    location_id: null,
     active_connections: {},
 };
 
-const settingsReducer = (state = settings, action) => {   
+const settingsReducer = (state = settings, action) => {
     switch (action.type) {
         case "UPDATE_SETTINGS":
             return {...state, ...action.payload };
 
         case "UPDATE_CONNECTIONS":
-            return {...state, connections: action.payload };
+            return {...state, active_connections: {...action.payload} };
 
         default:
             return state;

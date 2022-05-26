@@ -6,7 +6,6 @@ const SiteConnections = () => {
     const [search, setSearch] = useState('')
 
     const [state, setState] = useState(store.getState())
-    console.log(state)
 
     const active_connections = (typeof state?.active_connections === 'object') ? state.active_connections : {};
 
@@ -31,8 +30,8 @@ const SiteConnections = () => {
 
     const handle_check_connection = (slug) => {
         const connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
-        const active = typeof connection.active === 'undefined' || connection.active === false ? true : false;
-        handle_connections(slug, 'active', active)
+        const selected = typeof connection.selected === 'undefined' || connection.selected === false ? true : false;
+        handle_connections(slug, 'selected', selected)
     }
 
     const review_sites = [];
@@ -45,13 +44,14 @@ const SiteConnections = () => {
     }
 
     const get_row = (item) => {
-        const slug = item.slug, current_connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
+        const slug = item.slug;
+        const current_connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         const review_site = Object.assign(item, { selected: false, url: '' }, current_connection);
 
         const pending_items = () => <td className="message-pending-connections" colSpan={4}>We are working on you connection and notify you when complete.</td>
 
         const default_items = () => {
-            if (item.active === true && item.approved === true) {
+            if ( item.approved === true) {
                 return (
                     <>
                         <td className="bold">55</td>
@@ -69,7 +69,7 @@ const SiteConnections = () => {
 
         return (
             <React.Fragment>
-                <td><input className="checkbox-switch checkbox-onoff" type="checkbox" defaultChecked={review_site.active} onClick={() => handle_check_connection(slug)} /></td>
+                <td><input className="checkbox-switch checkbox-onoff" type="checkbox" defaultChecked={review_site.selected} onClick={() => handle_check_connection(slug)} /></td>
                 <td className="review-site-logo"><img src={review_site.logo} alt={review_site.name} /></td>
 
                 {item.active === true && item.approved === false ? pending_items() : default_items()}
@@ -87,7 +87,7 @@ const SiteConnections = () => {
         }
 
         return item.name.toLowerCase().match(new RegExp(search));
-    });
+    }).sort((a, b) => b.selected - a.selected)
 
     const handle_location = (location_id) => {
         store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {location_id} });
@@ -98,8 +98,6 @@ const SiteConnections = () => {
             proofratings.locations = [];
         }
 
-
-
         return (
             <React.Fragment>
                 <label style={{fontWeight: 'bold', marginBottom: 5, display: 'inline-block'}}>Location</label>
@@ -109,9 +107,6 @@ const SiteConnections = () => {
             </React.Fragment>
         )
     }
-
-    //console.log(proofratings)
-
 
     return (
         <React.Fragment>

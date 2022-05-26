@@ -47,8 +47,6 @@ const ProofratingsWidgets = (props) => {
         store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: { ...settings, current_tab } });
     }
 
-    console.log(props)
-
     useEffect(() => {
         const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'proofratings_get_location' }, function (response) {
             if (response?.success == false) {

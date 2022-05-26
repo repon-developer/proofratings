@@ -81,7 +81,7 @@ class Proofratings_Analytics {
 	 * @since  1.0.1
 	 */
 	public function output() {
-		$locations = get_proofratings()->query->items; ?>
+		$locations = get_proofratings()->query->locations; ?>
 		<div class="wrap proofratings-settings-wrap proofratings-analytics-wrap">
 			<header class="proofratins-header header-row">
 				<div class="header-left">

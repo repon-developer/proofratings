@@ -26,12 +26,6 @@ class Proofratings_Generate_Style {
 	 * Generate styles for sites badge
 	 */
 	public function sites_badge($location, $slug = 'widget_square', $type = 'square') {
-		if ( $location->settings->font ) {
-			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
-				printf("\tfont-family: %s!important;\n", $location->settings->font);
-			echo "}\n\n";
-		}
-
 		$sites_badge = new Proofratings_Site_Data($location->settings->$slug);
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-%s {\n", $location->id, $type);
@@ -99,12 +93,6 @@ class Proofratings_Generate_Style {
 	 * Generate styles for sites badge
 	 */
 	public function badge_basic($location) {
-		if ( $location->settings->font ) {
-			printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
-				printf("\tfont-family: %s!important;\n", $location->settings->font);
-			echo "}\n\n";
-		}
-
 		$badge_settings = new Proofratings_Site_Data($location->settings->badge_basic);
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
@@ -310,7 +298,7 @@ class Proofratings_Generate_Style {
 	 * Generate styles popover badges
 	 */
 	public function popover_style($popup_settings, $overall_reviews) {
-		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $overall_reviews->location_id);
+		printf(".proofratings-badges-popup.proofratings-badges-popup-%s .proofratings-widget {\n", $overall_reviews->id);
 			if ( $popup_settings->star_color ) {
 				printf("\t--themeColor: %s;\n", $popup_settings->star_color);
 			}
@@ -443,7 +431,7 @@ class Proofratings_Generate_Style {
 	 */
 	public function generate_css() {
 		//Get location again - Must use
-		$locations = get_proofratings()->query->get_locations();
+		$locations = get_proofratings()->query->prepare_locations();
 
 		ob_start();
 

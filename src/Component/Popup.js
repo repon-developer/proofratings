@@ -1,13 +1,7 @@
 import ColorPicker from "./ColorPicker";
 
-
 const PopupWidget = (props) => {
-
     const state = props.settings;
-
-
-
-    //console.log(state)
 
     const get_styles = () => {
         const styles = []

@@ -300,7 +300,7 @@ class Proofratings {
 	 * @since 1.0.4
 	 */
 	public function overall_ratings_float() {
-		$locations = get_proofratings()->query->items;
+		$locations = get_proofratings()->query->locations;
 
 		foreach ($locations as $location) {
 			$schema = $location->settings->schema;
@@ -357,7 +357,7 @@ class Proofratings {
 	 * Banner badge on frontend
 	 */
 	public function banner_badge() {
-		$locations = get_proofratings()->query->items;
+		$locations = get_proofratings()->query->locations;
 
 		foreach ($locations as $location) {
 			if( !isset($location->settings->badge_display['overall_cta_banner']) || !$location->settings->badge_display['overall_cta_banner'] ) {

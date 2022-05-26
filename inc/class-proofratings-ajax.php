@@ -55,14 +55,14 @@ class Proofratings_Ajax {
 	public function get_location_settings() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-		$location = get_proofratings()->query->get_by_location(@$postdata['location_id']);
-		$location = get_proofratings()->query->get_by_location('global');
+		$location = get_proofratings()->query->get(@$postdata['location_id']);
 
 		$settings['active_connections'] = [];
-
 		if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections) ) {
 			$settings['active_connections'] = $location->settings->active_connections;
 		}
+
+		//error_log( print_r($settings, true));
 
 		wp_send_json_success($settings);
 	}
@@ -74,21 +74,25 @@ class Proofratings_Ajax {
 		if ( isset($post_data['active_connections']) && is_array($post_data['active_connections'])) {
 			$active_connections = $post_data['active_connections'];
 		}
-		
-		
 
+		foreach ($active_connections as $key => $connection) {
+			if ( sizeof($connection) === 1 && isset($connection['active']) && $connection['active'] == false) {
+				unset($active_connections[$key]);
+			}
+		}
+		
 		$location_id = false;
-		if ( isset($post_data['location']) ) {
-			$location_id = $post_data['location'];
-			unset($post_data['location']);
+		if ( isset($post_data['location_id']) ) {
+			$location_id = $post_data['location_id'];
+			unset($post_data['location_id']);
 		}
 
 		if ( $location_id === false ) {
 			wp_send_json_error();
-		}		
+		}
 
 		$location = get_proofratings()->query;
-		$location->save_settings_by_location($location_id, array('active_connections' => $active_connections));
+		$location->save_settings($location_id, array('active_connections' => $active_connections));
 	
 	
 		$connection_approved = get_proofratings_settings('connections_approved');

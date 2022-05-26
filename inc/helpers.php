@@ -488,6 +488,10 @@ function get_proofratings_settings($key = null) {
         $settings['connections_approved'] = [];
     }
 
+    if ( !isset($settings['agency']) ) {
+        $settings['agency'] = false;
+    }
+
     if ( $key ) {
         return isset($settings[$key]) ? $settings[$key] : false;
     }
@@ -634,7 +638,7 @@ function get_proofratings_overall_ratings_cta_banner() {
 add_action( 'init', function(){
     return;
 
-    $locations = get_proofratings()->Query->items[0];
+    $locations = get_proofratings()->Query->locations[0];
 
     var_dump($locations);
     exit;

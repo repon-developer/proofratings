@@ -56,7 +56,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
         $sortable = $this->get_sortable_columns(); 
         $this->_column_headers = array($this->get_columns());
 
-		$this->items = get_proofratings()->query->items;
+		$this->items = get_proofratings()->query->locations;
         
         $this->set_pagination_args( array(
             'total_items' => $this->total_items,
