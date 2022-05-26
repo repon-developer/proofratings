@@ -32,7 +32,7 @@ html {
 .proofratings-badge.right {left: auto; right: 30px}
 
 .proofratings-badge:hover {
-    border-color: var(--border_hover, transparent);
+    border-color: var(--border_hover, var(--border_color, transparent));
     box-shadow: 0 0 4px 4px var(--shadow_hover, #377dbc66)!important;
 }
 
