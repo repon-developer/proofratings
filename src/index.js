@@ -20,14 +20,11 @@ import CTABanner from './CTABanner';
 
 const { useEffect, useState, useRef } = React;
 
-const location_id = proofratings_widgets_root.getAttribute("data-location");
 
-const ProofratingsWidgets = () => {
-    const [state, setState] = useState({
-        error: null,
-        loading: true,
-        saving: false,
-    });
+const ProofratingsWidgets = (props) => {
+    const location_id = props.location_id;
+
+    const [state, setState] = useState({error: null, loading: true, saving: false});
 
     const [settings, setSettings] = useState(store.getState());
 
@@ -49,6 +46,8 @@ const ProofratingsWidgets = () => {
         e.preventDefault();
         store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: { ...settings, current_tab } });
     }
+
+    console.log(props)
 
     useEffect(() => {
         const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'proofratings_get_location' }, function (response) {
@@ -195,5 +194,6 @@ const ProofratingsWidgets = () => {
 };
 
 if (proofratings_widgets_root) {
-    ReactDOM.render(<ProofratingsWidgets />, proofratings_widgets_root);
+    const location_id = proofratings_widgets_root.getAttribute("data-location");
+    ReactDOM.render(<ProofratingsWidgets location_id={location_id} />, proofratings_widgets_root);
 }

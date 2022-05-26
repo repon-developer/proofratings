@@ -135,7 +135,7 @@ class Proofratings_Admin {
 
 		$settings = get_proofratings_settings();
 
-		error_log(print_r($settings, true));
+		
 
 		wp_enqueue_script( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-dashboard.js', ['jquery'], PROOFRATINGS_VERSION, true);
 		wp_localize_script( 'proofratings-dashboard', 'proofratings', array(
@@ -145,6 +145,7 @@ class Proofratings_Admin {
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
 			'pages' => get_pages(),
+			'locations' => get_proofratings()->query->get_locations(),
 			'connections_approved' => $settings['connections_approved'],
 			'agency' => $settings['agency']
 		));

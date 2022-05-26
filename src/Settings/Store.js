@@ -7,6 +7,7 @@ const ACTIONS = {
 };
 
 const settings = {
+    location_id: 'global',
     active_connections: {},
 };
 

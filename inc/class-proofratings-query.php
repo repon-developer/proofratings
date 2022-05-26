@@ -41,19 +41,19 @@ class Proofratings_Query  {
 	}
 
 	/**
-	 * Items
+	 * locations
 	 * @var self
 	 * @since  1.1.0
 	 */
-	var $items = [];
+	var $locations = [];
 
 	/**
 	 * Constructor.
 	 * @since  1.0.6
 	 */
 	public function __construct() {
-        $this->get_locations();
-		$this->total = sizeof($this->items);
+        $this->prepare_locations();
+		$this->total = sizeof($this->locations);
 	}
 
 
@@ -89,16 +89,25 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function save_settings_by_location($location_id, $settings) {
-		$key = array_search($location_id, array_column($this->items, 'location_id'));
+		$key = array_search($location_id, array_column($this->locations, 'location_id'));
 		if ( $key !== false) {
-			return $this->save_settings($this->items[$key]->id, $settings);
+			return $this->save_settings($this->locations[$key]->id, $settings);
 		}
 
 		return array('success' => false);		
 	}
 
 	/**
-	 * get location
+	 * Get location
+	 * @since  1.1.7
+	 */
+	function get_locations() {
+		return array_map(function($location){
+			return array('id' => $location->id, 'location_id' => $location->location_id, 'name' => $location->location);
+		}, $this->locations);		
+	}
+	/**
+	 * Sanitize location
 	 * @since  1.0.6
 	 */
 	function sanitize_location($location) {
@@ -168,7 +177,7 @@ class Proofratings_Query  {
 		return $this->sanitize_location((object) array(
 			'id' => 'overall',
 			'location_id' => 'overall',
-			'location' => __('ALL LOCATIONS (OVERALL)', 'proofratings'),
+			'location' => __('ALL LOCATIONS', 'proofratings'),
 			'settings' => get_option('proofratings_overall_rating_settings'),
 			'reviews' => $site_overall_review,
 			'status' => $status_text
@@ -176,10 +185,10 @@ class Proofratings_Query  {
 	}
 	
 	/**
-     * Get locations
+     * Prepare locations
      * @since 1.0.6
      */
-	function get_locations() {
+	function prepare_locations() {
 		global $wpdb;
 
 		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->proofratings ) );
@@ -239,10 +248,7 @@ class Proofratings_Query  {
 			$location->overall_reviews->id = $location->id;
 		}
 
-		
-
-
-		return $this->items = $locations;
+		return $this->locations = $locations;
 	}
 
 	/**
@@ -250,8 +256,8 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function get_global_id() {
-		$key = array_search('global', array_column($this->items, 'location_id'));
-		return $key === false ? false : $this->items[$key]->id;
+		$key = array_search('global', array_column($this->locations, 'location_id'));
+		return $key === false ? false : $this->locations[$key]->id;
 	}
 
 	/**
@@ -259,8 +265,8 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function get($id) {
-		$key = array_search($id, array_column($this->items, 'id'));
-		return $key === false ? false : $this->items[$key];
+		$key = array_search($id, array_column($this->locations, 'id'));
+		return $key === false ? false : $this->locations[$key];
 	}
 
 	/**
@@ -268,7 +274,7 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function get_by_location($location_id) {
-		$key = array_search($location_id, array_column($this->items, 'location_id'));
-		return $key === false ? false : $this->items[$key];
+		$key = array_search($location_id, array_column($this->locations, 'location_id'));
+		return $key === false ? false : $this->locations[$key];
 	}
 }

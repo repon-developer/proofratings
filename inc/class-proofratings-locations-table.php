@@ -119,7 +119,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_edit( $location ) {
-		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-locations', false));
+		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-rating-badges', false));
         return sprintf('<a class="dashicons dashicons-edit" href="%s"></a>', $permalink);
     }
 
@@ -128,7 +128,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_location( $location ) {
-		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-locations', false));
+		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-rating-badges', false));
         return sprintf('<a href="%s">%s</a>', $permalink, $location->location);
     }
 

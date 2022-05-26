@@ -93,11 +93,7 @@ const BadgeRectangle = (props) => {
                 </p>
             </div>
 
-            <div className='gap-30' />
-
             <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
-
-
 
             <div id={`proofratings-widgets-${props?.id}`} className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
                 <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">

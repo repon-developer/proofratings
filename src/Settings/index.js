@@ -13,7 +13,12 @@ const ProofratingsSettings = () => {
         current_tab: 'connections',
     });
 
-    useEffect(() => {               
+    useEffect(() => {
+
+        const unsubscribe = store.subscribe(() => setState(store.getState()))
+        
+
+
         const request = jQuery.post(proofratings.ajaxurl, {action: 'proofratings_get_location_settings'}, function (response) {
             console.log(response.data, proofratings);
             if ( response?.success == false ) {
@@ -27,6 +32,8 @@ const ProofratingsSettings = () => {
         request.fail(function() {
             return setState({...state, error: true, loading: false});
         })
+
+        return () => unsubscribe();
     }, []);
 
     const setTab = (current_tab, e) => {

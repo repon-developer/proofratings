@@ -80,24 +80,30 @@ const BadgeSquare = (props) => {
     }
 
     const get_widget = () => {
-        const connection = Object.assign({reviews: 76}, get_connections(true)[0]);
+        const connection = Object.assign({ reviews: 76 }, get_connections(true)[0]);
+        if (!connection.length ) {
+            return;
+        }
 
         return (
-            <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
-                <div className="proofratings-widget proofratings-widget-square">
-                    <div className="review-site-logo">
-                        <img src={connection.logo} alt="Google" />
-                    </div>
+            <React.Fragment>
+                <h2 className="section-title-large">Color Selection</h2>
+                <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
+                    <div className="proofratings-widget proofratings-widget-square">
+                        <div className="review-site-logo">
+                            <img src={connection.logo} alt="Google" />
+                        </div>
 
-                    <div className="proofratings-reviews" itemProp="reviewRating">
-                        <span className="proofratings-score">4.0</span>
-                        <span className="proofratings-stars"><i style={{ width: '80%' }} /></span>
-                    </div>
+                        <div className="proofratings-reviews" itemProp="reviewRating">
+                            <span className="proofratings-score">4.0</span>
+                            <span className="proofratings-stars"><i style={{ width: '80%' }} /></span>
+                        </div>
 
-                    <div className="review-count"> {connection.reviews} reviews </div>
-                    <p className="view-reviews">View Reviews</p>
+                        <div className="review-count"> {connection.reviews} reviews </div>
+                        <p className="view-reviews">View Reviews</p>
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 
@@ -116,7 +122,6 @@ const BadgeSquare = (props) => {
 
             <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
 
-            <h2 className="section-title-large">Color Selection</h2>
             {get_widget()}
 
             <table className="form-table">

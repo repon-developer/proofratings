@@ -59,8 +59,6 @@ const BadgeBasic = (props) => {
                 </p>
             </div>
 
-            <div className='gap-30' />
-
             <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
 
             <h3>Color Selection</h3>
