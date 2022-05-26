@@ -15,8 +15,8 @@ const OverallNarrow = (props) => {
         return () => unsubscribe();
     }, [])
 
-    const handle_field = (data) => store.dispatch({ 
-        type: ACTIONS.OVERALL_SAVE, 
+    const handle_field = (data) => store.dispatch({
+        type: ACTIONS.OVERALL_SAVE,
         payload: {
             name: 'overall_narrow_embed', data
         }
@@ -25,19 +25,19 @@ const OverallNarrow = (props) => {
     const link = Object.assign({ enable: false, url: "", _blank: false }, state?.link)
     const handle_link = (name, value) => {
         link[name] = value;
-        handle_field({link})
+        handle_field({ link })
     }
 
     const border = Object.assign({ show: false, color: "", hover: "" }, state?.border)
     const handleBorder = (name, value) => {
         border[name] = value;
-        handle_field({border})
+        handle_field({ border })
     }
-    
+
     const shadow = Object.assign({ shadow: false, color: "", hover: "" }, state?.shadow)
     const handleShadow = (name, value) => {
         shadow[name] = value;
-        handle_field({shadow})
+        handle_field({ shadow })
     }
 
     return (
@@ -54,50 +54,31 @@ const OverallNarrow = (props) => {
                 <tbody>
                     <Link {...link} onUpdate={handle_link} />
 
+                    <Widgets {...state} shadow={shadow} border={border} />
+
                     <tr>
-                        <td style={{ paddingLeft: 0 }} colSpan={2}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    className="checkbox-switch"
-                                    defaultChecked={state?.customize}
-                                    onChange={() => handle_field({customize: !state?.customize})}
-                                /> Customize
-                            </label>
-                        </td>
+                        <th scope="row">Star Color</th>
+                        <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({ star_color })} /></td>
                     </tr>
 
-                    {state?.customize && (
-                        <React.Fragment>
+                    <tr>
+                        <th scope="row">Rating Color</th>
+                        <td><ColorPicker color={state?.rating_color} onUpdate={(rating_color) => handle_field({ rating_color })} /></td>
+                    </tr>
 
-                            <Widgets {...state} shadow={shadow} border={border} />
+                    <Border name="border" border={border} onUpdate={handleBorder} />
 
-                            <tr>
-                                <th scope="row">Star Color</th>
-                                <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({star_color})} /></td>
-                            </tr>
+                    <Shadow shadow={shadow} onUpdate={handleShadow} />
 
-                            <tr>
-                                <th scope="row">Rating Color</th>
-                                <td><ColorPicker color={state?.rating_color} onUpdate={(rating_color) => handle_field({rating_color})} /></td>
-                            </tr>
+                    <tr>
+                        <th scope="row">Background Color</th>
+                        <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({ background_color })} /></td>
+                    </tr>
 
-                            <Border name="border" border={border} onUpdate={handleBorder} />
-
-                            <Shadow shadow={shadow} onUpdate={handleShadow} />
-                        
-                            <tr>
-                                <th scope="row">Background Color</th>
-                                <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({background_color})} /></td>
-                            </tr>
-                            
-                            <tr>
-                                <th scope="row">Review Count Text Color</th>
-                                <td><ColorPicker color={state?.review_text_color} onUpdate={(review_text_color) => handle_field({review_text_color})} /></td>
-                            </tr>
-                        </React.Fragment>
-                    )}
-
+                    <tr>
+                        <th scope="row">Review Count Text Color</th>
+                        <td><ColorPicker color={state?.review_text_color} onUpdate={(review_text_color) => handle_field({ review_text_color })} /></td>
+                    </tr>
                 </tbody>
             </table>
 

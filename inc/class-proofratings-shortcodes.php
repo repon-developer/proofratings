@@ -197,7 +197,7 @@ class Proofratings_Shortcodes {
 
         ob_start(); 
 		
-        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $overall_reviews->location_id);
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $overall_reviews->id);
 			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
@@ -208,7 +208,7 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->url));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s %s" data-location="%s">', $tag, $key, $attribue, $overall_reviews->location_id);
+				printf('<%s class="proofratings-widget proofratings-widget-%s %s" data-location="%s">', $tag, $key, $attribue, $overall_reviews->id);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
 					echo '<div class="proofratings-reviews">';
@@ -244,14 +244,14 @@ class Proofratings_Shortcodes {
 	}
 
 	private function overall_ratings_narrow($location) {
-		$location->ratings->get_logos();
+		$location->overall_reviews->get_logos();
 
         echo '<div class="proofratings-reviews">';
-            printf('<span class="proofratings-score">%s</span>', esc_html($location->ratings->rating));
-            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_html($location->ratings->percent));
+            printf('<span class="proofratings-score">%s</span>', esc_html($location->overall_reviews->rating));
+            printf( '<span class="proofratings-stars"><i style="width: %s%%"></i></span>', esc_html($location->overall_reviews->percent));
         echo '</div>';
 
-    	printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->ratings->count), __('reviews', 'proofratings'));
+    	printf('<div class="proofratings-review-count">%d %s</div>', esc_html($location->overall_reviews->reviews), __('reviews', 'proofratings'));
 	}
 
 	/**
@@ -324,9 +324,6 @@ class Proofratings_Shortcodes {
 
 	
 		$review_sites = $widget_reviews->review_sites;
-		foreach ($review_sites as $key => &$review_site) {
-			$review_site = new Proofratings_Site_Data($review_site);
-		}
 
         ob_start();
 
@@ -352,8 +349,8 @@ class Proofratings_Shortcodes {
 	/**
 	 * Embed badge sites square
 	 */
-	public function widget_square($site) {		
-    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_attr($site->logo), esc_attr($site->name));
+	public function widget_square($site) {
+    	printf('<div class="review-site-logo"><img src="%s" alt="%s" ></div>', esc_url_raw($site->logo), esc_attr($site->name));
 	
 		echo '<div class="proofratings-reviews"">';
 			printf('<span class="proofratings-score">%s</span>', number_format($site->rating, 1));
@@ -417,7 +414,7 @@ class Proofratings_Shortcodes {
 	 */
 	public function overall_ratings_cta_banner($atts, $content = null) {
 		$location = get_proofratings()->query->get($atts['id']);
-		if ( !$location || !$location->has_ratings ) {
+		if ( !$location || !$location->overall_reviews->has_ratings ) {
 			return;
 		}
 
@@ -495,14 +492,14 @@ class Proofratings_Shortcodes {
 		ob_start(); ?>
 		<div class="<?php echo esc_attr($class); ?>" data-location="<?php echo esc_attr($location->id) ?>" data-type="overall_cta_banner">
 			<?php echo wp_kses_post($close_button); ?>
-			<?php $location->ratings->get_logos(); ?>
+			<?php $location->overall_reviews->get_logos(); ?>
 
 			<div class="rating-box">
-				<span class="proofratings-stars medium"><i style="width: <?php echo esc_attr( $location->ratings->percent) ?>%"></i></span> 
-				<span class="rating"><?php echo esc_html($location->ratings->rating); ?> / 5</span>
+				<span class="proofratings-stars medium"><i style="width: <?php echo esc_attr( $location->overall_reviews->percent) ?>%"></i></span> 
+				<span class="rating"><?php echo esc_html($location->overall_reviews->rating); ?> / 5</span>
 			</div>
 
-			<div class="proofratings-review-count"><?php echo esc_html($location->ratings->count); ?> customer reviews</div>
+			<div class="proofratings-review-count"><?php echo esc_html($location->overall_reviews->reviews); ?> customer reviews</div>
 
 			<div class="button-container">
 				<?php echo wp_kses_post($button1 . $button2); ?>

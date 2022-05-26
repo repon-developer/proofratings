@@ -6,7 +6,7 @@ html {
     scroll-behavior: smooth;
 }
 
-:is(.proofratings-widget, .proofratings-badge), :is(.proofratings-widget, .proofratings-badge) * {box-sizing: border-box}
+:is(.proofratings-widget, .proofratings-badge, .proofratings-banner-badge), :is(.proofratings-widget, .proofratings-badge, .proofratings-banner-badge) * {box-sizing: border-box}
 
 .proofratings-badge {
     --padx: 20px;

@@ -25,7 +25,7 @@ const OverallNarrow = () => {
         handle_field({ shadow })
     }
 
-    const popup_settings = (typeof state.popup_settings === 'object') ? state.popup_settings : {};
+    const popup_settings = (typeof state?.popup_settings === 'object') ? state.popup_settings : {};
     const handle_popup = (key, value) => {
         popup_settings[key] = value;
         handle_field({ popup_settings } )            

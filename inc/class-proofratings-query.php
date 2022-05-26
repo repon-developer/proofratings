@@ -236,7 +236,7 @@ class Proofratings_Query  {
 			}
 
 			$location->overall_reviews = new Proofratings_Ratings($location->reviews_connections);
-			$location->overall_reviews->location_id = $location->location_id;
+			$location->overall_reviews->id = $location->id;
 		}
 
 		

@@ -159,7 +159,7 @@ const CTABanner = (props) => {
                                             type="checkbox"
                                             defaultChecked={state?.shadow}
                                             className="checkbox-switch"
-                                            onChange={() => handle_field({ shadow: !state.shadow })}
+                                            onChange={() => handle_field({ shadow: !state?.shadow })}
                                         />
                                     </label>
                                 </td>

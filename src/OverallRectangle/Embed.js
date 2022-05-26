@@ -60,51 +60,35 @@ const OverallRectangle_Embed = (props) => {
                 <tbody>
                     <Link {...link} onUpdate={handle_link} />
 
+
+                    <Widgets {...state} shadow={shadow} border={border} />
+
                     <tr>
-                        <td style={{ paddingLeft: 0 }} colSpan={2}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    className="checkbox-switch"
-                                    defaultChecked={state?.customize}
-                                    onChange={() => handle_field({ customize: !state?.customize })}
-                                /> Customize
-                            </label>
-                        </td>
+                        <th scope="row">Star Color</th>
+                        <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({ star_color })} /></td>
                     </tr>
 
-                    {state?.customize && (
-                        <React.Fragment>
-                            <Widgets {...state} shadow={shadow} border={border} />
+                    <tr>
+                        <th scope="row">Rating Color</th>
+                        <td><ColorPicker color={state?.rating_color} onUpdate={(rating_color) => handle_field({ rating_color })} /></td>
+                    </tr>
 
-                            <tr>
-                                <th scope="row">Star Color</th>
-                                <td><ColorPicker color={state?.star_color} onUpdate={(star_color) => handle_field({ star_color })} /></td>
-                            </tr>
+                    <Border name="border" border={border} onUpdate={handleBorder} />
 
-                            <tr>
-                                <th scope="row">Rating Color</th>
-                                <td><ColorPicker color={state?.rating_color} onUpdate={(rating_color) => handle_field({ rating_color })} /></td>
-                            </tr>
+                    <Shadow shadow={shadow} onUpdate={handleShadow} />
 
-                            <Border name="border" border={border} onUpdate={handleBorder} />
-
-                            <Shadow shadow={shadow} onUpdate={handleShadow} />
-
-                            <tr>
-                                <th scope="row">Background Color</th>
-                                <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({ background_color })} /></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Review Text Color</th>
-                                <td><ColorPicker color={state?.review_text_color} onUpdate={(review_text_color) => handle_field({ review_text_color })} /></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Review Background Color</th>
-                                <td><ColorPicker color={state?.review_background} onUpdate={(review_background) => handle_field({ review_background })} /></td>
-                            </tr>
-                        </React.Fragment>
-                    )}
+                    <tr>
+                        <th scope="row">Background Color</th>
+                        <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({ background_color })} /></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Review Text Color</th>
+                        <td><ColorPicker color={state?.review_text_color} onUpdate={(review_text_color) => handle_field({ review_text_color })} /></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Review Background Color</th>
+                        <td><ColorPicker color={state?.review_background} onUpdate={(review_background) => handle_field({ review_background })} /></td>
+                    </tr>
 
                 </tbody>
             </table>

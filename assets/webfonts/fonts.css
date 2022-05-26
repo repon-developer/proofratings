@@ -6,7 +6,7 @@
          url('product_sans_bold_italic-webfont.woff') format('woff');
     font-weight: bold;
     font-style: italic;
-
+    descent-override: 7%;
 }
 
 @font-face {
@@ -15,11 +15,8 @@
          url('product_sans_bold-webfont.woff') format('woff');
     font-weight: bold;
     font-style: normal;
-
+    descent-override: 7%;
 }
-
-
-
 
 @font-face {
     font-family: 'Product Sans';
@@ -27,7 +24,7 @@
          url('product_sans_italic-webfont.woff') format('woff');
     font-weight: normal;
     font-style: italic;
-
+    descent-override: 7%;
 }
 
 @font-face {
@@ -36,5 +33,5 @@
          url('product_sans_regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
+    descent-override: 7%;
 }
