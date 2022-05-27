@@ -93,7 +93,7 @@ class Proofratings_Generate_Style {
 	 * Generate styles for sites badge
 	 */
 	public function badge_basic($location) {
-		$badge_settings = new Proofratings_Site_Data($location->settings->badge_basic);
+		$badge_settings = new Proofratings_Site_Data($location->settings->widget_basic);
 
 		printf(".proofratings-widgets-%d .proofratings-widget.proofratings-widget-basic {\n", $location->id);
 			if ( $badge_settings->star_color ) {

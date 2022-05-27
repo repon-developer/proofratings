@@ -41,7 +41,6 @@ const settings = {
 
     overall_popup: {},
     overall_cta_banner: {
-        customize: false,
         shadow: true,
         tablet: true,
         mobile: true,
@@ -89,19 +88,13 @@ const settingsReducer = (state = settings, action) => {
 
 const store = createStore(settingsReducer);
 
-
 const get_connections = () => {
     const active_connections = store.getState().active_connections;
     let connections = Object.keys(proofratings.review_sites).map(key => {
         return {slug: key, approved: proofratings.connections_approved.includes(key),  ...proofratings.review_sites[key]}
     })
 
-    connections = connections.filter(item => {
-
-        return typeof active_connections[item.slug] === 'object' && active_connections[item.slug]?.active === true
-
-    });
-
+    connections = connections.filter(item => typeof active_connections[item.slug] === 'object' && active_connections[item.slug]?.selected === true);
     connections = connections.sort((a,b) => b.approved - a.approved);
     return connections;
 }

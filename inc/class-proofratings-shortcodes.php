@@ -373,7 +373,7 @@ class Proofratings_Shortcodes {
 		printf('<div class="review-count"> %d %s </div>', esc_html($site->reviews), __('ratings', 'proofratings'));
 
 		if ( $review_url = esc_url($site->url) ) {
-			printf('<a class="view-reviews" href="%s">%s</a>', esc_attr($review_url), __('View all reviews', 'proofratings'));
+			printf('<a class="view-reviews" href="%s" target="_blank">%s</a>', esc_attr($review_url), __('View all reviews', 'proofratings'));
 		}            
 	}
 

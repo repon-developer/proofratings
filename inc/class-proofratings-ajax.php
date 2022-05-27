@@ -176,11 +176,17 @@ class Proofratings_Ajax {
 		
 		$location = get_proofratings()->query->get($location);
 
+		error_log(print_r($location, true));
+
 		if ( !$location ) {
 			wp_send_json_error();
 		}
-		
-		wp_send_json( $location->settings );
+
+		wp_send_json(array(
+			'global' => get_proofratings()->query->global,
+			'location_name' => $location->location,
+			'settings' => $location->settings,
+		));
 	}
 
 	

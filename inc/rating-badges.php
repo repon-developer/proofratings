@@ -25,29 +25,8 @@ class Rating_Badges {
      * @since  1.0.6
 	 */
 	public function __construct() {	
-		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen' ], 20, 3 );
 		add_action( 'init', [$this, 'handle_delete_action']);
 	}
-
-    /**
-	 * set screen option $value.
-     * @since  1.0.6
-	 */
-	public static function set_screen( $status, $option, $value ) {
-        return $value;
-    }
-
-    /**
-	 * add options for screen setting.
-     * @since  1.0.6
-	 */
-	public function screen_option() {
-        add_screen_option( 'per_page', [
-            'label' => __('Locations Per Page', 'proofratings'),
-            'default' => 15,
-            'option' => 'locations_per_page'
-        ] );
-    }
 
     /**
 	 * Get dashboard menu name

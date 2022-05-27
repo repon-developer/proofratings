@@ -87,7 +87,7 @@ const SiteConnections = () => {
         }
 
         return item.name.toLowerCase().match(new RegExp(search));
-    }).sort((a, b) => b.selected - a.selected)
+    })//.sort((a, b) => b.selected - a.selected)
 
     const handle_location = (location_id) => {
         store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {location_id} });

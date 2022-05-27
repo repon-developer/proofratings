@@ -224,7 +224,7 @@ class Proofratings_Query  {
 			}
 
 			foreach ($active_connections as $key => $review_site) {
-				if ( !isset($review_site['active']) || $review_site['active'] !== true ) {
+				if ( !isset($review_site['selected']) || $review_site['selected'] !== true ) {
 					unset($active_connections[$key]);
 				}				
 			}

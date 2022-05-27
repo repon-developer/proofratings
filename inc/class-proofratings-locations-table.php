@@ -32,7 +32,6 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 	 * @since  1.0.1
 	 */
 	public function __construct() {
-        $this->per_page = $this->get_items_per_page( 'locations_per_page', 15 );
         $this->total_items = get_proofratings()->query->total;
 		parent::__construct(array('singular' => 'singular_form', 'plural' => 'locations_table', 'ajax' => false));
 	}
@@ -143,7 +142,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
             return;
         }
 
-		$permalink = add_query_arg( ['id' => $location->id, '_nonce' => wp_create_nonce( 'delete-location' )], menu_page_url('proofratings-locations', false));
+		$permalink = add_query_arg( ['id' => $location->id, '_nonce' => wp_create_nonce( 'delete-location' )], menu_page_url('proofratings-rating-badges', false));
 
 		if ( !empty($input_data['s']) ) {
 			$permalink = add_query_arg( ['s' => $input_data['s']], $permalink );

@@ -23,9 +23,7 @@ const { useEffect, useState, useRef } = React;
 
 const ProofratingsWidgets = (props) => {
     const location_id = props.location_id;
-
-    const [state, setState] = useState({error: null, loading: true, saving: false});
-
+    const [state, setState] = useState({error: null, loading: true, saving: false, location_name: ''});
     const [settings, setSettings] = useState(store.getState());
 
     useEffect(() => {
@@ -53,9 +51,14 @@ const ProofratingsWidgets = (props) => {
                 return setState({ ...state, error: true, loading: false });
             }
 
-            setState({ ...state, error: false, loading: false });
-            if (Object.keys(response).length !== 0) {
-                store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response });
+            let location_name = 'Rating Badges';
+            if ( response?.global === false ) {
+                location_name = location_name + ` (${response.location_name})`;
+            }
+
+            setState({ ...state, error: false, loading: false, location_name });            
+            if ( typeof response?.settings === 'object' ) {
+                store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response.settings });
             }
         });
 
@@ -152,7 +155,7 @@ const ProofratingsWidgets = (props) => {
                 <div className="header-row">
                     <div className="header-left">
                         <a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i className="icon-back fa-solid fa-angle-left" /> Back to Main Menu</a>
-                        <h1 className="title">Rating Badges</h1>
+                        <h1 className="title">{state.location_name}</h1>
                     </div>
 
                     <div className="header-right">

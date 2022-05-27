@@ -106,8 +106,8 @@ class Proofratings_Admin {
 			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen);
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->analytics, 'output']);
 		
-			$rating_badges_menu = add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
-			add_action( "load-$rating_badges_menu", [$rating_badges, 'screen_option' ] );
+			add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
+			
 
 			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), 'manage_options', 'proofratings-settings', [$this->settings_page, 'settings']);
 			add_submenu_page('proofratings', __('Support', 'proofratings'), __('Support', 'proofratings'), 'manage_options', 'proofratings-support', [$this->settings_page, 'support']);
