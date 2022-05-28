@@ -11,7 +11,7 @@ const ProofratingsSettings = () => {
         loading: true,
         saving: false,
         location_id: null,
-        current_tab: 'connections',
+        settings_tab: 'connections',
     });
 
     useEffect(() => {
@@ -47,15 +47,15 @@ const ProofratingsSettings = () => {
         setState({...state, location_id: location.id})
 
         const unsubscribe = store.subscribe(() => {
-            setState({ location_id: store.getState().location_id })
+            setState({ ...store.getState() })
         })
 
         return () => unsubscribe();
     }, []);
 
-    const setTab = (current_tab, e) => {
+    const setTab = (settings_tab, e) => {
         e.preventDefault();
-        setState({ ...state, current_tab })
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {settings_tab} });
     }
 
     const save_data = () => {
@@ -92,7 +92,7 @@ const ProofratingsSettings = () => {
         'schema': 'Schema'
     }
 
-    const current_tab = state?.current_tab || 'connections';
+    const current_tab = state?.settings_tab || 'connections';
 
     return (
         <React.Fragment>
