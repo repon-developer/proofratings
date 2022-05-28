@@ -14,8 +14,8 @@ const Report = () => {
     const automated_email_report = Object.assign({ active: false, emails: [] }, settings?.automated_email_report);
 
     const handle_email = () => {
-        automated_email_report.active = !automated_email_report.active;
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { automated_email_report } });
+        automated_email_report.active = !automated_email_report?.active;
+        store.dispatch({ type: ACTIONS.UPDATE_REPORT, payload: { automated_email_report } });
     }
 
     const email_submit = (e) => {
@@ -38,13 +38,13 @@ const Report = () => {
 
     const remove_email = (i) => {
         automated_email_report.emails.splice(i, 1)
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { automated_email_report } });
+        store.dispatch({ type: ACTIONS.UPDATE_REPORT, payload: { automated_email_report } });
     }
 
     const agency_settings = Object.assign({}, settings?.agency_settings);
     const update_agency = (key, value) => {
         agency_settings[key] = value;
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { agency_settings } });
+        store.dispatch({ type: ACTIONS.UPDATE_REPORT, payload: { agency_settings } });
     }
 
     return (
