@@ -295,8 +295,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 .proofratings-popup-widgets-box > * {box-sizing: border-box;}
 
 
-
-.analytics-filter {display: flex; gap: 15px; align-items: center}
+.analytics-filter {display: flex; gap: 15px; align-items: center; margin-top: 13px}
 
 .analytics-filter select, #analytics-date {
     line-height: 32px;
@@ -305,6 +304,11 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
     border-radius: 5px;
     box-sizing: border-box;
 }
+
+.location-filter-box {position: relative}
+.location-filter-box label {position: absolute; font-weight: bold; top: -3px; left: 0; transform: translateY(-100%)}
+
+.analytics-filter .location-filter {width: 200px;}
 
 #analytics-date {
     width: 230px;

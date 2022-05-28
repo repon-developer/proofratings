@@ -124,11 +124,30 @@ class Proofratings_Query  {
 		}
 
 		$settings = $location->settings = new Proofratings_Site_Data(sanitize_proofrating_boolean_data($settings));
+		
 
-		$location->connected = 0;
-		if ( is_array($settings->active_connections) ) {
-			$location->connected = sizeof($settings->active_connections);
+		$active_connections = [];
+		if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections)) {
+			$active_connections = $location->settings->active_connections;
+		}		
+
+		foreach ($active_connections as $key => $review_site) {
+			if ( !isset($review_site['selected']) || $review_site['selected'] !== true ) {
+				unset($active_connections[$key]);
+			}				
 		}
+
+		$location->active_connections = $active_connections;
+
+		$location->connected = sizeof($location->active_connections);
+
+
+
+
+
+
+
+
 
 		$location->widgets = 0;
 		if ( is_array($settings->badge_display) ) {
@@ -218,19 +237,9 @@ class Proofratings_Query  {
 		$connections_approved = get_proofratings_settings('connections_approved');
 
 		foreach ($locations as $key => $location) {
-			$active_connections = [];
-			if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections)) {
-				$active_connections = $location->settings->active_connections;
-			}
-
-			foreach ($active_connections as $key => $review_site) {
-				if ( !isset($review_site['selected']) || $review_site['selected'] !== true ) {
-					unset($active_connections[$key]);
-				}				
-			}
-
+	
 			$location->reviews_connections = [];
-			foreach ($active_connections as $key => $connection_info) {
+			foreach ($location->active_connections as $key => $connection_info) {
 				if ( !isset($review_sites[$key]) || !in_array($key, $connections_approved)) {
 					continue;
 				}

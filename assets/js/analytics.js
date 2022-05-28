@@ -141,9 +141,7 @@
         const state = analytics_store.getState();
         const {start, end, domain, location } = state;
 
-        
-
-        const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 2;
+        const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 6;
 
         const data = {site_url: proofratings.site_url, monthly, domain, location, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
 
@@ -156,10 +154,9 @@
         });
     })
 
-    $('.analytics-filter > .location-filter').on('change', function(){
+    $('.analytics-filter .location-filter').on('change', function(){
         analytics_store.dispatch({type: 'UPDATE', payload: {location: $(this).val()}})
     })
-
 
     var start = analytics_store.getState().start, end = analytics_store.getState().end;    
 

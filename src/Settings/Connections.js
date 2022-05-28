@@ -48,10 +48,12 @@ const SiteConnections = () => {
         const current_connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         const review_site = Object.assign(item, { selected: false, url: '' }, current_connection);
 
+        //console.log(review_site);
+
         const pending_items = () => <td className="message-pending-connections" colSpan={4}>We are working on you connection and notify you when complete.</td>
 
         const default_items = () => {
-            if ( item.approved === true) {
+            if ( review_site.approved === true) {
                 return (
                     <>
                         <td className="bold">55</td>
@@ -72,7 +74,7 @@ const SiteConnections = () => {
                 <td><input className="checkbox-switch checkbox-onoff" type="checkbox" defaultChecked={review_site.selected} onClick={() => handle_check_connection(slug)} /></td>
                 <td className="review-site-logo"><img src={review_site.logo} alt={review_site.name} /></td>
 
-                {item.active === true && item.approved === false ? pending_items() : default_items()}
+                {item.selected === true && item.approved === false ? pending_items() : default_items()}
             </React.Fragment>
         )
     }

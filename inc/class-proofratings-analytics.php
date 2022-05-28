@@ -81,7 +81,13 @@ class Proofratings_Analytics {
 	 * @since  1.0.1
 	 */
 	public function output() {
-		$locations = get_proofratings()->query->locations; ?>
+		$locations = get_proofratings()->query->locations;
+		array_walk($locations, function(&$item){
+			if ( $item->id === 'overall' ) {
+				$item->id = '';
+			}
+		}); ?>
+
 		<div class="wrap proofratings-settings-wrap proofratings-analytics-wrap">
 			<header class="proofratins-header header-row">
 				<div class="header-left">
@@ -91,12 +97,14 @@ class Proofratings_Analytics {
 				
 				<div class="header-right analytics-filter">
 					<?php if(get_proofratings()->query->global !== true): ?>
-					<select class="location-filter">
-						<option value="">View all</option>
-						<?php foreach ($locations as $location) {
-							printf('<option value="%s">%s</option>', $location->id, $location->location);
-						} ?>
-					</select>
+					<div class="location-filter-box">
+						<label><?php _e('Location', 'proofratings'); ?></label>
+						<select class="location-filter">
+							<?php foreach ($locations as $location) {
+								printf('<option value="%s">%s</option>', $location->id, $location->location);
+							} ?>
+						</select>
+					</div>
 					<?php endif; ?>
 
 					<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
