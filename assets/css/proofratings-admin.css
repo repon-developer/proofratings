@@ -516,7 +516,7 @@ form.form-search-review-sites button {
 }
 
 .search-review-sites-wrapper {display: flex; gap: 50px}
-.search-review-sites-wrapper .left-column {flex: 1; max-width: 450px; align-self: flex-end;}
+.search-review-sites-wrapper .left-column {flex: 0 0 450px; align-self: flex-end;}
 .search-review-sites-wrapper .location-select {width: 100%; margin-bottom: 45px; padding: 8px 15px; border-color: #CED0D7}
 
 table.table-review-sites {border-collapse: collapse; width: calc(100% + (var(--wrap_edge) * 2)); margin-inline: calc(var(--wrap_edge) * -1)}
@@ -541,6 +541,8 @@ table.table-review-sites .click-through-url input {font-size: 15px; padding: 3px
 table.table-review-sites .click-through-url a {color: var(--text_color_gray); text-decoration: none; font-size: 16px}
 
 table.table-review-sites .message-pending-connections {color: var(--text_color_gray); font-style: italic}
+
+table.table-review-sites.table-location-overall {filter: blur(2px); pointer-events: none;}
 
 .email-reporting-wrap {gap: 40px; display: flex; align-items: flex-start}
 .email-reporting-wrap .form-table {max-width: 900px}

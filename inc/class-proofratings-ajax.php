@@ -21,22 +21,14 @@ class Proofratings_Ajax {
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_proofratings_notice_feedback', [$this, 'notice_feedback']);
-		add_action( 'wp_ajax_nopriv_proofratings_notice_feedback', [$this, 'notice_feedback']);
+		add_action( 'wp_ajax_nopriv_proofratings_notice_feedback', [$this, 'notice_feedback']);	
 
-		add_action( 'wp_ajax_proofratings_get_location_settings', [$this, 'get_location_settings']);
-		add_action( 'wp_ajax_nopriv_proofratings_get_location_settings', [$this, 'get_location_settings']);
 
 		add_action( 'wp_ajax_save_proofratings_location_settings', [$this, 'save_location_settings']);
 		add_action( 'wp_ajax_nopriv_save_proofratings_location_settings', [$this, 'save_location_settings']);
 
-		
-
-
-		add_action( 'wp_ajax_proofratings_save_location', [$this, 'save_location']);
-		add_action( 'wp_ajax_nopriv_proofratings_save_location', [$this, 'save_location']);
-
-		add_action( 'wp_ajax_proofratings_get_location', [$this, 'get_location']);
-		add_action( 'wp_ajax_nopriv_proofratings_get_location', [$this, 'get_location']);
+		add_action( 'wp_ajax_get_proofratings_location_settings', [$this, 'get_location_settings']);
+		add_action( 'wp_ajax_nopriv_get_proofratings_location_settings', [$this, 'get_location_settings']);
 	}
 
 	public function notice_feedback() {
@@ -55,20 +47,27 @@ class Proofratings_Ajax {
 	public function get_location_settings() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-		$location = get_proofratings()->query->get(@$postdata['location_id']);
-
-		$settings['active_connections'] = [];
-		if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections) ) {
-			$settings['active_connections'] = $location->settings->active_connections;
+		$location = @$postdata['location_id'];
+		if ( empty($location)) {
+			wp_send_json_error();
+		}
+		
+		$location = get_proofratings()->query->get($location);
+		if ( !$location ) {
+			wp_send_json_error();
 		}
 
-		//error_log( print_r($settings, true));
-
-		wp_send_json_success($settings);
+		wp_send_json(array(
+			'global' => get_proofratings()->query->global,
+			// 'location_id' => $location->id,
+			'location_name' => $location->location,
+			'settings' => $location->settings,
+		));
 	}
 
 	public function save_location_settings() {
 		$post_data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		unset($post_data['action']);
 
 		$active_connections = [];
 		if ( isset($post_data['active_connections']) && is_array($post_data['active_connections'])) {
@@ -92,7 +91,9 @@ class Proofratings_Ajax {
 		}
 
 		$location = get_proofratings()->query;
-		$location->save_settings($location_id, array('active_connections' => $active_connections));
+		$location->save_settings($location_id, $post_data);
+
+		wp_send_json_success($post_data);
 	
 	
 		$connection_approved = get_proofratings_settings('connections_approved');
@@ -133,18 +134,6 @@ class Proofratings_Ajax {
 		wp_send_json_success();
 	}
 
-	public function save_location() {
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-		$location = @$postdata['location_id'];
-		if ( empty($location)) {
-			wp_send_json_error();
-		}
-
-		unset($postdata['location_id'], $postdata['action']);
-		get_proofratings()->query->save_settings($location, $postdata);
-		wp_send_json( $postdata );
-	}
 
 	function sanitize_data($string) {
 		if (is_array($string)) {
@@ -166,28 +155,7 @@ class Proofratings_Ajax {
 		return $string;
 	}
 
-	public function get_location() {
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-		$location = @$postdata['location_id'];
-		if ( empty($location)) {
-			wp_send_json_error();
-		}
-		
-		$location = get_proofratings()->query->get($location);
-
-		error_log(print_r($location, true));
-
-		if ( !$location ) {
-			wp_send_json_error();
-		}
-
-		wp_send_json(array(
-			'global' => get_proofratings()->query->global,
-			'location_name' => $location->location,
-			'settings' => $location->settings,
-		));
-	}
+	
 
 	
 }

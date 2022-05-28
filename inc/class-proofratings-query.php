@@ -123,8 +123,7 @@ class Proofratings_Query  {
 			$settings = [];
 		}
 
-		$settings = $location->settings = new Proofratings_Site_Data(sanitize_proofrating_boolean_data($settings));
-		
+		$settings = $location->settings = new Proofratings_Site_Data(sanitize_proofrating_boolean_data($settings));		
 
 		$active_connections = [];
 		if ( isset($location->settings->active_connections) && is_array($location->settings->active_connections)) {
@@ -140,14 +139,6 @@ class Proofratings_Query  {
 		$location->active_connections = $active_connections;
 
 		$location->connected = sizeof($location->active_connections);
-
-
-
-
-
-
-
-
 
 		$location->widgets = 0;
 		if ( is_array($settings->badge_display) ) {
@@ -165,6 +156,11 @@ class Proofratings_Query  {
 		$status_text = __('~', 'proofratings');
 		if ( sizeof(array_unique(wp_list_pluck( $locations, 'status'))) == 1 ) {
 			$status_text = $locations[0]->status;
+		}
+
+		$active_connections = [];
+		foreach ($locations as $key => $location) {
+			$active_connections = $active_connections + $location->active_connections;
 		}
 
 		$sites_reviews = [];
@@ -193,7 +189,7 @@ class Proofratings_Query  {
 			);
 		}
 
-		return $this->sanitize_location((object) array(
+		$overall_location = $this->sanitize_location((object) array(
 			'id' => 'overall',
 			'location_id' => 'overall',
 			'location' => __('ALL LOCATIONS', 'proofratings'),
@@ -201,6 +197,10 @@ class Proofratings_Query  {
 			'reviews' => $site_overall_review,
 			'status' => $status_text
 		));
+
+		$overall_location->active_connections = $active_connections;
+
+		return $overall_location;
 	}
 	
 	/**
@@ -231,7 +231,6 @@ class Proofratings_Query  {
 			}
 		}
 
-
 		$review_sites = get_proofratings_review_sites();
 
 		$connections_approved = get_proofratings_settings('connections_approved');
@@ -247,7 +246,6 @@ class Proofratings_Query  {
 				$site_ratings = array('rating' => 0, 'reviews' => 0, 'url' => '');
 				if ( isset($location->reviews[$key] ) ) {
 					$site_ratings = $location->reviews[$key];
-
 				}
 				
 				$location->reviews_connections[$key] = array_merge($review_sites[$key], $connection_info, $site_ratings);
@@ -255,6 +253,8 @@ class Proofratings_Query  {
 
 			$location->overall_reviews = new Proofratings_Ratings($location->reviews_connections);
 			$location->overall_reviews->id = $location->id;
+
+			$location->settings->active_connections = $location->active_connections;
 		}
 
 		return $this->locations = $locations;

@@ -42,11 +42,12 @@ const ProofratingsWidgets = (props) => {
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
-        store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: { ...settings, current_tab } });
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { ...settings, current_tab } });
     }
 
     useEffect(() => {
-        const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'proofratings_get_location' }, function (response) {
+        const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'get_proofratings_location_settings' }, function (response) {
+            console.log(response)
             if (response?.success == false) {
                 return setState({ ...state, error: true, loading: false });
             }
@@ -56,9 +57,9 @@ const ProofratingsWidgets = (props) => {
                 location_name = location_name + ` (${response.location_name})`;
             }
 
-            setState({ ...state, error: false, loading: false, location_name });            
+            setState({ ...state, error: false, loading: false, location_name });
             if ( typeof response?.settings === 'object' ) {
-                store.dispatch({ type: ACTIONS.SAVE_SETTINGS, payload: response.settings });
+                store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
             }
         });
 
@@ -74,7 +75,7 @@ const ProofratingsWidgets = (props) => {
 
         setState({ ...state, saving: true });
 
-        settings.action = 'proofratings_save_location';
+        settings.action = 'save_proofratings_location_settings';
         settings.location_id = location_id;
 
         jQuery.post(proofratings.ajaxurl, settings, function (response) {

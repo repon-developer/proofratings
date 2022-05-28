@@ -3,7 +3,7 @@ import { createStore } from "redux";
 const ACTIONS = {
     OVERALL_SAVE: "OVERALL_SAVE",
 
-    SAVE_SETTINGS: "SAVE_SETTINGS",
+    UPDATE_SETTINGS: "UPDATE_SETTINGS",
     ACTIVE_SITES: "ACTIVE_SITES",
     BADGE_DISPLAY: "BADGE_DISPLAY",
     WIDGET_SQUARE: "WIDGET_SQUARE",
@@ -54,8 +54,8 @@ const settings = {
 
 const settingsReducer = (state = settings, action) => {
     switch (action.type) {
-        case "SAVE_SETTINGS":
-            return action.payload;
+        case "UPDATE_SETTINGS":
+            return {...state, ...action.payload};
 
         case "ACTIVE_SITES":
             return { ...state, activeSites: action.payload };
@@ -90,10 +90,12 @@ const store = createStore(settingsReducer);
 
 const get_connections = () => {
     const active_connections = store.getState().active_connections;
+    
     let connections = Object.keys(proofratings.review_sites).map(key => {
         return {slug: key, approved: proofratings.connections_approved.includes(key),  ...proofratings.review_sites[key]}
     })
 
+    
     connections = connections.filter(item => typeof active_connections[item.slug] === 'object' && active_connections[item.slug]?.selected === true);
     connections = connections.sort((a,b) => b.approved - a.approved);
     return connections;

@@ -21,7 +21,11 @@ const SiteConnections = () => {
         catch (e) { return false; }
     }
 
+    const is_overall = state?.location_id === 'overall';
+
     const handle_connections = (slug, key, value) => {
+        if (is_overall) { return }
+
         const connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         active_connections[slug] = Object.assign(connection, { [key]: value });
 
@@ -48,12 +52,10 @@ const SiteConnections = () => {
         const current_connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         const review_site = Object.assign(item, { selected: false, url: '' }, current_connection);
 
-        //console.log(review_site);
-
         const pending_items = () => <td className="message-pending-connections" colSpan={4}>We are working on you connection and notify you when complete.</td>
 
         const default_items = () => {
-            if ( review_site.approved === true) {
+            if (review_site.approved === true) {
                 return (
                     <>
                         <td className="bold">55</td>
@@ -92,7 +94,7 @@ const SiteConnections = () => {
     })//.sort((a, b) => b.selected - a.selected)
 
     const handle_location = (location_id) => {
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {location_id} });
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { location_id } });
     }
 
     const get_location_dropdown = () => {
@@ -102,7 +104,7 @@ const SiteConnections = () => {
 
         return (
             <React.Fragment>
-                <label style={{fontWeight: 'bold', marginBottom: 5, display: 'inline-block'}}>Location</label>
+                <label style={{ fontWeight: 'bold', marginBottom: 5, display: 'inline-block' }}>Location</label>
                 <select className="location-select" defaultValue={state?.location_id} onChange={(e) => handle_location(e.target.value)} >
                     {proofratings.locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
                 </select>
@@ -125,16 +127,31 @@ const SiteConnections = () => {
 
                 <div className="intro-text">
                     <h3>Connect review sites</h3>
-                    <p>Below is the current list of supported review sites to connect for your rating badges. During the initial setup of your account, we will connect the review sites your requested at sign up.</p>
-                    <p>If you would like to add additional sites, simply toggle on the review site and our support team will be notified to make the connection on the backend.</p>
-                    <p>Once connected, you can include the new review site in badges by accessing your Rating Badges tab.</p>
-                    <p>You can edit the click-through URL in this area if you would like your website visitors to visit a different link when they click the pertaining badge.</p>
+
+                    {(is_overall === true) &&
+                        <>
+                            <p>When all locations is selected, you will not see site connections available.</p>
+                            <p>All locations is a collective of
+                                all your locations and the sites available will be the ones connected with each individual site. In order to
+                                access and edit connected sites, select individual locations.
+                            </p>
+                        </>
+                    }
+
+                    {(is_overall === false) &&
+                        <div>
+                            <p>Below is the current list of supported review sites to connect for your rating badges. During the initial setup of your account, we will connect the review sites your requested at sign up.</p>
+                            <p>If you would like to add additional sites, simply toggle on the review site and our support team will be notified to make the connection on the backend.</p>
+                            <p>Once connected, you can include the new review site in badges by accessing your Rating Badges tab.</p>
+                            <p>You can edit the click-through URL in this area if you would like your website visitors to visit a different link when they click the pertaining badge.</p>
+                        </div>
+                    }
                 </div>
             </div>
 
             <div className="gap-50" />
 
-            <table className="table-review-sites">
+            <table className={`table-review-sites ${is_overall ? 'table-location-overall' : ''}`} >
                 <thead>
                     <tr>
                         <th></th>

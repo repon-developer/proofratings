@@ -21,16 +21,14 @@ const ProofratingsSettings = () => {
 
         setState({ ...state, loading: true });
 
-        const request = jQuery.post(proofratings.ajaxurl, { action: 'proofratings_get_location_settings', location_id: state.location_id }, function (response) {
+        const request = jQuery.post(proofratings.ajaxurl, { action: 'get_proofratings_location_settings', location_id: state.location_id }, function (response) {
+            console.log(response)
             if (response?.success == false) {
                 return setState({ ...state, error: true, loading: false });
             }
 
-            response.data.location_id = state.location_id;
-            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.data });
-            
+            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {...response.settings, location_id: state.location_id} });
             setState({ ...state, error: false, loading: false });
-
         });
 
         request.fail(function () {
@@ -71,6 +69,7 @@ const ProofratingsSettings = () => {
 
         settings.action = 'save_proofratings_location_settings';
         const request = jQuery.post(proofratings.ajaxurl, settings, (response) => {
+            console.log(response)
             setState({ ...state, saving: false })
         })
 
