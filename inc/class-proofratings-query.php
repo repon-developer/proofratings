@@ -67,8 +67,17 @@ class Proofratings_Query  {
 		}
 
 		if ( $id === 'overall' ) {
-			$settings = (array) get_option('proofratings_overall_rating_settings');
-			return update_option('proofratings_overall_rating_settings', array_merge($settings, $data));
+			$settings = get_option('proofratings_overall_rating_settings');
+			if ( !is_array($settings) ) {
+				$settings = [];
+			}
+
+			$settings =  array_merge($settings, $data);
+			if ( isset($settings['active_connections']) ) {
+				unset($settings['active_connections']);
+			}
+
+			return update_option('proofratings_overall_rating_settings', $settings);
 		}
 
 		global $wpdb;

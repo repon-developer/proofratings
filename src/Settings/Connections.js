@@ -54,6 +54,10 @@ const SiteConnections = () => {
 
         const pending_items = () => <td className="message-pending-connections" colSpan={4}>We are working on you connection and notify you when complete.</td>
 
+        if ( is_overall ) {
+            review_site.click_through_url = '';
+        }
+
         const default_items = () => {
             if (review_site.approved === true) {
                 return (

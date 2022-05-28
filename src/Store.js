@@ -28,10 +28,10 @@ const settings = {
         overall_narrow_embed: false,
         overall_narrow_float: false
     },
-    widget_square: { widget_connections: null },
-    widget_basic: { widget_connections: null },
-    widget_icon: { widget_connections: null },
-    widget_rectangle: { widget_connections: null },
+    widget_square: { widget_connections: [] },
+    widget_basic: { widget_connections: [] },
+    widget_icon: { widget_connections: [] },
+    widget_rectangle: { widget_connections: [] },
 
     overall_rectangle_embed: {},
     overall_rectangle_float: { tablet: true, mobile: true, close_button: true },

@@ -22,7 +22,7 @@ const ProofratingsSettings = () => {
         setState({ ...state, loading: true });
 
         const request = jQuery.post(proofratings.ajaxurl, { action: 'get_proofratings_location_settings', location_id: state.location_id }, function (response) {
-            console.log(response)
+            console.log(response.settings)
             if (response?.success == false) {
                 return setState({ ...state, error: true, loading: false });
             }
@@ -69,7 +69,6 @@ const ProofratingsSettings = () => {
 
         settings.action = 'save_proofratings_location_settings';
         const request = jQuery.post(proofratings.ajaxurl, settings, (response) => {
-            console.log(response)
             setState({ ...state, saving: false })
         })
 

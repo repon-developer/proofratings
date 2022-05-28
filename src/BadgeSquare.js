@@ -82,8 +82,6 @@ const BadgeSquare = (props) => {
     const get_widget = () => {
         const connection = Object.assign({logo: `${proofratings.assets_url}images/google.svg`, reviews: 76 }, get_connections(true)[0]);
 
-        console.log(connection);
-
         return (
             <React.Fragment>
                 <h2 className="section-title-large">Color Selection</h2>
