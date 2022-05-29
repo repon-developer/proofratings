@@ -107,7 +107,7 @@ class Proofratings_Ajax {
 		$new_connections = array_diff(array_keys($active_connections), $connection_approved);
 
 		//REMOVE LATER FOR APPROVAL
-		wp_send_json_error($new_connections);
+		wp_send_json_success($new_connections);
 		if ( empty($new_connections) ) {
 			wp_send_json_success();
 		}
