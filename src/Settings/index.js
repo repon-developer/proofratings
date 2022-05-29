@@ -30,12 +30,11 @@ const ProofratingsSettings = () => {
         store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { loading: true } });
 
         const request = jQuery.post(proofratings.ajaxurl, { action: 'get_proofratings_location_settings', location_id: state.location_id }, function (response) {
-            //console.log(response.settings)
             if (response?.success == false) {
                 return store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: true, loading: false } });
             }
 
-            console.log('Loaded', response.settings)
+            //console.log(response.settings)
             store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
             store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: false, loading: false } });
         });
@@ -107,13 +106,15 @@ const ProofratingsSettings = () => {
         )
     }
 
+    const is_overall = state?.location_id === 'overall';
+
     return (
         <React.Fragment>
             <header className="proofratins-header">
                 <a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i className="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
                 <h1 className="title">Settings</h1>
 
-                {get_location_dropdown()}
+                {is_overall && get_location_dropdown()}
 
                 <div className="rating-badges-navtab">
                     {Object.keys(tabs).map((key) => {

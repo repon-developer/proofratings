@@ -58,7 +58,7 @@ class Proofratings_Ajax {
 		}
 
 		$location->settings->schema = get_proofratings_settings('schema');
-		error_logs(get_proofratings_settings('schema'));
+		//error_logs(get_proofratings_settings('schema'));
 
 		wp_send_json(array(
 			'global' => get_proofratings()->query->global,

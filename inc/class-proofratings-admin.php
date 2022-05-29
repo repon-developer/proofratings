@@ -39,10 +39,21 @@ class Proofratings_Admin {
 	}
 
 	/**
+	 * Capability for settings
+	 * @var self
+	 * @since  1.0.1
+	 */
+	private $capability = 'manage_options';
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		include_once dirname( __FILE__ ) . '/class-proofratings-settings.php';
+
+		if ( defined('PROOFRATINGS_DEMO') && PROOFRATINGS_DEMO ) {
+			$this->capability = 'read';
+		}
 		
 		$this->settings_page = Proofratings_Settings::instance();
 		$this->analytics = include_once dirname( __FILE__ ) . '/class-proofratings-analytics.php';
@@ -126,7 +137,6 @@ class Proofratings_Admin {
 			wp_register_script('react', 'https://unpkg.com/react@17.0.1/umd/react.development.js', []);
 			wp_register_script('react-dom', 'https://unpkg.com/react-dom@17.0.1/umd/react-dom.development.js', []);
 		}
-
 
 		wp_enqueue_style( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings-dashboard.css', [], PROOFRATINGS_VERSION);
 

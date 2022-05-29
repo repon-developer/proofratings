@@ -78,22 +78,15 @@ class Proofratings_Settings {
 			return $this->error->add('license_key', 'Please enter your license key');
 		}
 
-		$response = wp_remote_get(add_query_arg(array(
-			'name' => get_bloginfo( 'name' ),
-			'email' => get_bloginfo( 'admin_email' ),
-			'site_url' => get_site_url(),
-			'license_key' => $license_key
-		), PROOFRATINGS_API_URL . '/register_site'));
-
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/register_site', get_proofratings_api_args(['license_key' => $license_key]));
 		if ( is_wp_error( $response ) ) {
 			return $this->error->add('remote_request', $response->get_error_message());
 		}
 
-		$result = json_decode(wp_remote_retrieve_body($response));
-		
+		$result = json_decode(wp_remote_retrieve_body($response));		
 		if ( !isset($result->success) || $result->success !== true ) {
 			return $this->error->add('license_key', $result->message);
-		}
+		}		
 
 		update_proofratings_settings(['status' => $result->data->status]);
 	}

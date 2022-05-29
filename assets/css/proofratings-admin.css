@@ -59,6 +59,7 @@ body.screen-proofratings .form-footer .btn-cancel {padding-inline: 20px}
     line-height: 36px;
     margin-right: 16px;
     padding: 0;
+    display: block!important;
 }
 
 .proofratings-instruction {font-size: 20px; font-weight: bold}
