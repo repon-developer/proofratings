@@ -3,22 +3,19 @@ const { useState, useEffect } = React;
 import store, { ACTIONS } from './Store';
 
 const Schema = () => {
-    const [settings, setSettings] = useState(store.getState())
+    const [settings, setSettings] = useState(store.getState().settings)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setSettings(store.getState()))
+        const unsubscribe = store.subscribe(() => setSettings(store.getState().settings))
         return () => unsubscribe();
     }, [])
-
-    console.log( settings );
-
 
     return (
         <React.Fragment>
             <h2 className="section-title-large" style={{ marginBottom: 20 }}>Structured data</h2>
             <div className="schema-wrapper">
                 <div className='left-column'>
-                    <textarea></textarea>
+                    <textarea defaultValue={settings?.schema} onInput={(e) => store.dispatch({ type: ACTIONS.UPDATE_SCHEMA, payload: e.target.value })}></textarea>
                     <p className="description">Add the script block below to the head section of your html.</p>
                 </div>
 

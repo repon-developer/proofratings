@@ -134,7 +134,6 @@ class Proofratings_Admin {
 		wp_register_script( 'tippy', PROOFRATINGS_PLUGIN_URL . '/assets/js/tippy.js', ['popper'], 6, true);
 
 		$settings = get_proofratings_settings();
-
 		
 
 		wp_enqueue_script( 'proofratings-dashboard', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-dashboard.js', ['jquery'], PROOFRATINGS_VERSION, true);
@@ -147,14 +146,13 @@ class Proofratings_Admin {
 			'pages' => get_pages(),
 			'locations' => get_proofratings()->query->get_locations(),
 			'connections_approved' => $settings['connections_approved'],
-			'agency' => $settings['agency']
+			'agency' => $settings['agency'],
 		));
 
 		$screen = get_current_screen();
 		if ( strpos($screen->id, 'proofratings') === false ) {
 			return;
 		}
-
 
 		add_action('in_admin_header', function () {
 			remove_all_actions('admin_notices');

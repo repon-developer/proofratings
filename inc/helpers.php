@@ -492,6 +492,10 @@ function get_proofratings_settings($key = null) {
         $settings['agency'] = false;
     }
 
+    if ( !isset($settings['schema']) ) {
+        $settings['schema'] = '';
+    }
+
     if ( $key ) {
         return isset($settings[$key]) ? $settings[$key] : false;
     }

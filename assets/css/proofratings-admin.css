@@ -343,13 +343,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 .analytics-information .engagements .counter:before {visibility: hidden;}
 #analytics-chart {margin-top: 30px}
 
-#reporting-email-addresses {
-    margin: 7px 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    max-width: 800px;
-}
+#reporting-email-addresses {margin: 7px 0 0; display: flex; flex-wrap: wrap; gap: 5px; padding: 0; max-width: 800px}
 
 #reporting-email-addresses > li {
     display: flex;
@@ -361,25 +355,14 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
     transition: all 200ms;
 }
 
-#reporting-email-addresses > li:hover {
-    background-color: #f1eeee
-}
-
-#reporting-email-addresses li .remove {
-    margin-left: 2px;
-    cursor: pointer;
-    position: relative;
-    top: -1px;
-}
+#reporting-email-addresses > li:hover {background-color: #f1eeee}
+#reporting-email-addresses li .remove {margin-left: 2px; cursor: pointer; position: relative; top: -1px}
 
 #reporting-email-addresses li .remove:before {font-size: 16px;}
 
 #toplevel_page_proofratings .wp-submenu-head + li {display: none!important}
 
-.proofratings-dashboard-menu {
-    margin-top: -31px;
-    margin-inline: calc(var(--wrap_edge) * -1);
-}
+.proofratings-dashboard-menu {margin-top: -31px; margin-inline: calc(var(--wrap_edge) * -1)}
 
 .proofratings-dashboard-menu a {
     display: flex;

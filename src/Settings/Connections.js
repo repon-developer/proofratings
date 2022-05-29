@@ -2,17 +2,16 @@ const { useState, useEffect } = React;
 
 import store, { ACTIONS } from './Store';
 
-const SiteConnections = () => {
+const SiteConnections = ({location_id}) => {
     const [search, setSearch] = useState('')
 
-    const [state, setState] = useState(store.getState())
+    const [state, setState] = useState(store.getState().settings)
 
     const active_connections = (typeof state?.active_connections === 'object') ? state.active_connections : {};
-
     const connections_approved = Array.isArray(proofratings?.connections_approved) ? proofratings.connections_approved : [];
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState()))
+        const unsubscribe = store.subscribe(() => setState(store.getState().settings))
         return () => unsubscribe();
     }, [])
 
@@ -21,7 +20,7 @@ const SiteConnections = () => {
         catch (e) { return false; }
     }
 
-    const is_overall = state?.location_id === 'overall';
+    const is_overall = location_id === 'overall';
 
     const handle_connections = (slug, key, value) => {
         if (is_overall) { return }

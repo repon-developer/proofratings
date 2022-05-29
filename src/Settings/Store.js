@@ -1,27 +1,18 @@
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 
 const ACTIONS = {
+    UPDATE_STATE: "UPDATE_STATE",
     UPDATE_SETTINGS: "UPDATE_SETTINGS",
     UPDATE_CONNECTIONS: "UPDATE_CONNECTIONS",
     UPDATE_REPORT: "UPDATE_REPORT",
+    UPDATE_SCHEMA: "UPDATE_SCHEMA",
 };
 
-const settings = {
-    location_id: null,
-    active_connections: {},
-    automated_email_report: {}
-};
+const primary_state = { error: null, loading: true, saving: false, location_id: null, settings_tab: 'connections' }
 
-const settingsReducer = (state = settings, action) => {
-    console.log(action)
+const stateReducer = (state = primary_state, action) => {
     switch (action.type) {
-        case "UPDATE_SETTINGS":
-            return { ...state, ...action.payload };
-
-        case "UPDATE_CONNECTIONS":
-            return { ...state, active_connections: { ...action.payload } };
-
-        case "UPDATE_REPORT":
+        case "UPDATE_STATE":
             return { ...state, ...action.payload };
 
         default:
@@ -29,8 +20,39 @@ const settingsReducer = (state = settings, action) => {
     }
 };
 
-const store = createStore(settingsReducer);
+const settings = {
+    active_connections: {},
+    automated_email_report: {},
+    schema: ''
+};
 
-export default store;
+const settingsReducer = (state = settings, action) => {
+    const { type, payload } = action
+
+    switch (type) {
+        case "UPDATE_SETTINGS":
+            return { ...action.payload };
+
+        case "UPDATE_CONNECTIONS":
+            return { ...state, active_connections: { ...payload } };
+
+        case "UPDATE_REPORT":
+            return { ...state, ...payload };
+
+        case "UPDATE_SCHEMA":
+            return { ...state, schema: payload };            
+
+        default:
+            return state;
+    }
+};
+
+const reducers = combineReducers({
+    state: stateReducer,
+    settings: settingsReducer
+});
+
+
+export default createStore(reducers);
 
 export { ACTIONS };

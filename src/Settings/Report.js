@@ -4,10 +4,10 @@ import store, { ACTIONS } from './Store';
 
 const Report = () => {
     const [email, setEmail] = useState('');
-    const [settings, setSettings] = useState(store.getState())
+    const [settings, setSettings] = useState(store.getState().settings)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setSettings(store.getState()))
+        const unsubscribe = store.subscribe(() => setSettings(store.getState().settings))
         return () => unsubscribe();
     }, [])
 
@@ -76,13 +76,13 @@ const Report = () => {
                     </tbody>
                 </table>
 
-                <div className="intro-text" style={{maxWidth: 400}}>
+                <div className="intro-text" style={{ maxWidth: 400 }}>
                     <h3>Receive monthly data reports</h3>
                     <p>Add emails to receive reports at the end of the month showing your rating badge analytics.</p>
                 </div>
             </div>
 
-            {settings?.agency === true && (
+            {Boolean(proofratings?.agency) === true && (
                 <React.Fragment>
                     <h2 className="section-title-large">Settings for agency</h2>
                     <table className="form-table">

@@ -119,8 +119,6 @@ class Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function set_reviews(WP_REST_Request $request) {
-		//error_log( print_r($request->get_params(), true) );
-
 		$review_locations = $request->get_param('locations');
 		if ( !is_array($review_locations) ) {
 			$review_locations = [];

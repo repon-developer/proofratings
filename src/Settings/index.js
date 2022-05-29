@@ -6,29 +6,38 @@ import Report from './Report';
 import Schema from './Schema';
 
 const ProofratingsSettings = () => {
-    const [state, setState] = useState({
-        error: null,
-        loading: true,
-        saving: false,
-        location_id: null,
-        settings_tab: 'connections',
-    });
+    const [state, setState] = useState(store.getState().state);
+
+    useEffect(() => {
+        if (!Array.isArray(proofratings.locations)) {
+            proofratings.locations = [];
+        }
+
+
+        const unsubscribe = store.subscribe(() => setState({ ...store.getState().state }))
+
+        const location = typeof proofratings.locations[0] !== 'undefined' ? proofratings.locations[0] : { id: 'global' };
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { location_id: location.id } });
+
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         if (!state?.location_id) {
             return;
         }
 
-        setState({ ...state, loading: true });
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { loading: true } });
 
         const request = jQuery.post(proofratings.ajaxurl, { action: 'get_proofratings_location_settings', location_id: state.location_id }, function (response) {
             //console.log(response.settings)
             if (response?.success == false) {
-                return setState({ ...state, error: true, loading: false });
+                return store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: true, loading: false } });
             }
 
-            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {...response.settings, location_id: state.location_id} });
-            setState({ ...state, error: false, loading: false });
+            console.log('Loaded', response.settings)
+            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
+            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: false, loading: false } });
         });
 
         request.fail(function () {
@@ -38,42 +47,27 @@ const ProofratingsSettings = () => {
 
     }, [state.location_id]);
 
-    useEffect(() => {        
-        if (!Array.isArray(proofratings.locations)) {
-            proofratings.locations = [];
-        }
-
-        const location = typeof proofratings.locations[0] !== 'undefined' ? proofratings.locations[0] : {id: 'global'};
-        setState({...state, location_id: location.id})
-
-        const unsubscribe = store.subscribe(() => {
-            setState({ ...store.getState() })
-        })
-
-        return () => unsubscribe();
-    }, []);
-
     const setTab = (settings_tab, e) => {
         e.preventDefault();
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {settings_tab} });
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { settings_tab } });
     }
 
     const save_data = () => {
         if (state.saving) {
             return;
         }
-        
-        const settings = store.getState();
-        
-        setState({ ...state, saving: true });
+
+        const settings = Object.assign({ action: 'save_proofratings_location_settings', location_id: state.location_id }, store.getState().settings);
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { saving: true } });
 
         settings.action = 'save_proofratings_location_settings';
         const request = jQuery.post(proofratings.ajaxurl, settings, (response) => {
-            setState({ ...state, saving: false })
+            console.log('After Saved', response.data)
+            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { saving: false } });
         })
 
         request.fail(() => {
-            setState({ ...state, saving: false })
+            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { saving: false } });
             alert('Something went wrong');
         })
     }
@@ -95,7 +89,7 @@ const ProofratingsSettings = () => {
     const current_tab = state?.settings_tab || 'connections';
 
     const handle_location = (location_id) => {
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { location_id } });
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { location_id } });
     }
 
     const get_location_dropdown = () => {
@@ -129,7 +123,7 @@ const ProofratingsSettings = () => {
                 </div>
             </header>
 
-            {current_tab === 'connections' && <SiteConnections />}
+            {current_tab === 'connections' && <SiteConnections location_id={state.location_id} />}
             {current_tab === 'report' && <Report />}
             {current_tab === 'schema' && <Schema />}
 
