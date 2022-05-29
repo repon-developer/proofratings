@@ -94,11 +94,32 @@ const ProofratingsSettings = () => {
 
     const current_tab = state?.settings_tab || 'connections';
 
+    const handle_location = (location_id) => {
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { location_id } });
+    }
+
+    const get_location_dropdown = () => {
+        if (!Array.isArray(proofratings.locations)) {
+            proofratings.locations = [];
+        }
+
+        return (
+            <div className="location-dropdown">
+                <label>Location</label>
+                <select className="location-select" defaultValue={state?.location_id} onChange={(e) => handle_location(e.target.value)} >
+                    {proofratings.locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
+                </select>
+            </div>
+        )
+    }
+
     return (
         <React.Fragment>
             <header className="proofratins-header">
                 <a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i className="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
                 <h1 className="title">Settings</h1>
+
+                {get_location_dropdown()}
 
                 <div className="rating-badges-navtab">
                     {Object.keys(tabs).map((key) => {

@@ -97,32 +97,11 @@ const SiteConnections = () => {
         return item.name.toLowerCase().match(new RegExp(search));
     })//.sort((a, b) => b.selected - a.selected)
 
-    const handle_location = (location_id) => {
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { location_id } });
-    }
-
-    const get_location_dropdown = () => {
-        if (!Array.isArray(proofratings.locations)) {
-            proofratings.locations = [];
-        }
-
-        return (
-            <React.Fragment>
-                <label style={{ fontWeight: 'bold', marginBottom: 5, display: 'inline-block' }}>Location</label>
-                <select className="location-select" defaultValue={state?.location_id} onChange={(e) => handle_location(e.target.value)} >
-                    {proofratings.locations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}
-                </select>
-            </React.Fragment>
-        )
-    }
-
     return (
         <React.Fragment>
 
             <div className="search-review-sites-wrapper">
                 <div className="left-column">
-                    {get_location_dropdown()}
-
                     <form className="form-search-review-sites" style={{ alignSelf: 'flex-end' }} onSubmit={(e) => e.preventDefault()}>
                         <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
                         <button></button>
