@@ -78,7 +78,7 @@ class Proofratings_Settings {
 			return $this->error->add('license_key', 'Please enter your license key');
 		}
 
-		$response = wp_remote_get(PROOFRATINGS_API_URL . '/register_site', get_proofratings_api_args(['license_key' => $license_key]));
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/activate_site', get_proofratings_api_args(['license_key' => $license_key]));
 		if ( is_wp_error( $response ) ) {
 			return $this->error->add('remote_request', $response->get_error_message());
 		}
