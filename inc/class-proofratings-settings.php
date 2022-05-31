@@ -59,7 +59,9 @@ class Proofratings_Settings {
 
 		add_action( 'init', [$this, 'handle_signup_form'] );
 		add_action( 'init', [$this, 'handle_support_form'] );
-		add_action( 'init', [$this, 'handle_add_location'] );
+		add_action( 'init', [$this, 'handle_edit_location'] );
+
+		
 	}
 
 	public function handle_signup_form() {
@@ -130,71 +132,88 @@ class Proofratings_Settings {
 		$this->form_data = new Proofratings_Site_Data(['success' => 'You have successfully placed your ticket.']);		
 	}
 
-	
+	public function get_location_data() {		
+		$location_id = false;
+		if ( isset($_GET['location']) ) {
+			$location_id = absint($_GET['location']);
+		}
+
+		$location = get_proofratings()->query->get($location_id);
+		if ( $location === false || $location_id === 0) {
+			return new Proofratings_Site_Data(['error' => 'Not a valid location']);			
+		}
+
+		$location_data = $location->location_information;
+
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if ( isset($postdata['_nonce']) && wp_verify_nonce( $postdata['_nonce'], '_nonce_edit_location')) {
+			$location_data = $postdata;
+		}
+
+		$location_data['location_id'] = $location->location_id;		
+		return new Proofratings_Site_Data($location_data);		
+	}
 
 	/**
-	 * handle add location form submit
+	 * handle edit location form submit
 	 * @since 1.0.6
 	 */
-	public function handle_add_location() {
-		if ( !isset($_POST['_nonce']) || !wp_verify_nonce( $_POST['_nonce'], '_nonce_add_location')) {
+	public function handle_edit_location() {
+		if ( !isset($_POST['_nonce']) || !wp_verify_nonce( $_POST['_nonce'], '_nonce_edit_location')) {
 			return;
 		}
 
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		$form_data = $this->get_location_data();
+		if (!empty($form_data->error) ) {
+			wp_die($form_data->error);
+		}
 		
-		if ( empty($postdata['name'])) {
+		if ( empty($form_data->name)) {
 			$this->error->add('name', __('Please fill location name field', 'proofratings'));
 		}
 
-		if ( empty($postdata['street'])) {
+		if ( empty($form_data->street)) {
 			$this->error->add('street', __('Please fill location street field', 'proofratings'));
 		}
 
-		if ( empty($postdata['city'])) {
+		if ( empty($form_data->city)) {
 			$this->error->add('city', __('Please fill location city field', 'proofratings'));
 		}
 
-		if ( empty($postdata['state'])) {
+		if ( empty($form_data->state)) {
 			$this->error->add('state', __('Please fill location state/province field', 'proofratings'));
 		}
 
-		if ( empty($postdata['zip'])) {
+		if ( empty($form_data->zip)) {
 			$this->error->add('zip', __('Please fill location zip/postal field', 'proofratings'));
 		}
 
-		if ( empty($postdata['country'])) {
+		if ( empty($form_data->country)) {
 			$this->error->add('country', __('Please fill location country field', 'proofratings'));
 		}
 
 		if ( $this->error->has_errors()) {
 			return;
-		}		
-		
-		$email = get_option( 'admin_email' );
-		$name = get_bloginfo('name');
-
-		ob_start();
-		include PROOFRATINGS_PLUGIN_DIR . '/templates/email-add-location.php';
-		$message = ob_get_clean();
-
-		$message = preg_replace('/{name}/', $postdata['name'], $message);
-		$message = preg_replace('/{street}/', $postdata['street'], $message);
-		$message = preg_replace('/{street2}/', $postdata['street2'], $message);
-		$message = preg_replace('/{city}/', $postdata['city'], $message);
-		$message = preg_replace('/{state}/', $postdata['state'], $message);
-		$message = preg_replace('/{zip}/', $postdata['zip'], $message);
-		$message = preg_replace('/{country}/', $postdata['country'], $message);
-		
-		$headers = array('Content-Type: text/html; charset=UTF-8', sprintf('From: %s <%s>', $name, $email), 'Reply-To: ' . $email);
-
-		$sendto = 'jonathan@proofratings.com';
-		
-		if (!wp_mail( $sendto, $name . ' - New location add request', $message, $headers) ) {
-			return $_POST['error_msg'] = __('Send mail have not successful.', 'proofratings');
 		}
 
-		exit(wp_safe_redirect(admin_url( 'admin.php?page=' . 'proofratings-locations')));
+		$location = get_object_vars($form_data);
+		foreach (['_nonce', '_wp_http_referer', 'submit'] as $clear_key) {
+			unset($location[$clear_key]);
+		}
+
+		get_proofratings()->query->update($_GET['location'], 'location', $location['name']);
+		get_proofratings()->query->save_meta_data($_GET['location'], 'location_information', $location);
+
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_location', get_proofratings_api_args($location));
+		// if ( is_wp_error( $response ) ) {
+		// 	return $this->error->add('remote_request', $response->get_error_message());
+		// }
+
+		
+
+		var_dump($response);
+
+		
 	}
 
 	/**
@@ -284,14 +303,26 @@ class Proofratings_Settings {
 		<?php
 	}
 
+
+
 	/**
 	 * Shows the plugin's settings page.
 	 */
-	public function add_location() {
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
+	public function edit_location() {
+		$location = $this->get_location_data();
+		if (!empty($location->error) ) {
+			wp_die($location->error);
+		} ?>
 		<div class="wrap proofratings-settings-wrap">
-			<header class="proofratins-header">
-				<h1 class="title"><?php _e('Add a Location', 'proofratings') ?></h1>
+			<header class="proofratins-header header-row">
+				<div class="header-left">
+					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<h1 class="title"><?php _e('Edit Location', 'proofratings') ?></h1>
+				</div>
+				
+				<div class="header-right">
+					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
+				</div>
 			</header>
 
 			<hr class="wp-header-end">
@@ -304,59 +335,59 @@ class Proofratings_Settings {
 
 			
 			<form method="post">
-				<?php wp_nonce_field( '_nonce_add_location', '_nonce' ) ?>
+				<?php wp_nonce_field( '_nonce_edit_location', '_nonce' ) ?>
 				<table class="form-table">
 					<tr>
 						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
 						<td>
-							<input name="name" type="text" value="<?php echo esc_attr(@$postdata['name']) ?>" />
+							<input name="name" type="text" value="<?php echo esc_attr($location->name) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street*', 'proofratings') ?></th>
 						<td>
-							<input name="street" type="text" value="<?php echo esc_attr(@$postdata['street']) ?>" />
+							<input name="street" type="text" value="<?php echo esc_attr($location->street) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Street 2', 'proofratings') ?></th>
 						<td>
-							<input name="street2" type="text" value="<?php echo esc_attr(@$postdata['street2']) ?>" />
+							<input name="street2" type="text" value="<?php echo esc_attr($location->street2) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location City*', 'proofratings') ?></th>
 						<td>
-							<input name="city" type="text" value="<?php echo esc_attr(@$postdata['city']) ?>" />
+							<input name="city" type="text" value="<?php echo esc_attr($location->city) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location State/Province*', 'proofratings') ?></th>
 						<td>
-							<input name="state" type="text" value="<?php echo esc_attr(@$postdata['state']) ?>" />
+							<input name="state" type="text" value="<?php echo esc_attr($location->state) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Zip/Postal*', 'proofratings') ?></th>
 						<td>
-							<input name="zip" type="text" value="<?php echo esc_attr(@$postdata['zip']) ?>" />
+							<input name="zip" type="text" value="<?php echo esc_attr($location->zip) ?>" />
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><?php _e('Location Country*', 'proofratings') ?></th>
 						<td>
-							<input name="country" type="text" value="<?php echo esc_attr(@$postdata['country']) ?>" />
+							<input name="country" type="text" value="<?php echo esc_attr($location->country) ?>" />
 						</td>
 					</tr>
 				</table>
 
-				<?php submit_button('Request location'); ?>
+				<?php submit_button('Update location'); ?>
 			</form>
 		</div>
 		<?php

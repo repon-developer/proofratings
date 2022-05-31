@@ -123,7 +123,7 @@ class Proofratings_Admin {
 			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), 'manage_options', 'proofratings-settings', [$this->settings_page, 'settings']);
 			add_submenu_page('proofratings', __('Support', 'proofratings'), __('Support', 'proofratings'), 'manage_options', 'proofratings-support', [$this->settings_page, 'support']);
 
-			add_submenu_page('', __('Add Location', 'proofratings'), __('Add Location', 'proofratings'), 'manage_options', 'proofratings-add-location', [$this->settings_page, 'add_location']);
+			add_submenu_page('', __('Edit Location', 'proofratings'), __('Edit Location', 'proofratings'), 'manage_options', 'proofratings-edit-location', [$this->settings_page, 'edit_location']);
 		}
 	}
 
@@ -170,7 +170,7 @@ class Proofratings_Admin {
 			remove_all_actions('all_admin_notices');
 		}, 1000);
 		
-		preg_match('/(proofratings_page|proofratings-widgets|proofratings-add-location)/', $screen->id, $matches);
+		preg_match('/(proofratings_page|proofratings-widgets|proofratings-edit-location)/', $screen->id, $matches);
 
 		wp_register_style('fontawesome', PROOFRATINGS_PLUGIN_URL . '/assets/css/fontawesome.css', [], '6.1.1');
 		

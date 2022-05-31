@@ -56,6 +56,14 @@ class Proofratings_Query  {
 		$this->total = sizeof($this->locations);
 	}
 
+	/**
+	 * Update a column
+	 * @since  1.1.7
+	 */
+	function update($id, $column, $value) {
+		global $wpdb;
+		return $wpdb->update($wpdb->proofratings, [$column => maybe_serialize( $value )], ['id' => $id]);
+	}
 
 	/**
 	 * save location
@@ -107,6 +115,29 @@ class Proofratings_Query  {
 	}
 
 	/**
+	 * save meta data
+	 * @param $id id column of table
+	 * @param $meta_data meta_data column merge previous to new one
+	 * @since  1.1.7
+	 */
+	public function save_meta_data($id, $key, $updated_data) {
+		$location = $this->get($id);
+		if ( $location === false) {
+			return false;
+		}
+
+		$meta_data = $location->meta_data;
+		if ( !is_array($meta_data) ) {
+			$meta_data = [];
+		}
+
+		$meta_data[$key] = $updated_data;
+
+		global $wpdb;
+		return $wpdb->update($wpdb->proofratings, ['meta_data' => maybe_serialize( $meta_data )], ['id' => $id]);
+	}
+
+	/**
 	 * Get location
 	 * @since  1.1.7
 	 */
@@ -153,6 +184,25 @@ class Proofratings_Query  {
 		if ( is_array($settings->badge_display) ) {
 			$location->widgets = sizeof(array_filter($settings->badge_display));
 		}
+
+		$location->meta_data = isset($location->meta_data) ? maybe_unserialize( $location->meta_data ) : [];
+		if ( !is_array($location->meta_data)) {
+			$location->meta_data = [];
+		}
+
+		$location_information = isset($location->meta_data['location_information']) ? $location->meta_data['location_information'] : [];
+		if ( !is_array($location_information) ) {
+			$location_information = [];
+		}
+		
+		$location->location_information = wp_parse_args($location_information, array(
+			'name' => '',
+			'street' => '',
+			'city' => '',
+			'state' => '',
+			'zip' => '',
+			'country' => '',
+		));
 
 		return $location;
 	}
@@ -226,6 +276,7 @@ class Proofratings_Query  {
 
 		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN('active', 'pause', 'pending', 'due') ORDER BY location ASC");
 
+
 		array_walk($locations, function(&$location){
 			$location = $this->sanitize_location($location);
 		});
@@ -277,7 +328,7 @@ class Proofratings_Query  {
 	}
 
 	/**
-	 * get single location
+	 * get single location by id column
 	 * @since  1.0.6
 	 */
 	function get($id) {
@@ -286,7 +337,7 @@ class Proofratings_Query  {
 	}
 
 	/**
-	 * get single location by location id
+	 * get single location by location_id
 	 * @since  1.0.6
 	 */
 	function get_by_location($location_id) {
