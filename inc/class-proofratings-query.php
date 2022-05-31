@@ -224,7 +224,7 @@ class Proofratings_Query  {
 			return [];
 		}
 
-		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status != 'deleted' ORDER BY location ASC");
+		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN('active', 'pause', 'pending', 'due') ORDER BY location ASC");
 
 		array_walk($locations, function(&$location){
 			$location = $this->sanitize_location($location);
