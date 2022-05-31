@@ -230,14 +230,9 @@ class Proofratings_Query  {
 			$location = $this->sanitize_location($location);
 		});
 
-		$location_ids = wp_list_pluck( $locations, 'location_id');
-
-		if ( !in_array('global', $location_ids) ) {
+		if ( count($locations) > 1 ) {
 			$this->global = false;
-
-			if ( sizeof($locations) >= 1) {
-				array_unshift($locations, $this->overall_location($locations));
-			}
+			array_unshift($locations, $this->overall_location($locations));
 		}
 
 		$review_sites = get_proofratings_review_sites();
@@ -274,8 +269,11 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function get_global_id() {
-		$key = array_search('global', array_column($this->locations, 'location_id'));
-		return $key === false ? false : $this->locations[$key]->id;
+		if ( sizeof($this->locations) > 0 ) {
+			return $this->locations[0]->id;
+		}
+		
+		return false;
 	}
 
 	/**

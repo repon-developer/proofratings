@@ -108,6 +108,7 @@ class Rating_Badges {
 		global $wpdb;
 
 		$location = get_proofratings()->query->get($location_id);
+
 		if ( !$location ) {
 			return $this->output();
 		}
