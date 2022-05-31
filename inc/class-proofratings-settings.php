@@ -209,11 +209,15 @@ class Proofratings_Settings {
 		// 	return $this->error->add('remote_request', $response->get_error_message());
 		// }
 
-		
+		$result = json_decode(wp_remote_retrieve_body($response));
 
-		var_dump($response);
+		if ( isset($result->code) && $result->code === 'rest_no_route' ) {
+			return $this->error->add('error', "We can't communicate with proofratings website. Please contact with them.");
+		}
 
-		
+		if ( isset($result->message) ) {
+			$this->error->add('error', $result->message);
+		}		
 	}
 
 	/**
