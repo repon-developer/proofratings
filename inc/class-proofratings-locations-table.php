@@ -41,6 +41,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since  1.0.6
 	 */
     function extra_tablenav( $which ) {        
+        return;
         $button_url = admin_url( 'admin.php?page=proofratings-add-location');
         printf('<a style="margin-right: 10px" class="btn-add-new button-primary" href="%s">%s</a>', $button_url, __('Add Location', 'proofratings'));
     }
@@ -69,7 +70,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      */
     public function get_bulk_actions() {
         $actions = [
-            'bulk-delete' => __('Delete', 'proofratings-manager'),
+            'bulk-delete' => __('Delete', 'proofratings'),
         ];
 
         return $actions;
@@ -83,7 +84,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 			'connected' => __('# of Sites Connected', 'proofratings'),
 			'widgets' => __('# of Widgets', 'proofratings'),
 			'status' => __('Status', 'proofratings'),
-			'action' => __('Action', 'proofratings-manager'),
+			'action' => '' // __('Action', 'proofratings'),
 		];
 	}
 
@@ -110,6 +111,10 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_cb( $location ) {
+        if ( $location->location_id === 'overall' ) {
+            return;
+        }
+        
         return sprintf('<input type="checkbox" name="locations[]" value="%d" />', $location->id);
     }
 
@@ -118,6 +123,10 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_edit( $location ) {
+        if ( $location->location_id === 'overall' ) {
+            return;
+        }
+
 		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-rating-badges', false));
         return sprintf('<a class="dashicons dashicons-edit" href="%s"></a>', $permalink);
     }
@@ -136,6 +145,9 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_action( $location ) {
+        $actions[] = sprintf('<a class="dashicons dashicons-admin-settings" href="%s"></a>', add_query_arg( 'location', $location->id, menu_page_url('proofratings-rating-badges', false)));
+        return implode(' ', $actions);
+
         $input_data = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 
         if ( $location->id === 'overall' ) {
@@ -152,6 +164,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
 			$permalink = add_query_arg( ['paged' => $this->get_pagenum()], $permalink );
 		}
 		
+		$actions[] = sprintf('<a class="dashicons dashicons-trash" href="%s"></a>', $permalink);
 		$actions[] = sprintf('<a class="dashicons dashicons-trash" href="%s"></a>', $permalink);
         return implode(' ', $actions);
     }
