@@ -212,11 +212,12 @@ class Proofratings_Settings {
 		}
 
 		if ( isset($result->message) ) {
-			$this->error->add($result->code, $result->message);
+			return $this->error->add($result->code, $result->message);
 		}
-		
-		var_dump($result);
-		exit;
+
+		if ( isset($result->success) ) {
+			$_POST['success'] = $result->data->message;
+		}
 	}
 
 	/**
@@ -333,6 +334,12 @@ class Proofratings_Settings {
 			<?php if ( $this->error->has_errors() ) : ?>
 			<div class="notice notice-error is-dismissible">
 				<p><?php echo $this->error->get_error_message() ?></p>
+			</div>
+			<?php endif; ?>
+
+			<?php if ( isset($_POST['success'] ) ): ?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php echo esc_html($_POST['success']) ?></p>
 			</div>
 			<?php endif; ?>
 
