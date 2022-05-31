@@ -46,6 +46,8 @@ const ProofratingsSettings = () => {
 
     }, [state.location_id]);
 
+    console.log(proofratings);
+
     const setTab = (settings_tab, e) => {
         e.preventDefault();
         store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { settings_tab } });
@@ -106,7 +108,7 @@ const ProofratingsSettings = () => {
         )
     }
 
-    const is_overall = state?.location_id === 'overall';
+    const is_overall = proofratings?.location_id === 'overall';
 
     return (
         <React.Fragment>
@@ -114,7 +116,7 @@ const ProofratingsSettings = () => {
                 <a className="btn-back-main-menu" href="/wp-admin/admin.php?page=proofratings"><i className="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
                 <h1 className="title">Settings</h1>
 
-                {is_overall && get_location_dropdown()}
+                {proofratings?.global && get_location_dropdown()}
 
                 <div className="rating-badges-navtab">
                     {Object.keys(tabs).map((key) => {

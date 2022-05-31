@@ -154,6 +154,7 @@ class Proofratings_Admin {
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
 			'pages' => get_pages(),
+			'global' => get_proofratings()->query->global,
 			'locations' => get_proofratings()->query->get_locations(),
 			'connections_approved' => $settings['connections_approved'],
 			'agency' => $settings['agency'],
