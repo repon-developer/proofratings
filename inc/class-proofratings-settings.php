@@ -205,19 +205,18 @@ class Proofratings_Settings {
 		get_proofratings()->query->save_meta_data($_GET['location'], 'location_information', $location);
 
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_location', get_proofratings_api_args($location));
-		// if ( is_wp_error( $response ) ) {
-		// 	return $this->error->add('remote_request', $response->get_error_message());
-		// }
 
 		$result = json_decode(wp_remote_retrieve_body($response));
-
 		if ( isset($result->code) && $result->code === 'rest_no_route' ) {
 			return $this->error->add('error', "We can't communicate with proofratings website. Please contact with them.");
 		}
 
 		if ( isset($result->message) ) {
-			$this->error->add('error', $result->message);
-		}		
+			$this->error->add($result->code, $result->message);
+		}
+		
+		var_dump($result);
+		exit;
 	}
 
 	/**
