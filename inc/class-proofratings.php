@@ -46,6 +46,7 @@ class Proofratings {
 		$this->add_proofratings_tables();
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/connection-sites.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/rating-badges.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-generate-style.php';
