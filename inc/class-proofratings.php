@@ -46,7 +46,7 @@ class Proofratings {
 		$this->add_proofratings_tables();
 
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/helpers.php';
-		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/connection-sites.php';
+		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/review-sites.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/rating-badges.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-query.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-generate-style.php';
@@ -96,12 +96,22 @@ class Proofratings {
 	/**
 	 * proofratings rest api for getting data
 	 */
-	public function register_rest_api() {		
+	public function register_rest_api() {
+		
+		register_rest_route( 'proofratings/v1', 'update_settings', array(
+			'methods' => 'POST',
+			'callback' => [$this, 'update_settings_api_callback'],
+			'permission_callback' => '__return_true'
+		));
+
+
 		register_rest_route( 'proofratings/v1', 'set_reviews', array(
 			'methods' => 'POST',
 			'callback' => [$this, 'set_reviews'],
 			'permission_callback' => '__return_true'
 		));
+
+
 
 		register_rest_route( 'proofratings/v1', 'save_location_settings', array(
 			'methods' => 'POST',
@@ -267,6 +277,14 @@ class Proofratings {
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		);");
+	}
+
+	/**
+	 * proofratings rest api callback
+	 */
+	public function update_settings_api_callback(WP_REST_Request $request) {
+		update_proofratings_settings($request->get_params());
+		wp_send_json_success();
 	}
 
 
