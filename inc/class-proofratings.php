@@ -136,9 +136,6 @@ class Proofratings {
 		}		
 
 		global $wpdb;
-
-		//error_logs($review_locations);
-
 		foreach ($review_locations as $id => $location) {
 			$reviews = null;
 			if ( isset($location['reviews']) && is_array($location['reviews'])) {
@@ -161,12 +158,13 @@ class Proofratings {
 			$wpdb->insert($wpdb->proofratings, $location_data);
 		}
 
+		$global = boolval($request->get_param('global'));
+
 		$locations = array_keys($review_locations);
-		if ( count($locations) > 0 ) {
+		if ( count($locations) > 0 && $global ) {
 			$ids = implode("','", $locations);
 			$wpdb->query(sprintf("UPDATE $wpdb->proofratings SET `status` = '' WHERE location_id NOT IN ('%s')", $ids));
 		}
-
 	
 		$settings = (array) $request->get_param('settings');
 		if ( isset($settings['agency']) ) {
@@ -175,6 +173,7 @@ class Proofratings {
 
 		update_proofratings_settings($settings);
 		$this->clear_cache();
+		wp_send_json_success();
 	}
 
 	/**
