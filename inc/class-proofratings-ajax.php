@@ -94,44 +94,34 @@ class Proofratings_Ajax {
 			unset($post_data['schema']);
 		}
 
+		update_proofratings_settings(['schema' => $schema]);
+
 		if ( $location_id === false ) {
-			wp_send_json_error();
+			wp_send_json_success();
 		}
 
 		$location = get_proofratings()->query;
 		$location->save_settings($location_id, $post_data);
-		update_proofratings_settings(['schema' => $schema]);
-	
+		
 	
 		$connection_approved = get_proofratings_settings('connections_approved');
 		$new_connections = array_diff(array_keys($active_connections), $connection_approved);
 
-		$settings = array(
-			'location_slug' => $location_id,
-			'automated_email_report' => $post_data['automated_email_report'],
-			'connections' => $new_connections
-		);
+		$settings = array('location_id' => $location_id, 'connections' => $new_connections);		
+		if ( isset($post_data['automated_email_report']) ) {
+			$settings['automated_email_report'] = $post_data['automated_email_report'];
+		}
 
 		if ( isset($post_data['agency_settings']) ) {
 			$settings['agency_settings'] = $post_data['agency_settings'];
 		}
-
-		error_logs($location->get($location_id));
-		error_logs($settings);
-		error_logs($post_data);
-
-		wp_send_json_error(array('message' => 'Unknown error, please contact with support'));
-
 		
-		$response = wp_remote_get(PROOFRATINGS_API_URL . '/request_connection', get_proofratings_api_args($settings));
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_client', get_proofratings_api_args($settings));
 
 		$result = json_decode(wp_remote_retrieve_body( $response ));
-		wp_send_json_success($result);
 		if ( isset($result->code) ) {
 			wp_send_json_error($result);
 		}
-
-		wp_send_json_success($result);
 
 		if ( isset($result->success) && $result->success === true ) {
 			wp_send_json_success($result);

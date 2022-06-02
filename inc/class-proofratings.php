@@ -171,6 +171,10 @@ class Proofratings {
 			$settings['agency'] = boolval($settings['agency']);
 		}
 
+		if ( !isset($settings['connections_approved']) ) {
+			$settings['connections_approved'] = [];
+		}		
+
 		update_proofratings_settings($settings);
 		$this->clear_cache();
 		wp_send_json_success();
