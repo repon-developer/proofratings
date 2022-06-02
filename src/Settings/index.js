@@ -13,11 +13,10 @@ const ProofratingsSettings = () => {
             proofratings.locations = [];
         }
 
-
         const unsubscribe = store.subscribe(() => setState({ ...store.getState().state }))
 
-        const location = typeof proofratings.locations[0] !== 'undefined' ? proofratings.locations[0] : { id: 'global' };
-        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { location_id: location.id } });
+        const location = typeof proofratings.locations[0] !== 'undefined' ? proofratings.locations[0] : { location_id: 'global' };
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { location_id: location.location_id } });
 
         return () => unsubscribe();
     }, []);

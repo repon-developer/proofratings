@@ -47,6 +47,8 @@ class Proofratings_Ajax {
 	public function get_location_settings() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+		error_logs($postdata);
+
 		$location = @$postdata['location_id'];
 		if ( empty($location)) {
 			wp_send_json_error();
