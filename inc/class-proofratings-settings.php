@@ -135,7 +135,7 @@ class Proofratings_Settings {
 	public function get_location_data() {		
 		$location_id = false;
 		if ( isset($_GET['location']) ) {
-			$location_id = absint($_GET['location']);
+			$location_id = $_GET['location'];
 		}
 
 		$location = get_proofratings()->query->get($location_id);

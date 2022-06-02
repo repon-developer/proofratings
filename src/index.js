@@ -23,7 +23,7 @@ const { useEffect, useState, useRef } = React;
 
 const ProofratingsWidgets = (props) => {
     const location_id = props.location_id;
-    const [state, setState] = useState({error: null, loading: true, saving: false, location_name: ''});
+    const [state, setState] = useState({ error: null, loading: true, saving: false, location_name: '' });
     const [settings, setSettings] = useState(store.getState());
 
     useEffect(() => {
@@ -34,10 +34,10 @@ const ProofratingsWidgets = (props) => {
     const support_button = useRef(null);
 
     useEffect(() => {
-        if ( support_button.current ) {
+        if (support_button.current) {
             tippy(support_button.current, { content: 'Need Help?' });
-        }        
-        
+        }
+
     }, [support_button.current])
 
     const setTab = (current_tab, e) => {
@@ -53,12 +53,12 @@ const ProofratingsWidgets = (props) => {
             }
 
             let location_name = 'Rating Badges';
-            if ( response?.global === false ) {
+            if (response?.global === false) {
                 location_name = location_name + ` (${response.location_name})`;
             }
 
             setState({ ...state, error: false, loading: false, location_name });
-            if ( typeof response?.settings === 'object' ) {
+            if (typeof response?.settings === 'object') {
                 store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
             }
         });
@@ -172,6 +172,67 @@ const ProofratingsWidgets = (props) => {
                 </div>
             </header>
 
+            <details className="badge-overview-item">
+                <summary>
+                    <h4>Embedded Badges</h4>
+                    Add individual site ratings or your overall rating to any page.
+                </summary>
+
+
+                <ul className="badge-items-grid">
+                    <li>
+                        <label class="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+                    </li>
+                </ul>
+            </details>
+
+            <details className="badge-overview-item" open>
+                <summary>
+                    <h4>Embedded Badges</h4>
+                    Add individual site ratings or your overall rating to any page.
+                </summary>
+
+
+                <ul className="badge-items-grid">
+                    <li>
+                        <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
+                        <label class="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a class="button button-primary">EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img style={{width: 200}} src={`${proofratings.assets_url}images/sites-icon.jpg`} alt="Proofratings" />
+                        <label class="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a class="button button-primary">EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img style={{ width: 120 }} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
+                        <label class="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a class="button button-primary">EDIT BADGE</a>
+                    </li>
+                </ul>
+            </details>
+
             {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'widget_square' && <BadgeSquare id={location_id} />}
             {current_tab === 'widget_basic' && <BadgeBasic id={location_id} />}
@@ -185,6 +246,8 @@ const ProofratingsWidgets = (props) => {
             {current_tab === 'overall-narrow-float' && <OverallNarrowFloat id={location_id} />}
 
             {current_tab === 'overall-cta-banner' && <CTABanner id={location_id} />}
+
+
 
             <div className="form-footer">
                 <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>

@@ -115,7 +115,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
             return;
         }
         
-        return sprintf('<input type="checkbox" name="locations[]" value="%d" />', $location->id);
+        return sprintf('<input type="checkbox" name="locations[]" value="%d" />', $location->location_id);
     }
 
 	/**
@@ -127,7 +127,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
             return;
         }
 
-		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-edit-location', false));
+		$permalink = add_query_arg( 'location', $location->location_id, menu_page_url('proofratings-edit-location', false));
         return sprintf('<a class="dashicons dashicons-edit" href="%s"></a>', $permalink);
     }
 
@@ -136,7 +136,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_location( $location ) {
-		$permalink = add_query_arg( 'location', $location->id, menu_page_url('proofratings-rating-badges', false));
+		$permalink = add_query_arg( 'location', $location->location_id, menu_page_url('proofratings-rating-badges', false));
         return sprintf('<a href="%s">%s</a>', $permalink, $location->location);
     }
 
@@ -145,7 +145,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.6
      */
     function column_action( $location ) {
-        $actions[] = sprintf('<a class="dashicons dashicons-admin-settings" href="%s"></a>', add_query_arg( 'location', $location->id, menu_page_url('proofratings-rating-badges', false)));
+        $actions[] = sprintf('<a class="dashicons dashicons-admin-settings" href="%s"></a>', add_query_arg( 'location', $location->location_id, menu_page_url('proofratings-rating-badges', false)));
         return implode(' ', $actions);
 
         $input_data = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
@@ -154,7 +154,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
             return;
         }
 
-		$permalink = add_query_arg( ['id' => $location->id, '_nonce' => wp_create_nonce( 'delete-location' )], menu_page_url('proofratings-rating-badges', false));
+		$permalink = add_query_arg( ['id' => $location->location_id, '_nonce' => wp_create_nonce( 'delete-location' )], menu_page_url('proofratings-rating-badges', false));
 
 		if ( !empty($input_data['s']) ) {
 			$permalink = add_query_arg( ['s' => $input_data['s']], $permalink );

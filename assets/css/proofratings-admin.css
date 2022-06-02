@@ -12,7 +12,7 @@
 .gap-40 {height: 40px;}
 .gap-50 {height: 50px;}
 
-
+.button {text-align: center;}
 .button.button-primary {padding: 4px 20px; font-weight: 500; background-color: var(--primary_color)}
 .button.button-primary:hover, .button.button-primary:focus {background-color: #2a0fda}
 
@@ -558,4 +558,73 @@ form.form-submit-ticket textarea {min-height: 100px;}
     border-radius: 4px;
     border: 2px solid var(--primary_color);
     border-left-width: 10px;
+}
+
+.badge-overview-item {
+    margin: 0 -30px 0;
+    padding: 0 30px;
+    border-bottom: 1px solid var(--border_color);
+}
+
+.badge-overview-item > summary {
+    margin: 0 -30px;
+    padding: 18px 30px;
+}
+
+.badge-overview-item > summary {list-style: none}
+.badge-overview-item > summary::-webkit-details-marker {display:none}
+.badge-overview-item > summary h4 {color: var(--primary_color); font-size: 16px; margin: 0 0 5px 0}
+
+.badge-overview-item[open] {padding-bottom: 20px}
+.badge-overview-item[open] > summary {margin-bottom: 30px; border-bottom: 1px solid var(--border_color); background-color: #F4F7FE}
+
+.badge-items-grid {
+    gap: 70px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.badge-items-grid > li {
+    max-width: 300px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.badge-items-grid img {
+    height: 150px;
+    max-width: 90%;
+    object-fit: contain;
+}
+
+.badge-items-grid .label-switch-checkbox {margin-bottom: 20px;}
+
+.label-switch-checkbox {
+    gap: 9px;
+    display: inline-flex;
+    align-items: center;
+}
+
+
+.label-switch-checkbox span {line-height: 1; position: relative; top: -1px; }
+.label-switch-checkbox input {margin: 0!important}
+.label-switch-checkbox input + span {order: -1; font-weight: bold}
+.label-switch-checkbox input:checked + span {font-weight: normal}
+.label-switch-checkbox input:checked + span + span {font-weight: bold;}
+
+.label-switch-checkbox input[type="checkbox"].checkbox-switch {width: 44px; height: 18px; }
+.label-switch-checkbox input[type="checkbox"].checkbox-switch:after {content: "";}
+.label-switch-checkbox input[type="checkbox"].checkbox-switch:before {
+    height: auto;
+    width: 20px;
+    top: -3px;
+    left: -2px;
+    bottom: -3px;
+    border: 1px solid #ccc;
+}
+
+.label-switch-checkbox input[type="checkbox"].checkbox-switch:checked:before {
+    left: calc(100% - 18px);
 }
