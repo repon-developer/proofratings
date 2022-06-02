@@ -29,8 +29,6 @@ if ( !defined('PROOFRATINGS_API_URL') ) {
   define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
 }
 
-
-
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
 
 

@@ -138,7 +138,7 @@ class Proofratings_Shortcodes {
 		}
 
 		$attributes['class'] = implode(' ', $classes);
-		$attributes['data-location'] = $location->id;
+		$attributes['data-location'] = $location->location_id;
 		$attributes['data-type'] = $overall_slug;
 
 		$attribute_html = '';
@@ -197,7 +197,7 @@ class Proofratings_Shortcodes {
 
         ob_start(); 
 		
-        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $overall_reviews->id);
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $overall_reviews->location_id);
 			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';
@@ -208,7 +208,7 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($site->url));
 				}
 				
-				printf('<%s class="proofratings-widget proofratings-widget-%s %s" data-location="%s">', $tag, $key, $attribue, $overall_reviews->id);
+				printf('<%s class="proofratings-widget proofratings-widget-%s %s" data-location="%s">', $tag, $key, $attribue, $overall_reviews->location_id);
 	            	printf('<div class="review-site-logo"><img src="%1$s" alt="%2$s" ></div>', esc_attr($site->logo), esc_attr($site->name));
 				
 					echo '<div class="proofratings-reviews">';
@@ -337,7 +337,7 @@ class Proofratings_Shortcodes {
 					$attribue = sprintf('href="%s" target="_blank"', esc_url($rating->url));
 				}
 				
-				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->id);
+				printf('<%s class="%s %s" %s data-location="%s">', $tag, implode(' ', $badge_class), 'proofratings-widget-' . $site_id, $attribue, $location->location_id);
 					$this->{$widget_type}($rating);
 				printf('</%s>', $tag);
 	        }
@@ -490,7 +490,7 @@ class Proofratings_Shortcodes {
 		}
 		
 		ob_start(); ?>
-		<div class="<?php echo esc_attr($class); ?>" data-location="<?php echo esc_attr($location->id) ?>" data-type="overall_cta_banner">
+		<div class="<?php echo esc_attr($class); ?>" data-location="<?php echo esc_attr($location->location_id) ?>" data-type="overall_cta_banner">
 			<?php echo wp_kses_post($close_button); ?>
 			<?php $location->overall_reviews->get_logos(); ?>
 

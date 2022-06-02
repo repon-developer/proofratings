@@ -106,11 +106,24 @@ class Proofratings_Ajax {
 		$connection_approved = get_proofratings_settings('connections_approved');
 		$new_connections = array_diff(array_keys($active_connections), $connection_approved);
 
-		if ( empty($new_connections) ) {
-			wp_send_json_success();
+		$settings = array(
+			'location_slug' => $location_id,
+			'automated_email_report' => $post_data['automated_email_report'],
+			'connections' => $new_connections
+		);
+
+		if ( isset($post_data['agency_settings']) ) {
+			$settings['agency_settings'] = $post_data['agency_settings'];
 		}
 
-		$response = wp_remote_get(PROOFRATINGS_API_URL . '/request_connection', get_proofratings_api_args(['connections' => $new_connections]));
+		error_logs($location->get($location_id));
+		error_logs($settings);
+		error_logs($post_data);
+
+		wp_send_json_error(array('message' => 'Unknown error, please contact with support'));
+
+		
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/request_connection', get_proofratings_api_args($settings));
 
 		$result = json_decode(wp_remote_retrieve_body( $response ));
 		wp_send_json_success($result);

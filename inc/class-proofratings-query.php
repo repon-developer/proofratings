@@ -67,14 +67,15 @@ class Proofratings_Query  {
 
 	/**
 	 * save location
+	 * @param string location_id
 	 * @since  1.0.6
 	 */
-	function save_settings($id, $data) {
+	function save_settings($location_id, $data) {
 		if ( !is_array($data) ) {
 			$data = [];
 		}
 
-		if ( $id === 'overall' ) {
+		if ( $location_id === 'overall' ) {
 			$settings = get_option('proofratings_overall_rating_settings');
 			if ( !is_array($settings) ) {
 				$settings = [];
@@ -90,38 +91,25 @@ class Proofratings_Query  {
 
 		global $wpdb;
 
-		$location = $this->get($id);
+		$location = $this->get($location_id);
 		if ( !$location ) {
 			return;
 		}
 		
 		$settings = array_merge((array) maybe_unserialize($location->settings), $data);
-		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $settings )], ['id' => $id]);
+		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $settings )], ['location_id' => $location_id]);
 		do_action( 'proofrating_location_save_settings' );
 		return $result;
 	}
 
 	/**
-	 * save location
-	 * @since  1.0.6
-	 */
-	function save_settings_by_location($location_id, $settings) {
-		$key = array_search($location_id, array_column($this->locations, 'location_id'));
-		if ( $key !== false) {
-			return $this->save_settings($this->locations[$key]->id, $settings);
-		}
-
-		return array('success' => false);		
-	}
-
-	/**
 	 * save meta data
-	 * @param $id id column of table
+	 * @param string location_id column of table
 	 * @param $meta_data meta_data column merge previous to new one
 	 * @since  1.1.7
 	 */
-	public function save_meta_data($id, $key, $updated_data) {
-		$location = $this->get($id);
+	public function save_meta_data($location_id, $key, $updated_data) {
+		$location = $this->get($location_id);
 		if ( $location === false) {
 			return false;
 		}
@@ -134,7 +122,7 @@ class Proofratings_Query  {
 		$meta_data[$key] = $updated_data;
 
 		global $wpdb;
-		return $wpdb->update($wpdb->proofratings, ['meta_data' => maybe_serialize( $meta_data )], ['id' => $id]);
+		return $wpdb->update($wpdb->proofratings, ['meta_data' => maybe_serialize( $meta_data )], ['location_id' => $location_id]);
 	}
 
 	/**
@@ -321,26 +309,17 @@ class Proofratings_Query  {
 	 */
 	function get_global_id() {
 		if ( sizeof($this->locations) > 0 ) {
-			return $this->locations[0]->id;
+			return $this->locations[0]->location_id;
 		}
 		
 		return false;
 	}
 
 	/**
-	 * get single location by id column
+	 * get single location by location_id column
 	 * @since  1.0.6
 	 */
-	function get($id) {
-		$key = array_search($id, array_column($this->locations, 'id'));
-		return $key === false ? false : $this->locations[$key];
-	}
-
-	/**
-	 * get single location by location_id
-	 * @since  1.0.6
-	 */
-	function get_by_location($location_id) {
+	function get($location_id) {
 		$key = array_search($location_id, array_column($this->locations, 'location_id'));
 		return $key === false ? false : $this->locations[$key];
 	}

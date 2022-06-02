@@ -237,7 +237,7 @@ class Proofratings {
 	 */
 	public function get_location_settings(WP_REST_Request $request) {
 		$this->clear_cache();
-		$location = $this->locations->get_by_location($request->get_param('location_id'));
+		$location = $this->locations->get($request->get_param('location_id'));
 		if ( isset($location->settings) ) {
 			return $location->settings;
 		}
@@ -253,7 +253,7 @@ class Proofratings {
 
 		$location_id = $settings['location_id'];
 		unset($settings['location_id']);
-		return $this->locations->save_settings_by_location($location_id, $settings);
+		return $this->locations->save_settings($location_id, $settings);
 	}
 
 	/**
