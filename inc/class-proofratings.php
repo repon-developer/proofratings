@@ -96,14 +96,12 @@ class Proofratings {
 	/**
 	 * proofratings rest api for getting data
 	 */
-	public function register_rest_api() {
-		
+	public function register_rest_api() {	
 		register_rest_route( 'proofratings/v1', 'update_settings', array(
 			'methods' => 'POST',
 			'callback' => [$this, 'update_settings_api_callback'],
 			'permission_callback' => '__return_true'
 		));
-
 
 		register_rest_route( 'proofratings/v1', 'set_reviews', array(
 			'methods' => 'POST',
