@@ -10,12 +10,11 @@ const Border = (props) => {
             <tr>
                 <th scope="row">Border</th>
                 <td>
-                    <input
-                        type="checkbox"
-                        checked={show}
-                        onChange={() => update_border('show', !show)}
-                        className="checkbox-switch"
-                    />
+                    <label className="label-switch-checkbox">
+                        <input className="checkbox-switch" type="checkbox" onChange={() => update_border('show', !show)} checked={show} />
+                        <span>No Border</span>
+                        <span>Add Border</span>
+                    </label>
                 </td>
             </tr>
 

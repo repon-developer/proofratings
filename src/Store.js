@@ -1,4 +1,4 @@
-import { createStore } from "redux";
+import { createStore, createRe } from "redux";
 
 const ACTIONS = {
     OVERALL_SAVE: "OVERALL_SAVE",
@@ -16,7 +16,7 @@ const ACTIONS = {
 
 const settings = {
     current_tab: 'overview',
-    currently_editing: false,
+    overview_summary_tab: 'embedded-badges',
     active_connections: [],
     badge_display: {
         widget_square: false,
@@ -102,6 +102,18 @@ const get_connections = () => {
     return connections;
 }
 
+const copy_shortcode = (attrs, event) => {
+    if ( event.target ) {
+        event.preventDefault();
+    }
+
+    const shorcode = Object.assign({slug: 'proofratings_widgets', id: '', style: 'square'}, attrs);
+    const location_text = Boolean(proofratings?.global) ? '' : `id="${shorcode?.id}"`;
+    const shortcode_text = `[${shorcode.slug} style="${shorcode.style}" ${location_text}]`;
+
+    console.log(shortcode_text)       
+}
+
 export default store;
 
-export { ACTIONS, get_connections };
+export { ACTIONS, get_connections, copy_shortcode };

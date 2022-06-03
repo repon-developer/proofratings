@@ -28,7 +28,7 @@ const OverallNarrow = () => {
     const popup_settings = (typeof state?.popup_settings === 'object') ? state.popup_settings : {};
     const handle_popup = (key, value) => {
         popup_settings[key] = value;
-        handle_field({ popup_settings } )            
+        handle_field({ popup_settings })
     }
 
     return (
@@ -40,14 +40,10 @@ const OverallNarrow = () => {
                         <tr>
                             <th scope="row">Tablet Visibility</th>
                             <td>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        defaultChecked={state?.tablet}
-                                        className="checkbox-switch"
-                                        onChange={() => handle_field({ tablet: !state?.tablet })}
-                                    />
-                                    Show/Hide on tablet
+                                <label className="label-switch-checkbox">
+                                    <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ tablet: !state?.tablet })} checked={state?.tablet} />
+                                    <span>Hide on Tablet</span>
+                                    <span>Show on Tablet</span>
                                 </label>
                             </td>
                         </tr>
@@ -55,14 +51,10 @@ const OverallNarrow = () => {
                         <tr>
                             <th scope="row">Mobile Visibility</th>
                             <td>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        defaultChecked={state?.mobile}
-                                        className="checkbox-switch"
-                                        onChange={() => handle_field({ mobile: !state?.mobile })}
-                                    />
-                                    Show/Hide on mobile
+                                <label className="label-switch-checkbox">
+                                    <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ mobile: !state?.mobile })} checked={state?.mobile} />
+                                    <span>Hide on Mobile</span>
+                                    <span>Show on Mobile</span>
                                 </label>
                             </td>
                         </tr>
@@ -70,13 +62,10 @@ const OverallNarrow = () => {
                         <tr>
                             <th scope="row">Close option</th>
                             <td>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        defaultChecked={state?.close_button}
-                                        className="checkbox-switch"
-                                        onChange={() => handle_field({ close_button: !state.close_button })}
-                                    />
+                                <label className="label-switch-checkbox">
+                                    <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ close_button: !state?.close_button })} checked={state?.close_button} />
+                                    <span>Don't allow user to close/hide</span>
+                                    <span>Allow user to close/hide</span>
                                 </label>
                             </td>
                         </tr>

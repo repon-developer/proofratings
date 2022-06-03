@@ -105,7 +105,7 @@ const BadgeRectangle = (props) => {
                             <i style={{ width: "100%" }} />
                         </span>
                     </div>
-                    <div className="review-count"> 9 reviews </div>
+                    <div className="review-count"> # reviews </div>
                 </div>
             </div>
 

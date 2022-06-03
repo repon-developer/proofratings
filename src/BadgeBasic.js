@@ -68,9 +68,9 @@ const BadgeBasic = (props) => {
                         <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
                     </div>
 
-                    <div className="proofratings-stars"><i style={{ width: '80%' }} /></div>
+                    <div className="proofratings-stars"><i style={{ width: '100%' }} /></div>
 
-                    <div className="review-count">76 ratings</div>
+                    <div className="review-count"># ratings</div>
                     <a className="view-reviews" href="#">View all reviews</a>
                 </div>
             </div>

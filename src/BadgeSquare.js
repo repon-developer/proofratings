@@ -80,7 +80,7 @@ const BadgeSquare = (props) => {
     }
 
     const get_widget = () => {
-        const connection = Object.assign({logo: `${proofratings.assets_url}images/google.svg`, reviews: 76 }, get_connections(true)[0]);
+        const connection = Object.assign({logo: `${proofratings.assets_url}images/google.svg`, reviews: '#'}, get_connections(true)[0]);
 
         return (
             <React.Fragment>
@@ -92,8 +92,8 @@ const BadgeSquare = (props) => {
                         </div>
 
                         <div className="proofratings-reviews" itemProp="reviewRating">
-                            <span className="proofratings-score">4.0</span>
-                            <span className="proofratings-stars"><i style={{ width: '80%' }} /></span>
+                            <span className="proofratings-score">5.0</span>
+                            <span className="proofratings-stars"><i style={{ width: '100%' }} /></span>
                         </div>
 
                         <div className="review-count"> {connection.reviews} reviews </div>

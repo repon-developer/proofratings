@@ -26,8 +26,6 @@ const ProofratingsWidgets = (props) => {
     const [state, setState] = useState({ error: null, loading: true, saving: false, location_name: '' });
     const [settings, setSettings] = useState(store.getState());
 
-    console.log(settings)
-
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setSettings({ ...store.getState() }))
         return () => unsubscribe();
@@ -44,7 +42,7 @@ const ProofratingsWidgets = (props) => {
 
     const setTab = (current_tab, e) => {
         e.preventDefault();
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { ...settings, current_tab } });
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { ...settings, currently_editing: false, current_tab } });
     }
 
     useEffect(() => {
@@ -61,6 +59,7 @@ const ProofratingsWidgets = (props) => {
 
             setState({ ...state, error: false, loading: false, location_name });
             if (typeof response?.settings === 'object') {
+                delete response.settings.current_tab;
                 store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
             }
         });
@@ -85,8 +84,16 @@ const ProofratingsWidgets = (props) => {
                 alert('Something wrong with saving data')
             }
 
+            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
+
+
             setState({ ...state, saving: false })
         })
+    }
+
+    const handle_cancel = (e) => {
+        e.preventDefault();
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
     }
 
 
@@ -98,49 +105,13 @@ const ProofratingsWidgets = (props) => {
         return <div className="proofraing-progress-msg">Failed to retrive this location.</div>
     }
 
-    const tabs = {'overview': 'Badge Overview'}
-    if ( settings.currently_editing ) {
+    const tabs = { 'overview': 'Badge Overview' }
+    if (settings.current_tab !== 'overview') {
         tabs.edit_tab = 'Edit Badge';
     }
 
 
     const { badge_display } = settings;
-
-    // if (badge_display?.widget_square !== true) {
-    //     delete tabs['widget_square'];
-    // }
-
-    // if (badge_display?.widget_basic !== true) {
-    //     delete tabs['widget_basic'];
-    // }
-
-    // if (badge_display?.widget_icon !== true) {
-    //     delete tabs['widget_icon'];
-    // }
-
-    // if (badge_display?.widget_rectangle !== true) {
-    //     delete tabs['widget_rectangle'];
-    // }
-
-    // if (badge_display?.overall_rectangle_embed !== true) {
-    //     delete tabs['overall-rectangle-embed']
-    // }
-
-    // if (badge_display?.overall_rectangle_float !== true) {
-    //     delete tabs['overall-rectangle-float']
-    // }
-
-    // if (badge_display?.overall_narrow_embed !== true) {
-    //     delete tabs['overall-narrow-embed']
-    // }
-
-    // if (badge_display?.overall_narrow_float !== true) {
-    //     delete tabs['overall-narrow-float']
-    // }
-
-    // if (badge_display?.overall_cta_banner !== true) {
-    //     delete tabs['overall-cta-banner'];
-    // }
 
     const current_tab = settings?.current_tab || 'overview';
 
@@ -159,10 +130,8 @@ const ProofratingsWidgets = (props) => {
                 </div>
 
                 <div className="rating-badges-navtab">
-                    {Object.keys(tabs).map((key) => {
-                        const tab_class = (current_tab === key) ? 'active' : '';
-                        return <a key={key} href="#" onClick={(e) => setTab(key, e)} className={tab_class}>{tabs[key]}</a>
-                    })}
+                    <a href="#" onClick={(e) => setTab('overview', e)} className={current_tab === 'overview' ? 'active' : ''}>Badge Overview</a>
+                    {current_tab !== 'overview' && <a href="#" className='active'>Edit Badge</a>}
                 </div>
             </header>
 
@@ -171,21 +140,18 @@ const ProofratingsWidgets = (props) => {
             {current_tab === 'widget_basic' && <BadgeBasic id={location_id} />}
             {current_tab === 'widget_icon' && <Sites_Icon id={location_id} />}
             {current_tab === 'widget_rectangle' && <BadgeRectangle id={location_id} />}
+            {current_tab === 'overall_rectangle_embed' && <OverallRectangleEmbed id={location_id} />}
+            {current_tab === 'overall_rectangle_float' && <OverallRectangleFloat id={location_id} />}
+            {current_tab === 'overall_narrow_embed' && <OverallNarrowEmbed id={location_id} />}
+            {current_tab === 'overall_narrow_float' && <OverallNarrowFloat id={location_id} />}
+            {current_tab === 'overall_cta_banner' && <CTABanner id={location_id} />}
 
-            {current_tab === 'overall-rectangle-embed' && <OverallRectangleEmbed id={location_id} />}
-            {current_tab === 'overall-rectangle-float' && <OverallRectangleFloat id={location_id} />}
-
-            {current_tab === 'overall-narrow-embed' && <OverallNarrowEmbed id={location_id} />}
-            {current_tab === 'overall-narrow-float' && <OverallNarrowFloat id={location_id} />}
-
-            {current_tab === 'overall-cta-banner' && <CTABanner id={location_id} />}
-
-
-
-            <div className="form-footer">
-                <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
-                <a className='btn-cancel' href="/wp-admin/admin.php?page=proofratings">CANCEL</a>
-            </div>
+            {current_tab !== 'overview' &&
+                <div className="form-footer">
+                    <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
+                    <a onClick={handle_cancel} className='btn-cancel' href="#">CANCEL</a>
+                </div>
+            }
 
         </React.Fragment>
     );

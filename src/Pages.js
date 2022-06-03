@@ -4,12 +4,12 @@ const Pages = (props) => {
     const on_pages = (Array.isArray(props?.on_pages) ? props.on_pages : []).map(item => parseInt(item));
 
     useEffect(() => {
-        if ( Array.isArray(props?.on_pages) ) {
+        if (Array.isArray(props?.on_pages)) {
             return;
         }
 
         const on_pages = proofratings.pages.map(page => page.ID);
-        props.onUpdate({on_pages })
+        props.onUpdate({ on_pages })
     }, [])
 
     const check_pages = (id) => {
@@ -20,7 +20,7 @@ const Pages = (props) => {
             on_pages.push(id);
         }
 
-        props.onUpdate({on_pages})
+        props.onUpdate({ on_pages })
     }
 
     return (
@@ -30,11 +30,15 @@ const Pages = (props) => {
                     <tr key={page.ID}>
                         <th scope="row">{page.post_title}</th>
                         <td>
-                            <input defaultChecked={on_pages.includes(page.ID)} onChange={() => check_pages(page.ID)} className="checkbox-switch" type="checkbox" />
+                            <label className="label-switch-checkbox">
+                                <input className="checkbox-switch" type="checkbox" onChange={() => check_pages(page.ID)} checked={on_pages.includes(page.ID)} />
+                                <span>Don't show on page</span>
+                                <span>Show on page</span>
+                            </label>
                         </td>
                     </tr>
                 ))}
-                
+
             </tbody>
         </table>
     );

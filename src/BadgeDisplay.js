@@ -1,6 +1,14 @@
-import store, { ACTIONS } from './Store';
+import store, { ACTIONS, copy_shortcode } from './Store';
+const { useState, useEffect } = React;
 
 const BadgeDisplay = (props) => {
+
+    const [settings, setSettings] = useState(store.getState())
+
+    useEffect(() => {
+        const unsubscribe = store.subscribe(() => setSettings(store.getState()))
+        return () => unsubscribe();
+    }, [])
 
     const badge_display = Object.assign({
         widget_square: false,
@@ -19,9 +27,20 @@ const BadgeDisplay = (props) => {
         store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });
     }
 
-    const handle_edit = (edit_badge) => {
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {currently_editing: edit_badge, current_tab: 'edit_tab'} });
-    }    
+    const handle_copy_shortcode = (attrs, event) => {
+        attrs.id = props.id;        
+        copy_shortcode(attrs, event);
+    }
+
+    const handle_edit = (current_tab) => store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {current_tab} })
+
+    const on_summary_tab_click = (e, overview_summary_tab) => {
+        if ( e.target.open === false ) {
+            return;
+        }
+
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {overview_summary_tab} });
+    }
 
     return (
         <React.Fragment>
@@ -34,7 +53,7 @@ const BadgeDisplay = (props) => {
 
             <div className="gap-30" />
 
-            <details className="badge-overview-item">
+            <details className="badge-overview-item" onToggle={(e) => on_summary_tab_click(e, 'embedded-badges')} open={settings?.overview_summary_tab == 'embedded-badges'}>
                 <summary>
                     <h4>Embedded Badges</h4>
                     Add individual site ratings or your overall rating to any page.
@@ -49,7 +68,8 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>
+                        {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({}, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_square && <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
@@ -60,7 +80,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>
+                        {badge_display?.widget_icon && <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
@@ -71,7 +91,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>
+                        {badge_display?.widget_basic && <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
@@ -82,7 +102,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>
+                        {badge_display?.widget_rectangle && <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
@@ -93,7 +113,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>
+                        {badge_display?.overall_rectangle_embed && <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
@@ -104,12 +124,12 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>
+                        {badge_display?.overall_narrow_embed && <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>}
                     </li>
                 </ul>
             </details>
 
-            <details className="badge-overview-item">
+            <details className="badge-overview-item" onToggle={(e) => on_summary_tab_click(e, 'floating-badges')} open={settings?.overview_summary_tab == 'floating-badges'}>
                 <summary>
                     <h4>Floating Badges</h4>
                     Display your overall rating floating at the bottom of the screen
@@ -141,7 +161,7 @@ const BadgeDisplay = (props) => {
                 </ul>
             </details>
 
-            <details className="badge-overview-item">
+            <details className="badge-overview-item" onToggle={(e) => on_summary_tab_click(e, 'call-to-action-banner')} open={settings?.overview_summary_tab == 'call-to-action-banner'}>
                 <summary>
                     <h4>Call-to-Action Banner</h4>
                     Track conversions with an overall rating displayed on a banner at the bottom of any page

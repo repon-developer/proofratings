@@ -1,21 +1,20 @@
 import ColorPicker from "./ColorPicker";
 
 const Shadow = (props) => {
-    const {shadow, color, hover} = Object.assign({shadow: '', color: '', hover: ''}, props?.shadow)
+    const { shadow, color, hover } = Object.assign({ shadow: '', color: '', hover: '' }, props?.shadow)
 
-    const update_border = (name, value) => props.onUpdate(name, value)
+    const update_shadow = (name, value) => props.onUpdate(name, value)
 
     return (
         <React.Fragment>
             <tr>
                 <th scope="row">Shadow</th>
                 <td>
-                    <input
-                        type="checkbox"
-                        defaultChecked={shadow}
-                        onChange={() => update_border('shadow', !shadow)}
-                        className="checkbox-switch"
-                    />
+                    <label className="label-switch-checkbox">
+                        <input className="checkbox-switch" type="checkbox" defaultChecked={shadow} onChange={() => update_shadow('shadow', !shadow)} />
+                        <span>No Shadow</span>
+                        <span>Add Shadow</span>
+                    </label>
                 </td>
             </tr>
 
@@ -27,7 +26,7 @@ const Shadow = (props) => {
                             <ColorPicker
                                 name="color"
                                 color={color}
-                                onUpdate={(color) => update_border('color', color)}
+                                onUpdate={(color) => update_shadow('color', color)}
                             />
                         </td>
                     </tr>
@@ -37,7 +36,7 @@ const Shadow = (props) => {
                             <ColorPicker
                                 name="hover"
                                 color={hover}
-                                onUpdate={(hover) => update_border('hover', hover)}
+                                onUpdate={(hover) => update_shadow('hover', hover)}
                             />
                         </td>
                     </tr>

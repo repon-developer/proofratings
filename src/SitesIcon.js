@@ -67,7 +67,7 @@ const Sites_Icon = (props) => {
                         <div className="review-info">
                             <span className="proofratings-rating">4.8 Rating</span>
                             <span className="separator-circle">●</span>
-                            <span className="proofratings-review-number">41 Reviews</span>
+                            <span className="proofratings-review-number"># Reviews</span>
                         </div>
                     </div>
                 </div>

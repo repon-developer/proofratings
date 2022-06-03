@@ -72,20 +72,16 @@ const CTABanner = (props) => {
 
             <div className="wrapper-page-selection">
                 <div className="settings-column">
-                    <h2 className="section-title-large" style={{marginTop: 0}}>Device Visibility</h2>
+                    <h2 className="section-title-large" style={{ marginTop: 0 }}>Device Visibility</h2>
                     <table className="form-table">
                         <tbody>
                             <tr>
                                 <th scope="row">Tablet Visibility</th>
                                 <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.tablet}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({ tablet: !state?.tablet })}
-                                        />
-                                        Show/Hide on tablet
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" checked={state?.tablet} onChange={() => handle_field({ tablet: !state?.tablet })} />
+                                        <span>Hide on Tablet</span>
+                                        <span>Show on Tablet</span>
                                     </label>
                                 </td>
                             </tr>
@@ -93,14 +89,10 @@ const CTABanner = (props) => {
                             <tr>
                                 <th scope="row">Mobile Visibility</th>
                                 <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.mobile}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({ mobile: !state?.mobile })}
-                                        />
-                                        Show/Hide on mobile
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" checked={state?.mobile} onChange={() => handle_field({ mobile: !state?.mobile })} />
+                                        <span>Hide on Mobile</span>
+                                        <span>Show on Mobile</span>
                                     </label>
                                 </td>
                             </tr>
@@ -108,15 +100,15 @@ const CTABanner = (props) => {
                             <tr>
                                 <th scope="row">Close option</th>
                                 <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.close_button}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({ close_button: !state?.close_button })}
-                                        />
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ close_button: !state?.close_button })} checked={state?.close_button} />
+                                        <span>Don't allow user to close/hide</span>
+                                        <span>Allow user to close/hide</span>
                                     </label>
-                                    Add close option when hovered on desktop. No close option available on mobile.
+
+                                    <div className="gap-5" />
+
+                                    <p>Add close option when hovered on desktop. No close option available on mobile.</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -139,7 +131,7 @@ const CTABanner = (props) => {
                                             </span>
                                             <span className="rating">4.8 / 5</span>
                                         </div>
-                                        <div className="proofratings-review-count">44 customer reviews</div>
+                                        <div className="proofratings-review-count"># customer reviews</div>
                                         <div className="button-container">
                                             <div className="proofratings-button button1 has-border">Buy Now</div>
                                         </div>
@@ -231,7 +223,7 @@ const CTABanner = (props) => {
                 </div>
 
                 <div className="column-page-selection">
-                    <h2 className="section-title-large" style={{marginTop: 0}}>Page(s) to Show on</h2>
+                    <h2 className="section-title-large" style={{ marginTop: 0 }}>Page(s) to Show on</h2>
                     <Pages onUpdate={handle_field} on_pages={state?.on_pages} />
                 </div>
             </div>
