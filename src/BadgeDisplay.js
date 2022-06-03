@@ -19,120 +19,148 @@ const BadgeDisplay = (props) => {
         store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });
     }
 
+    const handle_edit = (edit_badge) => {
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {currently_editing: edit_badge, current_tab: 'edit_tab'} });
+    }    
+
     return (
         <React.Fragment>
-            <table className="form-table">
-                <tbody>
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Square</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
-                                <label>
-                                    <input onChange={() => update_single('widget_square')} className="checkbox-switch checkbox-onoff" checked={badge_display?.widget_square} type="checkbox" />
-                                    Embed only
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Basic</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img style={{marginLeft: 5}} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
-                                <label>
-                                    <input onChange={() => update_single('widget_basic')} className="checkbox-switch checkbox-onoff" checked={badge_display?.widget_basic} type="checkbox" />
-                                    Embed only
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
+            <div className="intro-text">
+                <h3>Creating Rating Badges</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sequi magni officia eos aliquam consectetur doloremque neque quas nulla vitae. Beatae deserunt excepturi consequuntur velit hic, autem eaque eum incidunt!</p>
+                <p>Now that you display your rating badges on your website, you're able to gain your overall rating in search results.</p>
+            </div>
 
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Icon</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img style={{marginLeft: 5, padding: 10, width: 140, backgroundColor: '#fff', borderRadius: 5}} src={`${proofratings.assets_url}images/sites-icon.jpg`} alt="Proofratings" />
-                                <label>
-                                    <input onChange={() => update_single('widget_icon')} className="checkbox-switch checkbox-onoff" checked={badge_display?.widget_icon} type="checkbox" />
-                                    Embed only
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
+            <div className="gap-30" />
 
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Rectangle</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img src={`${proofratings.assets_url}images/widget-style2.png`} alt="Proofratings style" />
-                                <label>
-                                    <input className="checkbox-switch checkbox-onoff" onChange={() => update_single('widget_rectangle')} type="checkbox" checked={badge_display?.widget_rectangle} /> Embed only
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Overall Rectangle</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img src={`${proofratings.assets_url}images/floating-badge-style1.png`} alt="Proofratings style" />
-                                <label style={{ marginRight: 30 }}>
-                                    <input className="checkbox-switch checkbox-onoff" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} /> Embed
-                                </label>
+            <details className="badge-overview-item">
+                <summary>
+                    <h4>Embedded Badges</h4>
+                    Add individual site ratings or your overall rating to any page.
+                </summary>
 
-                                <label>
-                                    <input className="checkbox-switch checkbox-onoff" type="checkbox" checked={badge_display?.overall_rectangle_float} onChange={() => update_single('overall_rectangle_float')} /> Float
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Overall Narrow</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img src={`${proofratings.assets_url}images/floating-badge-style2.png`} alt="Proofratings style" />
-                                <label style={{marginRight: 30}}>
-                                    <input
-                                        type="checkbox"
-                                        className="checkbox-switch checkbox-onoff"
-                                        onChange={() => update_single('overall_narrow_embed')}
-                                        checked={badge_display?.overall_narrow_embed}
-                                    />
-                                    Embed
-                                </label>
+                <ul className="badge-items-grid">
+                    <li>
+                        <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_square')} checked={badge_display?.widget_square} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
 
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        className="checkbox-switch checkbox-onoff"
-                                        onChange={() => update_single('overall_narrow_float')}
-                                        checked={badge_display?.overall_narrow_float}
-                                    />
-                                    Float
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" style={{ verticalAlign: "middle" }}>Overall CTA Banner</th>
-                        <td>
-                            <div className="proofratings-image-option">
-                                <img src={`${proofratings.assets_url}images/cta-badge.png`} alt="Proofratings style" />
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={badge_display?.overall_cta_banner}
-                                        className="checkbox-switch checkbox-onoff"
-                                        onChange={() => update_single('overall_cta_banner')}
-                                    /> Float only
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img style={{ width: 200 }} src={`${proofratings.assets_url}images/sites-icon.jpg`} alt="Proofratings" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_icon')} checked={badge_display?.widget_icon} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img style={{ width: 120 }} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_basic')} checked={badge_display?.widget_basic} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img style={{ width: 160 }} src={`${proofratings.assets_url}images/widget-style2.png`} alt="Proofratings style" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_rectangle')} checked={badge_display?.widget_rectangle} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img src={`${proofratings.assets_url}images/floating-badge-style1.png`} alt="Overall Rectangle" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img src={`${proofratings.assets_url}images/floating-badge-style2.png`} alt="Overall Narrow" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_embed')} checked={badge_display?.overall_narrow_embed} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>
+                    </li>
+                </ul>
+            </details>
+
+            <details className="badge-overview-item">
+                <summary>
+                    <h4>Floating Badges</h4>
+                    Display your overall rating floating at the bottom of the screen
+                </summary>
+
+
+                <ul className="badge-items-grid">
+                    <li>
+                        <img src={`${proofratings.assets_url}images/floating-badge-style1.png`} alt="Overall Rectangle Float" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_float} onChange={() => update_single('overall_rectangle_float')} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_float')} >EDIT BADGE</a>
+                    </li>
+
+                    <li>
+                        <img src={`${proofratings.assets_url}images/floating-badge-style2.png`} alt="Proofratings" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_float')} checked={badge_display?.overall_narrow_float} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('overall_narrow_float')} >EDIT BADGE</a>
+                    </li>
+                </ul>
+            </details>
+
+            <details className="badge-overview-item">
+                <summary>
+                    <h4>Call-to-Action Banner</h4>
+                    Track conversions with an overall rating displayed on a banner at the bottom of any page
+                </summary>
+
+
+                <ul className="badge-items-grid">
+                    <li style={{ maxWidth: 800 }}>
+                        <img src={`${proofratings.assets_url}images/cta-badge.png`} alt="Proofratings CTA Banner" />
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_cta_banner} onChange={() => update_single('overall_cta_banner')} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        <a className="button button-primary" onClick={() => handle_edit('overall_cta_banner')} >EDIT BADGE</a>
+                    </li>
+                </ul>
+            </details>
         </React.Fragment>
     );
 };

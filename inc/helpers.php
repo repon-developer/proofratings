@@ -222,6 +222,14 @@ function get_proofratings_overall_ratings_cta_banner() {
 }
 
 
+do_action( 'in_admin_footer' );
+
+function proofratings_review_us() {?>
+    <p class="proofratings-review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
+    <?php
+}
+add_action( 'in_admin_footer', 'proofratings_review_us');
+
 
 add_action( 'init', function(){
     return;

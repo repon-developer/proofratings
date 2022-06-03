@@ -26,6 +26,8 @@ const ProofratingsWidgets = (props) => {
     const [state, setState] = useState({ error: null, loading: true, saving: false, location_name: '' });
     const [settings, setSettings] = useState(store.getState());
 
+    console.log(settings)
+
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setSettings({ ...store.getState() }))
         return () => unsubscribe();
@@ -96,57 +98,49 @@ const ProofratingsWidgets = (props) => {
         return <div className="proofraing-progress-msg">Failed to retrive this location.</div>
     }
 
-    const tabs = {
-        'overview': 'Badge Overview',
-        'widget_square': 'Square',
-        'widget_basic': 'Basic',
-        'widget_icon': 'Icon',
-        'widget_rectangle': 'Rectangle',
-        'overall-rectangle-embed': 'Overall Rectangle (EMBED)',
-        'overall-rectangle-float': 'Overall Rectangle (FLOAT)',
-        'overall-narrow-embed': 'Overall Narrow (EMBED)',
-        'overall-narrow-float': 'Overall Narrow (Float)',
-        'overall-cta-banner': 'Banner',
+    const tabs = {'overview': 'Badge Overview'}
+    if ( settings.currently_editing ) {
+        tabs.edit_tab = 'Edit Badge';
     }
 
 
     const { badge_display } = settings;
 
-    if (badge_display?.widget_square !== true) {
-        delete tabs['widget_square'];
-    }
+    // if (badge_display?.widget_square !== true) {
+    //     delete tabs['widget_square'];
+    // }
 
-    if (badge_display?.widget_basic !== true) {
-        delete tabs['widget_basic'];
-    }
+    // if (badge_display?.widget_basic !== true) {
+    //     delete tabs['widget_basic'];
+    // }
 
-    if (badge_display?.widget_icon !== true) {
-        delete tabs['widget_icon'];
-    }
+    // if (badge_display?.widget_icon !== true) {
+    //     delete tabs['widget_icon'];
+    // }
 
-    if (badge_display?.widget_rectangle !== true) {
-        delete tabs['widget_rectangle'];
-    }
+    // if (badge_display?.widget_rectangle !== true) {
+    //     delete tabs['widget_rectangle'];
+    // }
 
-    if (badge_display?.overall_rectangle_embed !== true) {
-        delete tabs['overall-rectangle-embed']
-    }
+    // if (badge_display?.overall_rectangle_embed !== true) {
+    //     delete tabs['overall-rectangle-embed']
+    // }
 
-    if (badge_display?.overall_rectangle_float !== true) {
-        delete tabs['overall-rectangle-float']
-    }
+    // if (badge_display?.overall_rectangle_float !== true) {
+    //     delete tabs['overall-rectangle-float']
+    // }
 
-    if (badge_display?.overall_narrow_embed !== true) {
-        delete tabs['overall-narrow-embed']
-    }
+    // if (badge_display?.overall_narrow_embed !== true) {
+    //     delete tabs['overall-narrow-embed']
+    // }
 
-    if (badge_display?.overall_narrow_float !== true) {
-        delete tabs['overall-narrow-float']
-    }
+    // if (badge_display?.overall_narrow_float !== true) {
+    //     delete tabs['overall-narrow-float']
+    // }
 
-    if (badge_display?.overall_cta_banner !== true) {
-        delete tabs['overall-cta-banner'];
-    }
+    // if (badge_display?.overall_cta_banner !== true) {
+    //     delete tabs['overall-cta-banner'];
+    // }
 
     const current_tab = settings?.current_tab || 'overview';
 
@@ -171,67 +165,6 @@ const ProofratingsWidgets = (props) => {
                     })}
                 </div>
             </header>
-
-            <details className="badge-overview-item">
-                <summary>
-                    <h4>Embedded Badges</h4>
-                    Add individual site ratings or your overall rating to any page.
-                </summary>
-
-
-                <ul className="badge-items-grid">
-                    <li>
-                        <label class="label-switch-checkbox">
-                            <input className="checkbox-switch" type="checkbox" />
-                            <span>Deactivate</span>
-                            <span>Activate</span>
-                        </label>
-                    </li>
-                </ul>
-            </details>
-
-            <details className="badge-overview-item" open>
-                <summary>
-                    <h4>Embedded Badges</h4>
-                    Add individual site ratings or your overall rating to any page.
-                </summary>
-
-
-                <ul className="badge-items-grid">
-                    <li>
-                        <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
-                        <label class="label-switch-checkbox">
-                            <input className="checkbox-switch" type="checkbox" />
-                            <span>Deactivate</span>
-                            <span>Activate</span>
-                        </label>
-
-                        <a class="button button-primary">EDIT BADGE</a>
-                    </li>
-
-                    <li>
-                        <img style={{width: 200}} src={`${proofratings.assets_url}images/sites-icon.jpg`} alt="Proofratings" />
-                        <label class="label-switch-checkbox">
-                            <input className="checkbox-switch" type="checkbox" />
-                            <span>Deactivate</span>
-                            <span>Activate</span>
-                        </label>
-
-                        <a class="button button-primary">EDIT BADGE</a>
-                    </li>
-
-                    <li>
-                        <img style={{ width: 120 }} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
-                        <label class="label-switch-checkbox">
-                            <input className="checkbox-switch" type="checkbox" />
-                            <span>Deactivate</span>
-                            <span>Activate</span>
-                        </label>
-
-                        <a class="button button-primary">EDIT BADGE</a>
-                    </li>
-                </ul>
-            </details>
 
             {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
             {current_tab === 'widget_square' && <BadgeSquare id={location_id} />}

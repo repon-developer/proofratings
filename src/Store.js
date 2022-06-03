@@ -16,6 +16,7 @@ const ACTIONS = {
 
 const settings = {
     current_tab: 'overview',
+    currently_editing: false,
     active_connections: [],
     badge_display: {
         widget_square: false,

@@ -120,7 +120,6 @@ class Rating_Badges {
 
 		<div class="wrap proofratings-settings-wrap">
 			<div id="proofratings-root" data-location=<?php echo esc_attr($location_id) ?>></div>
-			<p class="review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
 		</div>
 		<?php
 	}

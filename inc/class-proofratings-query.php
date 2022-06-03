@@ -60,9 +60,9 @@ class Proofratings_Query  {
 	 * Update a column
 	 * @since  1.1.7
 	 */
-	function update($id, $column, $value) {
+	function update($location_id, $column, $value) {
 		global $wpdb;
-		return $wpdb->update($wpdb->proofratings, [$column => maybe_serialize( $value )], ['id' => $id]);
+		return $wpdb->update($wpdb->proofratings, [$column => maybe_serialize( $value )], ['location_id' => $location_id]);
 	}
 
 	/**
