@@ -152,7 +152,6 @@ const ProofratingsWidgets = (props) => {
                     <a onClick={handle_cancel} className='btn-cancel' href="#">CANCEL</a>
                 </div>
             }
-
         </React.Fragment>
     );
 };

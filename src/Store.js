@@ -107,11 +107,21 @@ const copy_shortcode = (attrs, event) => {
         event.preventDefault();
     }
 
-    const shorcode = Object.assign({slug: 'proofratings_widgets', id: '', style: 'square'}, attrs);
-    const location_text = Boolean(proofratings?.global) ? '' : `id="${shorcode?.id}"`;
-    const shortcode_text = `[${shorcode.slug} style="${shorcode.style}" ${location_text}]`;
+    const shorcode = Object.assign({slug: 'proofratings_widgets', id: '', style: ''}, attrs);
 
-    console.log(shortcode_text)       
+    let shortcode_text = '[' + shorcode.slug;
+    
+    if ( shorcode.style.length ) {
+        shortcode_text += ` style="${shorcode.style}"`
+    }
+
+    if ( !Boolean(proofratings?.global) ) {
+        shortcode_text += ` id="${shorcode?.id}"`;
+    }
+
+    shortcode_text += ']';
+
+    navigator.clipboard.writeText(shortcode_text)
 }
 
 export default store;

@@ -30,6 +30,10 @@ const BadgeDisplay = (props) => {
     const handle_copy_shortcode = (attrs, event) => {
         attrs.id = props.id;        
         copy_shortcode(attrs, event);
+
+        const toast = document.getElementById('toast-proofratings')
+        toast.textContent = 'Shortcode has been copied';
+        setTimeout(() => toast.textContent = '', 800)
     }
 
     const handle_edit = (current_tab) => store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {current_tab} })
@@ -68,7 +72,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({}, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'square'}, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_square && <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>}
                     </li>
 
@@ -80,6 +84,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
+                        {badge_display?.widget_icon && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'icon'}, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_icon && <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>}
                     </li>
 
@@ -91,6 +96,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
+                        {badge_display?.widget_basic && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'basic'}, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_basic && <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>}
                     </li>
 
@@ -102,6 +108,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
+                        {badge_display?.widget_rectangle && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'rectangle'}, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_rectangle && <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>}
                     </li>
 
@@ -113,6 +120,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
+                        {badge_display?.overall_rectangle_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({slug: 'proofratings_overall_rectangle'}, event)} >Copy Shortcode</a>}
                         {badge_display?.overall_rectangle_embed && <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>}
                     </li>
 
@@ -124,6 +132,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
+                        {badge_display?.overall_narrow_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({slug: 'proofratings_overall_narrow'}, event)} >Copy Shortcode</a>}
                         {badge_display?.overall_narrow_embed && <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>}
                     </li>
                 </ul>

@@ -120,6 +120,7 @@ class Rating_Badges {
 
 		<div class="wrap proofratings-settings-wrap">
 			<div id="proofratings-root" data-location=<?php echo esc_attr($location_id) ?>></div>
+			<div id="toast-proofratings"></div>
 		</div>
 		<?php
 	}
