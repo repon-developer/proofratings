@@ -28,7 +28,7 @@ const BadgeDisplay = (props) => {
     }
 
     const handle_copy_shortcode = (attrs, event) => {
-        attrs.id = props.id;        
+        attrs.id = props.id;
         copy_shortcode(attrs, event);
 
         const toast = document.getElementById('toast-proofratings')
@@ -36,14 +36,14 @@ const BadgeDisplay = (props) => {
         setTimeout(() => toast.textContent = '', 800)
     }
 
-    const handle_edit = (current_tab) => store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {current_tab} })
+    const handle_edit = (current_tab) => store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab } })
 
     const on_summary_tab_click = (e, overview_summary_tab) => {
-        if ( e.target.open === false ) {
+        if (e.target.open === false) {
             return;
         }
 
-        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: {overview_summary_tab} });
+        store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { overview_summary_tab } });
     }
 
     return (
@@ -65,74 +65,74 @@ const BadgeDisplay = (props) => {
 
                 <ul className="badge-items-grid">
                     <li>
-                        <img src={`${proofratings.assets_url}images/widget-style1.png`} alt="Proofratings style" />
+                        <img src={`${proofratings.assets_url}images/widget-square.png`} alt="Proofratings style" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_square')} checked={badge_display?.widget_square} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'square'}, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'square' }, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_square && <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
-                        <img style={{ width: 200 }} src={`${proofratings.assets_url}images/sites-icon.jpg`} alt="Proofratings" />
+                        <img style={{ width: 200 }} src={`${proofratings.assets_url}images/widget-icon.png`} alt="Proofratings" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_icon')} checked={badge_display?.widget_icon} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.widget_icon && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'icon'}, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_icon && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'icon' }, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_icon && <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
-                        <img style={{ width: 120 }} src={`${proofratings.assets_url}images/sites-basic.png`} alt="Proofratings" />
+                        <img style={{ width: 120 }} src={`${proofratings.assets_url}images/widget-basic.png`} alt="Proofratings" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_basic')} checked={badge_display?.widget_basic} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.widget_basic && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'basic'}, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_basic && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'basic' }, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_basic && <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
-                        <img style={{ width: 160 }} src={`${proofratings.assets_url}images/widget-style2.png`} alt="Proofratings style" />
+                        <img style={{ width: 200 }} src={`${proofratings.assets_url}images/widget-rectangle.png`} alt="Proofratings style" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_rectangle')} checked={badge_display?.widget_rectangle} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.widget_rectangle && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({style: 'rectangle'}, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_rectangle && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'rectangle' }, event)} >Copy Shortcode</a>}
                         {badge_display?.widget_rectangle && <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
-                        <img src={`${proofratings.assets_url}images/floating-badge-style1.png`} alt="Overall Rectangle" />
+                        <img style={{width: 190}} src={`${proofratings.assets_url}images/overall-rectangle.png`} alt="Overall Rectangle" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.overall_rectangle_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({slug: 'proofratings_overall_rectangle'}, event)} >Copy Shortcode</a>}
+                        {badge_display?.overall_rectangle_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ slug: 'proofratings_overall_rectangle' }, event)} >Copy Shortcode</a>}
                         {badge_display?.overall_rectangle_embed && <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
-                        <img src={`${proofratings.assets_url}images/floating-badge-style2.png`} alt="Overall Narrow" />
+                        <img src={`${proofratings.assets_url}images/overall-narrow.png`} alt="Overall Narrow" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_embed')} checked={badge_display?.overall_narrow_embed} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        {badge_display?.overall_narrow_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({slug: 'proofratings_overall_narrow'}, event)} >Copy Shortcode</a>}
+                        {badge_display?.overall_narrow_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ slug: 'proofratings_overall_narrow' }, event)} >Copy Shortcode</a>}
                         {badge_display?.overall_narrow_embed && <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>}
                     </li>
                 </ul>
@@ -147,7 +147,7 @@ const BadgeDisplay = (props) => {
 
                 <ul className="badge-items-grid">
                     <li>
-                        <img src={`${proofratings.assets_url}images/floating-badge-style1.png`} alt="Overall Rectangle Float" />
+                        <img style={{width: 200}} src={`${proofratings.assets_url}images/overall-rectangle.png`} alt="Overall Rectangle Float" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_float} onChange={() => update_single('overall_rectangle_float')} />
                             <span>Deactivate</span>
@@ -158,7 +158,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img src={`${proofratings.assets_url}images/floating-badge-style2.png`} alt="Proofratings" />
+                        <img src={`${proofratings.assets_url}images/overall-narrow.png`} alt="Proofratings" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_float')} checked={badge_display?.overall_narrow_float} />
                             <span>Deactivate</span>

@@ -63,9 +63,9 @@ const Sites_Icon = (props) => {
                     </div>
 
                     <div className="review-info-container">
-                        <span className="proofratings-stars"><i style={{ width: '95.6%' }}></i></span>
+                        <span className="proofratings-stars"><i style={{ width: '100%' }}></i></span>
                         <div className="review-info">
-                            <span className="proofratings-rating">4.8 Rating</span>
+                            <span className="proofratings-rating">5.0 Rating</span>
                             <span className="separator-circle">●</span>
                             <span className="proofratings-review-number"># Reviews</span>
                         </div>

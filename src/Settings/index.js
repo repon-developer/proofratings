@@ -61,7 +61,7 @@ const ProofratingsSettings = () => {
         settings.action = 'save_proofratings_location_settings';
         const request = jQuery.post(proofratings.ajaxurl, settings, (response) => {
             console.log('After Saved', response.data)
-            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { saving: false } });
+            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: {editing: false, saving: false } });
         })
 
         request.fail(() => {
@@ -98,11 +98,18 @@ const ProofratingsSettings = () => {
         return (
             <div className="location-dropdown">
                 <label>Location</label>
-                <select className="location-select" defaultValue={state?.location_id} onChange={(e) => handle_location(e.target.value)} >
+                <select disabled={state.editing} className="location-select" defaultValue={state?.location_id} onChange={(e) => handle_location(e.target.value)} >
                     {proofratings.locations.map(location => <option key={location.location_id} value={location.location_id}>{location.name}</option>)}
                 </select>
+
+                {state.editing && <p style={{marginTop: 3}}>You need to save the changes or cancel before change location.</p>}
             </div>
         )
+    }
+
+    const handle_cancel = (e) => {
+        e.preventDefault();
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { editing: false } });
     }
     
     return (
@@ -126,8 +133,8 @@ const ProofratingsSettings = () => {
             {current_tab === 'schema' && <Schema />}
 
             <div className="form-footer">
-                <button className="button button-primary btn-save" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
-                <a className='btn-cancel' href="/wp-admin/admin.php?page=proofratings">CANCEL</a>
+                <button className="button button-primary btn-save" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGES'}</button>
+                <a className='btn-cancel' onClick={handle_cancel} href="#">CANCEL</a>
             </div>
 
         </React.Fragment>

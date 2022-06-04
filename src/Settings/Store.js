@@ -8,7 +8,7 @@ const ACTIONS = {
     UPDATE_SCHEMA: "UPDATE_SCHEMA",
 };
 
-const primary_state = { error: null, loading: true, saving: false, location_id: null, settings_tab: 'connections' }
+const primary_state = {editing: false, error: null, loading: true, saving: false, location_id: null, settings_tab: 'connections' }
 
 const stateReducer = (state = primary_state, action) => {
     switch (action.type) {
@@ -52,7 +52,17 @@ const reducers = combineReducers({
     settings: settingsReducer
 });
 
+const store = createStore(reducers);
 
-export default createStore(reducers);
+const update_store = (action) => {
+    if ( action.type !== ACTIONS.UPDATE_SETTINGS ) {
+        store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: {editing: true} });    
+    }
 
-export { ACTIONS };
+    store.dispatch(action);
+}
+
+
+export default store;
+
+export { ACTIONS, update_store };

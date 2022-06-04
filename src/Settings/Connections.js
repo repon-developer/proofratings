@@ -1,8 +1,8 @@
 const { useState, useEffect } = React;
 
-import store, { ACTIONS } from './Store';
+import store, { ACTIONS, update_store } from './Store';
 
-const SiteConnections = ({location_id}) => {
+const SiteConnections = ({ location_id }) => {
     const [search, setSearch] = useState('')
 
     const [state, setState] = useState(store.getState().settings)
@@ -28,7 +28,8 @@ const SiteConnections = ({location_id}) => {
         const connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
         active_connections[slug] = Object.assign(connection, { [key]: value });
 
-        store.dispatch({ type: ACTIONS.UPDATE_CONNECTIONS, payload: active_connections });
+        //store.dispatch({ type: ACTIONS.UPDATE_CONNECTIONS, payload: active_connections });
+        update_store({ type: ACTIONS.UPDATE_CONNECTIONS, payload: active_connections });
     }
 
     const handle_check_connection = (slug) => {
@@ -53,7 +54,7 @@ const SiteConnections = ({location_id}) => {
 
         const pending_items = () => <td className="message-pending-connections" colSpan={4}>We are working on you connection and notify you when complete.</td>
 
-        if ( is_overall ) {
+        if (is_overall) {
             review_site.click_through_url = '';
         }
 
@@ -76,7 +77,13 @@ const SiteConnections = ({location_id}) => {
 
         return (
             <React.Fragment>
-                <td><input className="checkbox-switch checkbox-onoff" type="checkbox" defaultChecked={review_site.selected} onClick={() => handle_check_connection(slug)} /></td>
+                <td>
+                    <label className="label-switch-checkbox">
+                        <input className="checkbox-switch" type="checkbox" onChange={() => handle_check_connection(slug)} defaultChecked={review_site.selected} />
+                        <span>Off</span>
+                        <span>On</span>
+                    </label>
+                </td>
                 <td className="review-site-logo"><img src={review_site.logo} alt={review_site.name} /></td>
 
                 {item.selected === true && item.approved === false ? pending_items() : default_items()}

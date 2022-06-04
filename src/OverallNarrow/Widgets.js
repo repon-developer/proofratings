@@ -60,12 +60,12 @@ const Widgets = (props) => {
                             <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
                         </div>
                         <div className="proofratings-reviews">
-                            <span className="proofratings-score">4.8</span>
+                            <span className="proofratings-score">5.0</span>
                             <span className="proofratings-stars">
                                 <i style={{ width: "96%" }} />
                             </span>
                         </div>
-                        <div className="proofratings-review-count">44 reviews</div>
+                        <div className="proofratings-review-count"># reviews</div>
                     </div>
                 </td>
             </tr>
