@@ -207,6 +207,7 @@ class Proofratings_Settings {
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_location', get_proofratings_api_args($location));
 
 		$result = json_decode(wp_remote_retrieve_body($response));
+		error_logs($result);
 		if ( isset($result->code) && $result->code === 'rest_no_route' ) {
 			return $this->error->add('error', "We can't communicate with proofratings website. Please contact with them.");
 		}
