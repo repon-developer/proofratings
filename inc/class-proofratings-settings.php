@@ -88,7 +88,23 @@ class Proofratings_Settings {
 		$result = json_decode(wp_remote_retrieve_body($response));
 		if ( !isset($result->success) || $result->success !== true ) {
 			return $this->error->add('license_key', $result->message);
-		}		
+		}
+
+		global $wpdb;
+
+		if ( isset($result->data->locations ) && is_object($result->data->locations) ) {
+			foreach ($result->data->locations as $location_slug => $location) {
+				$location_data = array('location_id' => $location_slug, 'location' => @$location->name);
+
+				$sql = $wpdb->prepare("SELECT * FROM $wpdb->proofratings WHERE location_id = '%s'", $location_slug);
+				if ( $get_location = $wpdb->get_row($sql) ) {
+					$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_location->id]);
+					continue;
+				}
+
+				$wpdb->insert($wpdb->proofratings, $location_data);
+			}
+		}
 
 		update_proofratings_settings(['status' => $result->data->status]);
 	}
@@ -207,7 +223,6 @@ class Proofratings_Settings {
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_location', get_proofratings_api_args($location));
 
 		$result = json_decode(wp_remote_retrieve_body($response));
-		error_logs($result);
 		if ( isset($result->code) && $result->code === 'rest_no_route' ) {
 			return $this->error->add('error', "We can't communicate with proofratings website. Please contact with them.");
 		}
