@@ -274,31 +274,31 @@ class Proofratings_Settings {
 
 			<div class="proofratings-dashboard-menu">
 				<a href="<?php menu_page_url('proofratings-analytics') ?>">
-					<i class="menu-icon fa-solid fa-chart-line"></i>
+					<i class="menu-icon menu-icon-analytics"></i>
 					<span class="menu-label">Analytics</span>
 					<p>View your rating widget data from impressions, hover, clicks, to conversions</p>
 				</a>
 
 				<a href="<?php menu_page_url('proofratings-rating-badges') ?>">
-					<i class="menu-icon fa-solid fa-star"></i>
+					<i class="menu-icon menu-icon-rating-badges"></i>
 					<span class="menu-label"><?php echo get_proofratings()->query->global ? __('Rating Badges', 'proofratings') :  __('Locations & Rating Badges', 'proofratings'); ?></span>
 					<p>Create and view all your rating trust badges</p>
 				</a>
 
 				<a href="<?php menu_page_url('proofratings-settings') ?>">
-					<i class="menu-icon fa-solid fa-screwdriver-wrench"></i>
+					<i class="menu-icon menu-icon-settings"></i>
 					<span class="menu-label">Settings</span>
 					<p>Edit review site connections, manage monthly reports and add schema</p>
 				</a>
 
 				<a href="<?php menu_page_url('proofratings-support') ?>">
-					<i class="menu-icon fa-solid fa-circle-question"></i>
+					<i class="menu-icon menu-icon-support"></i>
 					<span class="menu-label">Support</span>
 					<p>Need help? Submit a ticket</p>
 				</a>
 
 				<a href="<?php menu_page_url('proofratings-billing') ?>">
-					<i class="menu-icon fa-solid fa-credit-card"></i>
+					<i class="menu-icon menu-icon-billing"></i>
 					<span class="menu-label">Billing</span>
 					<p>Manage and update your payment source, subscription and invoices</p>
 				</a>

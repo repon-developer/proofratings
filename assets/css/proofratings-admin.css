@@ -385,13 +385,24 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 }
 
 .proofratings-dashboard-menu .menu-icon {
+    width: 35px;
+    height: 35px;
     color: var(--primary_color);
-    top: calc(50% - 3px);
+    top: 50%;
     font-size: 35px;
     position: absolute;
     left: var(--wrap_edge);
     transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
+
+.proofratings-dashboard-menu .menu-icon.menu-icon-analytics {background-image: url(../images/analytics.png)}
+.proofratings-dashboard-menu .menu-icon.menu-icon-rating-badges {background-image: url(../images/rating-badges.png)}
+.proofratings-dashboard-menu .menu-icon.menu-icon-settings {background-image: url(../images/settings.png)}
+.proofratings-dashboard-menu .menu-icon.menu-icon-support {background-image: url(../images/support.png)}
+.proofratings-dashboard-menu .menu-icon.menu-icon-billing {background-image: url(../images/billing.png)}
 
 .proofratings-dashboard-menu .menu-label {
     color: var(--primary_color);
