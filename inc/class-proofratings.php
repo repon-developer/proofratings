@@ -131,7 +131,7 @@ class Proofratings {
 		$review_locations = $request->get_param('locations');
 		if ( !is_array($review_locations) ) {
 			$review_locations = [];
-		}		
+		}
 
 		global $wpdb;
 		foreach ($review_locations as $id => $location) {
@@ -140,9 +140,11 @@ class Proofratings {
 				$reviews = maybe_serialize($location['reviews']);
 			}
 
+			unset($location['reviews']);
+
 			$location_data = array(
 				'location_id' => $id,
-				'location' => @$location['name'],
+				'location' => maybe_serialize($location),
 				'reviews' => $reviews,
 				'status' => @$location['status']
 			);
@@ -173,7 +175,7 @@ class Proofratings {
 			$settings['connections_approved'] = [];
 		}
 
-		error_logs($request->get_params());
+		//error_logs($request->get_params());
 
 		update_proofratings_settings($settings);
 		$this->clear_cache();
@@ -272,7 +274,7 @@ class Proofratings {
 		maybe_create_table($wpdb->proofratings, "CREATE TABLE $wpdb->proofratings (
 			`id` INT NOT NULL AUTO_INCREMENT, 
 			`location_id` VARCHAR(50) NULL,
-			`location` VARCHAR(100) NULL, 
+			`location` MEDIUMTEXT NULL, 
 			`reviews` LONGTEXT NULL, 
 			`settings` LONGTEXT NULL, 
 			`meta_data` LONGTEXT NULL, 

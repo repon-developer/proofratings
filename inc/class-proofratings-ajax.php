@@ -47,8 +47,6 @@ class Proofratings_Ajax {
 	public function get_location_settings() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-		error_logs($postdata);
-
 		$location = @$postdata['location_id'];
 		if ( empty($location)) {
 			wp_send_json_error();
@@ -60,11 +58,10 @@ class Proofratings_Ajax {
 		}
 
 		$location->settings->schema = get_proofratings_settings('schema');
-		//error_logs(get_proofratings_settings('schema'));
 
 		wp_send_json(array(
 			'global' => get_proofratings()->query->global,
-			'location_name' => $location->location,
+			'location_name' => $location->location['name'],
 			'settings' => $location->settings,
 		));
 	}

@@ -137,13 +137,13 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      */
     function column_location( $location ) {
         $page_slug = 'proofratings-rating-badges';
-        if ( empty($location->location)) {
+        if ( empty($location->location['name'])) {
             $page_slug = 'proofratings-edit-location';
-            $location->location = 'Edit location';
+            $location->location['name'] = 'Edit location';
         }
 
 		$permalink = add_query_arg( 'location', $location->location_id, menu_page_url($page_slug, false));
-        return sprintf('<a href="%s">%s</a>', $permalink, $location->location);
+        return sprintf('<a href="%s">%s</a>', $permalink, $location->location['name']);
     }
 
 	/**

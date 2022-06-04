@@ -159,8 +159,7 @@ class Proofratings_Settings {
 			return new Proofratings_Site_Data(['error' => 'Not a valid location']);			
 		}
 
-		$location_data = $location->location_information;
-
+		$location_data = $location->location;
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		if ( isset($postdata['_nonce']) && wp_verify_nonce( $postdata['_nonce'], '_nonce_edit_location')) {
 			$location_data = $postdata;
@@ -217,8 +216,7 @@ class Proofratings_Settings {
 			unset($location[$clear_key]);
 		}
 
-		get_proofratings()->query->update($_GET['location'], 'location', $location['name']);
-		get_proofratings()->query->save_meta_data($_GET['location'], 'location_information', $location);
+		get_proofratings()->query->update_column($_GET['location'], 'location', $location);
 
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_location', get_proofratings_api_args($location));
 

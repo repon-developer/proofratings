@@ -57,10 +57,19 @@ class Proofratings_Query  {
 	}
 
 	/**
+	 * Update location
+	 * @since  1.1.7
+	 */
+	function update($location_id, $params) {
+		global $wpdb;
+		return $wpdb->update($wpdb->proofratings, $params, ['location_id' => $location_id]);
+	}
+
+	/**
 	 * Update a column
 	 * @since  1.1.7
 	 */
-	function update($location_id, $column, $value) {
+	function update_column($location_id, $column, $value) {
 		global $wpdb;
 		return $wpdb->update($wpdb->proofratings, [$column => maybe_serialize( $value )], ['location_id' => $location_id]);
 	}
@@ -131,7 +140,7 @@ class Proofratings_Query  {
 	 */
 	function get_locations() {
 		return array_map(function($location){
-			return array('id' => $location->id, 'location_id' => $location->location_id, 'name' => $location->location);
+			return array('id' => $location->id, 'location_id' => $location->location_id, 'name' => $location->location['name']);
 		}, $this->locations);		
 	}
 	/**
@@ -178,12 +187,16 @@ class Proofratings_Query  {
 			$location->meta_data = [];
 		}
 
-		$location_information = isset($location->meta_data['location_information']) ? $location->meta_data['location_information'] : [];
-		if ( !is_array($location_information) ) {
-			$location_information = [];
+		$location_info = [];
+		if ( isset($location->location) ) {
+			$location_info = maybe_unserialize($location->location);
 		}
-		
-		$location->location_information = wp_parse_args($location_information, array(
+
+		if ( !is_array($location_info) ) {
+			$location_info = [];
+		}		
+
+		$location->location = wp_parse_args( $location_info, array(
 			'name' => '',
 			'street' => '',
 			'city' => '',
@@ -236,14 +249,15 @@ class Proofratings_Query  {
 			);
 		}
 
-		$overall_location = $this->sanitize_location((object) array(
+		$overall_location = (object) $this->sanitize_location((object) array(
 			'id' => 'overall',
 			'location_id' => 'overall',
-			'location' => __('ALL LOCATIONS', 'proofratings'),
 			'settings' => get_option('proofratings_overall_rating_settings'),
 			'reviews' => $site_overall_review,
 			'status' => $status_text
 		));
+
+		$overall_location->location['name'] = __('ALL LOCATIONS', 'proofratings');
 
 		$overall_location->active_connections = $active_connections;
 
@@ -264,10 +278,13 @@ class Proofratings_Query  {
 
 		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN('active', 'pause', 'pending', 'due', 'inactive') ORDER BY location ASC");
 
-
+		
+		
 		array_walk($locations, function(&$location){
 			$location = $this->sanitize_location($location);
 		});
+		
+		//var_dump($locations);
 
 		if ( count($locations) > 1 ) {
 			$this->global = false;
