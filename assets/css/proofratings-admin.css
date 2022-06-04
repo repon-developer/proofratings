@@ -349,6 +349,13 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
 .analytics-information .engagements .counter:before {visibility: hidden;}
 #analytics-chart {margin-top: 30px}
 
+.analytics-row {display: flex; gap: 30px; align-items: flex-start;}
+.analytics-row > * {flex: 1;}
+.analytics-row .chart-container {max-width: 50%;}
+.analytics-row .analytics-information {max-width: none; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));}
+
+.analytics-information-alltime .counter:before {content: none!important;}
+
 #reporting-email-addresses {margin: 7px 0 0; display: flex; flex-wrap: wrap; gap: 5px; padding: 0; max-width: 800px}
 
 #reporting-email-addresses > li {

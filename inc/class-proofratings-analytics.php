@@ -114,39 +114,85 @@ class Proofratings_Analytics {
 				</div>
 			</header>
 
-			<div class="analytics-information">
-				<div class="impressions">
-					<span class="counter">0</span>
-					<h4 class="name">Impressions</h4>
-					<p>Times notifications were shown</p>
-				</div>
 
-				<div class="hovers">
-					<span class="counter">0</span>
-					<h4 class="name">Hovers</h4>
-					<p>Number of hovers on all notifications</p>
-				</div>
+			<div class="analytics-row">
 
-				<div class="clicks">
-					<span class="counter">0</span>
-					<h4 class="name">Clicks</h4>
-					<p>Number of clicks on all notifications</p>
-				</div>
+				<div>
+					<h3 class="analytics-caption">All-time</h3>
+					<div class="analytics-information analytics-information-alltime">
+						<div class="impressions">
+							<span class="counter">0</span>
+							<h4 class="name">Impressions</h4>
+							<p>Times notifications were shown</p>
+						</div>
 
-				<div class="conversions" style="display:none">
-					<span class="counter">0</span>
-					<h4 class="name">Conversions</h4>
-					<p>Number of conversions on all notifications</p>
-				</div>
+						<div class="hovers">
+							<span class="counter">0</span>
+							<h4 class="name">Hovers</h4>
+							<p>Number of hovers on all notifications</p>
+						</div>
 
-				<div class="engagements">
-					<span class="counter">0</span>
-					<h4 class="name">Engagements</h4>
-					<p>Clicks, hovers and dismission combined</p>
+						<div class="clicks">
+							<span class="counter">0</span>
+							<h4 class="name">Clicks</h4>
+							<p>Number of clicks on all notifications</p>
+						</div>
+
+						<div class="conversions" style="display:none">
+							<span class="counter">0</span>
+							<h4 class="name">Conversions</h4>
+							<p>Number of conversions on all notifications</p>
+						</div>
+
+						<div class="engagements">
+							<span class="counter">0</span>
+							<h4 class="name">Engagements</h4>
+							<p>Clicks, hovers and dismission combined</p>
+						</div>
+					</div>
+
+					<hr style="margin-top: 40px; margin-bottom: 40px">
+
+					<h3 class="analytics-caption">Active</h3>
+					<div class="analytics-information">
+						<div class="impressions">
+							<span class="counter">0</span>
+							<h4 class="name">Impressions</h4>
+							<p>Times notifications were shown</p>
+						</div>
+
+						<div class="hovers">
+							<span class="counter">0</span>
+							<h4 class="name">Hovers</h4>
+							<p>Number of hovers on all notifications</p>
+						</div>
+
+						<div class="clicks">
+							<span class="counter">0</span>
+							<h4 class="name">Clicks</h4>
+							<p>Number of clicks on all notifications</p>
+						</div>
+
+						<div class="conversions" style="display:none">
+							<span class="counter">0</span>
+							<h4 class="name">Conversions</h4>
+							<p>Number of conversions on all notifications</p>
+						</div>
+
+						<div class="engagements">
+							<span class="counter">0</span>
+							<h4 class="name">Engagements</h4>
+							<p>Clicks, hovers and dismission combined</p>
+						</div>
+					</div>
+
+				</div>
+				
+
+				<div class="chart-container">
+					<canvas id="analytics-chart" style="width:100%; height: 500px"></canvas>
 				</div>
 			</div>
-
-			<canvas id="analytics-chart" style="width:100%; height: 500px"></canvas>
 		</div>
 		<?php
 	}
