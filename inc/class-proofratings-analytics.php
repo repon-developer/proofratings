@@ -81,10 +81,11 @@ class Proofratings_Analytics {
 	 * @since  1.0.1
 	 */
 	public function output() {
-		$locations = get_proofratings()->query->locations;
-		array_walk($locations, function(&$item){
-			if ( $item->id === 'overall' ) {
-				$item->id = '';
+		$locations = get_proofratings()->query->get_locations();
+		array_walk($locations, function(&$location){
+			if ( $location['id'] === 'overall' ) {
+				$location['id'] = '';
+				$location['location_id'] = '';
 			}
 		}); ?>
 
@@ -101,7 +102,7 @@ class Proofratings_Analytics {
 						<label><?php _e('Location', 'proofratings'); ?></label>
 						<select class="location-filter">
 							<?php foreach ($locations as $location) {
-								printf('<option value="%s">%s</option>', $location->id, $location->location);
+								printf('<option value="%s">%s</option>', $location['location_id'], $location['name']);
 							} ?>
 						</select>
 					</div>
