@@ -122,109 +122,12 @@ function get_proofratings_api_args($args = []) {
     return array('body' => $params);
 }
 
-/**
- * get square badges settings
- * @since  1.0.4
- */
-function get_proofratings_display_settings() {
-    return wp_parse_args(get_option( 'proofratings_display_badge'), [
-        'square' => 'no',
-        'rectangle' => 'no',
-        'overall_ratings_rectangle' => 'no',
-        'overall_ratings_narrow' => 'no',
-        'overall_ratings_cta_banner' => 'no',
-    ]);
-}
-
-/**
- * get square badges settings
- * @since  1.0.4
- */
-function get_proofratings_badges_square() {
-    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_square'), [
-		'customize' => 'no',
-		'shadow' => 'yes'
-	]));
-}
-
-/**
- * get rectangle badges settings
- * @since  1.0.4
- */
-function get_proofratings_badges_rectangle() {
-    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_rectangle'), [
-		'customize' => 'no',
-		'shadow' => 'yes',
-        'icon_color' => '#000'
-	]));
-}
-
-/**
- * get popup badges settings
- * @since  1.0.4
- */
-function get_proofratings_badges_popup() {
-    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_badges_popup'), ['customize' => 'no']));
-}
-
-/**
- * get overall rectangle settings
- * @since  1.0.4
- */
-function get_proofratings_overall_ratings_rectangle() {
-    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_overall_ratings_rectangle'), [
-		'float' => 'yes',
-        'tablet' => 'yes',
-        'mobile' => 'yes',
-        'close_button' => 'yes',
-        'customize' => 'no',
-        'shadow' => 'yes',
-        'pages' => [],
-	]));
-}
-
-/**
- * get overall ratings narrow settings
- * @since  1.0.4
- */
-function get_proofratings_overall_ratings_narrow() {
-    return new Proofratings_Site_Data(wp_parse_args(get_option('proofratings_overall_ratings_narrow'), [
-		'float' => 'yes',
-        'tablet' => 'yes',
-        'mobile' => 'yes',
-        'close_button' => 'yes',
-        'customize' => 'no',
-        'shadow' => 'yes',
-        'pages' => [],
-	]));
-}
-
-/**
- * get overall ratings CTA Banner settings
- * @since  1.0.4
- */
-function get_proofratings_overall_ratings_cta_banner() {
-    return new Proofratings_Site_Data(wp_parse_args((array)get_option( 'proofratings_overall_ratings_cta_banner'), [
-        'tablet' => 'yes',
-        'close_button' => 'yes',
-        'mobile' => 'yes',
-        'shadow' => 'yes',
-
-        'button1_text' => 'Sign Up',
-        'button1_blank' => 'no',
-        'button1_shape' => 'rectangle',
-        'button1_border' => 'yes',
-        
-        'button2' => 'no',
-        'button2_blank' => 'no',
-        'button2_border' => 'yes'
-    ]));
-}
-
-
-do_action( 'in_admin_footer' );
-
-function proofratings_review_us() {?>
+function proofratings_review_us() {
+    $screen = get_current_screen();
+    preg_match('/(proofratings_page|proofratings-widgets|proofratings-edit-location)/', $screen->id, $matches);
+    if ( !$matches  ) {
+        return;
+    } ?>
     <p class="proofratings-review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
     <?php
 }

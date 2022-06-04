@@ -171,7 +171,9 @@ class Proofratings {
 
 		if ( !isset($settings['connections_approved']) ) {
 			$settings['connections_approved'] = [];
-		}		
+		}
+
+		error_logs($request->get_params());
 
 		update_proofratings_settings($settings);
 		$this->clear_cache();

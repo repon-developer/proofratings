@@ -169,6 +169,8 @@ class Proofratings_Admin {
 			remove_all_actions('admin_notices');
 			remove_all_actions('all_admin_notices');
 		}, 1000);
+
+		
 		
 		preg_match('/(proofratings_page|proofratings-widgets|proofratings-edit-location)/', $screen->id, $matches);
 
