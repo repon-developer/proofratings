@@ -103,11 +103,9 @@ class Proofratings_Admin {
 		if ( is_proofratings_demo_mode() ) {
 			$capability = 'read';
 		}
-
-		$proofratings_status = get_proofratings_current_status();		
-
+		
 		$main_screen = [$this->settings_page, 'license_page'];
-		if ($proofratings_status == 'active' ) {
+		if (is_proofratings_active()) {
 			$main_screen = [$this->settings_page, 'main_menu'];
 		}
 		
@@ -118,7 +116,7 @@ class Proofratings_Admin {
 
 		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), $capability, 'proofratings', $main_screen, $proofratings_icon, 25);
 
-		if ($proofratings_status == 'active' ) {
+		if (is_proofratings_active()) {
 			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), $capability, 'proofratings', $main_screen);
 			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), $capability, 'proofratings-analytics', [$this->analytics, 'output']);
 		

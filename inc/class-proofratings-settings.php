@@ -86,6 +86,10 @@ class Proofratings_Settings {
 		}
 
 		$result = json_decode(wp_remote_retrieve_body($response));
+		if ( !is_object($result)) {
+			return $this->error->add('error', 'Unknown error');
+		}
+		
 		if ( !isset($result->success) || $result->success !== true ) {
 			return $this->error->add('license_key', $result->message);
 		}

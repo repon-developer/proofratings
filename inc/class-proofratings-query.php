@@ -276,15 +276,11 @@ class Proofratings_Query  {
 			return [];
 		}
 
-		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN('active', 'pause', 'pending', 'due', 'inactive') ORDER BY location ASC");
-
-		
+		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN ('active', 'pause', 'pending', 'due', 'inactive') ORDER BY location ASC");
 		
 		array_walk($locations, function(&$location){
 			$location = $this->sanitize_location($location);
 		});
-		
-		//var_dump($locations);
 
 		if ( count($locations) > 1 ) {
 			$this->global = false;

@@ -105,13 +105,8 @@ function update_proofratings_settings($args) {
  * get current status
  * @since  1.0.1
  */
-function get_proofratings_current_status() {
-    $proofratings_status = get_proofratings_settings('status');
-    if ( !$proofratings_status || !in_array($proofratings_status, ['pending', 'pause', 'active', 'trailing'])) {
-        return false;
-    }
-
-    return $proofratings_status;
+function is_proofratings_active() {
+    return in_array(get_proofratings_settings('status'), ['active', 'trialing']);
 }
 
 /**
