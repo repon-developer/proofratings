@@ -101,7 +101,7 @@ function update_proofratings_settings($args) {
  */
 function get_proofratings_current_status() {
     $proofratings_status = get_proofratings_settings('status');
-    if ( !$proofratings_status || !in_array($proofratings_status, ['pending', 'pause', 'active'])) {
+    if ( !$proofratings_status || !in_array($proofratings_status, ['pending', 'pause', 'active', 'trailing'])) {
         return false;
     }
 
@@ -131,7 +131,24 @@ function proofratings_review_us() {
     <p class="proofratings-review-us">Enjoying Proofratings? <img draggable="false" role="img" class="emoji" alt="❤️" src="https://s.w.org/images/core/emoji/13.1.0/svg/2764.svg"> Review us <a href="https://wordpress.org/plugins/proofratings/" target="_blank">here</a></p>
     <?php
 }
-add_action( 'in_admin_footer', 'proofratings_review_us');
+add_action( 'in_admin_footer', 'proofratings_review_us', 11);
+
+/**
+ * Check if demo mode
+ * @since  1.1.7
+ */
+function is_proofratings_demo_mode() {
+    if ( !is_user_logged_in(  ) ) {
+        return true;
+    }
+
+    if ( defined('PROOFRATINGS_DEMO') && PROOFRATINGS_DEMO === true && in_array( 'subscriber', (array) wp_get_current_user()->roles )) {
+        return true;
+    }
+
+    return false;
+}
+
 
 
 add_action( 'init', function(){

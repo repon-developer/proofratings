@@ -54,6 +54,9 @@ class Proofratings {
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-ajax.php';
 		include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-shortcodes.php';
 
+		if ( defined('PROOFRATINGS_DEMO') && PROOFRATINGS_DEMO ) {
+			include_once PROOFRATINGS_PLUGIN_DIR . '/inc/class-proofratings-demo.php';
+		}
 		
 		$this->query = Proofratings_Query::instance();
 		$this->shortcodes = Proofratings_Shortcodes::instance();

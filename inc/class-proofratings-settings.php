@@ -114,6 +114,10 @@ class Proofratings_Settings {
 			return;
 		}
 
+		if ( is_proofratings_demo_mode() ) {
+			$this->error->add('error_demo', __('On the demo, you are not able to send a message.'));
+		}
+
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if ( empty($postdata['subject']) ) {
@@ -181,6 +185,10 @@ class Proofratings_Settings {
 		$form_data = $this->get_location_data();
 		if (!empty($form_data->error) ) {
 			wp_die($form_data->error);
+		}
+
+		if ( is_proofratings_demo_mode() ) {
+			$this->error->add('error_demo', __('On the demo, you are not able to edit the location.'));
 		}
 		
 		if ( empty($form_data->name)) {

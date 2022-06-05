@@ -99,6 +99,11 @@ class Proofratings_Admin {
 	 * Add menu page
 	 */
 	public function admin_menu() {
+		$capability = 'manage_options';
+		if ( is_proofratings_demo_mode() ) {
+			$capability = 'read';
+		}
+
 		$proofratings_status = get_proofratings_current_status();		
 
 		$main_screen = [$this->settings_page, 'license_page'];
@@ -111,19 +116,19 @@ class Proofratings_Admin {
 		$rating_badges = new \Proofratings_Admin\Rating_Badges();
 
 
-		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen, $proofratings_icon, 25);
+		add_menu_page(__('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), $capability, 'proofratings', $main_screen, $proofratings_icon, 25);
 
 		if ($proofratings_status == 'active' ) {
-			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), 'manage_options', 'proofratings', $main_screen);
-			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), 'manage_options', 'proofratings-analytics', [$this->analytics, 'output']);
+			add_submenu_page('proofratings', __('Proofratings', 'proofratings'), __('Proofratings', 'proofratings'), $capability, 'proofratings', $main_screen);
+			add_submenu_page('proofratings', __('Proofratings Analytics', 'proofratings'), __('Analytics', 'proofratings'), $capability, 'proofratings-analytics', [$this->analytics, 'output']);
 		
-			add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), 'manage_options', $rating_badges->menu_slug, [$rating_badges, 'render']);
+			add_submenu_page('proofratings', $rating_badges->get_menu_label(), $rating_badges->get_menu_label(), $capability, $rating_badges->menu_slug, [$rating_badges, 'render']);
 			
 
-			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), 'manage_options', 'proofratings-settings', [$this->settings_page, 'settings']);
-			add_submenu_page('proofratings', __('Support', 'proofratings'), __('Support', 'proofratings'), 'manage_options', 'proofratings-support', [$this->settings_page, 'support']);
+			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), $capability, 'proofratings-settings', [$this->settings_page, 'settings']);
+			add_submenu_page('proofratings', __('Support', 'proofratings'), __('Support', 'proofratings'), $capability, 'proofratings-support', [$this->settings_page, 'support']);
 
-			add_submenu_page('', __('Edit Location', 'proofratings'), __('Edit Location', 'proofratings'), 'manage_options', 'proofratings-edit-location', [$this->settings_page, 'edit_location']);
+			add_submenu_page('', __('Edit Location', 'proofratings'), __('Edit Location', 'proofratings'), $capability, 'proofratings-edit-location', [$this->settings_page, 'edit_location']);
 		}
 	}
 
