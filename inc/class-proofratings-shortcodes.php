@@ -264,6 +264,11 @@ class Proofratings_Shortcodes {
 			'column' => false
         ], $atts);
 
+		$location_query = get_proofratings()->query;
+		if ( $location_query->global ) {
+			$atts['id'] = $location_query->get_global_id();
+		}
+
 		$location = get_proofratings()->query->get($atts['id']);		
 		if ( !$location ) {
 			return;
@@ -281,6 +286,8 @@ class Proofratings_Shortcodes {
 
 		$current_widget = isset($settings->$widget_type) ? $settings->$widget_type : [];
 		$current_widget = new Proofratings_Site_Data($current_widget);
+
+		
 		
 		if ( isset($settings->badge_display[$widget_type]) && !$settings->badge_display[$widget_type]) {
 			return;
