@@ -23,6 +23,7 @@ const stateReducer = (state = primary_state, action) => {
 const settings = {
     active_connections: {},
     automated_email_report: {},
+    enable_shema: true,
     schema: ''
 };
 

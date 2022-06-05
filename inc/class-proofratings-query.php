@@ -325,11 +325,11 @@ class Proofratings_Query  {
 	 * @since  1.0.6
 	 */
 	function get_global_id() {
-		if ( sizeof($this->locations) > 0 ) {
-			return $this->locations[0]->location_id;
+		if ( sizeof($this->locations) == 0 ) {
+			return false;
 		}
 		
-		return false;
+		return $this->locations[0]->location_id;		
 	}
 
 	/**

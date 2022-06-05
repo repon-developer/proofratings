@@ -80,6 +80,12 @@ function get_proofratings_settings($key = null) {
         $settings['schema'] = '';
     }
 
+    if ( !isset($settings['enable_shema']) ) {
+        $settings['enable_shema'] = false;
+    }
+
+    $settings['schema'] = wp_specialchars_decode($settings['schema'], ENT_QUOTES);
+
     if ( $key ) {
         return isset($settings[$key]) ? $settings[$key] : false;
     }

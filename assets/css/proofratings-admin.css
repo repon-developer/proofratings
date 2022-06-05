@@ -536,8 +536,8 @@ table.table-review-sites.table-location-overall {filter: blur(2px); pointer-even
 .email-reporting-wrap .form-table {max-width: 900px}
 
 .schema-wrapper {display: flex; gap: 40px; align-items: flex-start;}
-.schema-wrapper .left-column {flex: 0 0 auto; width: 450px;}
-.schema-wrapper textarea {width: 100%; padding: 10px; font-size: 15px; min-height: 500px; border-color: #C5C6CD; box-shadow: none!important}
+.schema-wrapper .left-column {flex: 0 0 auto; width: 500px;}
+.schema-wrapper textarea {width: 100%; padding: 10px; font-size: 15px; min-height: 560px; border-color: #C5C6CD; box-shadow: none!important}
 
 .proofratings-join-date {
     font-weight: bold;

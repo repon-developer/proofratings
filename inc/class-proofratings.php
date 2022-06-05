@@ -72,11 +72,12 @@ class Proofratings {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
+		add_action( 'wp_head', [$this, 'add_schema_markup']);
+
 		add_action( 'wp_footer', [ $this, 'overall_ratings_float' ] );
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
 
 		add_action( 'init', [$this, 'register_scripts']);
-
 	}
 
 	/**
@@ -111,8 +112,6 @@ class Proofratings {
 			'callback' => [$this, 'set_reviews'],
 			'permission_callback' => '__return_true'
 		));
-
-
 
 		register_rest_route( 'proofratings/v1', 'save_location_settings', array(
 			'methods' => 'POST',
@@ -177,8 +176,6 @@ class Proofratings {
 		if ( !isset($settings['connections_approved']) ) {
 			$settings['connections_approved'] = [];
 		}
-
-		//error_logs($request->get_params());
 
 		update_proofratings_settings($settings);
 		$this->clear_cache();
@@ -322,24 +319,42 @@ class Proofratings {
 
 	/**
 	 * Overrall Ratings Rectangle  badge on frontend
+	 * @since 1.1.7
+	 */
+	public function add_schema_markup() {
+		$query = get_proofratings()->query;
+		$location = $query->get($query->get_global_id());
+		if ( !$location ) {
+			return;
+		}
+
+		$settings = get_proofratings_settings();
+		if ( !$settings['enable_shema'] ) {
+			return;
+		}
+
+		$schema = get_proofratings_settings('schema');
+		if ( empty($schema)) {
+			return;
+		}
+
+		$schema = str_replace('{{bestRating}}', 5, $schema);
+		$schema = str_replace('{{ratingValue}}', $location->overall_reviews->rating, $schema);
+		$schema = str_replace('{{ratingCount}}', $location->overall_reviews->reviews, $schema);
+		$schema = json_decode($schema);
+		if ( is_object($schema)) {
+			echo '<script id=""proofratings-schema" type="application/ld+json">' . stripslashes(json_encode($schema, JSON_PRETTY_PRINT)) . '</script>';
+		}
+	}
+
+	/**
+	 * Overrall Ratings Rectangle  badge on frontend
 	 * @since 1.0.4
 	 */
 	public function overall_ratings_float() {
 		$locations = get_proofratings()->query->locations;
 
 		foreach ($locations as $location) {
-			$schema = $location->settings->schema;
-			if ( !empty($schema)) {
-				$schema = str_replace('{{ratingValue}}', $location->ratings->rating, $schema);
-				$schema = str_replace('{{bestRating}}', 5, $schema);
-				$schema = str_replace('{{ratingCount}}', $location->ratings->count, $schema);
-			}
-
-			$schema = json_decode($schema);
-			if ( is_object($schema)) {
-				echo '<script type="application/ld+json">' . stripslashes(json_encode($schema, JSON_PRETTY_PRINT)) . '</script>';
-			}
-
 			if( !isset($location->settings->badge_display['overall_rectangle_float']) || !$location->settings->badge_display['overall_rectangle_float'] ) {
 				continue;
 			}
