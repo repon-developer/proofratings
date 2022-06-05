@@ -116,6 +116,14 @@
         $(".analytics-information-alltime .hovers .counter").html(state.total_hover);
         $(".analytics-information-alltime .clicks .counter").html(state.total_clicks);
         $(".analytics-information-alltime .engagements .counter").html(state.total_engagement);
+
+        const alltile_conversions = parseInt(state?.total_conversions);
+        $(".analytics-information-alltime .conversions .counter").html(alltile_conversions);
+        if ( alltile_conversions > 0 ) {
+            $(".analytics-information-alltime .conversions").show();
+        } else {
+            $(".analytics-information-alltime .conversions").hide();
+        }
         
 
 
