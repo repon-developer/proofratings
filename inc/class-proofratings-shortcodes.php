@@ -295,9 +295,6 @@ class Proofratings_Shortcodes {
 		if ( isset($settings->badge_display[$widget_type]) && !$settings->badge_display[$widget_type]) {
 			return;
 		}
-
-		var_dump($current_widget->widget_connections);
-
 		if( !is_array($current_widget->widget_connections)) {
 			return;
 		}

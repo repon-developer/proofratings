@@ -29,11 +29,12 @@ const ProofratingsSettings = () => {
         store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { loading: true } });
 
         const request = jQuery.post(proofratings.ajaxurl, { action: 'get_proofratings_location_settings', location_id: state.location_id }, function (response) {
+            console.log(response)
             if (response?.success == false) {
                 return store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: true, loading: false } });
             }
 
-            //console.log(response.settings)
+            
             store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
             store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: false, loading: false } });
         });

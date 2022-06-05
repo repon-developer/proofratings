@@ -81,11 +81,11 @@ function get_proofratings_settings($key = null) {
     }
 
     if ( !isset($settings['schema']) ) {
-        $settings['schema'] = '';
+        $settings['schema'] = null;
     }
 
-    if ( !isset($settings['enable_shema']) ) {
-        $settings['enable_shema'] = false;
+    if ( !isset($settings['enable_schema']) ) {
+        $settings['enable_schema'] = false;
     }
 
     $settings['schema'] = wp_specialchars_decode($settings['schema'], ENT_QUOTES);
@@ -124,7 +124,7 @@ function get_proofratings_api_args($args = []) {
         'site_url' => get_site_url()
     ), (array) $args);
 
-    return array('body' => $params);
+    return array('body' => $params, 'sslverify' => false);
 }
 
 function proofratings_review_us() {

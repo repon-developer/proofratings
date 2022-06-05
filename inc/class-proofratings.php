@@ -329,7 +329,7 @@ class Proofratings {
 		}
 
 		$settings = get_proofratings_settings();
-		if ( !$settings['enable_shema'] ) {
+		if ( !$settings['enable_schema'] ) {
 			return;
 		}
 
