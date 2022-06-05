@@ -90,26 +90,33 @@
             return get_item ? parseInt(get_item.result) : 0;
         }
 
+        console.log(state)
+
         const clicks = sessoins.map((date) => santize_data((state.clicks || []), date))
         const hovers = sessoins.map((date) => santize_data((state.hovers || []), date));
         const impressions = sessoins.map((date) => santize_data((state.impressions || []), date));
         const conversions = sessoins.map((date) => santize_data((state.conversions || []), date));
         const engagements = sessoins.map((date) => santize_data((state.engagements || []), date));
 
-        $(".analytics-information .impressions .counter").html(impressions.reduce((a, b) => a + b, 0));
-        $(".analytics-information .hovers .counter").html(hovers.reduce((a, b) => a + b, 0));
-        $(".analytics-information .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
-        $(".analytics-information .engagements .counter").html(engagements.reduce((a, b) => a + b, 0));
+        $(".analytics-information-custom .impressions .counter").html(impressions.reduce((a, b) => a + b, 0));
+        $(".analytics-information-custom .hovers .counter").html(hovers.reduce((a, b) => a + b, 0));
+        $(".analytics-information-custom .clicks .counter").html(clicks.reduce((a, b) => a + b, 0));
+        $(".analytics-information-custom .engagements .counter").html(engagements.reduce((a, b) => a + b, 0));
+
 
         const total_conversions = conversions.reduce((a, b) => a + b, 0);
-        $(".analytics-information .conversions .counter").html(total_conversions);
+        $(".analytics-information-custom .conversions .counter").html(total_conversions);
         if (total_conversions > 0 ) {
-            $(".analytics-information .conversions").show();
+            $(".analytics-information-custom .conversions").show();
         } else {
-            $(".analytics-information .conversions").hide()
+            $(".analytics-information-custom .conversions").hide()
         }
 
-        console.log( analytics_input )
+        $(".analytics-information-alltime .impressions .counter").html(state.total_impressions);
+        $(".analytics-information-alltime .hovers .counter").html(state.total_hover);
+        $(".analytics-information-alltime .clicks .counter").html(state.total_clicks);
+        $(".analytics-information-alltime .engagements .counter").html(state.total_engagement);
+        
 
 
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));

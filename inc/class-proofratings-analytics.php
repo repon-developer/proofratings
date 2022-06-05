@@ -116,7 +116,6 @@ class Proofratings_Analytics {
 
 
 			<div class="analytics-row">
-
 				<div>
 					<h3 class="analytics-caption">All-time</h3>
 					<div class="analytics-information analytics-information-alltime">
@@ -154,7 +153,7 @@ class Proofratings_Analytics {
 					<hr style="margin-top: 40px; margin-bottom: 40px">
 
 					<h3 class="analytics-caption">Active</h3>
-					<div class="analytics-information">
+					<div class="analytics-information analytics-information-custom">
 						<div class="impressions">
 							<span class="counter">0</span>
 							<h4 class="name">Impressions</h4>
