@@ -81,7 +81,28 @@ function get_proofratings_settings($key = null) {
     }
 
     if ( !isset($settings['schema']) ) {
-        $settings['schema'] = null;
+        $settings['schema'] = '{
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Proofratings",
+            "image": "https://proofratings.com/wp-content/uploads/2021/08/Proofratings-site-header-logo.svg",
+            "url": "https://proofratings.com/",
+            "telephone": "(833) 662-0706",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "202 N. Dixon Ave.",
+                "addressLocality": "Cary",
+                "addressRegion": "NY",
+                "postalCode": "27513",
+                "addressCountry": "US"
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": {{ratingValue}},
+                "bestRating": "5",
+                "ratingCount": {{ratingCount}}
+            }
+        }';
     }
 
     if ( !isset($settings['enable_schema']) ) {

@@ -10,38 +10,9 @@ const Schema = () => {
         return () => unsubscribe();
     }, [])
 
+    console.log(settings);
+
     const enable_schema = settings?.enable_schema;
-
-    let schema = settings?.schema;
-
-    if ( schema === null ) {
-        schema = `{
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Proofratings",
-            "image": "https://proofratings.com/wp-content/uploads/2021/08/Proofratings-site-header-logo.svg",
-            "url": "https://proofratings.com/",
-            "telephone": "(833) 662-0706",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "202 N. Dixon Ave.",
-                "addressLocality": "Cary",
-                "addressRegion": "NY",
-                "postalCode": "27513",
-                "addressCountry": "US"
-            },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": {{ratingValue}},
-                "bestRating": "5",
-                "ratingCount": {{ratingCount}}
-            }
-        }`;
-    }
-
-    
-
-
 
     return (
         <React.Fragment>
@@ -49,11 +20,11 @@ const Schema = () => {
             <div className="schema-wrapper">
                 <div className='left-column'>
                     <label className="label-switch-checkbox" style={{ marginBottom: 15 }}>
-                        <input className="checkbox-switch" type="checkbox" onChange={(e) => store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { enable_schema: !enable_schema } })} defaultChecked={enable_schema} />
+                        <input className="checkbox-switch" type="checkbox" onChange={(e) => store.dispatch({ type: ACTIONS.ENABLE_SCHEMA, payload: !enable_schema })} defaultChecked={enable_schema} />
                         <span>Disable Schema Markup</span>
                         <span>Enable Schema Markup</span>
                     </label>
-                    <textarea value={settings?.schema} onInput={(e) => store.dispatch({ type: ACTIONS.UPDATE_SCHEMA, payload: e.target.value })}></textarea>
+                    <textarea defaultValue={settings?.schema} onInput={(e) => store.dispatch({ type: ACTIONS.UPDATE_SCHEMA, payload: e.target.value })}></textarea>
                     <p className="description">Add the script block below to the head section of your html.</p>
                 </div>
 

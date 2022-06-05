@@ -6,6 +6,7 @@ const ACTIONS = {
     UPDATE_CONNECTIONS: "UPDATE_CONNECTIONS",
     UPDATE_REPORT: "UPDATE_REPORT",
     UPDATE_SCHEMA: "UPDATE_SCHEMA",
+    ENABLE_SCHEMA: "ENABLE_SCHEMA",
 };
 
 const primary_state = {editing: false, error: null, loading: true, saving: false, location_id: null, settings_tab: 'connections' }
@@ -41,7 +42,12 @@ const settingsReducer = (state = settings, action) => {
             return { ...state, ...payload };
 
         case "UPDATE_SCHEMA":
-            return { ...state, schema: payload };            
+            return { ...state, schema: payload }; 
+
+        case "ENABLE_SCHEMA":
+            return { ...state, enable_schema: payload }; 
+            
+            
 
         default:
             return state;
