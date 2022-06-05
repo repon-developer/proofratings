@@ -33,7 +33,7 @@ const settingsReducer = (state = settings, action) => {
 
     switch (type) {
         case "UPDATE_SETTINGS":
-            return { ...action.payload };
+            return {...state, ...action.payload };
 
         case "UPDATE_CONNECTIONS":
             return { ...state, active_connections: { ...payload } };
