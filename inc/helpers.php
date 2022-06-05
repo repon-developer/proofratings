@@ -20,6 +20,10 @@ class Proofratings_Site_Data {
             $data = (array) $data;
         }
 
+        if ( !is_array($data)) {
+            return $data;
+        }
+
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }

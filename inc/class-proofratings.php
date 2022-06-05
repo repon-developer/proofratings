@@ -369,7 +369,7 @@ class Proofratings {
 			}
 
 			if ( in_array(get_the_ID(), $on_pages) ) {
-				echo do_shortcode(sprintf('[proofratings_overall_rectangle id="%s" float="yes"]', esc_attr($location->id) ));
+				echo do_shortcode(sprintf('[proofratings_overall_rectangle id="%s" float="yes"]', esc_attr($location->location_id) ));
 			}
 		}
 
@@ -388,7 +388,7 @@ class Proofratings {
 			}
 
 			if ( in_array(get_the_ID(), $on_pages) ) {
-				echo do_shortcode(sprintf('[proofratings_overall_narrow id="%s" float="yes"]', esc_attr($location->id) ));
+				echo do_shortcode(sprintf('[proofratings_overall_narrow id="%s" float="yes"]', esc_attr($location->location_id) ));
 			}
 		}
 	}
@@ -398,7 +398,7 @@ class Proofratings {
 	 */
 	public function banner_badge() {
 		$locations = get_proofratings()->query->locations;
-
+				
 		foreach ($locations as $location) {
 			if( !isset($location->settings->badge_display['overall_cta_banner']) || !$location->settings->badge_display['overall_cta_banner'] ) {
 				continue;
@@ -413,8 +413,9 @@ class Proofratings {
 				$on_pages = $location->settings->overall_cta_banner['on_pages'];
 			}
 
+			
 			if ( in_array(get_the_ID(), $on_pages) ) {
-				echo do_shortcode(sprintf('[proofratings_overall_ratings_cta_banner id="%s"]', esc_attr($location->id) ));
+				echo do_shortcode(sprintf('[proofratings_overall_ratings_cta_banner id="%s"]', esc_attr($location->location_id) ));
 			}
 		}
 	}

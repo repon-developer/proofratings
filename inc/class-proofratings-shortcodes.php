@@ -72,6 +72,11 @@ class Proofratings_Shortcodes {
 			'type' => 'rectangle',
         ], $atts);
 
+		$location_query = get_proofratings()->query;
+		if ( $location_query->global ) {
+			$atts['id'] = $location_query->get_global_id();
+		}
+
 		$type = sanitize_title( $atts['type']);
 		if ( !in_array($type, array('rectangle', 'narrow')) ) {
 			$type = 'rectangle';
@@ -197,7 +202,7 @@ class Proofratings_Shortcodes {
 
         ob_start(); 
 		
-        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%1$s" data-location="%1$s">', $overall_reviews->location_id);
+        printf('<div class="proofratings-badges-popup proofratings-badges-popup-%s" data-location="%s">', $overall_reviews->id, $overall_reviews->location_id);
 			printf ('<div class="proofratings-popup-widgets-box" data-column="%d">', $column);
 	        foreach ($review_sites as $key => $site) {
 				$tag = 'div';

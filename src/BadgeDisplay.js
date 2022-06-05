@@ -25,6 +25,8 @@ const BadgeDisplay = (props) => {
     const update_single = (name) => {
         badge_display[name] = !badge_display[name];
         store.dispatch({ type: ACTIONS.BADGE_DISPLAY, payload: badge_display });
+
+        props.save_now({...store.getState(), badge_display});
     }
 
     const handle_copy_shortcode = (attrs, event) => {

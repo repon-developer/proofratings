@@ -69,23 +69,27 @@ const ProofratingsWidgets = (props) => {
         })
     }, []);
 
-    const save_data = () => {
+    const save_data = (updated_settings = false) => {
         if (state.saving) {
             return;
         }
 
         setState({ ...state, saving: true });
 
-        settings.action = 'save_proofratings_location_settings';
-        settings.location_id = location_id;
+        const new_settings = updated_settings === false ? settings : updated_settings;
+        new_settings.action = 'save_proofratings_location_settings';
+        new_settings.location_id = location_id;
 
-        jQuery.post(proofratings.ajaxurl, settings, function (response) {
+        console.log(new_settings);
+
+        jQuery.post(proofratings.ajaxurl, new_settings, function (response) {
             if (response?.success == false) {
                 alert('Something wrong with saving data')
             }
 
+            if ( badge_display === false ) {
+            }
             store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
-
 
             setState({ ...state, saving: false })
         })
@@ -95,7 +99,6 @@ const ProofratingsWidgets = (props) => {
         e.preventDefault();
         store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
     }
-
 
     if (state.loading === true) {
         return <div className="proofraing-progress-msg">Loading...</div>
@@ -135,7 +138,7 @@ const ProofratingsWidgets = (props) => {
                 </div>
             </header>
 
-            {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} />}
+            {current_tab === 'overview' && <BadgeDisplay badge_display={badge_display} id={location_id} save_now={save_data} />}
             {current_tab === 'widget_square' && <BadgeSquare id={location_id} />}
             {current_tab === 'widget_basic' && <BadgeBasic id={location_id} />}
             {current_tab === 'widget_icon' && <Sites_Icon id={location_id} />}
@@ -148,7 +151,7 @@ const ProofratingsWidgets = (props) => {
 
             {current_tab !== 'overview' &&
                 <div className="form-footer">
-                    <button id="btn-proofratings-save" className="button button-primary" onClick={save_data}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
+                    <button id="btn-proofratings-save" className="button button-primary" onClick={() => save_data()}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
                     <a onClick={handle_cancel} className='btn-cancel' href="#">CANCEL</a>
                 </div>
             }
