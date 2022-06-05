@@ -154,7 +154,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_float')} >EDIT BADGE</a>
+                        {badge_display?.overall_rectangle_float && <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_float')} >EDIT BADGE</a>}
                     </li>
 
                     <li>
@@ -165,7 +165,7 @@ const BadgeDisplay = (props) => {
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('overall_narrow_float')} >EDIT BADGE</a>
+                        {badge_display?.overall_narrow_float && <a className="button button-primary" onClick={() => handle_edit('overall_narrow_float')} >EDIT BADGE</a>}
                     </li>
                 </ul>
             </details>
@@ -178,15 +178,15 @@ const BadgeDisplay = (props) => {
 
 
                 <ul className="badge-items-grid">
-                    <li style={{ maxWidth: 800 }}>
-                        <img src={`${proofratings.assets_url}images/cta-badge.png`} alt="Proofratings CTA Banner" />
+                    <li style={{ maxWidth: 1400 }}>
+                        <img style={{height: 'auto'}} src={`${proofratings.assets_url}images/cta-badge.png?v=4`} alt="Proofratings CTA Banner" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_cta_banner} onChange={() => update_single('overall_cta_banner')} />
                             <span>Deactivate</span>
                             <span>Activate</span>
                         </label>
 
-                        <a className="button button-primary" onClick={() => handle_edit('overall_cta_banner')} >EDIT BADGE</a>
+                        {badge_display?.overall_cta_banner && <a className="button button-primary" onClick={() => handle_edit('overall_cta_banner')} >EDIT BADGE</a>}
                     </li>
                 </ul>
             </details>

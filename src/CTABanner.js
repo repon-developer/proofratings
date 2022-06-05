@@ -55,6 +55,20 @@ const CTABanner = (props) => {
 
     const css_style = `.proofratings-banner-badge {${get_styles().join(';')}}`;
 
+    const cta_button_container = () => {
+        console.log(state);
+
+        const button1 = Object.assign({ show: true, text: 'Sign Up' }, state.button1);
+        const button2 = Object.assign({ show: true, text: 'Sign Up' }, state.button2);
+
+        return (
+            <div className="button-container">
+                {(button1.show && button1.text.length) && <div className="proofratings-button button1 has-border">{button1.text}</div>}
+                {/* {(button2.show && button2.text.length) && <div className="proofratings-button button1 has-border">{button2.text}</div>} */}
+            </div>
+        )
+    }
+
     return (
         <React.Fragment>
             <style>{css_style}</style>
@@ -103,7 +117,7 @@ const CTABanner = (props) => {
                                     <label className="label-switch-checkbox">
                                         <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ close_button: !state?.close_button })} checked={state?.close_button} />
                                         <span>Don't allow user to close/hide</span>
-                                        <span>Allow user to close/hide</span>
+                                        <span>Allow close for mobile if click</span>
                                     </label>
 
                                     <div className="gap-5" />
@@ -127,14 +141,12 @@ const CTABanner = (props) => {
                                         </div>
                                         <div className="rating-box">
                                             <span className="proofratings-stars medium">
-                                                <i style={{ width: "96%" }} />
+                                                <i style={{ width: "100%" }} />
                                             </span>
-                                            <span className="rating">4.8 / 5</span>
+                                            <span className="rating">5.0 / 5</span>
                                         </div>
                                         <div className="proofratings-review-count"># customer reviews</div>
-                                        <div className="button-container">
-                                            <div className="proofratings-button button1 has-border">Buy Now</div>
-                                        </div>
+                                        {cta_button_container()}
                                     </div>
                                 </td>
                             </tr>
@@ -188,7 +200,7 @@ const CTABanner = (props) => {
                                     <label>
                                         <input
                                             type="checkbox"
-                                            defaultChecked={state?.button2?.show}
+                                            defaultChecked={state?.button1?.show}
                                             className="checkbox-switch"
                                             onChange={() => handle_button('show', !state.button1?.show)}
                                         /> Second Button

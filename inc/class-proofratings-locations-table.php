@@ -69,6 +69,7 @@ class Proofratings_Locations_Table extends WP_List_Table  {
      * @since 1.0.1
      */
     public function get_bulk_actions() {
+        return;
         $actions = [
             'bulk-delete' => __('Delete', 'proofratings'),
         ];

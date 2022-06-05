@@ -108,8 +108,6 @@ class Proofratings_Analytics {
 					</div>
 					<?php endif; ?>
 
-					<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
-
 					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
 				</div>
 			</header>
@@ -152,7 +150,11 @@ class Proofratings_Analytics {
 
 					<hr style="margin-top: 40px; margin-bottom: 40px">
 
-					<h3 class="analytics-caption">Active</h3>
+					<div class="analytics-title">
+						<h3 class="analytics-caption">Active</h3>
+						<div id="analytics-date"><i class="dashicons dashicons-calendar-alt"></i> <span></span></div>
+					</div>
+
 					<div class="analytics-information analytics-information-custom">
 						<div class="impressions">
 							<span class="counter">0</span>
