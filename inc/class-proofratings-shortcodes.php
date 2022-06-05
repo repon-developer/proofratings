@@ -290,13 +290,13 @@ class Proofratings_Shortcodes {
 		}
 
 		$current_widget = isset($settings->$widget_type) ? $settings->$widget_type : [];
-		$current_widget = new Proofratings_Site_Data($current_widget);
-
-		
+		$current_widget = new Proofratings_Site_Data($current_widget);		
 		
 		if ( isset($settings->badge_display[$widget_type]) && !$settings->badge_display[$widget_type]) {
 			return;
 		}
+
+		var_dump($current_widget->widget_connections);
 
 		if( !is_array($current_widget->widget_connections)) {
 			return;

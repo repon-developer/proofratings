@@ -104,6 +104,22 @@ class Proofratings_Query  {
 		if ( !$location ) {
 			return;
 		}
+
+		if ( !isset($data['widget_square'])) {
+			$data['widget_square'] = [];
+		}
+
+		if ( !isset($data['widget_basic'])) {
+			$data['widget_basic'] = [];
+		}
+
+		if ( !isset($data['widget_icon'])) {
+			$data['widget_icon'] = [];
+		}
+
+		if ( !isset($data['widget_rectangle'])) {
+			$data['widget_rectangle'] = [];
+		}
 		
 		$settings = array_merge((array) maybe_unserialize($location->settings), $data);
 		$result = $wpdb->update($wpdb->proofratings, ['settings' => maybe_serialize( $settings )], ['location_id' => $location_id]);
