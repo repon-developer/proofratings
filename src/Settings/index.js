@@ -33,10 +33,9 @@ const ProofratingsSettings = () => {
             if (response?.success == false) {
                 return store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: true, loading: false } });
             }
-
             
             store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
-            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: false, loading: false } });
+            store.dispatch({ type: ACTIONS.UPDATE_STATE, payload: { error: false, loading: false, reviews: response.reviews } });
         });
 
         request.fail(function () {

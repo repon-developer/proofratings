@@ -62,6 +62,7 @@ class Proofratings_Ajax {
 
 		wp_send_json(array(
 			'global' => get_proofratings()->query->global,
+			'reviews' => $location->reviews,
 			'location_name' => $location->location['name'],
 			'settings' => $location->settings,
 		));

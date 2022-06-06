@@ -9,7 +9,7 @@ const ACTIONS = {
     ENABLE_SCHEMA: "ENABLE_SCHEMA",
 };
 
-const primary_state = {editing: false, error: null, loading: true, saving: false, location_id: null, settings_tab: 'connections' }
+const primary_state = {editing: false, error: null, loading: true, saving: false, location_id: null, reviews: {}, settings_tab: 'connections' }
 
 const stateReducer = (state = primary_state, action) => {
     switch (action.type) {
@@ -25,7 +25,7 @@ const settings = {
     active_connections: {},
     automated_email_report: {},
     enable_schema: true,
-    schema: null
+    schema: null,
 };
 
 const settingsReducer = (state = settings, action) => {

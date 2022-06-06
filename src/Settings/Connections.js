@@ -47,6 +47,8 @@ const SiteConnections = ({ location_id }) => {
         })
     }
 
+    const reviews = store.getState().state?.reviews;
+
     const get_row = (item) => {
         const slug = item.slug;
         const current_connection = (typeof active_connections[slug] === 'object') ? active_connections[slug] : {};
@@ -59,11 +61,13 @@ const SiteConnections = ({ location_id }) => {
         }
 
         const default_items = () => {
+            const review = Object.assign({rating: 0.0, reviews: 0}, reviews?.[slug])
+
             if (review_site.approved === true) {
                 return (
                     <>
-                        <td className="bold">55</td>
-                        <td className="bold">4</td>
+                        <td className="bold">{parseFloat(review.rating).toFixed(1)}</td>
+                        <td className="bold">{review.reviews}</td>
                         <td className="click-through-url">
                             <input type="text" defaultValue={review_site.click_through_url} onInput={(e) => handle_connections(slug, 'click_through_url', e.target.value)} />
                             {isUrl(review_site.click_through_url) ? <a className="fa-solid fa-up-right-from-square" href={review_site.click_through_url} target="_blank"></a> : ''}

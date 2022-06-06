@@ -309,8 +309,7 @@ class Proofratings_Query  {
 
 		$connections_approved = get_proofratings_settings('connections_approved');
 
-		foreach ($locations as $key => $location) {
-	
+		foreach ($locations as $key => $location) {	
 			$location->reviews_connections = [];
 			foreach ($location->active_connections as $key => $connection_info) {
 				if ( !isset($review_sites[$key]) || !in_array($key, $connections_approved)) {
