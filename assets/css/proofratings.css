@@ -163,7 +163,7 @@ html {
 .proofratings-badge.proofratings-badge-narrow .proofratings-reviews {margin-right: 20px;}
 .proofratings-badge.proofratings-badge-narrow .proofratings-review-count {color: var(--review_text_color);}
 
-.proofratings-review-widgets-grid {gap: 30px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fit, minmax(200px, 220px))}
+.proofratings-review-widgets-grid {gap: 30px; display: inline-flex; flex-wrap: wrap; grid-template-columns: repeat(auto-fit, minmax(200px, 220px))}
 .proofratings-review-widgets-grid.proofratings-widgets-grid-basic {grid-template-columns: repeat(auto-fit, minmax(130px, 1fr))}
 .proofratings-review-widgets-grid.proofratings-widgets-grid-rectangle {grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))}
 
