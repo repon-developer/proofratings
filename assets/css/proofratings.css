@@ -601,6 +601,7 @@ html {
 
 @media screen and (max-width: 767px) {
     .badge-hidden-mobile {display: none!important}
+
 }
 
 @media screen and (max-width: 575px) {
@@ -614,8 +615,15 @@ html {
     .proofratings-badges-popup .proofratings-widget:not(:last-child):after {top: auto; bottom: 0; left: 0; right: 0; height: 1px; width: auto}
     
     .proofratings-badge.badge-float:hover {--shadow_hover: transparent!important}
+
+    .proofratings-badge.proofratings-badge-narrow {padding: 8px 15px}
+    .proofratings-badge.proofratings-badge-narrow .proofratings-logos {display: none}
+    .proofratings-badge.proofratings-badge-narrow .proofratings-score {font-size: 16px}
+    .proofratings-badge.proofratings-badge-narrow .proofratings-review-count {font-size: 12px;}
     .proofratings-badge.proofratings-badge-narrow.connected-more {max-width: 80%; flex-wrap: wrap; justify-content: center;}
     .proofratings-badge.proofratings-badge-narrow.connected-more .proofratings-logos {flex: 0 0 100%; margin-right: 0; margin-bottom: 5px;}
+    .proofratings-badge.proofratings-badge-narrow .proofratings-stars {width: 88px!important}
+    .proofratings-badge.proofratings-badge-narrow :is(.proofratings-stars, .proofratings-stars i) {-webkit-mask-size: 18px 13px}
 
     .proofratings-badge.badge-float .proofratings-close {display: none;}
 }

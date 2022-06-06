@@ -95,7 +95,9 @@ class Proofratings_Query  {
 				unset($settings['active_connections']);
 			}
 
-			return update_option('proofratings_overall_rating_settings', $settings);
+			$result = update_option('proofratings_overall_rating_settings', $settings);
+			do_action( 'proofrating_location_save_settings' );
+			return $result;
 		}
 
 		global $wpdb;

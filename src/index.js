@@ -80,16 +80,14 @@ const ProofratingsWidgets = (props) => {
         new_settings.action = 'save_proofratings_location_settings';
         new_settings.location_id = location_id;
 
-        console.log(new_settings);
-
         jQuery.post(proofratings.ajaxurl, new_settings, function (response) {
             if (response?.success == false) {
                 alert('Something wrong with saving data')
             }
 
-            if ( badge_display === false ) {
+            if ( updated_settings === false ) {
+                //store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
             }
-            store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
 
             setState({ ...state, saving: false })
         })
