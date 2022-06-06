@@ -150,7 +150,7 @@ function get_proofratings_api_args($args = []) {
 
 function proofratings_review_us() {
     $screen = get_current_screen();
-    preg_match('/(toplevel_page_proofratings)/', $screen->id, $matches);
+    preg_match('/(toplevel_page_proofratings)$/', $screen->id, $matches);
     if ( !$matches  ) {
         return;
     } ?>
