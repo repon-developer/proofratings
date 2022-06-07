@@ -1,14 +1,14 @@
-import store, { ACTIONS } from '../widgets/Store';
+import store, { ACTIONS, get_proofrating, get_settings } from '../widgets/Store';
 import ColorPicker from "./../Component/ColorPicker";
 import ActiveSites from './../Component/ActiveSites';
 
 const { useState, useEffect } = React;
 
 const BadgeBasic = (props) => {
-    const [state, setState] = useState(store.getState().widget_basic)
+    const [state, setState] = useState(get_settings().widget_basic)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().widget_basic))
+        const unsubscribe = store.subscribe(() => setState(get_settings().widget_basic))
         return () => unsubscribe();
     }, [])
 
@@ -65,7 +65,7 @@ const BadgeBasic = (props) => {
             <div className="proofratings-review-widgets-grid proofratings-widget-grid-basic">
                 <div className={widget_classes}>
                     <div className="review-site-logo">
-                        <img src={`${proofratings.assets_url}images/google.svg`} alt="Google" />
+                        <img src={`${get_proofrating().assets_url}images/google.svg`} alt="Google" />
                     </div>
 
                     <div className="proofratings-stars"><i style={{ width: '100%' }} /></div>

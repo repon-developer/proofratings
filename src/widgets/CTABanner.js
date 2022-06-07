@@ -1,4 +1,4 @@
-import store, { ACTIONS } from "../widgets/Store";
+import store, { ACTIONS, get_proofrating, get_settings } from "../widgets/Store";
 import ColorPicker from "./../Component/ColorPicker";
 
 import Button from "../Component/Button";
@@ -7,10 +7,10 @@ import Pages from "../Component/Pages";
 const { useState, useEffect } = React;
 
 const CTABanner = (props) => {
-    const [state, setState] = useState(store.getState().overall_cta_banner);
+    const [state, setState] = useState(get_settings().overall_cta_banner);
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().overall_cta_banner));
+        const unsubscribe = store.subscribe(() => setState(get_settings().overall_cta_banner));
         return () => unsubscribe();
     }, [])
 
@@ -56,14 +56,12 @@ const CTABanner = (props) => {
     const css_style = `.proofratings-banner-badge {${get_styles().join(';')}}`;
 
     const cta_button_container = () => {
-        console.log(state);
-
         const button1 = Object.assign({ show: true, text: 'Sign Up' }, state.button1);
         const button2 = Object.assign({ show: true, text: 'Sign Up' }, state.button2);
 
         return (
             <div className="button-container">
-                {(button1.show && button1.text.length) && <div className="proofratings-button button1 has-border">{button1.text}</div>}
+                {(button1.show === true && button1.text.length) && <div className="proofratings-button button1 has-border">{button1.text}</div>}
                 {/* {(button2.show && button2.text.length) && <div className="proofratings-button button1 has-border">{button2.text}</div>} */}
             </div>
         )
@@ -75,7 +73,7 @@ const CTABanner = (props) => {
 
             <div className="proofratings-copyarea">
                 <h3>Webhook URL</h3>
-                <code className="shortocde-area">{proofratings.api}/webhooks?id={props?.id}&amp;site_url={proofratings.site_url}</code>
+                <code className="shortocde-area">{get_proofrating().api}/webhooks?id={props?.id}&amp;site_url={get_proofrating().site_url}</code>
                 <p className="description">
                     Use this URL to track conversions. And the URL to any software you use for <br /> your Call-to-action button(s). <br />
                     Note: Set the webhook as a POST.
@@ -136,8 +134,8 @@ const CTABanner = (props) => {
                                 <td colSpan={2} style={{ paddingLeft: 0 }}>
                                     <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
                                         <div className="proofratings-logos">
-                                            <img src={`${proofratings.assets_url}/images/icon-google.png`} alt="google" />
-                                            <img src={`${proofratings.assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
+                                            <img src={`${get_proofrating().assets_url}/images/icon-google.png`} alt="google" />
+                                            <img src={`${get_proofrating().assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
                                         </div>
                                         <div className="rating-box">
                                             <span className="proofratings-stars medium">

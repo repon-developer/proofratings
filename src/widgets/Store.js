@@ -1,4 +1,4 @@
-import { createStore, createRe } from "redux";
+import { createStore } from "redux";
 
 const ACTIONS = {
     OVERALL_SAVE: "OVERALL_SAVE",
@@ -89,11 +89,15 @@ const settingsReducer = (state = settings, action) => {
 
 const store = createStore(settingsReducer);
 
+const get_proofrating = () => proofratings
+
+const get_settings = () => store.getState()
+
 const get_connections = () => {
     const active_connections = store.getState().active_connections;
     
-    let connections = Object.keys(proofratings.review_sites).map(key => {
-        return {slug: key, approved: proofratings.connections_approved.includes(key),  ...proofratings.review_sites[key]}
+    let connections = Object.keys(get_proofrating().review_sites).map(key => {
+        return {slug: key, approved: get_proofrating().connections_approved.includes(key),  ...get_proofrating().review_sites[key]}
     })
 
     
@@ -126,4 +130,4 @@ const copy_shortcode = (attrs, event) => {
 
 export default store;
 
-export { ACTIONS, get_connections, copy_shortcode };
+export { ACTIONS, get_proofrating, get_settings, get_connections, copy_shortcode };

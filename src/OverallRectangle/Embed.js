@@ -5,8 +5,6 @@ import Link from '../Component/Link'
 import Border from "./../Component/Border";
 import Shadow from "./../Component/Shadow";
 
-import ActiveSites from "../Component/ActiveSites";
-
 const { useState, useEffect } = React;
 
 const OverallRectangle_Embed = (props) => {

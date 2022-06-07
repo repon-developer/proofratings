@@ -1,4 +1,4 @@
-import store, { ACTIONS } from '../widgets/Store';
+import store, { ACTIONS, get_proofrating, get_settings } from '../widgets/Store';
 import ColorPicker from "./../Component/ColorPicker";
 import Border from "./../Component/Border";
 import Shadow from "./../Component/Shadow";
@@ -7,10 +7,10 @@ import ActiveSites from './../Component/ActiveSites'
 const { useState, useEffect } = React;
 
 const BadgeRectangle = (props) => {
-    const [state, setState] = useState(store.getState().widget_rectangle)
+    const [state, setState] = useState(get_settings().widget_rectangle)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().widget_rectangle))
+        const unsubscribe = store.subscribe(() => setState(get_settings().widget_rectangle))
         return () => unsubscribe();
     }, [])
 
@@ -96,7 +96,7 @@ const BadgeRectangle = (props) => {
 
             <div id={`proofratings-widgets-${props?.id}`} className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
                 <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
-                    <div className="review-site-logo"><img src="https://proofratings.me/wp-content/plugins/proofratings/assets/images/energysage.svg" alt="Energy Sage" /></div>
+                    <div className="review-site-logo"><img src={`${get_proofrating().assets_url}/images/energysage.svg`} alt="Energy Sage" /></div>
 
                     <div className="proofratings-reviews" itemProp="reviewRating">
                         <span className="proofratings-score">5.0</span>

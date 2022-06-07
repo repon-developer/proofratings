@@ -1,4 +1,4 @@
-import store, { ACTIONS, get_connections } from './Store';
+import store, { ACTIONS, get_proofrating, get_settings, get_connections } from './Store';
 import ColorPicker from "./../Component/ColorPicker";
 import Border from "./../Component/Border";
 import Shadow from "./../Component/Shadow";
@@ -7,10 +7,10 @@ import ActiveSites from './../Component/ActiveSites';
 const { useState, useEffect } = React;
 
 const BadgeSquare = (props) => {
-    const [state, setState] = useState(store.getState().widget_square)
+    const [state, setState] = useState( get_settings().widget_square)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().widget_square))
+        const unsubscribe = store.subscribe(() => setState(get_settings().widget_square))
         return () => unsubscribe();
     }, [])
 
@@ -79,7 +79,7 @@ const BadgeSquare = (props) => {
     }
 
     const get_widget = () => {
-        const connection = Object.assign({logo: `${proofratings.assets_url}images/google.svg`, reviews: '#'}, get_connections(true)[0]);
+        const connection = Object.assign({logo: `${get_proofrating().assets_url}images/google.svg`, reviews: '#'}, get_connections(true)[0]);
 
         return (
             <React.Fragment>

@@ -1,14 +1,14 @@
-import store, { ACTIONS } from './Store';
+import store, { ACTIONS, get_proofrating, get_settings } from './Store';
 import ColorPicker from "./../Component/ColorPicker";
 import ActiveSites from './../Component/ActiveSites';
 
 const { useState, useEffect } = React;
 
 const Sites_Icon = (props) => {
-    const [state, setState] = useState(store.getState().widget_icon)
+    const [state, setState] = useState(get_settings().widget_icon)
 
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => setState(store.getState().widget_icon))
+        const unsubscribe = store.subscribe(() => setState(get_settings().widget_icon))
         return () => unsubscribe();
     }, [])
 
@@ -58,8 +58,8 @@ const Sites_Icon = (props) => {
 
             <div className="proofratings-review-widgets-grid proofratings-widget-grid-icon" style={{ padding: '10px 15px', backgroundColor: '#fff' }}>
                 <div className={widget_classes}>
-                    <div className="review-site-logo" style={{ WebkitMaskImage: `url(${proofratings.assets_url}images/icon3-yelp.svg)` }}>
-                        <img src={`${proofratings.assets_url}images/icon3-yelp.svg`} alt="Yelp" />
+                    <div className="review-site-logo" style={{ WebkitMaskImage: `url(${get_proofrating().assets_url}images/icon3-yelp.svg)` }}>
+                        <img src={`${get_proofrating().assets_url}images/icon3-yelp.svg`} alt="Yelp" />
                     </div>
 
                     <div className="review-info-container">
