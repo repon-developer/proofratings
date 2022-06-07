@@ -1,5 +1,5 @@
 (function ($) {
-    if ( !$('#analytics-chart').length ) {
+    if (!$('#analytics-chart').length) {
         return;
     }
 
@@ -59,13 +59,28 @@
                         maxTicksLimit: 12
                     },
                 }
-            },  
+            },
+
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        boxWidth: 40,
+                        boxHeight: 40,
+                        padding: 50,
+                        font: {
+                            lineHeight: 90,
+                        }
+                    }
+                }
+            }
         },
     });
 
 
-    const analytics_input = $("#analytics-date"), proofratings_analytics = (state, action) => ({...state, ...action.payload})
-    
+    const analytics_input = $("#analytics-date"), proofratings_analytics = (state, action) => ({ ...state, ...action.payload })
+
 
     const update_dashboard = (state, monthly = false) => {
 
@@ -79,7 +94,7 @@
                 sessions.push(now.format(date_format));
                 now.add(1, add_session);
             }
-            
+
             return sessions;
         };
 
@@ -106,7 +121,7 @@
 
         const total_conversions = conversions.reduce((a, b) => a + b, 0);
         $(".analytics-information-custom .conversions .counter").html(total_conversions);
-        if (total_conversions > 0 ) {
+        if (total_conversions > 0) {
             $(".analytics-information-custom .conversions").show();
         } else {
             $(".analytics-information-custom .conversions").hide()
@@ -119,19 +134,19 @@
 
         const alltile_conversions = parseInt(state?.total_conversions);
         $(".analytics-information-alltime .conversions .counter").html(alltile_conversions);
-        if ( alltile_conversions > 0 ) {
+        if (alltile_conversions > 0) {
             $(".analytics-information-alltime .conversions").show();
         } else {
             $(".analytics-information-alltime .conversions").hide();
         }
-        
+
 
 
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
 
-        analyticsChart.data.labels = sessoins.map((date) =>moment(date).format("DD MMM"));        
-        if ( monthly ) {
-            analyticsChart.data.labels = sessoins.map((date) =>moment(date).format("MMM YY"));
+        analyticsChart.data.labels = sessoins.map((date) => moment(date).format("DD MMM"));
+        if (monthly) {
+            analyticsChart.data.labels = sessoins.map((date) => moment(date).format("MMM YY"));
         }
 
         analyticsChart.data.datasets[0].data = impressions;
@@ -154,14 +169,14 @@
 
     analytics_store.subscribe(() => {
         const state = analytics_store.getState();
-        const {start, end, domain, location } = state;
+        const { start, end, domain, location } = state;
 
-        const monthly =  (moment(new Date(end)).diff(new Date(start), 'months', true)) > 6;
+        const monthly = (moment(new Date(end)).diff(new Date(start), 'months', true)) > 6;
 
-        const data = {site_url: proofratings.site_url, monthly, domain, location, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59")}
+        const data = { site_url: proofratings.site_url, monthly, domain, location, start: start.format("YYYY-MM-DD 00:00:00"), end: end.format("YYYY-MM-DD 23:59:59") }
 
         const request = $.get(proofratings.api + '/stats', data, (payload) => {
-            update_dashboard({...state, ...payload}, monthly);
+            update_dashboard({ ...state, ...payload }, monthly);
         });
 
         request.always(function () {
@@ -169,14 +184,14 @@
         });
     })
 
-    $('.analytics-filter .location-filter').on('change', function(){
-        analytics_store.dispatch({type: 'UPDATE', payload: {location: $(this).val()}})
+    $('.analytics-filter .location-filter').on('change', function () {
+        analytics_store.dispatch({ type: 'UPDATE', payload: { location: $(this).val() } })
     })
 
-    var start = analytics_store.getState().start, end = analytics_store.getState().end;    
+    var start = analytics_store.getState().start, end = analytics_store.getState().end;
 
     const update_date_string = (start, end) => {
-        analytics_store.dispatch({type: 'UPDATE', payload: {start, end}})
+        analytics_store.dispatch({ type: 'UPDATE', payload: { start, end } })
     };
 
     analytics_input.daterangepicker({
