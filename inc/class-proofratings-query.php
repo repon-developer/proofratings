@@ -104,7 +104,7 @@ class Proofratings_Query  {
 
 		$location = $this->get($location_id);
 		if ( !$location ) {
-			return;
+			return false;
 		}
 
 		if ( !isset($data['widget_square'])) {

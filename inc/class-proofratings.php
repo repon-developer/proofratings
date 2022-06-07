@@ -78,6 +78,8 @@ class Proofratings {
 		add_action( 'wp_footer', [ $this, 'banner_badge' ] );
 
 		add_action( 'init', [$this, 'register_scripts']);
+
+		add_action( "proofrating_location_save_settings", [ $this, 'clear_cache' ]);
 	}
 
 	/**
@@ -243,23 +245,41 @@ class Proofratings {
 	 */
 	public function get_location_settings(WP_REST_Request $request) {
 		$this->clear_cache();
-		$location = $this->locations->get($request->get_param('location_id'));
-		if ( isset($location->settings) ) {
-			return $location->settings;
+		$location = $this->query->get($request->get_param('location_id'));
+		if ( !$location ) {
+			return new WP_Error('location_404', 'No location found');
 		}
 
-		return false;
+		$location->settings->schema = get_proofratings_settings('schema');
+		$location->settings->enable_shema = get_proofratings_settings('enable_shema');
+
+		$settings = get_proofratings_settings();
+
+		return array(
+			'global' => $location->global,
+			'reviews' => $location->reviews,
+			'location_name' => $location->location['name'],
+			'settings' => $location->settings,
+			'proofratings' => array(
+				'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
+				'review_sites' => get_proofratings_review_sites(),
+				'pages' => get_pages(),
+				'global' => get_proofratings()->query->global,
+				'locations' => get_proofratings()->query->get_locations(),
+				'connections_approved' => $settings['connections_approved'],
+				'agency' => $settings['agency'],
+				'stylesheet' => PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css'
+			)
+		);
 	}
 
 	/**
 	 * proofratings rest api callback
 	 */
 	public function save_location_settings(WP_REST_Request $request) {
-		$settings = $request->get_params();
-
-		$location_id = $settings['location_id'];
-		unset($settings['location_id']);
-		return $this->locations->save_settings($location_id, $settings);
+		$location_id = $request->get_param('location_id');
+		$settings = $request->get_param('settings');		
+		return $this->query->save_settings($location_id, $settings);
 	}
 
 	/**
