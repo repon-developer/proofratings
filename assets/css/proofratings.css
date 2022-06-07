@@ -48,7 +48,7 @@ html {
     width: var(--size);
     height: var(--size);
     text-align: center;
-    line-height: 1em;
+    line-height: 19px;
     border-radius: 100px;
     position: absolute;
     z-index: 56;
@@ -527,9 +527,9 @@ html {
 
 .proofratings-banner-badge .rating-box .rating {color: inherit; font-size: 14px; font-weight: bold; line-height: 1.5;}
 
-.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); line-height: 1.1; margin: 0 100px 0 0; font-weight: normal;}
-
-.proofratings-banner-badge .button-container {display:flex; align-items: center; justify-content: center; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
+.proofratings-banner-badge .proofratings-review-count {color: var(--reviewCountTextcolor); line-height: 1.1; font-weight: normal;}
+.proofratings-banner-badge .button-container {display:flex; align-items: center; margin-inline-start: 100px; justify-content: center; flex-wrap: wrap; column-gap: 30px; row-gap: 10px;}
+.proofratings-banner-badge .button-container:empty {display: none!important}
 
 .proofratings-banner-badge .proofratings-button {
     color: #fff;
@@ -595,25 +595,17 @@ html {
 
 @media screen and (max-width: 1199px) {
     .proofratings-banner-badge {padding-top: 25px; padding-bottom: 25px;}
-    .proofratings-banner-badge .proofratings-review-count {margin-right: 0;}
-    .proofratings-banner-badge .button-container {flex: 0 0 100%}
+    .proofratings-banner-badge .button-container {flex: 0 0 100%; margin-inline-start: 0}
 }
 
 @media screen and (max-width: 767px) {
     .badge-hidden-mobile {display: none!important}
-
 }
 
 @media screen and (max-width: 575px) {
-    .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin-bottom: -5px;}
-    .proofratings-banner-badge .rating-box {margin-right: 0;}
-    .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%}
-
     .proofratings-popup-widgets-box {--column: 1!important; justify-content: center;}
-
     
     .proofratings-badges-popup .proofratings-widget:not(:last-child):after {top: auto; bottom: 0; left: 0; right: 0; height: 1px; width: auto}
-    
     .proofratings-badge.badge-float:hover {--shadow_hover: transparent!important}
 
     .proofratings-badge.proofratings-badge-narrow {padding: 8px 15px}
@@ -626,4 +618,18 @@ html {
     .proofratings-badge.proofratings-badge-narrow :is(.proofratings-stars, .proofratings-stars i) {-webkit-mask-size: 18px 13px}
 
     .proofratings-badge.badge-float .proofratings-close {display: none;}
+
+    .proofratings-badge.proofratings-badge-rectangle.badge-float {min-width: 0; --padx: 15px}
+    .proofratings-badge.proofratings-badge-rectangle.badge-float .proofratings-inner {padding-block: 8px}
+    .proofratings-badge.proofratings-badge-rectangle.badge-float .proofratings-review-count {padding-block: 8px}
+    .proofratings-badge.proofratings-badge-rectangle.badge-float .proofratings-logos {display: none}
+    .proofratings-badge.proofratings-badge-rectangle.badge-float .proofratings-score {font-size: 16px}
+    .proofratings-badge.proofratings-badge-rectangle.badge-float .proofratings-stars {width: 88px!important}
+    .proofratings-badge.proofratings-badge-rectangle.badge-float :is(.proofratings-stars, .proofratings-stars i) {-webkit-mask-size: 18px 13px}
+
+    /* .proofratings-banner-badge .proofratings-logos {flex: 0 0 100%; margin-bottom: -5px;}
+    .proofratings-banner-badge .rating-box {margin-right: 0;}
+    .proofratings-banner-badge .proofratings-review-count {flex: 0 0 100%} */
+    .proofratings-banner-badge .proofratings-logos {display: none}
+    .proofratings-banner-badge .proofratings-review-count span {display: none}
 }

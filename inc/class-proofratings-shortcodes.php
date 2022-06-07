@@ -507,11 +507,9 @@ class Proofratings_Shortcodes {
 				<span class="rating"><?php echo esc_html($location->overall_reviews->rating); ?> / 5</span>
 			</div>
 
-			<div class="proofratings-review-count"><?php echo esc_html($location->overall_reviews->reviews); ?> customer reviews</div>
+			<div class="proofratings-review-count"><?php echo esc_html($location->overall_reviews->reviews); ?> <span>customer reviews</span></div>
 
-			<div class="button-container">
-				<?php echo wp_kses_post($button1 . $button2); ?>
-			</div>
+			<div class="button-container"><?php echo wp_kses_post($button1 . $button2); ?></div>
 		</div>
 		<?php
 

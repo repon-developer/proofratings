@@ -292,7 +292,7 @@ class Proofratings_Settings {
 				<h1 class="title"><?php _e('Proofratings Main Menu', 'proofratings') ?></h1>
 
 				<?php 
-					if ( $join_date = wp_date('d-m-Y', strtotime(get_proofratings_settings('registered')) ) ) {
+					if ( $join_date = wp_date(get_option( 'date_format'), strtotime(get_proofratings_settings('registered')) ) ) {
 						printf('<span class="proofratings-join-date">Date Joined: %s</span>', $join_date);
 					}
 				?>
