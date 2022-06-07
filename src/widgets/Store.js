@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 
-import { widget_primary_state } from "../global";
+import { get_proofrating } from "../global";
 
 const ACTIONS = {
     OVERALL_SAVE: "OVERALL_SAVE",
@@ -14,6 +14,48 @@ const ACTIONS = {
     WIDGET_RECTANGLE: "WIDGET_RECTANGLE",
 
     OVERALL_CTA_BANNER: "OVERALL_CTA_BANNER",
+};
+
+
+
+const widget_primary_state = {
+    current_tab: 'overview',
+    overview_summary_tab: 'embedded-badges',
+    active_connections: [],
+    badge_display: {
+        widget_square: false,
+        widget_basic: false,
+        widget_icon: false,
+        widget_rectangle: false,
+        overall_cta_banner: false,
+        overall_rectangle_embed: false,
+        overall_rectangle_float: false,
+        overall_narrow_embed: false,
+        overall_narrow_float: false
+    },
+    widget_square: { widget_connections: [] },
+    widget_basic: { widget_connections: [] },
+    widget_icon: { widget_connections: [] },
+    widget_rectangle: { widget_connections: [] },
+
+    overall_rectangle_embed: {},
+    overall_rectangle_float: { tablet: true, mobile: true, close_button: true },
+
+    overall_narrow_embed: {},
+    overall_narrow_float: { tablet: true, mobile: true, close_button: true },
+
+    overall_popup: {},
+    overall_cta_banner: {
+        shadow: true,
+        tablet: true,
+        mobile: true,
+        close_button: true,
+        hide_on: [],
+        button1: {
+            show: true,
+            text: 'Sign Up'
+        }
+    }
 };
 
 const settingsReducer = (state = widget_primary_state, action) => {
@@ -52,8 +94,6 @@ const settingsReducer = (state = widget_primary_state, action) => {
 
 const store = createStore(settingsReducer);
 
-const get_proofrating = () => proofratings
-
 const get_settings = () => store.getState()
 
 const get_connections = () => {
@@ -69,28 +109,7 @@ const get_connections = () => {
     return connections;
 }
 
-const copy_shortcode = (attrs, event) => {
-    if ( event.target ) {
-        event.preventDefault();
-    }
-
-    const shorcode = Object.assign({slug: 'proofratings_widgets', id: '', style: ''}, attrs);
-
-    let shortcode_text = '[' + shorcode.slug;
-    
-    if ( shorcode.style.length ) {
-        shortcode_text += ` style="${shorcode.style}"`
-    }
-
-    if ( !Boolean(get_proofrating()?.global) ) {
-        shortcode_text += ` id="${shorcode?.id}"`;
-    }
-
-    shortcode_text += ']';
-
-    navigator.clipboard.writeText(shortcode_text)
-}
 
 export default store;
 
-export { ACTIONS, get_proofrating, get_settings, get_connections, copy_shortcode };
+export { ACTIONS, get_settings, get_connections };

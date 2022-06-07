@@ -1,4 +1,4 @@
-import { get_proofrating } from '../widgets/Store'
+import { get_proofrating } from "../global";
 
 const Widgets = (props) => {
 

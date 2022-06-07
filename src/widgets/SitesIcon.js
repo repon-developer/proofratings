@@ -1,4 +1,5 @@
-import store, { ACTIONS, get_proofrating, get_settings } from './Store';
+import store, { ACTIONS, get_settings } from './Store';
+import { get_proofrating } from "../global";
 import ColorPicker from "./../Component/ColorPicker";
 import ActiveSites from './../Component/ActiveSites';
 

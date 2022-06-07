@@ -1,4 +1,5 @@
-import store, { ACTIONS, get_proofrating, get_settings, get_connections } from './Store';
+import store, { ACTIONS, get_settings, get_connections } from './Store';
+import { get_proofrating } from "../global";
 import ColorPicker from "./../Component/ColorPicker";
 import Border from "./../Component/Border";
 import Shadow from "./../Component/Shadow";

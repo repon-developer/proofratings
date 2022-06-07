@@ -9,9 +9,22 @@ const ACTIONS = {
     ENABLE_SCHEMA: "ENABLE_SCHEMA",
 };
 
-const primary_state = {editing: false, error: null, loading: true, saving: false, location_id: null, reviews: {}, settings_tab: 'connections' }
+const settings_primary_state = {
+    state: {
+        active_connections: {},
+        automated_email_report: {},
+        enable_schema: true,
+        schema: null,
+    },
+    settings: {
+        active_connections: {},
+        automated_email_report: {},
+        enable_schema: true,
+        schema: null,
+    }
+}
 
-const stateReducer = (state = primary_state, action) => {
+const stateReducer = (state = settings_primary_state.state, action) => {
     switch (action.type) {
         case "UPDATE_STATE":
             return { ...state, ...action.payload };
@@ -21,14 +34,7 @@ const stateReducer = (state = primary_state, action) => {
     }
 };
 
-const settings = {
-    active_connections: {},
-    automated_email_report: {},
-    enable_schema: true,
-    schema: null,
-};
-
-const settingsReducer = (state = settings, action) => {
+const settingsReducer = (state = settings_primary_state.settings, action) => {
     const { type, payload } = action
 
     switch (type) {
