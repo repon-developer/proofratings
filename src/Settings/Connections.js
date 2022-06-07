@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
-
 import store, { ACTIONS, update_store } from './Store';
+import { get_proofrating } from '../global';
 
 const SiteConnections = ({ location_id }) => {
     const [search, setSearch] = useState('')
