@@ -1,3 +1,6 @@
+
+import { get_proofrating } from "../widgets/Store";
+
 const { useEffect } = React;
 
 const Pages = (props) => {
@@ -8,7 +11,7 @@ const Pages = (props) => {
             return;
         }
 
-        const on_pages = proofratings.pages.map(page => page.ID);
+        const on_pages = get_proofrating().pages.map(page => page.ID);
         props.onUpdate({ on_pages })
     }, [])
 
@@ -26,7 +29,7 @@ const Pages = (props) => {
     return (
         <table className="form-table">
             <tbody>
-                {proofratings.pages.map(page => (
+                {get_proofrating().pages.map(page => (
                     <tr key={page.ID}>
                         <th scope="row">{page.post_title}</th>
                         <td>

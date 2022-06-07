@@ -1,3 +1,4 @@
+import { get_proofrating } from '../widgets/Store'
 import ColorPicker from "./ColorPicker";
 
 const PopupWidget = (props) => {
@@ -48,7 +49,7 @@ const PopupWidget = (props) => {
                 <div className="proofratings-popup-widgets-box" data-column={2}>
                     <div className={widget_class}>
                         <div className="review-site-logo">
-                            <img src={`${proofratings.assets_url}/images/google.svg`} alt="Google" />
+                            <img src={`${get_proofrating().assets_url}/images/google.svg`} alt="Google" />
                         </div>
                         <div className="proofratings-reviews" itemProp="reviewRating">
                             <span className="proofratings-score">5.0</span>
@@ -62,7 +63,7 @@ const PopupWidget = (props) => {
 
                     <div className={widget_class}>
                         <div className="review-site-logo">
-                            <img src={`${proofratings.assets_url}/images/wordpress.svg`} alt="Wordpress" />
+                            <img src={`${get_proofrating().assets_url}/images/wordpress.svg`} alt="Wordpress" />
                         </div>
                         <div className="proofratings-reviews" itemProp="reviewRating">
                             <span className="proofratings-score">5.0</span>
