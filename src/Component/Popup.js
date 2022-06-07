@@ -1,4 +1,4 @@
-import { get_proofrating } from "../global";
+import { get_proofratings } from "../global";
 import ColorPicker from "./ColorPicker";
 
 const PopupWidget = (props) => {

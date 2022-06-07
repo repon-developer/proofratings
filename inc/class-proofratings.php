@@ -255,6 +255,7 @@ class Proofratings {
 		$locations = get_proofratings()->query->get_locations();
 
 		$response = array(
+			'site_url' => home_url(),
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
 			'global' => get_proofratings()->query->global,
@@ -297,6 +298,8 @@ class Proofratings {
 			'location_name' => $location->location['name'],
 			'settings' => $location->settings,
 			'proofratings' => array(
+				'api' => PROOFRATINGS_API_URL,
+				'site_url' => home_url(),
 				'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 				'review_sites' => get_proofratings_review_sites(),
 				'pages' => get_pages(),
