@@ -34,10 +34,6 @@ const BadgeDisplay = (props) => {
     const handle_copy_shortcode = (attrs, event) => {
         attrs.id = props.id;
         copy_shortcode(attrs, event);
-
-        const toast = document.getElementById('toast-proofratings')
-        toast.textContent = 'Shortcode has been copied';
-        setTimeout(() => toast.textContent = '', 800)
     }
 
     const handle_edit = (current_tab) => store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab } })
