@@ -1,3 +1,5 @@
+import { get_proofratings } from "../global";
+
 const Widgets = (props) => {
 
     const get_styles = () => {
