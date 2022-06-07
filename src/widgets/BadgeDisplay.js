@@ -1,5 +1,5 @@
 import store, { ACTIONS, get_settings } from './Store';
-import { get_proofrating, copy_shortcode } from '../global';
+import { get_proofratings, copy_shortcode } from '../global';
 
 const { useState, useEffect } = React;
 

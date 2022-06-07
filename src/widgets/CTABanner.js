@@ -1,5 +1,5 @@
 import store, { ACTIONS, get_settings } from "../widgets/Store";
-import { get_proofrating } from "../global";
+import { get_proofratings } from "../global";
 import ColorPicker from "./../Component/ColorPicker";
 
 import Button from "../Component/Button";
