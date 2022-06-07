@@ -121,9 +121,9 @@ class Proofratings {
 			'permission_callback' => '__return_true'
 		));
 
-		register_rest_route( 'proofratings/v1', 'save_location_settings', array(
+		register_rest_route( 'proofratings/v1', 'save_settings', array(
 			'methods' => 'POST',
-			'callback' => [$this, 'save_location_settings'],
+			'callback' => [$this, 'save_settings'],
 			'permission_callback' => '__return_true'
 		));
 
@@ -250,17 +250,30 @@ class Proofratings {
 	 * proofratings rest api callback
 	 */
 	public function get_settings_api_callback(WP_REST_Request $request) {
-
 		$settings = get_proofratings_settings();
 
-		return array(
+		$locations = get_proofratings()->query->get_locations();
+
+		$response = array(
 			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 			'review_sites' => get_proofratings_review_sites(),
 			'global' => get_proofratings()->query->global,
-			'locations' => get_proofratings()->query->get_locations(),
+			'locations' => $locations,
 			'connections_approved' => $settings['connections_approved'],
 			'agency' => $settings['agency'],
+			'pages' => get_pages(),
+			'stylesheet' => PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css'
 		);
+
+		$location_id = $request->get_param('location_id');
+		if ($location_id === 'first_one' ) {
+			$response['location_settings'] = [];
+			if ( count($locations) >= 0 ) {
+				$response['location_settings'] = get_proofratings()->query->get($locations[0]['location_id']);
+			}
+		}
+
+		return $response;
 	}
 
 	/**
@@ -299,10 +312,20 @@ class Proofratings {
 	/**
 	 * proofratings rest api callback
 	 */
-	public function save_location_settings(WP_REST_Request $request) {
+	public function save_settings(WP_REST_Request $request) {
+		$client_settings = $request->get_param('client_settings');
+		if ( $client_settings ) {
+			update_proofratings_settings($client_settings);
+		}
+
 		$location_id = $request->get_param('location_id');
-		$settings = $request->get_param('settings');		
-		return $this->query->save_settings($location_id, $settings);
+		$location_settings = $request->get_param('location_settings');
+		
+		if ( $location_id && is_array($location_settings)) {
+			$this->query->save_settings($location_id, $location_settings);
+		}
+
+		return true;
 	}
 
 	/**
