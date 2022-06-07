@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 
-import { get_proofrating } from "../global";
+import { get_proofratings } from "../global";
 
 const ACTIONS = {
     OVERALL_SAVE: "OVERALL_SAVE",
@@ -99,8 +99,8 @@ const get_settings = () => store.getState()
 const get_connections = () => {
     const active_connections = store.getState().active_connections;
     
-    let connections = Object.keys(get_proofrating().review_sites).map(key => {
-        return {slug: key, approved: get_proofrating().connections_approved.includes(key),  ...get_proofrating().review_sites[key]}
+    let connections = Object.keys(get_proofratings().review_sites).map(key => {
+        return {slug: key, approved: get_proofratings().connections_approved.includes(key),  ...get_proofratings().review_sites[key]}
     })
 
     

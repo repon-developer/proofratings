@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
 import store, { ACTIONS, update_store } from './Store';
-import { get_proofrating } from '../global';
+import { get_proofratings } from '../global';
 
 const SiteConnections = ({ location_id }) => {
     const [search, setSearch] = useState('')
@@ -8,7 +8,7 @@ const SiteConnections = ({ location_id }) => {
     const [state, setState] = useState(store.getState().settings)
 
     const active_connections = (typeof state?.active_connections === 'object') ? state.active_connections : {};
-    const connections_approved = Array.isArray(get_proofrating()?.connections_approved) ? get_proofrating().connections_approved : [];
+    const connections_approved = Array.isArray(get_proofratings()?.connections_approved) ? get_proofratings().connections_approved : [];
 
     useEffect(() => {
         const unsubscribe = store.subscribe(() => setState(store.getState().settings))
@@ -39,8 +39,8 @@ const SiteConnections = ({ location_id }) => {
     }
 
     const review_sites = [];
-    if (typeof get_proofrating()?.review_sites === 'object') {
-        Object.entries(get_proofrating().review_sites).forEach((item) => {
+    if (typeof get_proofratings()?.review_sites === 'object') {
+        Object.entries(get_proofratings().review_sites).forEach((item) => {
             item[1].slug = item[0];
             item[1].approved = connections_approved.includes(item[0])
             review_sites.push(item[1])

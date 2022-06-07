@@ -74,7 +74,7 @@ const CTABanner = (props) => {
 
             <div className="proofratings-copyarea">
                 <h3>Webhook URL</h3>
-                <code className="shortocde-area">{get_proofrating().api}/webhooks?id={props?.id}&amp;site_url={get_proofrating().site_url}</code>
+                <code className="shortocde-area">{get_proofratings().api}/webhooks?id={props?.id}&amp;site_url={get_proofratings().site_url}</code>
                 <p className="description">
                     Use this URL to track conversions. And the URL to any software you use for <br /> your Call-to-action button(s). <br />
                     Note: Set the webhook as a POST.
@@ -135,8 +135,8 @@ const CTABanner = (props) => {
                                 <td colSpan={2} style={{ paddingLeft: 0 }}>
                                     <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
                                         <div className="proofratings-logos">
-                                            <img src={`${get_proofrating().assets_url}/images/icon-google.png`} alt="google" />
-                                            <img src={`${get_proofrating().assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
+                                            <img src={`${get_proofratings().assets_url}/images/icon-google.png`} alt="google" />
+                                            <img src={`${get_proofratings().assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
                                         </div>
                                         <div className="rating-box">
                                             <span className="proofratings-stars medium">

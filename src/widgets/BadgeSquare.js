@@ -80,7 +80,7 @@ const BadgeSquare = (props) => {
     }
 
     const get_widget = () => {
-        const connection = Object.assign({logo: `${get_proofrating().assets_url}images/google.svg`, reviews: '#'}, get_connections(true)[0]);
+        const connection = Object.assign({logo: `${get_proofratings().assets_url}images/google.svg`, reviews: '#'}, get_connections(true)[0]);
 
         return (
             <React.Fragment>

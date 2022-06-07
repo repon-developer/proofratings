@@ -103,6 +103,12 @@ class Proofratings {
 	 * proofratings rest api for getting data
 	 */
 	public function register_rest_api() {	
+		register_rest_route( 'proofratings/v1', 'get_settings', array(
+			'methods' => 'GET',
+			'callback' => [$this, 'get_settings_api_callback'],
+			'permission_callback' => '__return_true'
+		));
+
 		register_rest_route( 'proofratings/v1', 'update_settings', array(
 			'methods' => 'POST',
 			'callback' => [$this, 'update_settings_api_callback'],
@@ -243,6 +249,23 @@ class Proofratings {
 	/**
 	 * proofratings rest api callback
 	 */
+	public function get_settings_api_callback(WP_REST_Request $request) {
+
+		$settings = get_proofratings_settings();
+
+		return array(
+			'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
+			'review_sites' => get_proofratings_review_sites(),
+			'global' => get_proofratings()->query->global,
+			'locations' => get_proofratings()->query->get_locations(),
+			'connections_approved' => $settings['connections_approved'],
+			'agency' => $settings['agency'],
+		);
+	}
+
+	/**
+	 * proofratings rest api callback
+	 */
 	public function get_location_settings(WP_REST_Request $request) {
 		$this->clear_cache();
 		$location = $this->query->get($request->get_param('location_id'));
@@ -302,14 +325,6 @@ class Proofratings {
 			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		);");
-	}
-
-	/**
-	 * proofratings rest api callback
-	 */
-	public function update_settings_api_callback(WP_REST_Request $request) {
-		update_proofratings_settings($request->get_params());
-		wp_send_json_success();
 	}
 
 

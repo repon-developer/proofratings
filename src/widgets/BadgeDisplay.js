@@ -65,7 +65,7 @@ const BadgeDisplay = (props) => {
 
                 <ul className="badge-items-grid">
                     <li>
-                        <img src={`${get_proofrating().assets_url}images/widget-square.png`} alt="Proofratings style" />
+                        <img src={`${get_proofratings().assets_url}images/widget-square.png`} alt="Proofratings style" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_square')} checked={badge_display?.widget_square} />
                             <span>Deactivate</span>
@@ -77,7 +77,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img style={{ width: 200 }} src={`${get_proofrating().assets_url}images/widget-icon.png`} alt="Proofratings" />
+                        <img style={{ width: 200 }} src={`${get_proofratings().assets_url}images/widget-icon.png`} alt="Proofratings" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_icon')} checked={badge_display?.widget_icon} />
                             <span>Deactivate</span>
@@ -89,7 +89,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img style={{ width: 120 }} src={`${get_proofrating().assets_url}images/widget-basic.png`} alt="Proofratings" />
+                        <img style={{ width: 120 }} src={`${get_proofratings().assets_url}images/widget-basic.png`} alt="Proofratings" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_basic')} checked={badge_display?.widget_basic} />
                             <span>Deactivate</span>
@@ -101,7 +101,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img style={{ width: 200 }} src={`${get_proofrating().assets_url}images/widget-rectangle.png`} alt="Proofratings style" />
+                        <img style={{ width: 200 }} src={`${get_proofratings().assets_url}images/widget-rectangle.png`} alt="Proofratings style" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_rectangle')} checked={badge_display?.widget_rectangle} />
                             <span>Deactivate</span>
@@ -113,7 +113,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img style={{ width: 190 }} src={`${get_proofrating().assets_url}images/overall-rectangle.png`} alt="Overall Rectangle" />
+                        <img style={{ width: 190 }} src={`${get_proofratings().assets_url}images/overall-rectangle.png`} alt="Overall Rectangle" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} />
                             <span>Deactivate</span>
@@ -125,7 +125,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img src={`${get_proofrating().assets_url}images/overall-narrow.png`} alt="Overall Narrow" />
+                        <img src={`${get_proofratings().assets_url}images/overall-narrow.png`} alt="Overall Narrow" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_embed')} checked={badge_display?.overall_narrow_embed} />
                             <span>Deactivate</span>
@@ -147,7 +147,7 @@ const BadgeDisplay = (props) => {
 
                 <ul className="badge-items-grid">
                     <li>
-                        <img style={{ width: 200 }} src={`${get_proofrating().assets_url}images/overall-rectangle.png`} alt="Overall Rectangle Float" />
+                        <img style={{ width: 200 }} src={`${get_proofratings().assets_url}images/overall-rectangle.png`} alt="Overall Rectangle Float" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_float} onChange={() => update_single('overall_rectangle_float')} />
                             <span>Deactivate</span>
@@ -158,7 +158,7 @@ const BadgeDisplay = (props) => {
                     </li>
 
                     <li>
-                        <img src={`${get_proofrating().assets_url}images/overall-narrow.png`} alt="Proofratings" />
+                        <img src={`${get_proofratings().assets_url}images/overall-narrow.png`} alt="Proofratings" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_float')} checked={badge_display?.overall_narrow_float} />
                             <span>Deactivate</span>
@@ -179,7 +179,7 @@ const BadgeDisplay = (props) => {
 
                 <ul className="badge-items-grid">
                     <li style={{ maxWidth: 1400 }}>
-                        <img style={{ height: 'auto' }} src={`${get_proofrating().assets_url}images/cta-badge.png?v=4`} alt="Proofratings CTA Banner" />
+                        <img style={{ height: 'auto' }} src={`${get_proofratings().assets_url}images/cta-badge.png?v=4`} alt="Proofratings CTA Banner" />
                         <label className="label-switch-checkbox">
                             <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_cta_banner} onChange={() => update_single('overall_cta_banner')} />
                             <span>Deactivate</span>

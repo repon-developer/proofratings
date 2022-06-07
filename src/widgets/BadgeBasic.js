@@ -66,7 +66,7 @@ const BadgeBasic = (props) => {
             <div className="proofratings-review-widgets-grid proofratings-widget-grid-basic">
                 <div className={widget_classes}>
                     <div className="review-site-logo">
-                        <img src={`${get_proofrating().assets_url}images/google.svg`} alt="Google" />
+                        <img src={`${get_proofratings().assets_url}images/google.svg`} alt="Google" />
                     </div>
 
                     <div className="proofratings-stars"><i style={{ width: '100%' }} /></div>

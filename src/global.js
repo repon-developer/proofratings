@@ -1,5 +1,5 @@
 
-const get_proofrating = () => proofratings
+const get_proofratings = () => proofratings
 
 const copy_shortcode = (attrs, event) => {
     if (event.target) {
@@ -14,7 +14,7 @@ const copy_shortcode = (attrs, event) => {
         shortcode_text += ` style="${shorcode.style}"`
     }
 
-    if (!Boolean(get_proofrating()?.global)) {
+    if (!Boolean(get_proofratings()?.global)) {
         shortcode_text += ` id="${shorcode?.id}"`;
     }
 
@@ -27,4 +27,4 @@ const copy_shortcode = (attrs, event) => {
     setTimeout(() => toast.textContent = '', 800)
 }
 
-export { get_proofrating, copy_shortcode };
+export { get_proofratings, copy_shortcode };

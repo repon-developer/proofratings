@@ -1,6 +1,7 @@
 const { useState, useEffect } = React;
 
 import store, { ACTIONS } from './Store';
+import { get_proofratings } from '../global'
 
 const Report = () => {
     const [email, setEmail] = useState('');
@@ -82,7 +83,7 @@ const Report = () => {
                 </div>
             </div>
 
-            {Boolean(proofratings?.agency) === true && (
+            {Boolean(get_proofratings()?.agency) === true && (
                 <React.Fragment>
                     <h2 className="section-title-large">Settings for agency</h2>
                     <table className="form-table">

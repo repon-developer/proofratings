@@ -10,7 +10,7 @@ const Pages = (props) => {
             return;
         }
 
-        const on_pages = get_proofrating().pages.map(page => page.ID);
+        const on_pages = get_proofratings().pages.map(page => page.ID);
         props.onUpdate({ on_pages })
     }, [])
 
@@ -28,7 +28,7 @@ const Pages = (props) => {
     return (
         <table className="form-table">
             <tbody>
-                {get_proofrating().pages.map(page => (
+                {get_proofratings().pages.map(page => (
                     <tr key={page.ID}>
                         <th scope="row">{page.post_title}</th>
                         <td>

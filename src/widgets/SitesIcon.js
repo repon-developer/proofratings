@@ -59,8 +59,8 @@ const Sites_Icon = (props) => {
 
             <div className="proofratings-review-widgets-grid proofratings-widget-grid-icon" style={{ padding: '10px 15px', backgroundColor: '#fff' }}>
                 <div className={widget_classes}>
-                    <div className="review-site-logo" style={{ WebkitMaskImage: `url(${get_proofrating().assets_url}images/icon3-yelp.svg)` }}>
-                        <img src={`${get_proofrating().assets_url}images/icon3-yelp.svg`} alt="Yelp" />
+                    <div className="review-site-logo" style={{ WebkitMaskImage: `url(${get_proofratings().assets_url}images/icon3-yelp.svg)` }}>
+                        <img src={`${get_proofratings().assets_url}images/icon3-yelp.svg`} alt="Yelp" />
                     </div>
 
                     <div className="review-info-container">

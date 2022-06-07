@@ -63,8 +63,8 @@ const Widgets = (props) => {
                     <div className="proofratings-badge proofratings-badge-rectangle">
                         <div className="proofratings-inner">
                             <div className="proofratings-logos">
-                                <img src={`${get_proofrating().assets_url}/images/icon-google.png`} alt="google"/>
-                                <img src={`${get_proofrating().assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
+                                <img src={`${get_proofratings().assets_url}/images/icon-google.png`} alt="google"/>
+                                <img src={`${get_proofratings().assets_url}/images/icon-wordpress.jpg`} alt="wordpress"/>
                             </div>
                             <div className="proofratings-reviews">
                                 <span className="proofratings-score">5.0</span>
