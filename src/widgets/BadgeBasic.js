@@ -1,6 +1,6 @@
-import store, { ACTIONS } from './Store';
-import ColorPicker from "./Component/ColorPicker";
-import ActiveSites from './Component/ActiveSites';
+import store, { ACTIONS } from '../widgets/Store';
+import ColorPicker from "./../Component/ColorPicker";
+import ActiveSites from './../Component/ActiveSites';
 
 const { useState, useEffect } = React;
 

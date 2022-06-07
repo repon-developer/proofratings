@@ -1,8 +1,8 @@
-import store, { ACTIONS } from "./Store";
-import ColorPicker from "./Component/ColorPicker";
+import store, { ACTIONS } from "../widgets/Store";
+import ColorPicker from "./../Component/ColorPicker";
 
-import Button from "./Button";
-import Pages from "./Pages";
+import Button from "../Component/Button";
+import Pages from "../Component/Pages";
 
 const { useState, useEffect } = React;
 

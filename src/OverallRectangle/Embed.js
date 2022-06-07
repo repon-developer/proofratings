@@ -1,4 +1,4 @@
-import store, { ACTIONS } from "./../Store";
+import store, { ACTIONS } from "./../widgets/Store";
 import ColorPicker from "./../Component/ColorPicker";
 import Widgets from "./Widgets";
 import Link from '../Component/Link'

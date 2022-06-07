@@ -1,4 +1,4 @@
-import {get_connections } from '../Store';
+import {get_connections } from '../widgets/Store';
 
 const ActiveSites = (props) => {
     const widget_connections = Array.isArray(props.widget_connections) ? props.widget_connections : [];

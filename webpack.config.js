@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        'widgets': path.resolve(__dirname, './src/index.js'),
-        'settings': path.resolve(__dirname, './src/Settings/index.js'),
+        'widgets': path.resolve(__dirname, './src/widgets.js'),
+        'settings': path.resolve(__dirname, './src/settings.js'),
     },
     output: {
         path: path.resolve(__dirname, 'assets'),

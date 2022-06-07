@@ -2,21 +2,22 @@ const proofratings_widgets_root = document.getElementById(
     "proofratings-root"
 );
 
-import store, { ACTIONS } from './Store';
+import store, { ACTIONS } from './widgets/Store';
 
-import BadgeDisplay from './BadgeDisplay';
-import BadgeSquare from './BadgeSquare'
-import BadgeBasic from './BadgeBasic'
-import Sites_Icon from './SitesIcon'
-import BadgeRectangle from './BadgeRectangle'
+import BadgeDisplay from './widgets/BadgeDisplay';
+import BadgeSquare from './widgets/BadgeSquare'
+import BadgeBasic from './widgets/BadgeBasic'
+import Sites_Icon from './widgets/SitesIcon'
+import BadgeRectangle from './widgets/BadgeRectangle'
 
 import OverallRectangleEmbed from './OverallRectangle/Embed'
+
 import OverallRectangleFloat from './OverallRectangle/Float'
 
 import OverallNarrowEmbed from './OverallNarrow/Embed';
 import OverallNarrowFloat from './OverallNarrow/Float';
 
-import CTABanner from './CTABanner';
+import CTABanner from './widgets/CTABanner';
 
 const { useEffect, useState, useRef } = React;
 

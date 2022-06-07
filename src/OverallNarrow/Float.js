@@ -1,8 +1,8 @@
-import store, { ACTIONS } from "./../Store";
+import store, { ACTIONS } from "../widgets/Store";
 import ColorPicker from "./../Component/ColorPicker";
 import Widgets from "./Widgets"
 import Shadow from "./../Component/Shadow";
-import Pages from "./../Pages";
+import Pages from "../Component/Pages";
 
 import PopupWidget from "../Component/Popup";
 

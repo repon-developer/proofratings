@@ -1,9 +1,9 @@
 const { useEffect, useState } = React;
 
-import store, { ACTIONS } from './Store';
-import SiteConnections from './Connections';
-import Report from './Report';
-import Schema from './Schema';
+import store, { ACTIONS } from './settings/Store';
+import SiteConnections from './settings/Connections';
+import Report from './settings/Report';
+import Schema from './settings/Schema';
 
 const ProofratingsSettings = () => {
     const [state, setState] = useState(store.getState().state);
