@@ -40,6 +40,7 @@ body.screen-proofratings .wrap.proofratings-settings-wrap {padding: 30px; margin
 .proofratins-header {padding: 30px; margin: -30px -30px 30px -30px; background-color: #F4F7FE; border-bottom: 1px solid #CED0D7}
 
 .header-row {display: flex; justify-content: space-between; align-items: center}
+.proofratings-row {display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start}
 
 body.screen-proofratings .form-footer {display: flex; font-weight: 500; align-items: center; gap: 10px; margin-top: 40px;}
 body.screen-proofratings .form-footer a {text-decoration: none}
@@ -604,7 +605,7 @@ form.form-submit-ticket textarea {min-height: 100px;}
 .badge-overview-item[open] {padding-bottom: 20px}
 .badge-overview-item[open] > summary {margin-bottom: 30px; border-bottom: 1px solid var(--border_color); background-color: #F4F7FE}
 
-.badge-items-grid {gap: 70px; display: flex; flex-wrap: wrap}
+.badge-items-grid {gap: 50px; display: flex; flex-wrap: wrap}
 
 .badge-items-grid > li {max-width: 300px; display: flex; gap: 20px; align-items: center; flex-direction: column}
 
