@@ -48,7 +48,6 @@ class Demo {
     public function show_demo_notification() { ?>
         <div class="proofratings-demo-message">            
             <div class="demo-message">Proofratings is running in Demo Mode.</div>
-            <a href="#">Learn more</a>
         </div>
 
         <style>

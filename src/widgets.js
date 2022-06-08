@@ -87,7 +87,7 @@ const ProofratingsWidgets = (props) => {
             }
 
             if ( updated_settings === false ) {
-                //store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
+                store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
             }
 
             setState({ ...state, saving: false })
