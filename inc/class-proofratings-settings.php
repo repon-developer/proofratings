@@ -323,11 +323,11 @@ class Proofratings_Settings {
 					<p>Need help? Submit a ticket</p>
 				</a>
 
-				<a href="<?php menu_page_url('proofratings-billing') ?>">
+				<!-- <a href="<?php menu_page_url('proofratings-billing') ?>">
 					<i class="menu-icon menu-icon-billing"></i>
 					<span class="menu-label">Billing</span>
 					<p>Manage and update your payment source, subscription and invoices</p>
-				</a>
+				</a> -->
 			</div>
 		</div>
 		<?php
