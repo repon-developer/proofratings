@@ -140,8 +140,8 @@ function is_proofratings_active() {
  */
 function get_proofratings_api_args($args = []) {
     $params = array_merge(array(
-        'name' => get_bloginfo( 'name' ),
-        'email' => get_bloginfo( 'admin_email' ),
+        'site_name' => get_bloginfo( 'name' ),
+        'site_email' => get_bloginfo( 'admin_email' ),
         'site_url' => get_site_url()
     ), (array) $args);
 
