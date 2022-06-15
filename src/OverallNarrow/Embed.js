@@ -1,9 +1,10 @@
 import store, { ACTIONS } from "../widgets/Store";
 import ColorPicker from "../Component/ColorPicker";
-import Widgets from "./Widgets"
 import Link from "../Component/Link";
 import Border from "./../Component/Border";
 import Shadow from "../Component/Shadow";
+
+import DisplayOverallNarrow from '../Display/OverallNarrow'
 
 const { useState, useEffect } = React;
 
@@ -54,7 +55,11 @@ const OverallNarrow = (props) => {
                 <tbody>
                     <Link {...link} onUpdate={handle_link} />
 
-                    <Widgets {...state} shadow={shadow} border={border} />
+                    <tr>
+                        <td style={{ paddingLeft: 0 }} colSpan={2}>
+                            <DisplayOverallNarrow {...state} />
+                        </td>
+                    </tr>
 
                     <tr>
                         <th scope="row">Star Color</th>

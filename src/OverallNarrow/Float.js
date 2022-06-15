@@ -1,9 +1,8 @@
 import store, { ACTIONS } from "../widgets/Store";
 import ColorPicker from "./../Component/ColorPicker";
-import Widgets from "./Widgets"
 import Shadow from "./../Component/Shadow";
 import Pages from "../Component/Pages";
-
+import DisplayOverallNarrow from '../Display/OverallNarrow'
 import PopupWidget from "../Component/Popup";
 
 const { useState, useEffect } = React;
@@ -86,7 +85,12 @@ const OverallNarrow = () => {
                 <h2 className="section-title-large">Color Selection</h2>
                 <table className="form-table">
                     <tbody>
-                        <Widgets {...state} shadow={shadow} />
+
+                        <tr>
+                            <td style={{ paddingLeft: 0 }} colSpan={2}>
+                                <DisplayOverallNarrow {...state} />
+                            </td>
+                        </tr>
 
                         <tr>
                             <th scope="row">Star Color</th>

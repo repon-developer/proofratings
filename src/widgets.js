@@ -48,7 +48,7 @@ const ProofratingsWidgets = (props) => {
 
     useEffect(() => {
         const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'get_proofratings_location_settings' }, function (response) {
-            console.log(response)
+            console.log(response.settings)
             if (response?.success == false) {
                 return setState({ ...state, error: true, loading: false });
             }
@@ -87,7 +87,7 @@ const ProofratingsWidgets = (props) => {
             }
 
             if ( updated_settings === false ) {
-                store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
+                //store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { current_tab: 'overview' } });
             }
 
             setState({ ...state, saving: false })
@@ -150,7 +150,7 @@ const ProofratingsWidgets = (props) => {
 
             {current_tab !== 'overview' &&
                 <div className="form-footer">
-                    <button id="btn-proofratings-save" className="button button-primary" onClick={() => save_data()}>{state.saving ? 'Saving...' : 'SAVE CHANGE'}</button>
+                    <button id="btn-proofratings-save" className="button button-primary" onClick={() => save_data()}>{state.saving ? 'Saving...' : 'SAVE CHANGES'}</button>
                     <a onClick={handle_cancel} className='btn-cancel' href="#">CANCEL</a>
                 </div>
             }

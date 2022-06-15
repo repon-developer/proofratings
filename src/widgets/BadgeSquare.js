@@ -4,6 +4,7 @@ import ColorPicker from "./../Component/ColorPicker";
 import Border from "./../Component/Border";
 import Shadow from "./../Component/Shadow";
 import ActiveSites from './../Component/ActiveSites';
+import WidgetSquare from '../Display/Square';
 
 const { useState, useEffect } = React;
 
@@ -84,6 +85,7 @@ const BadgeSquare = (props) => {
 
         return (
             <React.Fragment>
+                <style>{css_style}</style>
                 <h2 className="section-title-large">Color Selection</h2>
                 <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
                     <div className="proofratings-widget proofratings-widget-square">
@@ -106,8 +108,6 @@ const BadgeSquare = (props) => {
 
     return (
         <React.Fragment>
-            <style>{css_style}</style>
-
             <div className="proofratings-copyarea">
                 <h3>Shortcode</h3>
                 <code className="shortocde-area">[proofratings_widgets id="{props?.id}" style="square"]</code>
@@ -119,7 +119,8 @@ const BadgeSquare = (props) => {
 
             <ActiveSites onUpdate={(widget_connections) => handle_field({ widget_connections })} widget_connections={state?.widget_connections} />
 
-            {get_widget()}
+            <h2 className="section-title-large">Color Selection</h2>
+            <WidgetSquare {...state} />
 
             <table className="form-table">
                 <tbody>

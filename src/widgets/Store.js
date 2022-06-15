@@ -33,7 +33,7 @@ const widget_primary_state = {
         overall_narrow_embed: false,
         overall_narrow_float: false
     },
-    widget_square: { widget_connections: [] },
+    widget_square: { widget_connections: null },
     widget_basic: { widget_connections: [] },
     widget_icon: { widget_connections: [] },
     widget_rectangle: { widget_connections: [] },

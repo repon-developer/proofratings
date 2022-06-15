@@ -1,6 +1,6 @@
 import store, { ACTIONS } from "./../widgets/Store";
 import ColorPicker from "./../Component/ColorPicker";
-import Widgets from "./Widgets";
+import DisplayOverallRectangle from "../Display/OverallRectangle";
 import Link from '../Component/Link'
 import Border from "./../Component/Border";
 import Shadow from "./../Component/Shadow";
@@ -58,8 +58,11 @@ const OverallRectangle_Embed = (props) => {
                 <tbody>
                     <Link {...link} onUpdate={handle_link} />
 
-
-                    <Widgets {...state} shadow={shadow} border={border} />
+                    <tr>
+                        <td colSpan={2} style={{ paddingLeft: 0 }}>
+                            <DisplayOverallRectangle {...state} />
+                        </td>
+                    </tr>
 
                     <tr>
                         <th scope="row">Star Color</th>

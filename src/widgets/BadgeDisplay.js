@@ -1,6 +1,13 @@
 import store, { ACTIONS, get_settings } from './Store';
 import { get_proofratings, copy_shortcode } from '../global';
 
+import DisplaySquare from '../Display/Square';
+import DisplayIcon from '../Display/Icon';
+import DisplayBasic from '../Display/Basic';
+import DisplayRectangle from '../Display/Rectangle';
+import DisplayOverallRectangle from '../Display/OverallRectangle';
+import DisplayOverallNarrow from '../Display/OverallNarrow';
+
 const { useState, useEffect } = React;
 
 const BadgeDisplay = (props) => {
@@ -46,6 +53,7 @@ const BadgeDisplay = (props) => {
         store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: { overview_summary_tab } });
     }
 
+
     return (
         <React.Fragment>
 
@@ -68,7 +76,7 @@ const BadgeDisplay = (props) => {
                 <div className="proofratings-row">
                     <ul className="badge-items-grid" style={{ maxWidth: 1200 }}>
                         <li>
-                            <img src={`${get_proofratings().assets_url}images/widget-square.png`} alt="Proofratings style" />
+                            <DisplaySquare {...get_settings()?.widget_square} />
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_square')} checked={badge_display?.widget_square} />
                                 <span>Deactivate</span>
@@ -80,7 +88,7 @@ const BadgeDisplay = (props) => {
                         </li>
 
                         <li>
-                            <img style={{ width: 200 }} src={`${get_proofratings().assets_url}images/widget-icon.png`} alt="Proofratings" />
+                            <DisplayIcon />
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_icon')} checked={badge_display?.widget_icon} />
                                 <span>Deactivate</span>
@@ -92,7 +100,7 @@ const BadgeDisplay = (props) => {
                         </li>
 
                         <li>
-                            <img style={{ width: 120 }} src={`${get_proofratings().assets_url}images/widget-basic.png`} alt="Proofratings" />
+                            <DisplayBasic />
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_basic')} checked={badge_display?.widget_basic} />
                                 <span>Deactivate</span>
@@ -104,7 +112,7 @@ const BadgeDisplay = (props) => {
                         </li>
 
                         <li>
-                            <img style={{ width: 200 }} src={`${get_proofratings().assets_url}images/widget-rectangle.png`} alt="Proofratings style" />
+                            <DisplayRectangle />
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_rectangle')} checked={badge_display?.widget_rectangle} />
                                 <span>Deactivate</span>
@@ -116,7 +124,8 @@ const BadgeDisplay = (props) => {
                         </li>
 
                         <li>
-                            <img style={{ width: 190 }} src={`${get_proofratings().assets_url}images/overall-rectangle.png`} alt="Overall Rectangle" />
+                            <DisplayOverallRectangle {...settings.overall_rectangle_embed} />
+
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} />
                                 <span>Deactivate</span>
@@ -128,7 +137,7 @@ const BadgeDisplay = (props) => {
                         </li>
 
                         <li>
-                            <img src={`${get_proofratings().assets_url}images/overall-narrow.png`} alt="Overall Narrow" />
+                            <DisplayOverallNarrow {...settings.overall_narrow_embed} />
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_embed')} checked={badge_display?.overall_narrow_embed} />
                                 <span>Deactivate</span>

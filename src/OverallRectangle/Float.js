@@ -4,7 +4,7 @@ import Shadow from "./../Component/Shadow";
 import Pages from "../Component/Pages";
 
 import PopupWidget from "../Component/Popup";
-import Widgets from "./Widgets";
+import DisplayOverallRectangle from "../Display/OverallRectangle";
 
 const { useState, useEffect } = React;
 
@@ -94,7 +94,11 @@ const OverallRectangle_Embed = (props) => {
 
                 <table className="form-table">
                     <tbody>
-                        <Widgets {...state} shadow={shadow} />
+                        <tr>
+                            <td colSpan={2} style={{ paddingLeft: 0 }}>
+                                <DisplayOverallRectangle {...state} />
+                            </td>
+                        </tr>
 
                         <tr>
                             <th scope="row">Star Color</th>
