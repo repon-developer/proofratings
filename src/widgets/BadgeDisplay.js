@@ -7,6 +7,7 @@ import DisplayBasic from '../Display/Basic';
 import DisplayRectangle from '../Display/Rectangle';
 import DisplayOverallRectangle from '../Display/OverallRectangle';
 import DisplayOverallNarrow from '../Display/OverallNarrow';
+import PreviewCTABanner from '../Display/CTABanner'
 
 const { useState, useEffect } = React;
 
@@ -73,88 +74,103 @@ const BadgeDisplay = (props) => {
                     Add individual site ratings or your overall rating to any page.
                 </summary>
 
-                <div className="proofratings-row">
-                    <ul className="badge-items-grid" style={{ maxWidth: 1200 }}>
-                        <li>
-                            <DisplaySquare {...get_settings()?.widget_square} />
-                            <label className="label-switch-checkbox">
-                                <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_square')} checked={badge_display?.widget_square} />
-                                <span>Deactivate</span>
-                                <span>Activate</span>
-                            </label>
-
-                            {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'square' }, event)} >Copy Shortcode</a>}
-                            {badge_display?.widget_square && <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>}
-                        </li>
-
-                        <li>
-                            <DisplayIcon />
-                            <label className="label-switch-checkbox">
-                                <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_icon')} checked={badge_display?.widget_icon} />
-                                <span>Deactivate</span>
-                                <span>Activate</span>
-                            </label>
-
-                            {badge_display?.widget_icon && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'icon' }, event)} >Copy Shortcode</a>}
-                            {badge_display?.widget_icon && <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>}
-                        </li>
-
-                        <li>
-                            <DisplayBasic />
-                            <label className="label-switch-checkbox">
-                                <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_basic')} checked={badge_display?.widget_basic} />
-                                <span>Deactivate</span>
-                                <span>Activate</span>
-                            </label>
-
-                            {badge_display?.widget_basic && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'basic' }, event)} >Copy Shortcode</a>}
-                            {badge_display?.widget_basic && <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>}
-                        </li>
-
-                        <li>
-                            <DisplayRectangle />
-                            <label className="label-switch-checkbox">
-                                <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_rectangle')} checked={badge_display?.widget_rectangle} />
-                                <span>Deactivate</span>
-                                <span>Activate</span>
-                            </label>
-
-                            {badge_display?.widget_rectangle && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'rectangle' }, event)} >Copy Shortcode</a>}
-                            {badge_display?.widget_rectangle && <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>}
-                        </li>
-
-                        <li>
-                            <DisplayOverallRectangle {...settings.overall_rectangle_embed} />
-
-                            <label className="label-switch-checkbox">
-                                <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} />
-                                <span>Deactivate</span>
-                                <span>Activate</span>
-                            </label>
-
-                            {badge_display?.overall_rectangle_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ slug: 'proofratings_overall_rectangle' }, event)} >Copy Shortcode</a>}
-                            {badge_display?.overall_rectangle_embed && <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>}
-                        </li>
-
-                        <li>
-                            <DisplayOverallNarrow {...settings.overall_narrow_embed} />
-                            <label className="label-switch-checkbox">
-                                <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_embed')} checked={badge_display?.overall_narrow_embed} />
-                                <span>Deactivate</span>
-                                <span>Activate</span>
-                            </label>
-
-                            {badge_display?.overall_narrow_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ slug: 'proofratings_overall_narrow' }, event)} >Copy Shortcode</a>}
-                            {badge_display?.overall_narrow_embed && <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>}
-                        </li>
-                    </ul>
-
-                    <div className="intro-text" style={{ maxWidth: 390 }}>
-                        <p>The embed rating badges will display your ratings for each individual review site or you can also display your overall rating.</p>
-                        <p>Activate the badge(s) you want to display, edit to customize, and copy paste the shortcode on the page(s) where you would like to dislay the badge.</p>
-                        <p>Each badge when clicked will direct the visitor to the pertaining review site or the URL you provide.</p>
-                    </div>
+                <div className="intro-text">
+                    <p>The embed rating badges will display your ratings for each individual review site or you can also display your overall rating.</p>
+                    <p>Activate the badge(s) you want to display, edit to customize, and copy paste the shortcode on the page(s) where you would like to dislay the badge.</p>
+                    <p>Each badge when clicked will direct the visitor to the pertaining review site or the URL you provide.</p>
                 </div>
+
+                <div className="gap-20"></div>
+
+                <ul className="badge-items-grid">
+                    <li>
+                        <div className="preview-widget">
+                            <DisplaySquare {...get_settings()?.widget_square} />
+                        </div>
+
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_square')} checked={badge_display?.widget_square} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        {badge_display?.widget_square && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'square' }, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_square && <a className="button button-primary" onClick={() => handle_edit('widget_square')} >EDIT BADGE</a>}
+                    </li>
+
+                    <li>
+                        <div className="preview-widget">
+                            <DisplayIcon />
+                        </div>
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_icon')} checked={badge_display?.widget_icon} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        {badge_display?.widget_icon && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'icon' }, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_icon && <a className="button button-primary" onClick={() => handle_edit('widget_icon')} >EDIT BADGE</a>}
+                    </li>
+
+                    <li>
+                        <div className="preview-widget">
+                            <DisplayBasic />
+                        </div>
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_basic')} checked={badge_display?.widget_basic} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        {badge_display?.widget_basic && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'basic' }, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_basic && <a className="button button-primary" onClick={() => handle_edit('widget_basic')} >EDIT BADGE</a>}
+                    </li>
+
+                    <li>
+                        <div className="preview-widget">
+                            <DisplayRectangle />
+                        </div>
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('widget_rectangle')} checked={badge_display?.widget_rectangle} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        {badge_display?.widget_rectangle && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ style: 'rectangle' }, event)} >Copy Shortcode</a>}
+                        {badge_display?.widget_rectangle && <a className="button button-primary" onClick={() => handle_edit('widget_rectangle')} >EDIT BADGE</a>}
+                    </li>
+
+                    <li>
+                        <div className="preview-widget">
+                            <DisplayOverallRectangle {...settings.overall_rectangle_embed} />
+                        </div>
+
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_embed} onChange={() => update_single('overall_rectangle_embed')} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        {badge_display?.overall_rectangle_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ slug: 'proofratings_overall_rectangle' }, event)} >Copy Shortcode</a>}
+                        {badge_display?.overall_rectangle_embed && <a className="button button-primary" onClick={() => handle_edit('overall_rectangle_embed')} >EDIT BADGE</a>}
+                    </li>
+
+                    <li>
+                        <div className="preview-widget">
+                            <DisplayOverallNarrow {...settings.overall_narrow_embed} />
+                        </div>
+                        <label className="label-switch-checkbox">
+                            <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_embed')} checked={badge_display?.overall_narrow_embed} />
+                            <span>Deactivate</span>
+                            <span>Activate</span>
+                        </label>
+
+                        {badge_display?.overall_narrow_embed && <a className="btn-copy-shortcode" href="#" onClick={(event) => handle_copy_shortcode({ slug: 'proofratings_overall_narrow' }, event)} >Copy Shortcode</a>}
+                        {badge_display?.overall_narrow_embed && <a className="button button-primary" onClick={() => handle_edit('overall_narrow_embed')} >EDIT BADGE</a>}
+                    </li>
+                </ul>
+
+
             </details>
 
             <details className="badge-overview-item" onToggle={(e) => on_summary_tab_click(e, 'floating-badges')} open={settings?.overview_summary_tab == 'floating-badges'}>
@@ -165,10 +181,12 @@ const BadgeDisplay = (props) => {
 
                 <div className="proofratings-row">
 
-
                     <ul className="badge-items-grid">
                         <li>
-                            <img style={{ width: 200 }} src={`${get_proofratings().assets_url}images/overall-rectangle.png`} alt="Overall Rectangle Float" />
+                            <div className="preview-widget">
+                                <DisplayOverallRectangle {...settings.overall_rectangle_float} className="preview-badge-float" />
+                            </div>
+
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_rectangle_float} onChange={() => update_single('overall_rectangle_float')} />
                                 <span>Deactivate</span>
@@ -179,7 +197,9 @@ const BadgeDisplay = (props) => {
                         </li>
 
                         <li>
-                            <img src={`${get_proofratings().assets_url}images/overall-narrow.png`} alt="Proofratings" />
+                            <div className="preview-widget">
+                                <DisplayOverallNarrow {...settings.overall_narrow_float} className="preview-badge-float" />
+                            </div>
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" onChange={() => update_single('overall_narrow_float')} checked={badge_display?.overall_narrow_float} />
                                 <span>Deactivate</span>
@@ -206,8 +226,8 @@ const BadgeDisplay = (props) => {
 
                 <div className="proofratings-row">
                     <ul className="badge-items-grid">
-                        <li style={{ maxWidth: 1400 }}>
-                            <img style={{ height: 'auto' }} src={`${get_proofratings().assets_url}images/cta-badge.png?v=4`} alt="Proofratings CTA Banner" />
+                        <li style={{ maxWidth: 'none' }}>
+                            <PreviewCTABanner {...settings.overall_cta_banner} />
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_cta_banner} onChange={() => update_single('overall_cta_banner')} />
                                 <span>Deactivate</span>

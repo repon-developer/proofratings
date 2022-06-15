@@ -64,18 +64,16 @@ const Rectangle = (props) => {
     return (
         <React.Fragment>
             <style>{css_style}</style>
-            <div className="proofratings-review-widgets-grid proofratings-widgets-grid-rectangle">
-                <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
-                    <div className="review-site-logo"><img src={`${get_proofratings().assets_url}/images/energysage.svg`} alt="Energy Sage" /></div>
+            <div className="proofratings-widget proofratings-widget-rectangle proofratings-widget-yelp proofratings-widget-customized">
+                <div className="review-site-logo"><img src={`${get_proofratings().assets_url}/images/energysage.svg`} alt="Energy Sage" /></div>
 
-                    <div className="proofratings-reviews" itemProp="reviewRating">
-                        <span className="proofratings-score">5.0</span>
-                        <span className="proofratings-stars">
-                            <i style={{ width: "100%" }} />
-                        </span>
-                    </div>
-                    <div className="review-count"> # reviews </div>
+                <div className="proofratings-reviews" itemProp="reviewRating">
+                    <span className="proofratings-score">5.0</span>
+                    <span className="proofratings-stars">
+                        <i style={{ width: "100%" }} />
+                    </span>
                 </div>
+                <div className="review-count"> # reviews </div>
             </div>
         </React.Fragment>
     );

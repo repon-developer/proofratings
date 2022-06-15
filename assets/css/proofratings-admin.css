@@ -254,8 +254,7 @@ input[type="checkbox"].checkbox-yesno:checked:after {content: "Yes";}
     position: static;
     display: inline-flex;
     transform: scale(0.85);
-    transform-origin: left;
-    clip-path: polygon(0 -30px, 100% -30px, 100% 100%, 0 100%);
+    clip-path: polygon(0 -30px, calc(100% - 2px) -30px, calc(100% - 2px) calc(100% - 5px), 2px calc(100% - 5px));
 }
 
 .proofratings-banner-badge .proofratings-banner-close {display: none!important}
@@ -605,9 +604,11 @@ form.form-submit-ticket textarea {min-height: 100px;}
 .badge-overview-item[open] {padding-bottom: 20px}
 .badge-overview-item[open] > summary {margin-bottom: 30px; border-bottom: 1px solid var(--border_color); background-color: #F4F7FE}
 
-.badge-items-grid {gap: 50px; display: flex; flex-wrap: wrap}
-
+.badge-items-grid {gap: 40px; display: flex; flex-wrap: wrap}
 .badge-items-grid > li {max-width: 300px; display: flex; gap: 20px; align-items: center; flex-direction: column}
+.badge-items-grid .preview-widget {min-height: 195px; margin-bottom: 10px; display: flex; align-items: center}
+.badge-items-grid .preview-widget .proofratings-badge.proofratings-badge-narrow {min-width: 350px; transform: scale(0.85)}
+.badge-items-grid .preview-widget .proofratings-widget.proofratings-widget-rectangle {transform: scale(0.80)}
 
 .label-switch-checkbox {gap: 9px; display: inline-flex; align-items: center}
 .label-switch-checkbox span {line-height: 1; position: relative; top: -1px; color: #6E7289; }

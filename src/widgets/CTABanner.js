@@ -5,6 +5,8 @@ import ColorPicker from "./../Component/ColorPicker";
 import Button from "../Component/Button";
 import Pages from "../Component/Pages";
 
+import PreviewCTABanner from '../Display/CTABanner'
+
 const { useState, useEffect } = React;
 
 const CTABanner = (props) => {
@@ -133,20 +135,7 @@ const CTABanner = (props) => {
 
                             <tr>
                                 <td colSpan={2} style={{ paddingLeft: 0 }}>
-                                    <div className={`proofratings-banner-badge badge-hidden-mobile ${state?.shadow ? 'has-shadow' : ''}`}>
-                                        <div className="proofratings-logos">
-                                            <img src={`${get_proofratings().assets_url}/images/icon-google.png`} alt="google" />
-                                            <img src={`${get_proofratings().assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />
-                                        </div>
-                                        <div className="rating-box">
-                                            <span className="proofratings-stars medium">
-                                                <i style={{ width: "100%" }} />
-                                            </span>
-                                            <span className="rating">5.0 / 5</span>
-                                        </div>
-                                        <div className="proofratings-review-count"># customer reviews</div>
-                                        {cta_button_container()}
-                                    </div>
+                                    <PreviewCTABanner {...state} />
                                 </td>
                             </tr>
                             <tr>

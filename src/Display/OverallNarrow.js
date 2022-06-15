@@ -49,12 +49,12 @@ const DisplayOverallNarrow = (props) => {
         return styles;
     }
 
-    const css_style = `.proofratings-badge.proofratings-badge-narrow {${get_styles().join(';')}}`;
+    const css_style = `.proofratings-badge.proofratings-badge-narrow.${props?.className} {${get_styles().join(';')}}`;
 
     return (
         <React.Fragment>
             <style>{css_style}</style>
-            <div className="proofratings-badge proofratings-badge-narrow">
+            <div className={`proofratings-badge proofratings-badge-narrow ${props?.className}`}>
                 <div className="proofratings-logos">
                     <img src={`${get_proofratings().assets_url}/images/icon-google.png`} alt="google" />
                     <img src={`${get_proofratings().assets_url}/images/icon-wordpress.jpg`} alt="wordpress" />

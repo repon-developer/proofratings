@@ -53,12 +53,12 @@ const DisplayOverallRectangle = (props) => {
         return styles;
     }
 
-    const css_style = `.proofratings-badge.proofratings-badge-rectangle {${get_styles().join(';')}}`;
+    const css_style = `.proofratings-badge.proofratings-badge-rectangle.${props?.className} {${get_styles().join(';')}}`;
 
     return (
         <React.Fragment>
             <style>{css_style}</style>
-            <div className="proofratings-badge proofratings-badge-rectangle">
+            <div className={`proofratings-badge proofratings-badge-rectangle ${props?.className}`}>
                 <div className="proofratings-inner">
                     <div className="proofratings-logos">
                         <img src={`${get_proofratings().assets_url}/images/icon-google.png`} alt="google" />

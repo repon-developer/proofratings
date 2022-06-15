@@ -41,18 +41,18 @@ const Basic = (props) => {
         <React.Fragment>
             <style>{css_style}</style>
 
-            <div className="proofratings-review-widgets-grid proofratings-widget-grid-basic">
-                <div className={widget_classes}>
-                    <div className="review-site-logo">
-                        <img src={`${get_proofratings().assets_url}images/google.svg`} alt="Google" />
-                    </div>
 
-                    <div className="proofratings-stars"><i style={{ width: '100%' }} /></div>
-
-                    <div className="review-count"># ratings</div>
-                    <a className="view-reviews" href="#">View all reviews</a>
+            <div className={widget_classes}>
+                <div className="review-site-logo">
+                    <img src={`${get_proofratings().assets_url}images/google.svg`} alt="Google" />
                 </div>
+
+                <div className="proofratings-stars"><i style={{ width: '100%' }} /></div>
+
+                <div className="review-count"># ratings</div>
+                <a className="view-reviews" href="#">View all reviews</a>
             </div>
+
         </React.Fragment>
     );
 };

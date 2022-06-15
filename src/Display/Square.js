@@ -61,7 +61,7 @@ const WidgetSquare = (props) => {
     return (
         <React.Fragment>
             <style>{css_style}</style>
-            <div id="proofratings-badge-square" className="proofratings-review-widgets-grid proofratings-widgets-grid-square">
+            
                 <div className="proofratings-widget proofratings-widget-square">
                     <div className="review-site-logo">
                         <img src={connection.logo} alt="Google" />
@@ -75,7 +75,7 @@ const WidgetSquare = (props) => {
                     <div className="review-count"> {connection.reviews} reviews </div>
                     <p className="view-reviews">View Reviews</p>
                 </div>
-            </div>
+            
         </React.Fragment>
     )
 }
