@@ -31,56 +31,16 @@ const CTABanner = (props) => {
         handle_field({ button2 })
     }
 
-    const get_styles = () => {
-        const styles = []
-        if (state?.star_color) {
-            styles.push('--star_color:' + state.star_color);
-        }
-
-        if (state?.background_color) {
-            styles.push('--backgroundColor:' + state.background_color);
-        }
-
-        if (state?.rating_text_color) {
-            styles.push('--rating_text_color:' + state.rating_text_color);
-        }
-
-        if (state?.review_rating_background_color) {
-            styles.push('--review_rating_background_color:' + state.review_rating_background_color);
-        }
-
-        if (state?.number_review_text_color) {
-            styles.push('--reviewCountTextcolor:' + state.number_review_text_color);
-        }
-
-        return styles;
-    }
-
-    const css_style = `.proofratings-banner-badge {${get_styles().join(';')}}`;
-
-    const cta_button_container = () => {
-        const button1 = Object.assign({ show: true, text: 'Sign Up' }, state.button1);
-        const button2 = Object.assign({ show: true, text: 'Sign Up' }, state.button2);
-
-        return (
-            <div className="button-container">
-                {(button1.show === true && button1.text.length) && <div className="proofratings-button button1 has-border">{button1.text}</div>}
-                {/* {(button2.show && button2.text.length) && <div className="proofratings-button button1 has-border">{button2.text}</div>} */}
-            </div>
-        )
-    }
-
     return (
         <React.Fragment>
-            <style>{css_style}</style>
-
             <div className="proofratings-copyarea">
                 <h3>Webhook URL</h3>
                 <code className="shortocde-area">{get_proofratings().api}/webhooks?id={props?.id}&amp;site_url={get_proofratings().site_url}</code>
                 <p className="description">
-                    Use this URL to track conversions. And the URL to any software you use for <br /> your Call-to-action button(s). <br />
-                    Note: Set the webhook as a POST.
+                    Use this URL to track conversions. Add the URL to any software you use for your Call-to-action button(s). Add this webhook and at least one button below to track conversions.
                 </p>
+
+                <p className="description">Note: Set the webhook as a POST.</p>
             </div>
 
             <div className="gap-40" />
@@ -146,13 +106,10 @@ const CTABanner = (props) => {
                             <tr>
                                 <th scope="row">Top Shadow</th>
                                 <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.shadow}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_field({ shadow: !state?.shadow })}
-                                        />
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" defaultChecked={state?.shadow} onChange={() => handle_field({ shadow: !state?.shadow })} />
+                                        <span>No Shadow</span>
+                                        <span>Add Shadow</span>
                                     </label>
                                 </td>
                             </tr>
@@ -185,13 +142,10 @@ const CTABanner = (props) => {
                         <tbody>
                             <tr>
                                 <td colSpan={2} style={{ paddingLeft: 0 }}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.button1?.show}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_button('show', !state.button1?.show)}
-                                        /> Second Button
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" defaultChecked={state?.button1?.show} onChange={() => handle_button('show', !state.button1?.show)} />
+                                        <span>Hide Button</span>
+                                        <span>Show Button</span>
                                     </label>
                                 </td>
                             </tr>
@@ -205,13 +159,10 @@ const CTABanner = (props) => {
                         <tbody>
                             <tr>
                                 <td colSpan={2} style={{ paddingLeft: 0 }}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={state?.button2?.show}
-                                            className="checkbox-switch"
-                                            onChange={() => handle_button2('show', !state.button2?.show)}
-                                        /> Second Button
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" defaultChecked={state?.button2?.show} onChange={() => handle_button2('show', !state.button2?.show)} />
+                                        <span>Hide Button</span>
+                                        <span>Show Button</span>
                                     </label>
                                 </td>
                             </tr>

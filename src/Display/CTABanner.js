@@ -33,12 +33,12 @@ const PreviewCTABanner = (props) => {
 
     const cta_button_container = () => {
         const button1 = Object.assign({ show: true, text: 'Sign Up' }, state.button1);
-        const button2 = Object.assign({ show: true, text: 'Sign Up' }, state.button2);
+        const button2 = Object.assign({ show: false, text: '' }, state.button2);
 
         return (
             <div className="button-container">
-                {(button1.show === true && button1.text.length) && <div className="proofratings-button button1 has-border">{button1.text}</div>}
-                {/* {(button2.show && button2.text.length) && <div className="proofratings-button button1 has-border">{button2.text}</div>} */}
+                {(button1.show === true && button1.text.length) && <div className="proofratings-button button1">{button1.text}</div>}
+                {(button2.show && button2.text.length) && <div className="proofratings-button button2">{button2.text}</div>}
             </div>
         )
     }

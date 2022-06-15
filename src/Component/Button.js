@@ -19,16 +19,15 @@ const Button = (props) => {
                 <td>
                     <input
                         type="url"
+                        style={{ marginRight: 10 }}
                         defaultValue={props?.url}
                         onChange={(e) => props.onUpdate('url', e.target.value)}
                     />
-                    <label style={{ marginLeft: 10 }}>
-                        <input
-                            type="checkbox"
-                            defaultChecked={props?.blank}
-                            className="checkbox-switch checkbox-onoff"
-                            onChange={(e) => props.onUpdate('blank', !props?.blank)}
-                        /> Open in new tab
+
+                    <label className="label-switch-checkbox">
+                        <input className="checkbox-switch" type="checkbox" defaultChecked={props?.blank} onChange={(e) => props.onUpdate('blank', !props?.blank)} />
+                        <span>Keep on same tab</span>
+                        <span>Open in new tab</span>
                     </label>
                 </td>
             </tr>
@@ -43,23 +42,21 @@ const Button = (props) => {
             <tr>
                 <th scope="row">Button Shape</th>
                 <td>
-                    <input
-                        type="checkbox"
-                        defaultChecked={props?.rectangle}
-                        className="checkbox-switch checkbox-shape"
-                        onChange={() => props.onUpdate('rectangle', !props?.rectangle)}
-                    />
+                    <label className="label-switch-checkbox">
+                        <input className="checkbox-switch" type="checkbox" defaultChecked={props?.rectangle} onChange={() => props.onUpdate('rectangle', !props?.rectangle)} />
+                        <span>Round</span>
+                        <span>Rectangle</span>
+                    </label>
                 </td>
             </tr>
             <tr>
                 <th scope="row">Button Border</th>
                 <td>
-                    <input
-                        type="checkbox"
-                        defaultChecked={props?.border}
-                        className="checkbox-switch"
-                        onChange={() => props.onUpdate('border', !props?.border)}
-                    />
+                    <label className="label-switch-checkbox">
+                        <input className="checkbox-switch" type="checkbox" defaultChecked={props?.border} onChange={() => props.onUpdate('rectangle', !props?.border)} />
+                        <span>Hide Border</span>
+                        <span>Show Border</span>
+                    </label>
                 </td>
             </tr>
 

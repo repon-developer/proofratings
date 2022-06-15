@@ -25,7 +25,7 @@ const Schema = () => {
                         <span>Enable Schema Markup</span>
                     </label>
                     <textarea defaultValue={settings?.schema} onInput={(e) => store.dispatch({ type: ACTIONS.UPDATE_SCHEMA, payload: e.target.value })}></textarea>
-                    <p className="description">Add the script block below to the head section of your html.</p>
+                    <p className="description">DO NOT edit this data unless you know what you are doing.</p>
                 </div>
 
                 <div>

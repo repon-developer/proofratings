@@ -227,7 +227,10 @@ const BadgeDisplay = (props) => {
                 <div className="proofratings-row">
                     <ul className="badge-items-grid">
                         <li style={{ maxWidth: 'none' }}>
-                            <PreviewCTABanner {...settings.overall_cta_banner} />
+                            <div className="preview-widget" style={{minHeight: 0}}>
+                                <PreviewCTABanner {...settings.overall_cta_banner} />
+                            </div>
+
                             <label className="label-switch-checkbox">
                                 <input className="checkbox-switch" type="checkbox" checked={badge_display?.overall_cta_banner} onChange={() => update_single('overall_cta_banner')} />
                                 <span>Deactivate</span>
