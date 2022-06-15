@@ -323,11 +323,11 @@ class Proofratings_Settings {
 					<p>Need help? Submit a ticket</p>
 				</a>
 
-				<!-- <a href="<?php menu_page_url('proofratings-billing') ?>">
+				<a href="<?php menu_page_url('proofratings-billing') ?>">
 					<i class="menu-icon menu-icon-billing"></i>
 					<span class="menu-label">Billing</span>
 					<p>Manage and update your payment source, subscription and invoices</p>
-				</a> -->
+				</a>
 			</div>
 		</div>
 		<?php
@@ -436,6 +436,24 @@ class Proofratings_Settings {
 	public function settings() { ?>
 		<div class="wrap proofratings-settings-wrap">
 			<div id="proofratings-settings-root"></div>
+		</div>
+		<?php
+	}
+
+	public function billing() { ?>
+		<div class="wrap proofratings-settings-wrap">		
+			<header class="proofratins-header header-row">
+				<div class="header-left">
+					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<h1 class="title"><?php _e('Support', 'proofratings') ?></h1>
+				</div>
+				
+				<div class="header-right">
+					<!-- <a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a> -->
+				</div>
+			</header>
+
+			<iframe src="https://demo.paymentsplugin.com/manage-subscriptions-inline/" width="100%" height="1000px" ></iframe>
 		</div>
 		<?php
 	}
