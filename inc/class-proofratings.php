@@ -173,7 +173,7 @@ class Proofratings {
 		$locations = array_keys($review_locations);
 		if ( count($locations) > 0 ) {
 			$ids = implode("','", $locations);
-			$wpdb->query(sprintf("UPDATE $wpdb->proofratings SET `status` = 'inactive' WHERE location_id NOT IN ('%s')", $ids));
+			$wpdb->query(sprintf("UPDATE $wpdb->proofratings SET `status` = 'deleted' WHERE location_id NOT IN ('%s')", $ids));
 		}
 	
 		$settings = (array) $request->get_param('settings');
