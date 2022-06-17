@@ -36,7 +36,7 @@ const widget_primary_state = {
     widget_square: { widget_connections: null },
     widget_basic: { widget_connections: [] },
     widget_icon: { widget_connections: [] },
-    widget_rectangle: { widget_connections: [] },
+    widget_rectangle: { widget_connections: [], shadow: {shadow: true} },
 
     overall_rectangle_embed: {},
     overall_rectangle_float: { tablet: true, mobile: true, close_button: true },

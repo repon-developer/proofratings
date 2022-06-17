@@ -78,7 +78,7 @@ const CTABanner = (props) => {
                                     <label className="label-switch-checkbox">
                                         <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ close_button: !state?.close_button })} checked={state?.close_button} />
                                         <span>Don't allow user to close/hide</span>
-                                        <span>Allow close for mobile if click</span>
+                                        <span>Allow user to close/hide</span>
                                     </label>
 
                                     <div className="gap-5" />
