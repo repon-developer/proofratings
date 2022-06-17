@@ -140,8 +140,6 @@
             $(".analytics-information-alltime .conversions").hide();
         }
 
-
-
         analytics_input.children("span").html(state.start.format("YYYY-MM-DD") + " ~ " + state.end.format("YYYY-MM-DD"));
 
         analyticsChart.data.labels = sessoins.map((date) => moment(date).format("DD MMM"));
