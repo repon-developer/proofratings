@@ -18,6 +18,10 @@ const Icon = () => {
             styles.push('--textcolor:' + state.textcolor);
         }
 
+        if (state?.background_color) {
+            styles.push('background-color:' + state.background_color);
+        }
+
 
         return styles;
     }

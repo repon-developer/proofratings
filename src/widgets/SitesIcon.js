@@ -3,6 +3,8 @@ import { get_proofratings } from "../global";
 import ColorPicker from "./../Component/ColorPicker";
 import ActiveSites from './../Component/ActiveSites';
 
+import PreviewIcon from '../Display/Icon';
+
 const { useState, useEffect } = React;
 
 const Sites_Icon = (props) => {
@@ -74,6 +76,8 @@ const Sites_Icon = (props) => {
                 </div>
             </div>
 
+            <PreviewIcon />
+
 
             <table className="form-table">
                 <tbody>
@@ -90,6 +94,11 @@ const Sites_Icon = (props) => {
                     <tr>
                         <th scope="row">Text color</th>
                         <td><ColorPicker color={state?.textcolor} onUpdate={(textcolor) => handle_field({ textcolor })} /></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Background color</th>
+                        <td><ColorPicker color={state?.background_color} onUpdate={(background_color) => handle_field({ background_color })} /></td>
                     </tr>
 
                     <tr>

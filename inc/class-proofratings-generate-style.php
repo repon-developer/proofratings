@@ -140,6 +140,10 @@ class Proofratings_Generate_Style {
 			if ( $badge_settings->textcolor ) {
 				printf("\t--textcolor: %s;\n", $badge_settings->textcolor);
 			}
+
+			if ( $badge_settings->background_color ) {
+				printf("\tbackground-color: %s;\n", $badge_settings->background_color);
+			}
 		echo "}\n\n";
 	}
 

@@ -295,6 +295,15 @@ class Proofratings_Query  {
 		}
 
 		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN ('active', 'pause', 'pending', 'due', 'deleted') ORDER BY location ASC");
+
+
+		usort($locations, function($location){
+			if ( $location->status === 'active' ) {
+				return -1;
+			}
+
+			return 2;
+		});
 		
 		array_walk($locations, function(&$location){
 			$location = $this->sanitize_location($location);

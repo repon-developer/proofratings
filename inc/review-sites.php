@@ -344,6 +344,18 @@ function get_proofratings_review_sites() {
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/goodfirms-black.svg',
             'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-goodfirms.svg',
             'category' => 'agency'
+        ],
+
+        'nextdoor' => [
+            'theme_color' => '#76d40e',
+            'name' => __('Nextdoor', 'proofratings'),
+            'title' => __('Nextdoor Review Settings', 'proofratings'),
+            'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/nextdoor.svg',
+            'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-nextdoor.svg',
+            'rating_title' => __('Goodfirms Rating', 'proofratings'),
+            'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon2-nextdoor.svg',
+            'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-nextdoor.svg',
+            'category' => 'agency'
         ]
     ];
 }
