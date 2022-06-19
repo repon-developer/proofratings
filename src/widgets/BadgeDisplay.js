@@ -1,5 +1,5 @@
 import store, { ACTIONS, get_settings } from './Store';
-import { get_proofratings, copy_shortcode } from '../global';
+import { copy_shortcode } from '../global';
 
 import DisplaySquare from '../Display/Square';
 import DisplayIcon from '../Display/Icon';

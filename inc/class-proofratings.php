@@ -97,7 +97,6 @@ class Proofratings {
 	 */	
 	public function register_scripts() {
 		wp_register_style( 'proofratings-fonts', PROOFRATINGS_PLUGIN_URL . '/assets/webfonts/fonts.css', [], PROOFRATINGS_VERSION);
-		wp_register_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['proofratings-fonts'], PROOFRATINGS_VERSION);
 	}
 		
 	/**
@@ -372,7 +371,7 @@ class Proofratings {
 	 * frontend CSS and JS assets.
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style( 'proofratings' );
+		wp_enqueue_style( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css', ['proofratings-fonts'], PROOFRATINGS_VERSION);
 		wp_register_script( 'js-cookie', PROOFRATINGS_PLUGIN_URL.  '/assets/js/js.cookie.min.js', [], '3.0.1', true);
 
 		$upload_dir = wp_upload_dir();

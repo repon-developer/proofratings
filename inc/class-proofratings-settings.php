@@ -258,7 +258,7 @@ class Proofratings_Settings {
 
 			<div class="proofratings-form-activation-wrapper">
 				<p class="lead-text"><?php _e('This plugin requires an annual subscription to cover daily, automatic rating updates. You can try Proofratings free for 30 days by signing up for a trial below.', 'proofratings') ?></p>
-				<a class="button btn-primary" href="#"><?php _e('SIGN UP FOR TRIAL', 'proofratings') ?></a>
+				<a class="button btn-primary" href="<?php echo home_url('checkout') ?>" target="_blank"><?php _e('SIGN UP FOR TRIAL', 'proofratings') ?></a>
 
 				<div class="gap-30"></div>
 
