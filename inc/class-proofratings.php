@@ -123,7 +123,7 @@ class Proofratings {
 
 		register_rest_route( 'proofratings/v1', 'save_settings', array(
 			'methods' => 'POST',
-			'callback' => [$this, 'save_settings'],
+			'callback' => [$this, 'save_settings_callback'],
 			'permission_callback' => '__return_true'
 		));
 
@@ -282,7 +282,11 @@ class Proofratings {
 	 */
 	public function get_location_settings(WP_REST_Request $request) {
 		$this->clear_cache();
-		$location = $this->query->get($request->get_param('location_id'));
+
+		$query = $this->query;
+
+
+		$location = $query->get($request->get_param('location_id'));
 		if ( !$location ) {
 			return new WP_Error('location_404', 'No location found');
 		}
@@ -293,7 +297,7 @@ class Proofratings {
 		$settings = get_proofratings_settings();
 
 		return array(
-			'global' => $location->global,
+			'global' => $query->global,
 			'reviews' => $location->reviews,
 			'location_name' => $location->location['name'],
 			'settings' => $location->settings,
@@ -303,8 +307,8 @@ class Proofratings {
 				'assets_url' => PROOFRATINGS_PLUGIN_URL . '/assets/',
 				'review_sites' => get_proofratings_review_sites(),
 				'pages' => get_pages(),
-				'global' => get_proofratings()->query->global,
-				'locations' => get_proofratings()->query->get_locations(),
+				'global' => $query->global,
+				'locations' => $query->get_locations(),
 				'connections_approved' => $settings['connections_approved'],
 				'agency' => $settings['agency'],
 				'stylesheet' => PROOFRATINGS_PLUGIN_URL . '/assets/css/proofratings.css'
@@ -315,11 +319,13 @@ class Proofratings {
 	/**
 	 * proofratings rest api callback
 	 */
-	public function save_settings(WP_REST_Request $request) {
+	public function save_settings_callback(WP_REST_Request $request) {
 		$client_settings = $request->get_param('client_settings');
 		if ( $client_settings ) {
 			update_proofratings_settings($client_settings);
 		}
+
+		
 
 		$location_id = $request->get_param('location_id');
 		$location_settings = $request->get_param('location_settings');

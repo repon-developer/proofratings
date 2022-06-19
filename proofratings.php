@@ -26,7 +26,7 @@ define( 'PROOFRATINGS_PLUGIN_URL', untrailingslashit(plugin_dir_url(__FILE__)));
 define( 'PROOFRATINGS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 if ( !defined('PROOFRATINGS_API_URL') ) {
-  define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings/v1');
+  define( 'PROOFRATINGS_API_URL', 'https://proofratings.com/wp-json/proofratings-manager/v1');
 }
 
 require_once dirname( __FILE__ ) . '/inc/class-proofratings.php';
