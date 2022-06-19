@@ -445,17 +445,15 @@ class Proofratings_Settings {
 			<header class="proofratins-header header-row">
 				<div class="header-left">
 					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
-					<h1 class="title"><?php _e('Support', 'proofratings') ?></h1>
+					<h1 class="title"><?php _e('Billing', 'proofratings') ?></h1>
 				</div>
 				
 				<div class="header-right">
-					<!-- <a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a> -->
+					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
 				</div>
 			</header>
 
-			
-
-			<!-- <iframe src="https://proofratings.me/customer-panel/" width="100%" height="1000px" ></iframe> -->
+			<iframe style="margin: -30px; height: calc(100vh - 116px - 32px); width: calc(100% + 60px)!important" src="https://proofratings.me/customer-panel/"></iframe>
 		</div>
 		<?php
 	}
