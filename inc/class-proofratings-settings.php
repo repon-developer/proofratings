@@ -461,6 +461,7 @@ class Proofratings_Settings {
 
 	public function billing() {
 		$request = wp_safe_remote_get(PROOFRATINGS_API_URL . '/get_subscription', get_proofratings_api_args());
+		
 		if ( is_wp_error($request) ) {
 			$this->error->add('unknown', $request->get_error_message());
 		}
