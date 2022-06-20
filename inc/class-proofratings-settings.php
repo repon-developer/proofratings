@@ -492,7 +492,7 @@ class Proofratings_Settings {
 					<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
 
 					<div class="billing-meta">
-						<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option( 'date_format'),  $result->subscription_date)); ?>
+						<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option( 'date_format'),  $result->created)); ?>
 					</div>
 
 					<div class="billing-footer">
