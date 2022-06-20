@@ -653,12 +653,11 @@ form.form-submit-ticket textarea {min-height: 100px;}
     box-shadow: 0 0 15px rgb(0 0 0 / 70%);
 }
 
-#toast-proofratings:empty {
-    bottom: -40px;
-    pointer-events: none;
-}
+#toast-proofratings:empty {bottom: -40px; pointer-events: none}
 
-.billing-title {color: #000; font-size: 20px; font-weight: bold; margin-top: 32px; margin-bottom: 16px}
+.proofratings-billing-wrapper {max-width: 500px}
+
+.billing-title {color: #000; font-size: 20px; font-weight: bold; margin-top: 0; margin-bottom: 16px}
 
 .billing-item {font-size: 15px; padding-block: 8px; margin-bottom: -1px; border-block: 1px solid #b6b8c5}
 .billing-item a {text-decoration: none}
@@ -668,7 +667,6 @@ form.form-submit-ticket textarea {min-height: 100px;}
 
 .billing-item .billing-meta {color: #2f2f37; font-size: 13px; margin-bottom: 2px}
 .billing-item .billing-footer a {color: #4980D1; font-weight: bold;}
-
 
 ul.subscription-invoices {list-style: none; padding: 0; margin: 0}
 ul.subscription-invoices > li {padding-inline-start: 40px; background: url(../images/file-invoice-dollar.svg) no-repeat left center; background-size: auto 60%}

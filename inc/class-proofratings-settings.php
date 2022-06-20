@@ -60,8 +60,7 @@ class Proofratings_Settings {
 		add_action( 'init', [$this, 'handle_signup_form'] );
 		add_action( 'init', [$this, 'handle_support_form'] );
 		add_action( 'init', [$this, 'handle_edit_location'] );
-
-		
+		add_action( 'init', [$this, 'handle_cancel_subscription'] );		
 	}
 
 	public function handle_signup_form() {
@@ -153,7 +152,7 @@ class Proofratings_Settings {
 			return $this->error->add($response->code, $response->message);
 		}
 
-		$this->form_data = new Proofratings_Site_Data(['success' => 'You have successfully placed your ticket.']);		
+		$this->form_data = new Proofratings_Site_Data(['success' => 'You have successfully placed your ticket.']);
 	}
 
 	public function get_location_data() {		
@@ -247,6 +246,28 @@ class Proofratings_Settings {
 	}
 
 	/**
+	 * Cancel subscription handler
+	 * @since 1.0.6
+	 */
+	public function handle_cancel_subscription() {
+		if ( !isset($_GET['_nonce']) || !wp_verify_nonce( $_GET['_nonce'], '_nonce_cancel_subscription')) {
+			return;
+		}
+		
+		$response = wp_remote_get(PROOFRATINGS_API_URL . '/cancel_subscription', get_proofratings_api_args());
+		$result = json_decode(wp_remote_retrieve_body($response));
+
+		if ( isset($result->success) && $result->success === true ) {
+			update_proofratings_settings(array('status' => 'canceled'));
+			exit(wp_safe_redirect(admin_url('admin.php?page=proofratings')));
+		}
+
+		if ( isset($result->code)) {
+			return $this->error->add('error', $result->message);
+		}
+	}
+
+	/**
 	 * Shows the plugin's settings page.
 	 */
 	public function license_page() {
@@ -332,8 +353,6 @@ class Proofratings_Settings {
 		</div>
 		<?php
 	}
-
-
 
 	/**
 	 * Shows the plugin's settings page.
@@ -459,46 +478,47 @@ class Proofratings_Settings {
 				</div>
 			</header>
 
-			<hr class="wp-header-end">
+			<div class="proofratings-billing-wrapper">
+				<hr class="wp-header-end">
 
-			<?php if ( $this->error->has_errors() ) : ?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php echo $this->error->get_error_message() ?></p>
-			</div>
-			<?php endif; ?>
-
-			<h3 class="billing-title"><?php _e('Subscription') ?></h3>
-			<div class="billing-item">
-				<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
-
-				<div class="billing-meta">
-					<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option( 'date_format'),  $result->subscription_date)); ?>
+				<?php if ( $this->error->has_errors() ) : ?>
+				<div class="notice notice-error is-dismissible">
+					<p><?php echo $this->error->get_error_message() ?></p>
 				</div>
+				<?php endif; ?>
 
-				<div class="billing-footer">
-					<a href="#"><?php _e('Cancel') ?></a>
-				</div>
-			</div>
+				<h3 class="billing-title"><?php _e('Subscription') ?></h3>
+				<div class="billing-item">
+					<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
 
-			<?php if ( count($result->invoices) > 0 ):  ?>
-			<h3 class="billing-title"><?php _e('Invoices') ?></h3>
-			<ul class="subscription-invoices">
-				<?php foreach ($result->invoices as $invoice) : ?>
-				<li class="billing-item">
-					<div class="billing-name">
-						<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(&dollar;%s / %s)</span>', $invoice->number, $invoice->total, date(get_option( 'date_format'), $invoice->date)); ?>
+					<div class="billing-meta">
+						<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option( 'date_format'),  $result->subscription_date)); ?>
 					</div>
+
 					<div class="billing-footer">
-						<?php if ( $invoice->pdf ) {
-							printf('<a href="%s" target="_blank">%s</a>', esc_url_raw( $invoice->pdf ), __('Download'));
-						} ?>
+						<a href="<?php echo add_query_arg('_nonce', wp_create_nonce( '_nonce_cancel_subscription' )) ?>"><?php _e('Cancel') ?></a>
 					</div>
-				</li>
-				<?php endforeach; ?>
-			</ul>
-			<?php endif; ?>
+				</div>
 
-			<!-- <iframe style="margin: -30px; height: calc(100vh - 116px - 32px); width: calc(100% + 60px)!important" src="https://proofratings.me/customer-panel/"></iframe> -->
+				<?php if ( count($result->invoices) > 0 ):  ?>
+				<div class="gap-40"></div>
+				<h3 class="billing-title"><?php _e('Invoices') ?></h3>
+				<ul class="subscription-invoices">
+					<?php foreach ($result->invoices as $invoice) : ?>
+					<li class="billing-item">
+						<div class="billing-name">
+							<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(&dollar;%s / %s)</span>', $invoice->number, $invoice->total, date(get_option( 'date_format'), $invoice->date)); ?>
+						</div>
+						<div class="billing-footer">
+							<?php if ( $invoice->pdf ) {
+								printf('<a href="%s" target="_blank">%s</a>', esc_url_raw( $invoice->pdf ), __('Download'));
+							} ?>
+						</div>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+				<?php endif; ?>
+			</div>
 		</div>
 		<?php
 	}
