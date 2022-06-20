@@ -440,7 +440,13 @@ class Proofratings_Settings {
 		<?php
 	}
 
-	public function billing() { ?>
+	public function billing() {
+		$request = wp_safe_remote_get(PROOFRATINGS_API_URL . '/get_subscription', get_proofratings_api_args());
+		$result = json_decode(wp_remote_retrieve_body( $request ) );
+
+		if ( isset($result->code) ) {
+			$this->error->add($result->code, $result->message);
+		} ?>
 		<div class="wrap proofratings-settings-wrap">		
 			<header class="proofratins-header header-row">
 				<div class="header-left">
@@ -453,7 +459,46 @@ class Proofratings_Settings {
 				</div>
 			</header>
 
-			<iframe style="margin: -30px; height: calc(100vh - 116px - 32px); width: calc(100% + 60px)!important" src="https://proofratings.me/customer-panel/"></iframe>
+			<hr class="wp-header-end">
+
+			<?php if ( $this->error->has_errors() ) : ?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php echo $this->error->get_error_message() ?></p>
+			</div>
+			<?php endif; ?>
+
+			<h3 class="billing-title"><?php _e('Subscription') ?></h3>
+			<div class="billing-item">
+				<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
+
+				<div class="billing-meta">
+					<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option( 'date_format'),  $result->subscription_date)); ?>
+				</div>
+
+				<div class="billing-footer">
+					<a href="#"><?php _e('Cancel') ?></a>
+				</div>
+			</div>
+
+			<?php if ( count($result->invoices) > 0 ):  ?>
+			<h3 class="billing-title"><?php _e('Invoices') ?></h3>
+			<ul class="subscription-invoices">
+				<?php foreach ($result->invoices as $invoice) : ?>
+				<li class="billing-item">
+					<div class="billing-name">
+						<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(&dollar;%s / %s)</span>', $invoice->number, $invoice->total, date(get_option( 'date_format'), $invoice->date)); ?>
+					</div>
+					<div class="billing-footer">
+						<?php if ( $invoice->pdf ) {
+							printf('<a href="%s" target="_blank">%s</a>', esc_url_raw( $invoice->pdf ), __('Download'));
+						} ?>
+					</div>
+				</li>
+				<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
+
+			<!-- <iframe style="margin: -30px; height: calc(100vh - 116px - 32px); width: calc(100% + 60px)!important" src="https://proofratings.me/customer-panel/"></iframe> -->
 		</div>
 		<?php
 	}
