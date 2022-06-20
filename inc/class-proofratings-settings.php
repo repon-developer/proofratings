@@ -507,7 +507,7 @@ class Proofratings_Settings {
 					<?php foreach ($result->invoices as $invoice) : ?>
 					<li class="billing-item">
 						<div class="billing-name">
-							<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(&dollar;%s / %s)</span>', $invoice->number, $invoice->total, date(get_option( 'date_format'), $invoice->date)); ?>
+							<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(%s / %s)</span>', $invoice->number, $invoice->total, date(get_option( 'date_format'), $invoice->date)); ?>
 						</div>
 						<div class="billing-footer">
 							<?php if ( $invoice->pdf ) {
