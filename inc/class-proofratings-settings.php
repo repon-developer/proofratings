@@ -461,8 +461,11 @@ class Proofratings_Settings {
 
 	public function billing() {
 		$request = wp_safe_remote_get(PROOFRATINGS_API_URL . '/get_subscription', get_proofratings_api_args());
-		$result = json_decode(wp_remote_retrieve_body( $request ) );
+		if ( is_wp_error($request) ) {
+			$this->error->add('unknown', $request->get_error_message());
+		}
 
+		$result = json_decode(wp_remote_retrieve_body( $request ) );
 		if ( isset($result->code) ) {
 			$this->error->add($result->code, $result->message);
 		} ?>
@@ -487,6 +490,7 @@ class Proofratings_Settings {
 				</div>
 				<?php endif; ?>
 
+				<?php if ( !$this->error->has_errors() ) : ?>
 				<h3 class="billing-title"><?php _e('Subscription') ?></h3>
 				<div class="billing-item">
 					<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
@@ -517,6 +521,7 @@ class Proofratings_Settings {
 					</li>
 					<?php endforeach; ?>
 				</ul>
+				<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>
