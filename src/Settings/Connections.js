@@ -142,6 +142,8 @@ const SiteConnections = ({ location_id }) => {
                 </div>
             </div>
 
+            {store.getState().state?.editing && <p class="editing-notification" style={{marginTop: 3}}>You need to save the changes or cancel before change location.</p>}
+
             <div className="gap-50" />
 
             <table className={`table-review-sites ${is_overall ? 'table-location-overall' : ''}`} >

@@ -42,7 +42,7 @@ class Proofratings_Query  {
 
 	/**
 	 * locations
-	 * @var self
+	 * @var array
 	 * @since  1.1.0
 	 */
 	var $locations = [];
@@ -294,7 +294,8 @@ class Proofratings_Query  {
 			return [];
 		}
 
-		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN ('active', 'pause', 'pending', 'due', 'deleted') ORDER BY location ASC");
+		//$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN ('active', 'pause', 'pending', 'due', 'deleted') ORDER BY location ASC");
+		$locations = $wpdb->get_results("SELECT * FROM $wpdb->proofratings WHERE status IN ('active', 'pause', 'pending', 'due') ORDER BY location ASC");
 
 
 		usort($locations, function($location){

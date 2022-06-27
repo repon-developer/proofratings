@@ -101,8 +101,6 @@ const ProofratingsSettings = () => {
                 <select disabled={state.editing} className="location-select" defaultValue={state?.location_id} onChange={(e) => handle_location(e.target.value)} >
                     {proofratings.locations.map(location => <option key={location.location_id} value={location.location_id}>{location.name}</option>)}
                 </select>
-
-                {state.editing && <p style={{marginTop: 3}}>You need to save the changes or cancel before change location.</p>}
             </div>
         )
     }
