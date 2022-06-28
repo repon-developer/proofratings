@@ -72,7 +72,7 @@ class Proofratings_Settings {
 			return;
 		}
 
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
 		$license_key = @$postdata['license-key'];
 		if ( empty($license_key) ) {
@@ -121,7 +121,7 @@ class Proofratings_Settings {
 			$this->error->add('error_demo', __('On the demo, you are not able to send a message.'));
 		}
 
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
 		if ( empty($postdata['subject']) ) {
 			$this->error->add('subject_missing', __('Please fill your subject.'));
@@ -167,7 +167,7 @@ class Proofratings_Settings {
 		}
 
 		$location_data = $location->location;
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 		if ( isset($postdata['_nonce']) && wp_verify_nonce( $postdata['_nonce'], '_nonce_edit_location')) {
 			$location_data = $postdata;
 		}
@@ -271,7 +271,7 @@ class Proofratings_Settings {
 	 * Shows the plugin's settings page.
 	 */
 	public function license_page() {
-		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); ?>
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS); ?>
 		<div class="wrap proofratings-settings-wrap">		
 			<header class="proofratins-header">
 				<h1 class="title"><?php _e('Proofratings Activation', 'proofratings') ?></h1>
