@@ -60,7 +60,7 @@ class Proofratings_Settings {
 		add_action( 'init', [$this, 'handle_signup_form'] );
 		add_action( 'init', [$this, 'handle_support_form'] );
 		add_action( 'init', [$this, 'handle_edit_location'] );
-		//add_action( 'init', [$this, 'handle_cancel_subscription'] );
+		add_action( 'init', [$this, 'handle_cancel_subscription'] );
 	}
 
 	public function handle_signup_form() {
@@ -97,7 +97,7 @@ class Proofratings_Settings {
 
 		if ( isset($result->data->locations ) && is_object($result->data->locations) ) {
 			foreach ($result->data->locations as $location_slug => $location) {
-				$location_data = array('location_id' => $location_slug, 'location' => @$location->name);
+				$location_data = array('location_id' => $location_slug, 'location' => @$location->name, 'status' => @$location->status);
 
 				$sql = $wpdb->prepare("SELECT * FROM $wpdb->proofratings WHERE location_id = '%s'", $location_slug);
 				if ( $get_location = $wpdb->get_row($sql) ) {

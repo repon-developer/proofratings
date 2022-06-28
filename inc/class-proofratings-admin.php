@@ -124,8 +124,8 @@ class Proofratings_Admin {
 			
 
 			add_submenu_page('proofratings', __('Settings', 'proofratings'), __('Settings', 'proofratings'), $capability, 'proofratings-settings', [$this->settings_page, 'settings']);
-			add_submenu_page('proofratings', __('Billing', 'proofratings'), __('Billing', 'proofratings'), $capability, 'proofratings-billing', [$this->settings_page, 'billing']);
 			add_submenu_page('proofratings', __('Support', 'proofratings'), __('Support', 'proofratings'), $capability, 'proofratings-support', [$this->settings_page, 'support']);
+			add_submenu_page('proofratings', __('Billing', 'proofratings'), __('Billing', 'proofratings'), $capability, 'proofratings-billing', [$this->settings_page, 'billing']);
 
 			add_submenu_page('', __('Edit Location', 'proofratings'), __('Edit Location', 'proofratings'), $capability, 'proofratings-edit-location', [$this->settings_page, 'edit_location']);
 		}
