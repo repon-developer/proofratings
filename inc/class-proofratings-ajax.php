@@ -46,7 +46,7 @@ class Proofratings_Ajax {
 
 	public function get_location_settings() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
+		
 		$location = @$postdata['location_id'];
 		if ( empty($location)) {
 			wp_send_json_error();
@@ -58,7 +58,7 @@ class Proofratings_Ajax {
 		}
 
 		$location->settings->schema = get_proofratings_settings('schema');
-		$location->settings->enable_shema = get_proofratings_settings('enable_shema');
+		$location->settings->enable_schema = get_proofratings_settings('enable_schema');
 
 		wp_send_json(array(
 			'global' => get_proofratings()->query->global,
@@ -89,7 +89,7 @@ class Proofratings_Ajax {
 			unset($post_data['location_id']);
 		}
 
-		$settings = array('schema' => '', 'enable_shema' => '');
+		$settings = array('schema' => '', 'enable_schema' => '');
 		foreach (array_keys($settings) as $key_id) {
 			if ( !isset($post_data[$key_id]) ) {
 				continue;				

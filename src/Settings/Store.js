@@ -12,10 +12,6 @@ const ACTIONS = {
 const settings_primary_state = {
     state: {
         loading: true,
-        active_connections: {},
-        automated_email_report: {},
-        enable_schema: true,
-        schema: null,
     },
     settings: {
         active_connections: {},

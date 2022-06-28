@@ -68,7 +68,7 @@ class Proofratings_Generate_Style {
 			}
 
 			if ( isset($sites_badge->shadow['shadow']) && $sites_badge->shadow['shadow'] ) {
-				if ( $sites_badge->shadow['color'] ) {
+				if ( !empty($sites_badge->shadow['color'] )) {
 					printf("\t--shadowColor: %s;\n", $sites_badge->shadow['color']);
 				}
 			}
@@ -76,7 +76,7 @@ class Proofratings_Generate_Style {
 
 		if ( isset($sites_badge->shadow['shadow']) && $sites_badge->shadow['shadow'] ) {
 			printf(".proofratings-widgets-%s .proofratings-widget.proofratings-widget-%s:hover {\n", $location->id, $type);
-				if ( $sites_badge->shadow['hover'] ) {
+				if ( !empty($sites_badge->shadow['hover'] )) {
 					printf("\t--shadowColor: %s;\n", $sites_badge->shadow['hover']);
 				}
 			echo "}\n\n";

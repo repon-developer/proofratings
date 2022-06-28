@@ -109,21 +109,15 @@ class Proofratings {
 			'permission_callback' => '__return_true'
 		));
 
-		register_rest_route( 'proofratings/v1', 'update_settings', array(
+		register_rest_route( 'proofratings/v1', 'save_settings', array(
 			'methods' => 'POST',
-			'callback' => [$this, 'update_settings_api_callback'],
+			'callback' => [$this, 'save_settings_callback'],
 			'permission_callback' => '__return_true'
 		));
 
 		register_rest_route( 'proofratings/v1', 'set_reviews', array(
 			'methods' => 'POST',
 			'callback' => [$this, 'set_reviews'],
-			'permission_callback' => '__return_true'
-		));
-
-		register_rest_route( 'proofratings/v1', 'save_settings', array(
-			'methods' => 'POST',
-			'callback' => [$this, 'save_settings_callback'],
 			'permission_callback' => '__return_true'
 		));
 
@@ -293,7 +287,7 @@ class Proofratings {
 		}
 
 		$location->settings->schema = get_proofratings_settings('schema');
-		$location->settings->enable_shema = get_proofratings_settings('enable_shema');
+		$location->settings->enable_schema = get_proofratings_settings('enable_schema');
 
 		$settings = get_proofratings_settings();
 
@@ -322,11 +316,10 @@ class Proofratings {
 	 */
 	public function save_settings_callback(WP_REST_Request $request) {
 		$client_settings = $request->get_param('client_settings');
+		error_logs($client_settings);
 		if ( $client_settings ) {
 			update_proofratings_settings($client_settings);
-		}
-
-		
+		}		
 
 		$location_id = $request->get_param('location_id');
 		$location_settings = $request->get_param('location_settings');
