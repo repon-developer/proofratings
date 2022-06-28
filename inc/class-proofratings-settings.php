@@ -60,7 +60,7 @@ class Proofratings_Settings {
 		add_action( 'init', [$this, 'handle_signup_form'] );
 		add_action( 'init', [$this, 'handle_support_form'] );
 		add_action( 'init', [$this, 'handle_edit_location'] );
-		add_action( 'init', [$this, 'handle_cancel_subscription'] );		
+		//add_action( 'init', [$this, 'handle_cancel_subscription'] );
 	}
 
 	public function handle_signup_form() {
@@ -501,7 +501,7 @@ class Proofratings_Settings {
 					</div>
 
 					<div class="billing-footer">
-						<a href="<?php echo add_query_arg('_nonce', wp_create_nonce( '_nonce_cancel_subscription' )) ?>"><?php _e('Cancel') ?></a>
+						<a class="btn-cancel-subscription" href="<?php echo add_query_arg('_nonce', wp_create_nonce( '_nonce_cancel_subscription' )) ?>"><?php _e('Cancel') ?></a>
 					</div>
 				</div>
 
