@@ -275,7 +275,7 @@ class Proofratings_Query  {
 			'status' => $status_text
 		));
 
-		$overall_location->location['name'] = __('ALL LOCATIONS', 'proofratings');
+		$overall_location->location['name'] = __('Overall Location', 'proofratings');
 
 		$overall_location->active_connections = $active_connections;
 
