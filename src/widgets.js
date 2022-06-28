@@ -60,7 +60,7 @@ const ProofratingsWidgets = (props) => {
 
             setState({ ...state, error: false, loading: false, location_name });
             if (typeof response?.settings === 'object') {
-                delete response.settings.current_tab; //ACTIVE THIS AFTER DEVELOPING
+                //delete response.settings.current_tab; //ACTIVE THIS AFTER DEVELOPING
                 store.dispatch({ type: ACTIONS.UPDATE_SETTINGS, payload: response.settings });
             }
         });

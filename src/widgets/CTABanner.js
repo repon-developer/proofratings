@@ -86,6 +86,21 @@ const CTABanner = (props) => {
                                     <p>Add close option when hovered on desktop. No close option available on mobile.</p>
                                 </td>
                             </tr>
+
+                            <tr>
+                                <th scope="row">Close option - Mobile</th>
+                                <td>
+                                    <label className="label-switch-checkbox">
+                                        <input className="checkbox-switch" type="checkbox" onChange={() => handle_field({ close_button_mobile: !state?.close_button_mobile })} checked={state?.close_button_mobile} />
+                                        <span>Don't allow user to close/hide</span>
+                                        <span>Allow user to close/hide</span>
+                                    </label>
+
+                                    <div className="gap-5" />
+
+                                    <p>Add close option on mobile.</p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 
