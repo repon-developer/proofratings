@@ -10,8 +10,6 @@ const Schema = () => {
         return () => unsubscribe();
     }, [])
 
-    console.log(settings);
-
     const enable_schema = settings?.enable_schema;
 
     return (

@@ -110,6 +110,7 @@ class Proofratings_Settings {
 		}
 
 		update_proofratings_settings(['status' => $result->data->status]);
+		exit(wp_safe_redirect(admin_url('admin.php?page=proofratings')));
 	}
 
 	public function handle_support_form() {

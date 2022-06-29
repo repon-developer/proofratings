@@ -316,7 +316,6 @@ class Proofratings {
 	 */
 	public function save_settings_callback(WP_REST_Request $request) {
 		$client_settings = $request->get_param('client_settings');
-		error_logs($client_settings);
 		if ( $client_settings ) {
 			update_proofratings_settings($client_settings);
 		}		

@@ -112,7 +112,7 @@ const SiteConnections = ({ location_id }) => {
 
             <div className="search-review-sites-wrapper">
                 <div className="left-column">
-                    {store.getState().state?.editing && <p class="editing-warning" style={{ marginTop: 3 }}>Note: Please make sure to hit 'Save Changes' after requesting a site connection.</p>}
+                    {store.getState().state?.editing && <p className="editing-warning" style={{ marginTop: 3 }}>Note: Please make sure to hit 'Save Changes' after requesting a site connection.</p>}
                     <form className="form-search-review-sites" style={{ alignSelf: 'flex-end' }} onSubmit={(e) => e.preventDefault()}>
                         <input type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
                         <button></button>

@@ -48,7 +48,6 @@ const ProofratingsWidgets = (props) => {
 
     useEffect(() => {
         const request = jQuery.post(proofratings.ajaxurl, { location_id, action: 'get_proofratings_location_settings' }, function (response) {
-            console.log(response.settings)
             if (response?.success == false) {
                 return setState({ ...state, error: true, loading: false });
             }
