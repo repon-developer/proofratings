@@ -49,7 +49,8 @@ const widget_primary_state = {
         shadow: true,
         tablet: true,
         mobile: true,
-        close_button: true,
+        close_button_desktop: true,
+        close_button_mobile: false,
         hide_on: [],
         button1: {
             show: true,

@@ -499,8 +499,8 @@ html {
 }
 
 .proofratings-banner-badge:hover .proofratings-banner-close {
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
 }
 
 
@@ -589,6 +589,13 @@ html {
     background-color: var(--backgroundHoverColor, var(--backgroundColor));
 }
 
+@media screen and (min-width: 768px) {
+    .proofratings-banner-badge:hover .proofratings-banner-close.close-button-desktop {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .badge-hidden-tablet {display: none!important}
 }
@@ -600,6 +607,11 @@ html {
 
 @media screen and (max-width: 767px) {
     .badge-hidden-mobile {display: none!important}
+
+    .proofratings-banner-badge:hover .proofratings-banner-close.close-button-mobile {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 @media screen and (max-width: 575px) {

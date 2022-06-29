@@ -420,13 +420,14 @@ class Proofratings_Shortcodes {
 	/**
 	 * CTA banner 
 	 */
-	public function overall_ratings_cta_banner($atts, $content = null) {
+	public function overall_ratings_cta_banner($atts) {
 		$location = get_proofratings()->query->get($atts['id']);
 		if ( !$location || !$location->overall_reviews->has_ratings ) {
 			return;
 		}
 
 		$badge_settings = new Proofratings_Site_Data($location->settings->overall_cta_banner);
+		
 		
 		$classes = ['proofratings-banner-badge'];
 		$classes[] = 'proofratings-banner-badge-'.$location->id;
@@ -493,8 +494,18 @@ class Proofratings_Shortcodes {
 		}
 
 		$close_button = '';
-		if ( $badge_settings->close_button !== false ) {
-			$close_button = sprintf('<a class="proofratings-banner-close" href="#">%s</a>', __('Close', 'proofratings'));
+		
+		if ( $badge_settings->close_button_desktop !== false || $badge_settings->close_button_mobile !== false ) {
+			$close_button_class = ['proofratings-banner-close'];
+			if ( $badge_settings->close_button_desktop ) {
+				$close_button_class[] = 'close-button-desktop';
+			}
+
+			if ( $badge_settings->close_button_mobile ) {
+				$close_button_class[] = 'close-button-mobile';
+			}
+
+			$close_button = sprintf('<a class="%s" href="#">%s</a>', implode(' ', $close_button_class), __('Close', 'proofratings'));
 		}
 		
 		ob_start(); ?>
