@@ -20,7 +20,7 @@
         })
     })
 
-    const card_container = $('.proofratings-customer-card');
+    const card_container = $('.proofratings-customer-card .card-form');
 
     card_container.find('.card-number').mask('0000 0000 0000 0000');
     card_container.find('.card-expiry').mask('00 / 00');

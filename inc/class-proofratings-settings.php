@@ -501,13 +501,33 @@ class Proofratings_Settings {
 					</div>
 				<?php endif; ?>
 
-				<div class="proofratings-customer-card">
+				<div class="proofratings-customer-card proofratings-customer-card-editing">
 					<h3>Credit/debit card</h3>
 
-					<div class="card-details">
+					<?php if ($result->payment_method !== false) : ?>
+						<div class="card-details billing-item">
+							<div class="brand"><?php echo $result->payment_method->brand ?></div>
+							<div class="card-number"><?php echo ucwords($result->payment_method->brand) ?> xxxx-<?php echo $result->payment_method->last4 ?></div>
+							<div class="expiry">
+								<p>Expires</p>
+								<?php echo str_pad($result->payment_method->exp_month, 2, '0', STR_PAD_LEFT) ?> / <?php echo $result->payment_method->exp_year ?>
+
+							</div>
+						</div>
+					<?php endif; ?>
+
+					<div class="card-form">
 						<input class="card-input card-number" name="card-number" type="text" placeholder="Card number" data-mask="0000 0000 0000 0000">
 						<input class="card-input card-expiry" type="text" placeholder="MM / YY" data-mask="00 / 00">
 						<input class="card-input" type="text" class="card-cvc" placeholder="CVC" data-mask="0000">
+					</div>
+
+					<div class="card-action">
+						<a href="#" class="button button-link button-card-form">Update Card</a>
+						<div class="update-card-buttons">
+							<a href="#" class="button button-primary">Update Card</a>
+							<a href="#" class="button button-discard">Discard</a>
+						</div>
 					</div>
 				</div>
 
