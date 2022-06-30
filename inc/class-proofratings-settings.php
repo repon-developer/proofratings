@@ -476,6 +476,7 @@ class Proofratings_Settings {
 		}
 
 		$result = json_decode(wp_remote_retrieve_body($request));
+		var_dump($result);
 		if (isset($result->code)) {
 			$this->error->add($result->code, $result->message);
 		} ?>
