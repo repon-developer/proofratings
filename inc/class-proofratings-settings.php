@@ -7,7 +7,7 @@
  * @since   1.0.1
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
@@ -31,7 +31,7 @@ class Proofratings_Settings {
 	 * @return self Main instance.
 	 */
 	public static function instance() {
-		if ( is_null( self::$instance ) ) {
+		if (is_null(self::$instance)) {
 			self::$instance = new self();
 		}
 		return self::$instance;
@@ -57,50 +57,50 @@ class Proofratings_Settings {
 		$this->error = new WP_Error();
 		$this->form_data = new Proofratings_Site_Data();
 
-		add_action( 'init', [$this, 'handle_signup_form'] );
-		add_action( 'init', [$this, 'handle_support_form'] );
-		add_action( 'init', [$this, 'handle_edit_location'] );
-		add_action( 'init', [$this, 'handle_cancel_subscription'] );
+		add_action('init', [$this, 'handle_signup_form']);
+		add_action('init', [$this, 'handle_support_form']);
+		add_action('init', [$this, 'handle_edit_location']);
+		add_action('init', [$this, 'handle_cancel_subscription']);
 	}
 
 	public function handle_signup_form() {
-		if ( !isset($_POST['_nonce']) ) {
+		if (!isset($_POST['_nonce'])) {
 			return;
 		}
 
-		if ( !wp_verify_nonce( $_POST['_nonce'], 'proofratings_license_confirm_nonce')) {
+		if (!wp_verify_nonce($_POST['_nonce'], 'proofratings_license_confirm_nonce')) {
 			return;
 		}
 
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
 		$license_key = @$postdata['license-key'];
-		if ( empty($license_key) ) {
+		if (empty($license_key)) {
 			return $this->error->add('license_key', 'Please enter your license key');
 		}
 
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/activate_site', get_proofratings_api_args(['license_key' => $license_key]));
-		if ( is_wp_error( $response ) ) {
+		if (is_wp_error($response)) {
 			return $this->error->add('remote_request', $response->get_error_message());
 		}
 
 		$result = json_decode(wp_remote_retrieve_body($response));
-		if ( !is_object($result)) {
+		if (!is_object($result)) {
 			return $this->error->add('error', 'Unknown error');
 		}
-		
-		if ( !isset($result->success) || $result->success !== true ) {
+
+		if (!isset($result->success) || $result->success !== true) {
 			return $this->error->add('license_key', $result->message);
 		}
 
 		global $wpdb;
 
-		if ( isset($result->data->locations ) && is_object($result->data->locations) ) {
+		if (isset($result->data->locations) && is_object($result->data->locations)) {
 			foreach ($result->data->locations as $location_slug => $location) {
 				$location_data = array('location_id' => $location_slug, 'location' => @$location->name, 'status' => @$location->status);
 
 				$sql = $wpdb->prepare("SELECT * FROM $wpdb->proofratings WHERE location_id = '%s'", $location_slug);
-				if ( $get_location = $wpdb->get_row($sql) ) {
+				if ($get_location = $wpdb->get_row($sql)) {
 					$wpdb->update($wpdb->proofratings, $location_data, ['id' => $get_location->id]);
 					continue;
 				}
@@ -114,67 +114,67 @@ class Proofratings_Settings {
 	}
 
 	public function handle_support_form() {
-		if ( !isset($_POST['_nonce']) || !wp_verify_nonce( $_POST['_nonce'], '_nonce_submit_ticket')) {
+		if (!isset($_POST['_nonce']) || !wp_verify_nonce($_POST['_nonce'], '_nonce_submit_ticket')) {
 			return;
 		}
 
-		if ( is_proofratings_demo_mode() ) {
+		if (is_proofratings_demo_mode()) {
 			$this->error->add('error_demo', __('On the demo, you are not able to send a message.'));
 		}
 
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
-		if ( empty($postdata['subject']) ) {
+		if (empty($postdata['subject'])) {
 			$this->error->add('subject_missing', __('Please fill your subject.'));
 		}
 
-		if ( empty($postdata['message']) ) {
+		if (empty($postdata['message'])) {
 			$this->error->add('message_missing', __('Please fill your message.'));
 		}
 
-		$this->form_data->subject = sanitize_text_field( $postdata['subject'] );
+		$this->form_data->subject = sanitize_text_field($postdata['subject']);
 		$this->form_data->message = sanitize_textarea_field($postdata['message']);
 
-		if ( $this->error->has_errors() ) {
+		if ($this->error->has_errors()) {
 			return;
-		}		
+		}
 
 		$request = wp_safe_remote_post(PROOFRATINGS_API_URL . '/submit_ticket', get_proofratings_api_args(array(
 			'subject' => $this->form_data->subject,
 			'message' => $this->form_data->message,
 		)));
 
-		if ( is_wp_error( $request ) ) {
-			return $this->error = $request;			
+		if (is_wp_error($request)) {
+			return $this->error = $request;
 		}
 
-		$response = json_decode(wp_remote_retrieve_body( $request ) );
-		if ( isset($response->code) ) {
+		$response = json_decode(wp_remote_retrieve_body($request));
+		if (isset($response->code)) {
 			return $this->error->add($response->code, $response->message);
 		}
 
 		$this->form_data = new Proofratings_Site_Data(['success' => 'You have successfully placed your ticket.']);
 	}
 
-	public function get_location_data() {		
+	public function get_location_data() {
 		$location_id = false;
-		if ( isset($_GET['location']) ) {
+		if (isset($_GET['location'])) {
 			$location_id = $_GET['location'];
 		}
 
 		$location = get_proofratings()->query->get($location_id);
-		if ( $location === false || $location_id === 0) {
-			return new Proofratings_Site_Data(['error' => 'Not a valid location']);			
+		if ($location === false || $location_id === 0) {
+			return new Proofratings_Site_Data(['error' => 'Not a valid location']);
 		}
 
 		$location_data = $location->location;
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-		if ( isset($postdata['_nonce']) && wp_verify_nonce( $postdata['_nonce'], '_nonce_edit_location')) {
+		if (isset($postdata['_nonce']) && wp_verify_nonce($postdata['_nonce'], '_nonce_edit_location')) {
 			$location_data = $postdata;
 		}
 
-		$location_data['location_id'] = $location->location_id;		
-		return new Proofratings_Site_Data($location_data);		
+		$location_data['location_id'] = $location->location_id;
+		return new Proofratings_Site_Data($location_data);
 	}
 
 	/**
@@ -182,44 +182,44 @@ class Proofratings_Settings {
 	 * @since 1.0.6
 	 */
 	public function handle_edit_location() {
-		if ( !isset($_POST['_nonce']) || !wp_verify_nonce( $_POST['_nonce'], '_nonce_edit_location')) {
+		if (!isset($_POST['_nonce']) || !wp_verify_nonce($_POST['_nonce'], '_nonce_edit_location')) {
 			return;
 		}
 
 		$form_data = $this->get_location_data();
-		if (!empty($form_data->error) ) {
+		if (!empty($form_data->error)) {
 			wp_die($form_data->error);
 		}
 
-		if ( is_proofratings_demo_mode() ) {
+		if (is_proofratings_demo_mode()) {
 			$this->error->add('error_demo', __('On the demo, you are not able to edit the location.'));
 		}
-		
-		if ( empty($form_data->name)) {
+
+		if (empty($form_data->name)) {
 			$this->error->add('name', __('Please fill location name field', 'proofratings'));
 		}
 
-		if ( empty($form_data->street)) {
+		if (empty($form_data->street)) {
 			$this->error->add('street', __('Please fill location street field', 'proofratings'));
 		}
 
-		if ( empty($form_data->city)) {
+		if (empty($form_data->city)) {
 			$this->error->add('city', __('Please fill location city field', 'proofratings'));
 		}
 
-		if ( empty($form_data->state)) {
+		if (empty($form_data->state)) {
 			$this->error->add('state', __('Please fill location state/province field', 'proofratings'));
 		}
 
-		if ( empty($form_data->zip)) {
+		if (empty($form_data->zip)) {
 			$this->error->add('zip', __('Please fill location zip/postal field', 'proofratings'));
 		}
 
-		if ( empty($form_data->country)) {
+		if (empty($form_data->country)) {
 			$this->error->add('country', __('Please fill location country field', 'proofratings'));
 		}
 
-		if ( $this->error->has_errors()) {
+		if ($this->error->has_errors()) {
 			return;
 		}
 
@@ -233,15 +233,15 @@ class Proofratings_Settings {
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/update_location', get_proofratings_api_args($location));
 
 		$result = json_decode(wp_remote_retrieve_body($response));
-		if ( isset($result->code) && $result->code === 'rest_no_route' ) {
+		if (isset($result->code) && $result->code === 'rest_no_route') {
 			return $this->error->add('error', "We can't communicate with proofratings website. Please contact with them.");
 		}
 
-		if ( isset($result->message) ) {
+		if (isset($result->message)) {
 			return $this->error->add($result->code, $result->message);
 		}
 
-		if ( isset($result->success) ) {
+		if (isset($result->success)) {
 			$_POST['success'] = $result->data->message;
 		}
 	}
@@ -251,19 +251,20 @@ class Proofratings_Settings {
 	 * @since 1.0.6
 	 */
 	public function handle_cancel_subscription() {
-		if ( !isset($_GET['_nonce']) || !wp_verify_nonce( $_GET['_nonce'], '_nonce_cancel_subscription')) {
+		if (!isset($_GET['_nonce']) || !wp_verify_nonce($_GET['_nonce'], '_nonce_cancel_subscription')) {
 			return;
 		}
-		
+
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/cancel_subscription', get_proofratings_api_args());
 		$result = json_decode(wp_remote_retrieve_body($response));
 
-		if ( isset($result->success) && $result->success === true ) {
+		if (isset($result->success) && $result->success === true) {
+			delete_transient('proofratings_get_subscription');
 			update_proofratings_settings(array('status' => 'canceled'));
 			exit(wp_safe_redirect(admin_url('admin.php?page=proofratings')));
 		}
 
-		if ( isset($result->code)) {
+		if (isset($result->code)) {
 			return $this->error->add('error', $result->message);
 		}
 	}
@@ -273,7 +274,7 @@ class Proofratings_Settings {
 	 */
 	public function license_page() {
 		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS); ?>
-		<div class="wrap proofratings-settings-wrap">		
+		<div class="wrap proofratings-settings-wrap">
 			<header class="proofratins-header">
 				<h1 class="title"><?php _e('Proofratings Activation', 'proofratings') ?></h1>
 			</header>
@@ -287,36 +288,36 @@ class Proofratings_Settings {
 				<hr class="wp-header-end">
 
 				<form class="proofratings-activation" method="POST">
-					<?php wp_nonce_field('proofratings_license_confirm_nonce', '_nonce'); 
-					if( $this->error->has_errors() ) {
+					<?php wp_nonce_field('proofratings_license_confirm_nonce', '_nonce');
+					if ($this->error->has_errors()) {
 						echo '<div class="notice notice-error settings-error is-dismissible">';
-							echo '<p>'. $this->error->get_error_message().'</p>';
+						echo '<p>' . $this->error->get_error_message() . '</p>';
 						echo '</div>';
 					} ?>
 
 					<p>If you already signed up, please enter your license key below.</p>
 					<div class="inline-field">
-						<input name="license-key" type="text" value="<?php echo esc_attr( @$postdata['license-key'] )  ?>" placeholder="<?php _e('License key', 'proofratings') ?>" style="width: 285px">
+						<input name="license-key" type="text" value="<?php echo esc_attr(@$postdata['license-key'])  ?>" placeholder="<?php _e('License key', 'proofratings') ?>" style="width: 285px">
 						<button class="button btn-primary"><?php _e('CONFIRM', 'proofratings') ?></button>
 					</div>
 				</form>
 			</div>
 		</div>
-		<?php
+	<?php
 	}
 
 	/**
 	 * Main menu of proofratings
 	 */
-	public function main_menu() {?>
-		<div class="wrap proofratings-settings-wrap">		
+	public function main_menu() { ?>
+		<div class="wrap proofratings-settings-wrap">
 			<header class="proofratins-header header-row">
 				<h1 class="title"><?php _e('Proofratings Main Menu', 'proofratings') ?></h1>
 
-				<?php 
-					if ( $join_date = wp_date(get_option( 'date_format'), strtotime(get_proofratings_settings('registered')) ) ) {
-						printf('<span class="proofratings-join-date">Date Joined: %s</span>', $join_date);
-					}
+				<?php
+				if ($join_date = wp_date(get_option('date_format'), strtotime(get_proofratings_settings('registered')))) {
+					printf('<span class="proofratings-join-date">Date Joined: %s</span>', $join_date);
+				}
 				?>
 			</header>
 
@@ -352,7 +353,7 @@ class Proofratings_Settings {
 				</a>
 			</div>
 		</div>
-		<?php
+	<?php
 	}
 
 	/**
@@ -360,38 +361,38 @@ class Proofratings_Settings {
 	 */
 	public function edit_location() {
 		$location = $this->get_location_data();
-		if (!empty($location->error) ) {
+		if (!empty($location->error)) {
 			wp_die($location->error);
 		} ?>
 		<div class="wrap proofratings-settings-wrap">
 			<header class="proofratins-header header-row">
 				<div class="header-left">
-					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<a class="btn-back-main-menu" href="<?php menu_page_url('proofratings') ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
 					<h1 class="title"><?php _e('Edit Location', 'proofratings') ?></h1>
 				</div>
-				
+
 				<div class="header-right">
-					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
+					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url('proofratings-support') ?>"></a>
 				</div>
 			</header>
 
 			<hr class="wp-header-end">
 
-			<?php if ( $this->error->has_errors() ) : ?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php echo $this->error->get_error_message() ?></p>
-			</div>
+			<?php if ($this->error->has_errors()) : ?>
+				<div class="notice notice-error is-dismissible">
+					<p><?php echo $this->error->get_error_message() ?></p>
+				</div>
 			<?php endif; ?>
 
-			<?php if ( isset($_POST['success'] ) ): ?>
-			<div class="notice notice-success is-dismissible">
-				<p><?php echo esc_html($_POST['success']) ?></p>
-			</div>
+			<?php if (isset($_POST['success'])) : ?>
+				<div class="notice notice-success is-dismissible">
+					<p><?php echo esc_html($_POST['success']) ?></p>
+				</div>
 			<?php endif; ?>
 
-			
+
 			<form method="post">
-				<?php wp_nonce_field( '_nonce_edit_location', '_nonce' ) ?>
+				<?php wp_nonce_field('_nonce_edit_location', '_nonce') ?>
 				<table class="form-table">
 					<tr>
 						<th scope="row"><?php _e('Location Name*', 'proofratings') ?></th>
@@ -446,7 +447,7 @@ class Proofratings_Settings {
 				<?php submit_button('Update location'); ?>
 			</form>
 		</div>
-		<?php
+	<?php
 	}
 
 
@@ -457,117 +458,134 @@ class Proofratings_Settings {
 		<div class="wrap proofratings-settings-wrap">
 			<div id="proofratings-settings-root"></div>
 		</div>
-		<?php
+	<?php
 	}
 
 	public function billing() {
-		$request = wp_safe_remote_get(PROOFRATINGS_API_URL . '/get_subscription', get_proofratings_api_args());
-		
-		if ( is_wp_error($request) ) {
+
+		$request = get_transient('proofratings_get_subscription');
+		if ($request === false) {
+			$request = wp_safe_remote_get(PROOFRATINGS_API_URL . '/get_subscription', get_proofratings_api_args());
+			if (wp_remote_retrieve_response_code($request) === 200) {
+				set_transient('proofratings_get_subscription', $request, HOUR_IN_SECONDS);
+			}
+		}
+
+		if (is_wp_error($request)) {
 			$this->error->add('unknown', $request->get_error_message());
 		}
 
-		$result = json_decode(wp_remote_retrieve_body( $request ) );
-		if ( isset($result->code) ) {
+		$result = json_decode(wp_remote_retrieve_body($request));
+		if (isset($result->code)) {
 			$this->error->add($result->code, $result->message);
 		} ?>
-		<div class="wrap proofratings-settings-wrap">		
+		<div class="wrap proofratings-settings-wrap">
 			<header class="proofratins-header header-row">
 				<div class="header-left">
-					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<a class="btn-back-main-menu" href="<?php menu_page_url('proofratings') ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
 					<h1 class="title"><?php _e('Billing', 'proofratings') ?></h1>
 				</div>
-				
+
 				<div class="header-right">
-					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a>
+					<a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url('proofratings-support') ?>"></a>
 				</div>
 			</header>
 
 			<div class="proofratings-billing-wrapper">
 				<hr class="wp-header-end">
 
-				<?php if ( $this->error->has_errors() ) : ?>
-				<div class="notice notice-error is-dismissible">
-					<p><?php echo $this->error->get_error_message() ?></p>
-				</div>
+				<?php if ($this->error->has_errors()) : ?>
+					<div class="notice notice-error is-dismissible">
+						<p><?php echo $this->error->get_error_message() ?></p>
+					</div>
 				<?php endif; ?>
 
-				<?php if ( !$this->error->has_errors() ) : ?>
-				<h3 class="billing-title"><?php _e('Subscription') ?></h3>
-				<div class="billing-item">
-					<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
+				<div class="proofratings-customer-card">
+					<h3>Credit/debit card</h3>
 
-					<div class="billing-meta">
-						<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option( 'date_format'),  $result->created)); ?>
-					</div>
-
-					<div class="billing-footer">
-						<a class="btn-cancel-subscription" href="<?php echo add_query_arg('_nonce', wp_create_nonce( '_nonce_cancel_subscription' )) ?>"><?php _e('Cancel') ?></a>
+					<div class="card-details">
+						<input class="card-input card-number" name="card-number" type="text" placeholder="Card number" data-mask="0000 0000 0000 0000">
+						<input class="card-input card-expiry" type="text" placeholder="MM / YY" data-mask="00 / 00">
+						<input class="card-input" type="text" class="card-cvc" placeholder="CVC" data-mask="0000">
 					</div>
 				</div>
 
-				<?php if ( count($result->invoices) > 0 ):  ?>
-				<div class="gap-40"></div>
-				<h3 class="billing-title"><?php _e('Invoices') ?></h3>
-				<ul class="subscription-invoices">
-					<?php foreach ($result->invoices as $invoice) : ?>
-					<li class="billing-item">
-						<div class="billing-name">
-							<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(%s / %s)</span>', $invoice->number, $invoice->total, date(get_option( 'date_format'), $invoice->date)); ?>
+				<?php if (!$this->error->has_errors()) : ?>
+					<h3 class="billing-title"><?php _e('Subscription') ?></h3>
+					<div class="billing-item">
+						<div class="billing-name"><?php echo $result->name ?> <span class="status"><?php echo $result->status ?></span></div>
+
+						<div class="billing-meta">
+							<?php printf('%s / %s • Created on %s', $result->price, $result->duration, date(get_option('date_format'),  $result->created)); ?>
 						</div>
+
 						<div class="billing-footer">
-							<?php if ( $invoice->pdf ) {
-								printf('<a href="%s" target="_blank">%s</a>', esc_url_raw( $invoice->pdf ), __('Download'));
-							} ?>
+							<a class="btn-cancel-subscription" href="<?php echo add_query_arg('_nonce', wp_create_nonce('_nonce_cancel_subscription')) ?>"><?php _e('Cancel') ?></a>
 						</div>
-					</li>
-					<?php endforeach; ?>
-				</ul>
-				<?php endif; ?>
+					</div>
+
+					<?php if (count($result->invoices) > 0) :  ?>
+						<div class="gap-40"></div>
+						<h3 class="billing-title"><?php _e('Invoices') ?></h3>
+						<ul class="subscription-invoices">
+							<?php foreach ($result->invoices as $invoice) : ?>
+								<li class="billing-item">
+									<div class="billing-name">
+										<?php printf('%s &nbsp;<span class="wpfs-invoice-date">(%s / %s)</span>', $invoice->number, $invoice->total, date(get_option('date_format'), $invoice->date)); ?>
+									</div>
+									<div class="billing-footer">
+										<?php if ($invoice->pdf) {
+											printf('<a href="%s" target="_blank">%s</a>', esc_url_raw($invoice->pdf), __('Download'));
+										} ?>
+									</div>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>
-		<?php
+	<?php
 	}
 
 	public function support() { ?>
-		<div class="wrap proofratings-settings-wrap">		
+		<div class="wrap proofratings-settings-wrap">
 			<header class="proofratins-header header-row">
 				<div class="header-left">
-					<a class="btn-back-main-menu" href="<?php menu_page_url( 'proofratings' ) ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
+					<a class="btn-back-main-menu" href="<?php menu_page_url('proofratings') ?>"><i class="icon-back fa-solid fa-angle-left"></i> Back to Main Menu</a>
 					<h1 class="title"><?php _e('Support', 'proofratings') ?></h1>
 				</div>
-				
+
 				<div class="header-right">
-					<!-- <a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url( 'proofratings-support' ) ?>"></a> -->
+					<!-- <a class="btn-support fa-regular fa-circle-question" href="<?php menu_page_url('proofratings-support') ?>"></a> -->
 				</div>
 			</header>
 
-			<?php if ( $this->error->has_errors() ) : ?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php echo $this->error->get_error_message() ?></p>
-			</div>
+			<?php if ($this->error->has_errors()) : ?>
+				<div class="notice notice-error is-dismissible">
+					<p><?php echo $this->error->get_error_message() ?></p>
+				</div>
 			<?php endif;
-			
-			if ( $this->form_data->success ) : ?>
-			<div class="notice notice-success is-dismissible">
-				<p><?php echo $this->form_data->success; ?></p>
-			</div>
+
+			if ($this->form_data->success) : ?>
+				<div class="notice notice-success is-dismissible">
+					<p><?php echo $this->form_data->success; ?></p>
+				</div>
 			<?php endif; ?>
 
 			<form class="form-submit-ticket" method="post">
 				<hr class="wp-header-end">
 
-				<?php wp_nonce_field( '_nonce_submit_ticket', '_nonce' ) ?>
+				<?php wp_nonce_field('_nonce_submit_ticket', '_nonce') ?>
 
 				<label>Subject</label>
-				<input class="input-field" name="subject" type="text" value="<?php echo esc_attr( $this->form_data->subject ) ?>">
+				<input class="input-field" name="subject" type="text" value="<?php echo esc_attr($this->form_data->subject) ?>">
 
 				<label>Message</label>
-				<textarea class="input-field" name="message"><?php echo esc_textarea($this->form_data->message ) ?></textarea>
+				<textarea class="input-field" name="message"><?php echo esc_textarea($this->form_data->message) ?></textarea>
 				<?php submit_button('SUBMIT'); ?>
 			</form>
 		</div>
-		<?php
+<?php
 	}
 }

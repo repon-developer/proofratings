@@ -20,4 +20,15 @@
         })
     })
 
+    const card_container = $('.proofratings-customer-card');
+
+    card_container.find('.card-number').mask('0000 0000 0000 0000');
+    card_container.find('.card-expiry').mask('00 / 00');
+
+    card_container.find('.card-number').validateCreditCard(function (result) {
+        //console.log(result)
+        
+    });
+
+
 })(jQuery)
