@@ -33,7 +33,7 @@
 }
 
 .button.button-primary {
-    
+
     background-color: var(--primary_color)
 }
 
@@ -43,9 +43,9 @@
 }
 
 .button.button-link {
-    outline: none!important;
-    box-shadow: none!important;
-    background-color: transparent!important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
 }
 
 .button.btn-save {
@@ -1387,4 +1387,8 @@ ul.subscription-invoices>li {
 .proofratings-customer-card .card-action {
     margin-top: 15px;
     display: flex;
+}
+
+.proofratings-customer-card .card-action .button-primary.inprogress {
+    opacity: 0.5;
 }
