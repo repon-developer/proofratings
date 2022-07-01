@@ -539,7 +539,7 @@ class Proofratings_Settings {
 
 					<form class="card-form" method="post" id="update-proofratings-card">
 						<?php wp_nonce_field('_nonce_update_proofratings_card', '_nonce') ?>
-						<input class="card-input card-number" name="card-number" type="text" placeholder="Card number" data-mask="0000 0000 0000 0000">
+						<input class="card-input card-number" name="card-number" type="text" placeholder="Card number">
 						<input class="card-input card-expiry" type="text" placeholder="MM / YY" data-mask="00 / 00">
 						<input class="card-input card-cvc" type="text" placeholder="CVC" data-mask="0000">
 					</form>

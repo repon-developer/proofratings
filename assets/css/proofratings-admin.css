@@ -1320,6 +1320,10 @@ ul.subscription-invoices>li {
     padding-inline: 10px;
 }
 
+.proofratings-customer-card .card-details .brand {
+    text-transform: capitalize
+}
+
 .proofratings-customer-card .card-details .card-number {
     font-weight: bold;
     font-size: 17px;
