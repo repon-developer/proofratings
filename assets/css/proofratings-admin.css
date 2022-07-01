@@ -42,6 +42,11 @@
     background-color: #2a0fda
 }
 
+.button.button-link {
+    outline: none!important;
+    box-shadow: none!important;
+    background-color: transparent!important;
+}
 
 .button.btn-save {
     min-width: 100px;

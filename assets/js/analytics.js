@@ -105,8 +105,6 @@
             return get_item ? parseInt(get_item.result) : 0;
         }
 
-        console.log(state)
-
         const clicks = sessoins.map((date) => santize_data((state.clicks || []), date))
         const hovers = sessoins.map((date) => santize_data((state.hovers || []), date));
         const impressions = sessoins.map((date) => santize_data((state.impressions || []), date));

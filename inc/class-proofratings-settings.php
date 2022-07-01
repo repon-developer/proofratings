@@ -61,6 +61,8 @@ class Proofratings_Settings {
 		add_action('init', [$this, 'handle_support_form']);
 		add_action('init', [$this, 'handle_edit_location']);
 		add_action('init', [$this, 'handle_cancel_subscription']);
+
+		add_action('wp_ajax_proofratings_update_payment_method', [$this, 'update_payment_method']);
 	}
 
 	public function handle_signup_form() {
@@ -270,6 +272,27 @@ class Proofratings_Settings {
 	}
 
 	/**
+	 * Update payment method
+	 * @since 1.0.6
+	 */
+	public function update_payment_method() {
+		$postdata = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+		unset($postdata['action']);
+
+		$response = wp_remote_post(PROOFRATINGS_API_URL . '/update_subscription_method', get_proofratings_api_args(['data' => $postdata]));
+		$result = json_decode(wp_remote_retrieve_body($response));
+		if (!is_object($result)) {
+			wp_send_json(array('error' => 'Unknown error'));
+		}
+
+		if ( isset($result->success) ) {
+			delete_transient('proofratings_get_subscription');
+		}
+
+		wp_send_json($result);
+	}
+
+	/**
 	 * Shows the plugin's settings page.
 	 */
 	public function license_page() {
@@ -476,7 +499,6 @@ class Proofratings_Settings {
 		}
 
 		$result = json_decode(wp_remote_retrieve_body($request));
-		var_dump($result);
 		if (isset($result->code)) {
 			$this->error->add($result->code, $result->message);
 		} ?>
@@ -501,31 +523,31 @@ class Proofratings_Settings {
 					</div>
 				<?php endif; ?>
 
-				<div class="proofratings-customer-card proofratings-customer-card-editing">
+				<div class="proofratings-customer-card">
 					<h3>Credit/debit card</h3>
 
-					<?php if ($result->payment_method !== false) : ?>
+					<?php if ($result && $result->payment_method) : ?>
 						<div class="card-details billing-item">
 							<div class="brand"><?php echo $result->payment_method->brand ?></div>
 							<div class="card-number"><?php echo ucwords($result->payment_method->brand) ?> xxxx-<?php echo $result->payment_method->last4 ?></div>
 							<div class="expiry">
 								<p>Expires</p>
 								<?php echo str_pad($result->payment_method->exp_month, 2, '0', STR_PAD_LEFT) ?> / <?php echo $result->payment_method->exp_year ?>
-
 							</div>
 						</div>
 					<?php endif; ?>
 
-					<div class="card-form">
+					<form class="card-form" method="post" id="update-proofratings-card">
+						<?php wp_nonce_field('_nonce_update_proofratings_card', '_nonce') ?>
 						<input class="card-input card-number" name="card-number" type="text" placeholder="Card number" data-mask="0000 0000 0000 0000">
 						<input class="card-input card-expiry" type="text" placeholder="MM / YY" data-mask="00 / 00">
-						<input class="card-input" type="text" class="card-cvc" placeholder="CVC" data-mask="0000">
-					</div>
+						<input class="card-input card-cvc" type="text" placeholder="CVC" data-mask="0000">
+					</form>
 
 					<div class="card-action">
 						<a href="#" class="button button-link button-card-form">Update Card</a>
 						<div class="update-card-buttons">
-							<a href="#" class="button button-primary">Update Card</a>
+							<button class="button button-primary" form="update-proofratings-card">Update Card</button>
 							<a href="#" class="button button-discard">Discard</a>
 						</div>
 					</div>

@@ -188,6 +188,10 @@ class Proofratings_Admin {
 			wp_enqueue_script('jquery-card-validation', PROOFRATINGS_PLUGIN_URL . '/assets/js/jquery.creditCardValidator.js', ['jquery'], '1.2', true);
 			wp_enqueue_script('jquery-mask', PROOFRATINGS_PLUGIN_URL . '/assets/js/jquery.mask.min.js', [], '1.14.16', true);
 			wp_enqueue_script( 'proofratings', PROOFRATINGS_PLUGIN_URL . '/assets/js/proofratings-admin.js', ['jquery', 'wp-util', 'wp-color-picker', 'tippy', 'jquery-mask', 'jquery-card-validation'], PROOFRATINGS_VERSION, true);
+			wp_localize_script('proofratings', 'proofratings_admin', array(
+				'api' => PROOFRATINGS_API_URL,
+				'ajax_url' => admin_url('admin-ajax.php'),
+			));
 		}
 
 		preg_match('/(proofratings-rating-badges)/', $screen->id, $widget_matches);		

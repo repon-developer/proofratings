@@ -4,8 +4,6 @@
     }
 
     $('.proofratings-badge.baddddge-float').on('click', function (e) {
-        console.log(e)
-
         $(this).addClass('opened');
     })
 
