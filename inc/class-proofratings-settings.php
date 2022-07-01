@@ -253,12 +253,12 @@ class Proofratings_Settings {
 	 * @since 1.0.6
 	 */
 	public function handle_cancel_subscription() {
-		if (is_proofratings_demo_mode()) {
-			$this->error->add('error_demo', __('On the demo, you are not able to cancel subscription'));
-		}
-
 		if (!isset($_GET['_nonce']) || !wp_verify_nonce($_GET['_nonce'], '_nonce_cancel_subscription')) {
 			return;
+		}
+
+		if (is_proofratings_demo_mode()) {
+			return $this->error->add('error_demo', __('On the demo, you are not able to cancel subscription'));
 		}
 
 		$response = wp_remote_get(PROOFRATINGS_API_URL . '/cancel_subscription', get_proofratings_api_args());
@@ -281,7 +281,6 @@ class Proofratings_Settings {
 	 */
 	public function update_payment_method() {
 		if (is_proofratings_demo_mode()) {
-			$this->error->add('error_demo', __('On the demo, you are not able cancle subscription'));
 			wp_send_json(array('error' => 'On the demo, you are not able to update card.'));
 		}
 

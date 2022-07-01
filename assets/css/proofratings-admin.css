@@ -1301,6 +1301,8 @@ ul.subscription-invoices>li {
     border-width: 3px;
 }
 
+.swal2-container .swal2-title {line-height: 1.2;}
+
 .swal2-container .swal2-icon .swal2-icon-content {
     font-size: 2em;
 }
@@ -1392,3 +1394,4 @@ ul.subscription-invoices>li {
 .proofratings-customer-card .card-action .button-primary.inprogress {
     opacity: 0.5;
 }
+
