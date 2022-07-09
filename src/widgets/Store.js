@@ -20,7 +20,7 @@ const ACTIONS = {
 
 const widget_primary_state = {
     current_tab: 'overview',
-    overview_summary_tab: 'embedded-badges',
+    //overview_summary_tab: 'embedded-badges',
     active_connections: [],
     badge_display: {
         widget_square: false,
