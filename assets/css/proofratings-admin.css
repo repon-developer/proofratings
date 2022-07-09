@@ -873,7 +873,7 @@ form.form-search-review-sites button {
 }
 
 .search-review-sites-wrapper .left-column {
-    flex: 0 0 450px;
+    flex: 0 0 475px;
     align-self: flex-end;
 }
 
@@ -1292,7 +1292,9 @@ ul.subscription-invoices>li {
 }
 
 .editing-warning {
+    color: #4123FF;
     font-size: 12.5px;
+    font-weight: bold;
 }
 
 .swal2-container .swal2-icon {
