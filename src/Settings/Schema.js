@@ -1,5 +1,6 @@
 const { useState, useEffect } = React;
 
+import { get_proofratings } from '../global'
 import store, { ACTIONS } from './Store';
 
 const Schema = () => {
@@ -30,6 +31,7 @@ const Schema = () => {
                     <div style={{ marginBottom: 33 }} />
                     <div className="intro-text">
                         <h3>Add star ratings to search results</h3>
+                        <img src={`${get_proofratings().assets_url}images/aggregated-rating-google-star-snippet01.svg`} />
                         <p>Now that you display your rating badges on your website, you're able to gain your overall rating in search results.</p>
                     </div>
                 </div>

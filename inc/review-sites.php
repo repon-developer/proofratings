@@ -93,11 +93,11 @@ function get_proofratings_review_sites() {
 
         'guildquality' => [
             'theme_color' => '#032e57',
-            'name' => __('Guild Quality', 'proofratings'),
-            'title' => __('Guild Quality Review Settings', 'proofratings'),
+            'name' => __('GuildQuality', 'proofratings'),
+            'title' => __('GuildQuality Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-guildquality.png',
-            'rating_title' => __('Guild Quality Rating', 'proofratings'),
+            'rating_title' => __('GuildQuality Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/guildquality-black.svg',
             'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-guildquality.svg',
             'category' => 'home-service'
@@ -142,11 +142,11 @@ function get_proofratings_review_sites() {
         //Solar review sites
         'energysage' => [
             'theme_color' => '#bf793f',
-            'name' => __('Energy Sage', 'proofratings'),
-            'title' => __('Energy Sage Review Settings', 'proofratings'),
+            'name' => __('EnergySage', 'proofratings'),
+            'title' => __('EnergySage Review Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-energysage.png',
-            'rating_title' => __('Energy Sage Rating', 'proofratings'),
+            'rating_title' => __('EnergySage Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/energysage-black.svg',
             'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-energysage.svg',
             'category' => 'solar'
@@ -154,11 +154,11 @@ function get_proofratings_review_sites() {
 
         'solarreviews' => [
             'theme_color' => '#0f92d7',
-            'name' => __('Solar', 'proofratings'),
-            'title' => __('Solar Reviews Settings', 'proofratings'),
+            'name' => __('SolarReviews', 'proofratings'),
+            'title' => __('SolarReviews Settings', 'proofratings'),
             'logo' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews.svg',
             'icon' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon-solarreviews.png',
-            'rating_title' => __('Solar Reviews Rating', 'proofratings'),
+            'rating_title' => __('SolarReviews Rating', 'proofratings'),
             'icon2' => PROOFRATINGS_PLUGIN_URL . '/assets/images/solarreviews-black.svg',
             'icon3' => PROOFRATINGS_PLUGIN_URL . '/assets/images/icon3-solarreviews.svg',
             'category' => 'solar'
